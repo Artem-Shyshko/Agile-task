@@ -8,35 +8,24 @@
 import SwiftUI
 
 public struct CustomCalendarView: View {
-    @ObservedObject var viewModel = CalendarViewModel()
+    @StateObject var viewModel = CalendarViewModel()
     @Binding var selectedCalendarDay: Date
-    @Binding var calendarDates: [Date]
-    var weekDayTitles: [String]
-    @Binding var currentDate: Date
-    var item: [CalendarItem]
+    @State var currentDate = Date()
     var currentMonthDatesColor: Color
     var backgroundColor: Color
     
     public init(
         selectedCalendarDay: Binding<Date>,
-        calendarDates: Binding<[Date]>,
-        weekDayTitles: [String],
-        currentDate: Binding<Date>,
-        item: [CalendarItem],
         currentMonthDatesColor: Color,
         backgroundColor: Color
     ) {
         self._selectedCalendarDay = selectedCalendarDay
-        self._calendarDates = calendarDates
-        self.weekDayTitles = weekDayTitles
-        self._currentDate = currentDate
-        self.item = item
         self.currentMonthDatesColor = currentMonthDatesColor
         self.backgroundColor = backgroundColor
     }
     
     public var body: some View {
-        calendar()
+            calendar()
     }
 }
 
@@ -48,7 +37,7 @@ private extension CustomCalendarView {
             
             VStack(spacing: 11) {
                 HStack {
-                    ForEach(weekDayTitles, id: \.self) { day in
+                    ForEach(viewModel.getWeekSymbols(), id: \.self) { day in
                         Text(day)
                             .font(.helveticaRegular(size: 10))
                             .foregroundStyle(currentMonthDatesColor)
@@ -57,19 +46,27 @@ private extension CustomCalendarView {
                 }
                 
                 LazyVGrid(columns: viewModel.calendarGridLayout, spacing: 5) {
-                    ForEach(calendarDates, id: \.self) { date in
+                    ForEach(viewModel.getAllDates(currentDate: currentDate), id: \.self) { date in
                         calendarCell(date: date)
+                            .id(date)
+                            .disabled(viewModel.isDisabledDate(date))
                     }
                 }
             }
             .padding(.horizontal, 20)
             .padding(.top, 50)
+            .padding(.bottom, 10)
             
             HStack {
                 monthButton()
                 yearButton()
+                Spacer()
+                backToCurrentDateButton()
+                minusMonthButton()
+                addMonthButton()
             }
-            .hAlign(alignment: .leading)
+            .padding(.top, 15)
+            .padding(.horizontal, 15)
             .vAlign(alignment: .top)
         }
     }
@@ -99,16 +96,6 @@ private extension CustomCalendarView {
                     }
                 }
                 .foregroundStyle(currentMonthDatesColor)
-                .overlay(alignment: .bottom) {
-                    if item.contains(where: { item in
-                        (item.date ?? item.createdDate).shortDateFormat == date.shortDateFormat
-                    }) {
-                        Circle()
-                            .foregroundColor(.calendarSelectedDateCircleColor)
-                            .frame(width: 4, height: 4)
-                            .padding(.bottom, 6)
-                    }
-                }
             } else {
                 Text(date.format("dd"))
                     .foregroundColor(.gray)
@@ -119,101 +106,77 @@ private extension CustomCalendarView {
     }
     
     func monthButton() -> some View {
-            Button {
-                withAnimation(.easeInOut) {
-                    viewModel.showMonthList.toggle()
-                }
-            } label: {
-                HStack {
-                    Spacer()
-                    Text(currentDate.monthString)
-                        .font(.helveticaBold(size: 14))
-                    Spacer()
-                    Image(systemName: viewModel.showMonthList ? "chevron.up" : "chevron.down")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 8, height: 8)
-                }
+        Menu {
+            ForEach(0..<viewModel.months.count, id: \.self) { index in
+                Button(action: {
+                    viewModel.changeMoth(index: index, current: &currentDate)
+                }, label: {
+                        Text(viewModel.months[index])
+                            .font(.helveticaRegular(size: 14))
+                })
             }
-            .layoutPriority(1)
-            .overlay(
-                VStack(spacing: 0) {
-                    Spacer(minLength: 20)
-                    if viewModel.showMonthList {
-                        ForEach(0..<viewModel.months.count, id: \.self) { index in
-                            Button(action: {
-                                viewModel.changeMoth(index: index, current: &currentDate)
-                                viewModel.showMonthList = false
-                            }, label: {
-                                VStack(spacing: 0) {
-                                    Text(viewModel.months[index])
-                                        .font(.helveticaRegular(size: 14))
-                                        .frame(width: 90, alignment: .leading)
-                                        .padding(.vertical, 5)
-                                        .padding(.leading, 8)
-                                    Divider()
-                                }
-                                .background(backgroundColor)
-                            })
-                        }
-                    }
-                }
-                    .mask(RoundedRectangle(cornerRadius: 8))
-                    .shadow(color: .black.opacity(0.3), radius: 7, x: 0, y: 0),
-                alignment: .topLeading
-            )
-            .padding([.top, .leading], 15)
-            .frame(width: 120, alignment: .leading)
-            .foregroundColor(currentMonthDatesColor)
+        } label: {
+            HStack {
+                Image(systemName: "chevron.down")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 10)
+                Text(currentDate.monthString)
+            }
+            .font(.helveticaBold(size: 14))
+            .foregroundStyle(currentMonthDatesColor)
+        }
+        .foregroundStyle(currentMonthDatesColor)
     }
     
     func yearButton() -> some View {
-        VStack {
-            Button {
-                withAnimation(.easeInOut) {
-                    viewModel.showYearList.toggle()
-                }
-            } label: {
-                HStack {
-                    Text(currentDate.yearString)
-                        .font(.helveticaBold(size: 14))
-                    Image(systemName: viewModel.showYearList ? "chevron.up" : "chevron.down")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 8, height: 8)
-                }
+        Menu {
+            ForEach(viewModel.currentYear..<viewModel.currentYearPlusThen, id: \.self) { year in
+                Button(action: {
+                    viewModel.changeYear(year, current: &currentDate)
+                    viewModel.showYearList = false
+                }, label: {
+                        Text(year.description)
+                            .font(.helveticaRegular(size: 14))
+                })
             }
-            .layoutPriority(1)
-            .overlay(
-                VStack(spacing: 0) {
-                    Spacer(minLength: 20)
-                    if viewModel.showYearList {
-                        ForEach(viewModel.currentYear..<viewModel.currentYearPlusThen, id: \.self) { year in
-                            Button(action: {
-                                viewModel.changeYear(year, current: &currentDate)
-                                viewModel.showYearList = false
-                            }, label: {
-                                VStack(spacing: 0) {
-                                    Text(year.description)
-                                        .font(.helveticaRegular(size: 14))
-                                        .frame(width: 80, alignment: .leading)
-                                        .padding(.vertical, 5)
-                                        .padding(.leading, 8)
-                                    Divider()
-                                }
-                                .background(backgroundColor)
-                            })
-                        }
-                    }
-                }
-                    .mask(RoundedRectangle(cornerRadius: 8))
-                    .shadow(color: .black.opacity(0.3), radius: 7, x: 0, y: 0)
-                ,
-                alignment: .topLeading
-            )
-            .padding(.top, 15)
+        } label: {
+            HStack {
+                Image(systemName: "chevron.down")
+                Text(currentDate.yearString)
+            }
+            .font(.helveticaBold(size: 14))
+            .foregroundStyle(currentMonthDatesColor)
         }
-        .foregroundColor(currentMonthDatesColor)
+        .foregroundStyle(currentMonthDatesColor)
+    }
+    
+    func addMonthButton() -> some View {
+        Button {
+            viewModel.addToCurrentDate(currentDate: &currentDate, component: .month, value: 1)
+        } label: {
+            Image(systemName: "chevron.right")
+        }
+        .foregroundStyle(currentMonthDatesColor)
+    }
+    
+    func backToCurrentDateButton() -> some View {
+        Button(action: {
+            viewModel.backToCurrentDateButtonAction(&selectedCalendarDay)
+            viewModel.backToCurrentDateButtonAction(&currentDate)
+        }, label: {
+            Image(systemName: "arrow.uturn.backward")
+        })
+        .foregroundStyle(currentMonthDatesColor)
+    }
+    
+    func minusMonthButton() -> some View {
+        Button {
+            viewModel.minusFromCurrentDate(currentDate: &currentDate, component: .month, value: 1)
+        } label: {
+            Image(systemName: "chevron.left")
+        }
+        .foregroundStyle(currentMonthDatesColor)
     }
 }
 
@@ -230,11 +193,7 @@ public protocol CalendarItem {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CustomCalendarView(
-            selectedCalendarDay: .constant(Date()),
-            calendarDates: .constant([Date()]),
-            weekDayTitles: ["Monday"],
-            currentDate: .constant(Date()),
-            item: [MyItem()],
+            selectedCalendarDay: .constant(Date()), 
             currentMonthDatesColor: .white,
             backgroundColor: .secondary
         )

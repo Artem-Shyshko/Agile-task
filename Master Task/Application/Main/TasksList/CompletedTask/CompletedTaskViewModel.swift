@@ -9,36 +9,30 @@ import SwiftUI
 import RealmSwift
 
 final class CompletedTaskViewModel: ObservableObject {
-    @Published var taskArray: [TaskObject] = Account.completedTasks()
+    @Published var completedTasks = [TaskDTO]()
     @Published var isSearchBarHidden: Bool = true
     @Published var searchText: String = ""
+    @Published var showDeleteAlert: Bool = false
+    @Published var showRestoreAlert: Bool = false
     
-    private var realm = try! Realm()
+    let taskRepository: TaskRepository = TaskRepositoryImpl()
     
-    func updateTask(_ task: TaskObject) {
-        guard let updateObject = realm.object(ofType: TaskObject.self, forPrimaryKey: task.id) else { return }
-        do {
-            try realm.write {
-                updateObject.isCompleted.toggle()
-            }
-        } catch {
-            print(error)
-        }
-        
-        taskArray = Account.completedTasks()
+    init() {
+        completedTasks = taskRepository.getTaskList().filter { $0.isCompleted }
     }
     
-    func deleteTask(_ task: TaskObject) {
-        do {
-            guard let updateObject = realm.object(ofType: TaskObject.self, forPrimaryKey: task.id) else { return }
-            let realm = updateObject.thaw()!.realm!
-            try realm.write {
-                realm.delete(updateObject)
-            }
-        } catch {
-            print(error)
+    func updateTask(_ task: TaskDTO) {
+        if let taskIndex = completedTasks.firstIndex(where: { $0.id == task.id}) {
+            completedTasks[taskIndex].isCompleted.toggle()
+            completedTasks[taskIndex].completedDate = task.isCompleted ? Date() : nil
+            taskRepository.saveTask(completedTasks[taskIndex])
+            completedTasks.remove(at: taskIndex)
         }
-        
-        taskArray = Account.completedTasks()
+    }
+    
+    func deleteAll() {
+        let tasksToDelete = completedTasks
+        completedTasks.removeAll()
+        tasksToDelete.forEach { taskRepository.deleteTask(TaskObject($0)) }
     }
 }

@@ -12,34 +12,37 @@ struct SecurityView: View {
     
     @StateObject var viewModel: SecurityViewModel
     @Environment(\.realm) var realm
-    @State private var showPasswordView = false
+    @Environment(\.dismiss) var dismiss
     
-    var settings: TaskSettings {
-        realm.objects(TaskSettings.self).first!
-    }
     var isUserPassword: Bool {
-        UserDefaults.standard.string(forKey: MasterTaskConstants.shared.userPassword) != nil
+        UserDefaults.standard.string(forKey: Constants.shared.userPassword) != nil
     }
     
     var body: some View {
-        VStack(spacing: 3) {
+        VStack(spacing: Constants.shared.listRowSpacing) {
             securitySection()
             changePasswordView()
             Spacer()
         }
         .padding(.top, 25)
         .modifier(TabViewChildModifier())
-        .navigationBarBackButtonHidden(false)
         .navigationTitle("Security")
-        .onAppear {
-            viewModel.selectedSecurityOption = settings.securityOption
-        }
-        .navigationDestination(isPresented: $showPasswordView) {
+        .navigationDestination(isPresented: $viewModel.showPasswordView) {
             SetPasswordView(viewModel: SetPasswordViewModel())
         }
-        .onChange(of: viewModel.selectedSecurityOption) { newValue in
+        .onChange(of: viewModel.settings.securityOption) { newValue in
             if newValue == .password, !isUserPassword {
-                showPasswordView = true
+                viewModel.showPasswordView = true
+            }
+        }
+        .onChange(of: viewModel.settings) { _ in
+            viewModel.settingsRepository.save(viewModel.settings)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                backButton {
+                    dismiss.callAsFunction()
+                }
             }
         }
     }
@@ -53,25 +56,20 @@ private extension SecurityView {
             Text("Security")
             Spacer()
             
-            Picker("", selection: $viewModel.selectedSecurityOption) {
+            Picker("", selection: $viewModel.settings.securityOption) {
                 ForEach(SecurityOption.allCases, id: \.self) {
                     Text($0.rawValue)
                         .tag($0.rawValue)
                 }
             }
             .pickerStyle(.menu)
-            .onChange(of: viewModel.selectedSecurityOption) { newValue in
-                settings.saveSettings {
-                    settings.securityOption = newValue
-                }
-            }
         }
         .modifier(SectionStyle())
     }
     
     func changePasswordView() -> some View {
         Button {
-            showPasswordView = true
+            viewModel.showPasswordView = true
         } label: {
             HStack {
                 Text("Password")
@@ -82,11 +80,6 @@ private extension SecurityView {
         }
         .padding(.vertical, 10)
         .modifier(SectionStyle())
-    }
-    
-    var checkMark: some View {
-        Image(systemName: "checkmark")
-            .foregroundColor(.green)
     }
 }
 

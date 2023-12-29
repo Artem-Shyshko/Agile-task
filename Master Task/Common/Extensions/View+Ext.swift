@@ -17,4 +17,12 @@ extension View {
       self
         .frame(maxHeight: .infinity, alignment: alignment)
     }
+    
+    func backButton(action: @escaping (()->Void)) -> some View {
+        Button {
+            action()
+        } label: {
+            Image("Arrow Left")
+        }
+    }
 }

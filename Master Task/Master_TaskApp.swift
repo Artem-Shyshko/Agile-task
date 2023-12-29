@@ -16,18 +16,18 @@ struct Master_TaskApp: App {
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var purchaseManager = PurchaseManager()
     @StateObject var authManager = AuthManager()
-    @StateObject var realmManager = RealmManager()
     @StateObject var appThemeManager = AppThemeManager()
     
     @State private var isDarkModeOn = false
     @State private var showAuthView = false
-    var settings: TaskSettings? {
-        RealmManager.shared.settings
-    }
+    
+    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    let projectRepository: ProjectRepository = ProjectRepositoryImpl()
     
     var isNoneAuthorised: Bool {
-        if let settings,
-           settings.securityOption != .none,
+        let settings = settingsRepository.get()
+        
+        if settings.securityOption != .none,
            authManager.state == .noneAuth {
             return true
         }
@@ -47,7 +47,7 @@ struct Master_TaskApp: App {
                 }
                 
                 if isNoneAuthorised {
-                    AuthView(isShowing: $showAuthView)
+                    AuthView(vm: AuthViewModel(), isShowing: $showAuthView)
                 }
             }
             .ignoresSafeArea()
@@ -55,13 +55,13 @@ struct Master_TaskApp: App {
             .environmentObject(localNotificationManager)
             .environmentObject(purchaseManager)
             .environmentObject(authManager)
-            .environmentObject(realmManager)
             .environmentObject(appThemeManager)
             .onAppear {
-                appThemeManager.setAppTheme()
-                print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)
                 UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-                if let option = settings?.securityOption, option != .none {
+                appThemeManager.setAppTheme()
+                let settings = settingsRepository.get()
+                let _ = projectRepository.getSelectedProject()
+                if settings.securityOption != .none {
                     showAuthView = true
                 }
             }
@@ -69,7 +69,8 @@ struct Master_TaskApp: App {
                 await purchaseManager.updatePurchasedProducts()
             }
             .onChange(of: scenePhase) { scene in
-                if let settings, settings.securityOption != .none {
+                let settings = settingsRepository.get()
+                if settings.securityOption != .none {
                     if scene == .background {
                         authManager.state = .noneAuth
                     }

@@ -12,21 +12,15 @@ import MasterAppsUI
 struct CalendarView: View {
   @EnvironmentObject var theme: AppThemeManager
   @Binding var viewModel: TaskListViewModel
-  var settings: TaskSettings
-  @Binding var tasks: [TaskObject]
-  
-  private let sortingManager = SortingManager()
+  var settings: SettingsDTO
+  @Binding var tasks: [TaskDTO]
   
   var body: some View {
     VStack(spacing: 11) {
       CustomCalendarView(
-        selectedCalendarDay: $viewModel.selectedCalendarDate,
-        calendarDates: .constant(viewModel.getAllDates(weekStarts: settings.startWeekFrom)),
-        weekDayTitles: viewModel.getWeekSymbols(weekStarts: settings.startWeekFrom),
-        currentDate: $viewModel.currentDate,
-        item: tasks,
-        currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-        backgroundColor: theme.selectedTheme.sectionColor
+          selectedCalendarDay: $viewModel.selectedCalendarDate,
+          currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
+          backgroundColor: theme.selectedTheme.sectionColor
       )
     }
     .foregroundColor(.textColor)
@@ -38,7 +32,7 @@ struct CalendarView: View {
 
 struct CalendarView_Previews: PreviewProvider {
   static var previews: some View {
-    CalendarView(viewModel: .constant(TaskListViewModel()), settings: TaskSettings(), tasks: .constant([MasterTaskConstants.mockTask]))
+    CalendarView(viewModel: .constant(TaskListViewModel()), settings: SettingsDTO(object: SettingsObject()), tasks: .constant([TaskDTO(object: TaskObject())]))
       .environmentObject(AppThemeManager())
   }
 }

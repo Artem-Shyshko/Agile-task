@@ -10,21 +10,15 @@ import RealmSwift
 
 struct NewProjectView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
-    @ObservedResults(Account.self) var accounts
-    @ObservedRealmObject var account: Account
     @Environment(\.dismiss) var dismiss
-    
-    @State var accountName: String = ""
-    @State var editMode: Bool = false
-    @State var searchIsActive: Bool = false
+    @StateObject var vm: NewProjectViewModel
     
     var body: some View {
         VStack {
-            if !editMode {
-                TextField("Enter name for new account", text: $accountName)
-            } else {
-                TextField("Enter new name", text: $account.name)
-            }
+                TextField(
+                    vm.editedProject == nil ? "Enter new name" : "Enter name for new account",
+                    text: $vm.projectName
+                )
             Spacer()
         }
         .padding(.top, 30)
@@ -40,24 +34,17 @@ struct NewProjectView: View {
                 saveButton()
             }
         }
-        .onAppear {
-            accountName = account.name
-        }
     }
 }
 
 private extension NewProjectView {
     func saveButton() -> some View {
         Button {
-            if !editMode {
-                guard purchaseManager.hasUnlockedPro else { return }
-                
-                guard !accountName.isEmpty else { return }
-                let newAccount = Account()
-                newAccount.name = accountName
-                $accounts.append(newAccount)
+            let isSaved = vm.saveButtonAction(purchaseManager: purchaseManager)
+            
+            if isSaved {
+                dismiss.callAsFunction()
             }
-            dismiss.callAsFunction()
         } label: {
             Text("Save")
         }
@@ -75,7 +62,7 @@ private extension NewProjectView {
 
 struct NewAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        NewProjectView(account: Account())
+        NewProjectView(vm: NewProjectViewModel(editedProject: ProjectDTO(ProjectObject())))
             .environmentObject(PurchaseManager())
     }
 }

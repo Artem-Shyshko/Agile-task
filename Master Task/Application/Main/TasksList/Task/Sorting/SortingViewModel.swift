@@ -9,19 +9,14 @@ import Foundation
 import RealmSwift
 
 final class SortingViewModel: ObservableObject {
+    @Published var settings: SettingsDTO
+    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     
-    @Published var taskSorting: TaskSorting = .creation
+    init() {
+        settings = settingsRepository.get()
+    }
     
-    private let realm = try! Realm()
-    
-    func editValue(for settings: Results<TaskSettings>, with option: TaskSorting) {
-        guard let edited = realm.object(ofType: TaskSettings.self, forPrimaryKey: settings.first!.id) else { return }
-        do {
-            try realm.write {
-                edited.taskSorting = option
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
+    func editValue(with option: TaskSorting) {
+        settings.taskSorting = option
     }
 }

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct TaskList: View {
-  @Binding var taskArray: [TaskObject]
+  @Binding var taskArray: [TaskDTO]
   
   var body: some View {
-    ForEach(taskArray, id: \.self) { task in
-      TaskRow(task: task)
+    ForEach($taskArray, id: \.self) { task in
+        TaskRow(viewModel: TaskListViewModel(), task: task)
     }
     .onMove(perform: { from, to in
       taskArray.move(fromOffsets: from, toOffset: to)
@@ -22,5 +22,5 @@ struct TaskList: View {
 }
 
 #Preview {
-    TaskList(taskArray: .constant([MasterTaskConstants.mockTask]))
+    TaskList(taskArray: .constant([TaskDTO(object: Constants.shared.mockTask)]))
 }

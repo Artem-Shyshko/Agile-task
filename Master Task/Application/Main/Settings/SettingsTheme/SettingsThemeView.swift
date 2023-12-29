@@ -16,21 +16,12 @@ struct SettingsThemeView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: 1) {
-            
             Text("Theme")
                 .padding(.vertical, 10)
                 .modifier(SectionStyle())
                 .overlay(alignment: .trailing) {
                     colorButton()
                 }
-            
-            Spacer()
-        }
-        .navigationTitle("Theme")
-        .padding(.top, 25)
-        .modifier(TabViewChildModifier())
-        .navigationBarBackButtonHidden(false)
     }
 }
 
@@ -39,27 +30,40 @@ struct SettingsThemeView: View {
 private extension SettingsThemeView {
     func colorButton() -> some View {
         Menu {
-            ForEach(0..<appThemeManager.themes.count, id: \.self) { i in
+            ForEach(appThemeManager.themes.indices, id: \.self) { i in
                 Button {
                     appThemeManager.savedThemeIndex = i
                     switch i {
-                    case 0:
-                        appThemeManager.changeTheme(mode: .light)
-                    case 1:
+                    case 3:
                         appThemeManager.changeTheme(mode: .dark)
                     default:
-                        appThemeManager.changeTheme(mode: .dark)
+                        appThemeManager.changeTheme(mode: .light)
                     }
                 } label: {
-                    HStack {
-                        Text(appThemeManager.themes[i].name)
-                        appThemeManager.themes[i].backgroundColor
-                            .frame(width: 5, height: 5)
-                        appThemeManager.themes[i].backgroundGradient
-                            .frame(width: 5, height: 5)
+                    switch i {
+                    case 0:
+                        HStack {
+                            Image("AquamarineColorImage")
+                            Text(appThemeManager.themes[i].name)
+                        }
+                    case 1:
+                        HStack {
+                            Image("RubyColorImage")
+                            Text(appThemeManager.themes[i].name)
+                        }
+                    case 2:
+                        HStack {
+                            Image("OceanColorImage")
+                            Text(appThemeManager.themes[i].name)
+                        }
+                    default:
+                        HStack {
+                            Image("NightColorImage")
+                            Text(appThemeManager.themes[i].name)
+                        }
                     }
                 }
-                .buttonStyle(SettingsButtonStyle())
+                .modifier(SectionStyle())
             }
         } label: {
             ZStack {

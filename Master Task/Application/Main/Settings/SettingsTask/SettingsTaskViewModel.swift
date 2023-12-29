@@ -5,38 +5,81 @@
 //  Created by Artur Korol on 02.10.2023.
 //
 
-import Foundation
+import SwiftUI
+import MasterAppsUI
 
 final class SettingsTaskViewModel: ObservableObject {
-    @Published var startWeekFrom: WeekStarts = .sunday
-    @Published var timeFormat: TimeFormat = .twentyFour
-    @Published var taskDateFormat: TaskDateFormmat = .dayFirst
-    @Published var taskDateSorting: TaskDateSorting = .today
-    @Published var addNewTaskIn: AddingNewTask = .top
-    @Published var completedTask: CompletedTask = .leave
-    @Published var defaultReminder: DefaultReminder = .none
-    @Published var showPlusButton = true
-    @Published var isPushNotificationEnabled = true
-    @Published var rememberLastPickedOptionView = true
+    @Published var settings: SettingsDTO
+    @Published var isShowingAlert = false
+    @Published var isNotificationAccess = false
     
-    func getAppVersion() -> String {
-      if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-        return version
-      } else {
-        return "x.x"
-      }
+    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    private let tasksRepository: TaskRepository = TaskRepositoryImpl()
+    
+    init() {
+        settings = settingsRepository.get()
     }
     
-    func loadSettings(from settings: TaskSettings) {
-        startWeekFrom = settings.startWeekFrom
-        taskDateFormat = settings.taskDateFormat
-//        timeFormat = settings.timeFormat
-        taskDateSorting = settings.taskDateSorting
-        addNewTaskIn = settings.addNewTaskIn
-        completedTask = settings.completedTask
-        defaultReminder = settings.defaultReminder
-        showPlusButton = settings.showPlusButton
-        isPushNotificationEnabled = settings.isPushNotificationEnabled
-        rememberLastPickedOptionView = settings.rememberLastPickedOptionView
+    func getAppVersion() -> String {
+        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            return version
+        } else {
+            return "x.x"
+        }
+    }
+    
+    func pushNotificationButtonAction() {
+        settings.isPushNotificationEnabled.toggle()
+    }
+    
+    func addPlusButtonAction() {
+        settings.showPlusButton.toggle()
+    }
+    
+    func deleteAllTasks() {
+        let taskToDelete = tasksRepository.getTaskList()
+        taskToDelete.forEach { tasksRepository.deleteTask(TaskObject($0)) }
+    }
+    
+    func requestNotificationPermission() {
+        UNUserNotificationCenter.current()
+            .requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+                if let error = error {
+                    print("Error requesting notifications authorization: \(error.localizedDescription)")
+                    return
+                }
+                
+                if granted {
+                    DispatchQueue.main.async {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+                } else {
+                    self.redirectToSettings()
+                }
+            }
+    }
+    
+    func getPermissionState() async throws  {
+        let current = UNUserNotificationCenter.current()
+        
+        let result = await current.notificationSettings()
+        switch result.authorizationStatus {
+        case .authorized:
+            isNotificationAccess = true
+        default:
+            isNotificationAccess = false
+        }
+    }
+    
+    func redirectToSettings() {
+        DispatchQueue.main.async {
+            guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+                return
+            }
+            
+            if UIApplication.shared.canOpenURL(settingsURL) {
+                UIApplication.shared.open(settingsURL, options: [:], completionHandler: nil)
+            }
+        }
     }
 }

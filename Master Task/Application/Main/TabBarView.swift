@@ -16,7 +16,7 @@ enum TaskListNavigationView: Hashable {
 }
 
 enum SettingsNavigationView: Hashable {
-    case account, theme, taskSettings, security, more, contactUs
+    case account, taskSettings, security, more, contactUs
 }
 
 enum TabItem {
@@ -26,9 +26,6 @@ enum TabItem {
 struct TabBarView: View {
     
     // MARK: - Properties
-    
-    @ObservedResults(Account.self) var savedAccountsList
-    @ObservedResults(TaskSettings.self) var savedTaskSettings
     @State private var selectedTab: TabItem = .taskList
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
@@ -42,13 +39,12 @@ struct TabBarView: View {
                     Label("Tasks", image: "tasks")
                 }
                 .tag(TabItem.taskList)
-                .toolbar(.visible, for: .tabBar)
             TaskListView(selectedCalendarTab: true, path: $taskListNavigationStack)
                 .tabItem {
                     Label("Calendar", image: "calendar")
                 }
                 .tag(TabItem.calendar)
-            ProjectsView()
+            ProjectsView(vm: ProjectsViewModel())
                 .tabItem {
                     Label("Projects", image: "project")
                 }
@@ -57,6 +53,7 @@ struct TabBarView: View {
                 .tabItem { tabLabel(icon: "settings", title: "Settings") }
                 .tag(TabItem.settings)
         }
+        .toolbar(.visible, for: .tabBar)
         .tint(.white)
         .navigationBarBackButtonHidden(true)
         .onAppear {
@@ -67,8 +64,6 @@ struct TabBarView: View {
             standardAppearance.backgroundColor = UIColor(Color.clear)
             UITabBar.appearance().standardAppearance = standardAppearance
             UITabBar.appearance().unselectedItemTintColor = .white
-            addPersonalAccount()
-            initSettings()
         }
     }
     
@@ -84,23 +79,6 @@ struct TabBarView: View {
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
-    }
-}
-
-private extension TabBarView {
-    func addPersonalAccount() {
-        if savedAccountsList.isEmpty {
-            let account = Account()
-            account.name = "Personal"
-            account.isSelected = true
-            $savedAccountsList.append(account)
-        }
-    }
-    
-    func initSettings() {
-        if savedTaskSettings.isEmpty {
-            $savedTaskSettings.append(TaskSettings())
-        }
     }
 }
 

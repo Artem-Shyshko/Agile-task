@@ -9,13 +9,13 @@ import Foundation
 
 extension Date {
     func format(_ format: String) -> String {
-        MasterTaskConstants.shared.dateFormatter.dateFormat = format
+        Constants.shared.dateFormatter.dateFormat = format
         
-        return MasterTaskConstants.shared.dateFormatter.string(from: self)
+        return Constants.shared.dateFormatter.string(from: self)
     }
     
     var startDay: Date {
-        let calendar = Calendar.current
+        let calendar = Constants.shared.calendar
         var components = calendar.dateComponents(in: .autoupdatingCurrent, from: self)
         components.timeZone = .gmt
         components.hour = 0
@@ -25,7 +25,7 @@ extension Date {
     }
     
     var startOfMonth: Date {
-        let calendar = Calendar.current
+        let calendar = Constants.shared.calendar
         let components = calendar.dateComponents([.year, .month], from: self)
         return  calendar.date(from: components)!
     }
@@ -35,7 +35,7 @@ extension Date {
         components.month = 1
         components.hour = -2
         components.second = -1
-        return Calendar.current.date(byAdding: components, to: startOfMonth.startDay)!
+        return Constants.shared.calendar.date(byAdding: components, to: startOfMonth.startDay)!
     }
     
     /// Return string value of week number.
@@ -80,15 +80,15 @@ extension Date {
         self.description
     }
     
-    func byAdding(component: Calendar.Component, value: Int, wrappingComponents: Bool = false, using calendar: Calendar = .current) -> Date? {
+    func byAdding(component: Calendar.Component, value: Int, wrappingComponents: Bool = false, using calendar: Calendar = Constants.shared.calendar) -> Date? {
         calendar.date(byAdding: component, value: value, to: self, wrappingComponents: wrappingComponents)
     }
     
-    func dateComponents(_ components: Set<Calendar.Component>, using calendar: Calendar = .current) -> DateComponents {
+    func dateComponents(_ components: Set<Calendar.Component>, using calendar: Calendar = Constants.shared.calendar) -> DateComponents {
         calendar.dateComponents(components, from: self)
     }
     
-    func startOfWeek(using calendar: Calendar = .current) -> Date {
+    func startOfWeek(using calendar: Calendar = Constants.shared.calendar) -> Date {
         calendar.date(from: dateComponents([.yearForWeekOfYear, .weekOfYear], using: calendar))!
     }
     
@@ -96,7 +96,7 @@ extension Date {
         Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
     }
     
-    func daysOfWeek(using calendar: Calendar = .current) -> [Date] {
+    func daysOfWeek(using calendar: Calendar = Constants.shared.calendar) -> [Date] {
         let startOfWeek = self.startOfWeek(using: calendar).noon
         return (0...6).map { startOfWeek.byAdding(component: .day, value: $0, using: calendar)! }
     }

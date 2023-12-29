@@ -12,9 +12,8 @@ struct AuthView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var theme: AppThemeManager
     @Environment(\.scenePhase) var scene
-    
+    @StateObject var vm: AuthViewModel
     @Binding var isShowing: Bool
-    @State var password: String = ""
     
     var body: some View {
         ZStack {
@@ -25,6 +24,7 @@ struct AuthView: View {
             securityView()
         }
         .onAppear(perform: {
+            vm.settings = vm.settingsRepository.get()
             authWithFaceId()
         })
         .onChange(of: scene) { scene in
@@ -32,13 +32,22 @@ struct AuthView: View {
                 authWithFaceId()
             }
         }
-        .onChange(of: password) { newValue in
-            if password.count == 6 {
-                if let userPassword = UserDefaults.standard.string(forKey: MasterTaskConstants.shared.userPassword),
-                userPassword == password {
+        .onChange(of: vm.password) { newValue in
+            if vm.password.count == 6,
+                let userPassword = UserDefaults.standard.string(forKey: Constants.shared.userPassword) {
+                if userPassword == vm.password {
                     isShowing = false
                     authManager.state = .loggedIn
+                } else {
+                    vm.showAlert = true
                 }
+            }
+        }
+        .alert("Wrong password", isPresented: $vm.showAlert) {
+            Button {
+                vm.showAlert = false
+            } label: {
+                Text("OK")
             }
         }
     }
@@ -48,16 +57,8 @@ private extension AuthView {
     
     func securityView() -> some View {
         VStack {
-            if let settings = RealmManager.shared.settings {
-            
-                switch settings.securityOption {
-                case .password:
-                    passwordView()
-                case .faceID:
-                    EmptyView()
-                case .none:
-                    EmptyView()
-                }
+            if vm.settings.securityOption == .password {
+                passwordView()
             }
         }
     }
@@ -67,7 +68,7 @@ private extension AuthView {
             Spacer()
             HStack {
                 ForEach(0..<6, id: \.self) { index in
-                    PasswordView(index: index, password: $password)
+                    PasswordView(index: index, password: $vm.password)
                 }
             }
             
@@ -75,23 +76,18 @@ private extension AuthView {
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 15) {
                 ForEach(1...9, id: \.self) { value in
-                    PasswordButton(value: "\(value)", password: $password)
+                    PasswordButton(value: "\(value)", password: $vm.password)
                 }
-                PasswordButton(value: "", password: $password)
-                PasswordButton(value: "0", password: $password)
-                PasswordButton(value: "delete.fill", password: $password)
+                PasswordButton(value: "", password: $vm.password)
+                PasswordButton(value: "0", password: $vm.password)
+                PasswordButton(value: "delete.fill", password: $vm.password)
             }
             .padding(.bottom, 15)
         }
     }
     
     func authWithFaceId() {
-        guard let settings = RealmManager.shared.settings else {
-            isShowing = false
-            return
-        }
-        
-        if settings.securityOption == .faceID {
+        if vm.settings.securityOption == .faceID {
             authManager.auth()
             isShowing = authManager.state == .loggedIn ? false : true
         }

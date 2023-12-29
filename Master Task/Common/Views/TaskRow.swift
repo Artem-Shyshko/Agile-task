@@ -9,91 +9,123 @@ import SwiftUI
 import RealmSwift
 
 struct TaskRow: View {
-    @ObservedResults(TaskObject.self) var savedTaskList
-    @ObservedResults(TaskSettings.self) var savedTaskSettings
-    @EnvironmentObject var theme: AppThemeManager
-    @ObservedRealmObject var task: TaskObject
-    @Environment(\.realm) var realm
-    @State var isAlert = false
     
-    var taskSettings: TaskSettings {
-        savedTaskSettings.first!
+    // MARK: - Enum
+    
+    enum Constrains {
+        static let triggerRightThreshHold: CGFloat = -210
+        static let expansionRightThreshHold: CGFloat = -60
+        static let expansionRightOffset: CGFloat = -80
+        static let expansionLeftThreshHold: CGFloat = 30
+        static let expansionLeftOffset: CGFloat = 35
     }
     
+    // MARK: - Properties
+    
+    @StateObject var viewModel: TaskListViewModel
+    @EnvironmentObject var theme: AppThemeManager
+    @Binding var task: TaskDTO
+    
+    @State private var draggingOffset: CGFloat = .zero
+    @State private var startOffset: CGFloat = 0
+    @State private var isDragging = false
+    @State private var isDeleteAlert = false
+    
+    // MARK: - Body
+    
     var body: some View {
-        VStack {
-            if task.checkBoxList.isEmpty {
-                singleTaskRow()
-            } else {
-                checkBoxesTaskRow()
-            }
+        VStack(alignment: .leading) {
+            generalRow()
+            checkboxesView()
         }
         .font(.helveticaRegular(size: 16))
-        .listRowBackground(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(Color(task.colorName))
-        )
-        .alert("Are you sure you want to delete", isPresented: $isAlert) {
+        .gesture(swipeGesture())
+        .contentShape(Rectangle())
+        .alert("Are you sure you want to delete", isPresented: $isDeleteAlert) {
             Button("Cancel", role: .cancel) {
-                isAlert = false
+                isDeleteAlert = false
             }
             
             Button("Delete") {
-                $savedTaskList.remove(task)
+                viewModel.deleteTask(task)
             }
-        }
-    }
-    
-    private func updateTask() {
-        guard let updateObject = realm.object(ofType: TaskObject.self, forPrimaryKey: task.id) else { return }
-        do {
-            try realm.write {
-                updateObject.isCompleted.toggle()
-                
-                if !updateObject.checkBoxList.isEmpty {
-                    Array(updateObject.checkBoxList).forEach {
-                        $0.isCompleted = true
-                    }
-                }
-            }
-        } catch {
-            print(error)
-        }
-    }
-    
-    private func updateCheckBox(id: ObjectId) {
-        guard let updateObject = realm.object(ofType: CheckBoxObject.self, forPrimaryKey: id) else { return }
-        do {
-            try realm.write {
-                updateObject.isCompleted.toggle()
-            }
-        } catch {
-            print(error)
         }
     }
 }
 
+// MARK: - Layout
+
 private extension TaskRow {
-    func singleTaskRow() -> some View {
-        HStack(spacing: 5) {
-            if task.isCompleted {
-                Image(systemName: "checkmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 12, height: 15)
+    
+    func foregroundColor() -> Color {
+        if task.isCompleted {
+            if theme.selectedTheme.name == Constants.shared.nightTheme,
+               task.colorName != theme.selectedTheme.sectionColor.name {
+                return .black.opacity(0.5)
+            } else {
+                return  .textColor.opacity(0.5)
             }
-            
-            Text(task.title)
-                .font(.helveticaRegular(size: 16))
+        } else {
+            if theme.selectedTheme.name == Constants.shared.nightTheme,
+               task.colorName != theme.selectedTheme.sectionColor.name {
+                return .black
+            } else {
+                return  theme.selectedTheme.sectionTextColor
+            }
+        }
+    }
+    
+    func generalRow() -> some View {
+        HStack(spacing: 5) {
+            HStack(spacing: 10) {
+                if !task.checkBoxArray.isEmpty {
+                    Image(systemName: task.showCheckboxes ? "chevron.up" : "chevron.down")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 10)
+                        .onTapGesture {
+                            viewModel.updateTaskShowingCheckbox(&task)
+                        }
+                }
+                Text(task.title)
+                    .font(.helveticaRegular(size: 16))
+            }
             Spacer()
             
+            let timeFormat = viewModel.settings.timeFormat == .twelve ? "hh" : "HH"
             if let date = task.date {
-                Text(date.format(
-                    taskSettings.taskDateFormat == .dayFirst
-                    ? "EE dd/MM/yy"
-                    : "EE MM/dd/yy")
-                )
+                Text(date.format(viewModel.dateFormat()))
+                    .font(.helveticaRegular(size: 14))
+                    .foregroundStyle(
+                        task.isCompleted
+                        ? foregroundColor()
+                        : viewModel.calculateDateColor(
+                            whit: date,
+                            themeTextColor: theme.selectedTheme.sectionTextColor,
+                            isDate: true
+                        )
+                    )
+            }
+            
+            if let time = task.time {
+                HStack {
+                    Text(time.format("\(timeFormat):mm"))
+                    
+                    if viewModel.settings.timeFormat == .twelve {
+                        Text(task.timePeriod.rawValue)
+                    }
+                }
                 .font(.helveticaRegular(size: 14))
+                .foregroundStyle(
+                    task.isCompleted
+                    ? foregroundColor()
+                    : viewModel.calculateDateColor(
+                        whit: time,
+                        themeTextColor: theme.selectedTheme.sectionTextColor,
+                        isDate: false
+                    )
+                )
             }
             
             if task.reminder != .none {
@@ -112,138 +144,135 @@ private extension TaskRow {
                     .frame(width: 12, height: 15)
             }
         }
-        .foregroundColor(task.isCompleted ? .textColor.opacity(0.5) : theme.selectedTheme.sectionTextColor)
-        .overlay(alignment: .leading) {
-            if task.isCompleted {
-                Rectangle()
-                    .padding(.leading, 15)
-                    .frame(height: 2)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.completedTaskLineColor)
-            }
-        }
+        .foregroundColor(foregroundColor())
+        .padding(.horizontal, -10)
+        .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
-            updateTask()
+            viewModel.updateTaskCompletion(&task)
+            viewModel.sortTask()
         })
-        .swipeActions {
-            Button {
-                isAlert = true
-            } label: {
-                Image("trash")
-            }
-            .tint(.red)
-            
-            NavigationLink {
-                NewItemView(viewModel: NewTaskViewModel(), editTask: task)
-            } label: {
-                Image("edit")
-            }
-            .tint(Color.editButtonColor)
-            
-            Button {
-                updateTask()
-            } label: {
-                Image("done-checkbox")
-            }
-            .tint(.green)
-        }
+        .overlay(alignment: .leading, content: {
+            rightSwipeViews()
+                .padding(.leading, -20)
+                .padding(.vertical, -13)
+        })
+        .overlay(alignment: .trailing, content: {
+            leftSwipeViews()
+                .padding(.trailing, -20)
+                .padding(.vertical, -12)
+        })
+        
     }
     
-    func checkBoxTaskRow(title: String, isDone: Bool) -> some View {
-        HStack {
-            Image(isDone ? "done-checkbox" : "empty-checkbox")
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 12, height: 12)
-            Text(title)
-        }
-        .foregroundColor(isDone ? .textColor.opacity(0.5) : theme.selectedTheme.sectionTextColor)
-        .overlay(alignment: .leading) {
-            if isDone {
-                Rectangle()
-                    .padding(.leading, 15)
-                    .frame(height: 2)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.completedTaskLineColor)
+    @ViewBuilder
+    func checkboxesView() -> some View {
+        if !task.checkBoxArray.isEmpty, task.showCheckboxes {
+            ForEach($task.checkBoxArray
+                .sorted(by: {$0.sortingOrder.wrappedValue < $1.sortingOrder.wrappedValue}), id: \.id.wrappedValue
+            ) { checkBox in
+                CheckboxTaskRow(viewModel: viewModel, checkbox: checkBox, colorName: task.colorName)
             }
-        }
-        .listRowBackground(
-            RoundedRectangle(cornerRadius: 4)
-                .fill(Color(task.colorName))
-        )
-        .listRowSeparator(.hidden)
-    }
-    
-    func checkBoxesTaskRow() -> some View {
-        VStack(alignment: .leading) {
-            let completedTaskCount = task.checkBoxList.filter {$0.isCompleted}.count
-            HStack(spacing: 5) {
-                if task.isCompleted {
-                    Image(systemName: "checkmark")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 12, height: 15)
-                }
-                
-                Text(task.title)
-                Spacer()
-                Text("\(completedTaskCount)/\(task.checkBoxList.count)")
-            }
-            .font(.helveticaRegular(size: 16))
-            .foregroundColor(
-                completedTaskCount == task.checkBoxList.count 
-                ? .textColor.opacity(0.5)
-                : theme.selectedTheme.sectionTextColor
-            )
-            .onTapGesture(count: 2, perform: {
-                updateTask()
-            })
-            .overlay(alignment: .leading) {
-                if task.isCompleted {
-                    Rectangle()
-                        .padding(.leading, 15)
-                        .frame(height: 2)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(.completedTaskLineColor)
-                }
-            }
-            
-            ForEach(task.checkBoxList, id: \.id) { checkBox in
-                checkBoxTaskRow(title: checkBox.title, isDone: checkBox.isCompleted)
-                    .onTapGesture(count: 2, perform: {
-                        updateCheckBox(id: checkBox.id)
-                    })
-            }
-        }
-        .swipeActions {
-            Button {
-                isAlert = true
-            } label: {
-                Image("trash")
-            }
-            .tint(.red)
-            
-            NavigationLink {
-                NewItemView(viewModel: NewTaskViewModel(), editTask: task)
-            } label: {
-                Image("edit")
-            }
-            .tint(Color.editButtonColor)
-            
-            Button {
-                updateTask()
-            } label: {
-                Image("done-checkbox")
-            }
-            .tint(.green)
         }
     }
 }
 
+// MARK: - Swipes
+
+private extension TaskRow {
+    func swipeGesture() -> some Gesture {
+        DragGesture()
+            .onChanged {
+                if !isDragging {
+                    startOffset = draggingOffset
+                    isDragging = true
+                }
+                
+                draggingOffset = startOffset + $0.translation.width
+                
+                if draggingOffset < Constrains.triggerRightThreshHold {
+                    isDeleteAlert = true
+                    draggingOffset = 0
+                }
+            }
+            .onEnded { value in
+                isDragging = false
+                
+                withAnimation {
+                    if startOffset == .zero {
+                        if value.translation.width < 10 {
+                            if value.translation.width < Constrains.expansionRightThreshHold  {
+                                draggingOffset = Constrains.expansionRightOffset
+                            } else {
+                                draggingOffset = .zero
+                                startOffset = .zero
+                            }
+                        } else if value.translation.width > -10 {
+                            if value.translation.width > Constrains.expansionLeftThreshHold {
+                                draggingOffset = Constrains.expansionLeftOffset
+                            } else {
+                                draggingOffset = .zero
+                                startOffset = .zero
+                            }
+                        }
+                    } else {
+                        draggingOffset = .zero
+                        startOffset = .zero
+                    }
+                }
+            }
+    }
+    
+    func leftSwipeViews() -> some View {
+        HStack(spacing: 0) {
+            Button {
+                viewModel.showAddNewTaskView = true
+                draggingOffset = .zero
+            } label: {
+                Image("edit")
+                    .renderingMode(.template)
+                    .foregroundColor(.secondary)
+                    .padding(.leading, 5)
+            }
+            .buttonStyle(.borderless)
+            
+            Button {
+                isDeleteAlert = true
+                draggingOffset = .zero
+            } label: {
+                Image("trash")
+                    .renderingMode(.template)
+                    .foregroundColor(.red)
+                    .padding(.leading, 5)
+            }
+            .buttonStyle(.borderless)
+        }
+        .frame(width: startOffset == .zero ? -draggingOffset : .zero)
+        .background(theme.selectedTheme.sectionColor)
+        .cornerRadius(3)
+    }
+    
+    func rightSwipeViews() -> some View {
+        Button {
+            viewModel.updateTaskCompletion(&task)
+            draggingOffset = .zero
+        } label: {
+            Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
+                .renderingMode(.template)
+                .foregroundColor(.green)
+                .padding(.leading, 5)
+        }
+        .buttonStyle(.borderless)
+        .frame(width: startOffset == .zero ? draggingOffset : .zero)
+        .background(theme.selectedTheme.sectionColor)
+        .cornerRadius(3)
+    }
+}
+
+// MARK: - Preview
+
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(task: MasterTaskConstants.mockTask)
+        TaskRow(viewModel: TaskListViewModel(), task: .constant(TaskDTO(object: Constants.shared.mockTask)))
             .environmentObject(AppThemeManager())
     }
 }

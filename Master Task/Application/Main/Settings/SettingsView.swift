@@ -13,52 +13,66 @@ struct SettingsView: View {
     
     @EnvironmentObject var userState: UserState
     @Binding var path: [SettingsNavigationView]
+    @State var showMailView = false
     
     // MARK: - Body
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 5) {
-                NavigationView(title: "Settings")
-                
+            VStack(spacing: Constants.shared.listRowSpacing) {
                 NavigationLink(value: SettingsNavigationView.account) {
-                    Text("Account")
+                        Text("Account")
+                            .modifier(SectionStyle())
                 }
-                NavigationLink(value: SettingsNavigationView.theme) {
-                    Text("Theme")
-                }
+                
+                SettingsThemeView()
+                
                 NavigationLink(value: SettingsNavigationView.taskSettings) {
-                    Text("Task settings")
+                    Text("Settings")
+                        .modifier(SectionStyle())
                 }
+                
                 NavigationLink(value: SettingsNavigationView.security) {
                     Text("Security")
+                        .modifier(SectionStyle())
                 }
+                
                 NavigationLink(value: SettingsNavigationView.more) {
-                    Text("More our apps")
+                    Text("More Agile App")
+                        .modifier(SectionStyle())
                 }
-                NavigationLink(value: SettingsNavigationView.contactUs) {
-                    Text("Contact us")
+                
+                Button {
+                    showMailView = true
+                } label: {
+                    Text("Write to us on the email")
+                        .modifier(SectionStyle())
                 }
+                
                 Spacer()
             }
-            .buttonStyle(SettingsButtonStyle())
+            .padding(.top, 25)
             .modifier(TabViewChildModifier())
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: SettingsNavigationView.self) { views in
                 switch views {
                 case .account:
                     SettingsAccountView()
-                case .theme:
-                    SettingsThemeView()
                 case .taskSettings:
                     SettingsTaskView(viewModel: SettingsTaskViewModel())
                 case .security:
                     SecurityView(viewModel: SecurityViewModel())
                 case .more:
-                    Text("More")
+                    MoreOurAppsView()
                 case .contactUs:
                     Text("Contact Us")
                 }
             }
+            .sheet(isPresented: $showMailView, content: {
+                MailView()
+                    .tint(.blue)
+            })
         }
     }
 }

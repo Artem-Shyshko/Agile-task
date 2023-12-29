@@ -8,5 +8,11 @@
 import Foundation
 
 final class SecurityViewModel: ObservableObject {
-    @Published var selectedSecurityOption: SecurityOption = .none
+    @Published var settings: SettingsDTO
+    @Published var showPasswordView = false
+    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    
+    init() {
+        self.settings = settingsRepository.get()
+    }
 }

@@ -39,6 +39,7 @@ extension Color {
     static let completedTaskLineColor = Color("CompletedTaskLineColor")
     static let calendarSelectedDateCircleColor = Color("Cerise")
     static let editButtonColor = Color("Onyx")
+    static let aquamarineColor = Color("Aquamarine")
     
     static let battleshipGray = Color("BattleshipGray")
     static let nyanza = Color("Nyanza")
@@ -50,9 +51,23 @@ extension Color {
     static let mindaro = Color("Mindaro")
     static let malachite = Color("Malachite")
     static let timberwolf = Color("Timberwolf")
+    static let launch = Color("LaunchScreenBackgroundColor")
+    static let teaGreenColor = Color("TeaGreen")
     
     static let greenGradient = LinearGradient(
         colors: [Color(hex: "#556085"), Color(hex: "#4D8990"), Color(hex: "#3D9E90"), Color(hex: "#82E8CB")],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
+    static let rubyGradient = LinearGradient(
+        colors: [Color(hex: "#604CF7"), Color(hex: "#8734C4"), Color(hex: "#B21C8D"), Color(hex: "#C00B6B"), Color(hex: "#AD0447")],
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
+    static let oceanGradient = LinearGradient(
+        colors: [Color(hex: "#223E9E"), Color(hex: "#006BFF"), Color(hex: "#67A2FC"), Color(hex: "#9AE3FF")],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )

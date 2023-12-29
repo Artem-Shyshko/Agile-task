@@ -9,30 +9,24 @@ import SwiftUI
 import RealmSwift
 
 struct SortingView: View {
-    @EnvironmentObject var userState: UserState
-    @ObservedResults(TaskSettings.self) var savedSettings
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: SortingViewModel
     
-    var settings: TaskSettings {
-        savedSettings.first!
-    }
-    
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
             ForEach(TaskSorting.allCases, id: \.self) { option in
                 Button {
-                    viewModel.taskSorting = option
-                    viewModel.editValue(for: savedSettings, with: option)
+                    viewModel.editValue(with: option)
                 } label: {
                     HStack {
-                        if viewModel.taskSorting == option {
+                        if viewModel.settings.taskSorting == option {
                             checkMark
                         }
                         
                         Text(option.rawValue)
                     }
                 }
-                .buttonStyle(SettingsButtonStyle())
+                .modifier(SectionStyle())
             }
             Spacer()
         }
@@ -40,8 +34,15 @@ struct SortingView: View {
         .navigationTitle("Sorting")
         .toolbar(.visible, for: .navigationBar)
         .modifier(TabViewChildModifier())
-        .onAppear {
-            viewModel.taskSorting = settings.taskSorting
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                backButton {
+                    dismiss.callAsFunction()
+                }
+            }
+        }
+        .onChange(of: viewModel.settings) { _ in
+          viewModel.settingsRepository.save(viewModel.settings)
         }
     }
 }
@@ -60,6 +61,5 @@ private extension SortingView {
 struct SortingView_Previews: PreviewProvider {
     static var previews: some View {
         SortingView(viewModel: SortingViewModel())
-            .environmentObject(UserState())
     }
 }

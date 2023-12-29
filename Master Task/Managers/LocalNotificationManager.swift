@@ -23,33 +23,43 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func addNotification(to task: TaskObject) async  {
-        
-        if let taskDate = task.date, let reminderDate = task.reminderDate {
-            var reminderTime: Date
-            switch task.reminder {
-//            case .typical:
-//                reminderTime = Calendar.current.date(byAdding: .hour, value: -1, to: reminderDate) ?? reminderDate
-//            case .dontHave:
-//                return
-//            case .whenStart:
-//                reminderTime = taskDate
-//            case .fiveMinBefore:
-//                reminderTime = Calendar.current.date(byAdding: .minute, value: -5, to: reminderDate) ?? reminderDate
-            case .none: return
-            case .custom: reminderTime = reminderDate
-            }
-            
-            let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: reminderTime)
-            let notification = LocalNotification(
-                id: UUID().uuidString,
-                title: task.title,
-                body: "Today at \(taskDate.format("hh:mm"))",
-                dateComponents: dateComponents,
-                repeats: false
-            )
-            
-            await schedule(localNotification: notification)
+        var reminderTime: Date
+        switch task.reminder {
+        case .none: return
+        case .inOneHour:
+            guard let reminderDate = task.reminderDate else { return }
+            reminderTime = Constants.shared.calendar.date(byAdding: .hour, value: 1, to: reminderDate)!
+        case .tomorrow:
+            guard let reminderDate = task.reminderDate else { return }
+            reminderTime = reminderDate.byAdding(component: .day, value: 1)!
+        case .nextWeek:
+            guard let reminderDate = task.reminderDate else { return }
+            reminderTime = reminderDate.byAdding(component: .weekOfYear, value: 1)!.startOfWeek()
+        case .custom, .withRecurring:
+            guard let reminderDate = task.reminderDate else { return }
+            reminderTime = reminderDate
         }
+        
+        var dateComponents = Constants.shared.calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminderTime)
+        
+        if task.reminder == .tomorrow || task.reminder == .nextWeek || task.reminder == .withRecurring {
+            dateComponents.hour = 12
+            dateComponents.minute = 0
+        }
+        
+        let notification = LocalNotification(
+            id: task.id.stringValue,
+            title: "Master Task",
+            body: task.title,
+            dateComponents: dateComponents,
+            repeats: false
+        )
+        
+        await schedule(localNotification: notification)
+    }
+    
+    func deleteNotification(with identifier: String) {
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
     }
 }
 
@@ -60,11 +70,11 @@ extension LocalNotificationManager: UNUserNotificationCenterDelegate {
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification
     ) async -> UNNotificationPresentationOptions {
-        return [.sound, .banner]
+        return [.list, .banner, .sound]
     }
 }
 
- // MARK: - Private Methods
+// MARK: - Private Methods
 
 private extension LocalNotificationManager {
     

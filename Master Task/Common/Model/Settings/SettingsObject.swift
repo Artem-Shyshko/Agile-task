@@ -7,11 +7,12 @@
 
 import Foundation
 import RealmSwift
+import MasterAppsUI
 
-final class TaskSettings: Object, ObjectKeyIdentifiable {
+final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var startWeekFrom: WeekStarts = .monday
-    @Persisted var taskDateFormat: TaskDateFormmat = .dayFirst
+    @Persisted var taskDateFormat: TaskDateFormmat = .dayMonthYear
     @Persisted var timeFormat: TimeFormat = .twentyFour
     @Persisted var taskDateSorting: TaskDateSorting = .today
     @Persisted var addNewTaskIn: AddingNewTask = .top
@@ -24,30 +25,29 @@ final class TaskSettings: Object, ObjectKeyIdentifiable {
     @Persisted var securityOption: SecurityOption = .none
 }
 
-extension TaskSettings {
-    private static var config = Realm.Configuration(schemaVersion: 1)
-    private static var realm = try! Realm(configuration: config)
-    
-    func saveSettings(completion: @escaping (() -> Void)) {
-        guard let settings = TaskSettings.realm.object(ofType: TaskSettings.self, forPrimaryKey: self.id) else { return }
-        let realm = settings.thaw()!.realm!
+extension SettingsObject {
+    convenience init(dto: SettingsDTO) {
+        self.init()
         
-        do {
-            try realm.write {
-                completion()
-            }
-        } catch {
-            print(error.localizedDescription)
-        }
+        id = dto.id
+        startWeekFrom = dto.startWeekFrom
+        taskDateFormat = dto.taskDateFormat
+        timeFormat = dto.timeFormat
+        taskDateSorting = dto.taskDateSorting
+        addNewTaskIn = dto.addNewTaskIn
+        completedTask = dto.completedTask
+        defaultReminder = dto.defaultReminder
+        showPlusButton = dto.showPlusButton
+        isPushNotificationEnabled = dto.isPushNotificationEnabled
+        rememberLastPickedOptionView = dto.rememberLastPickedOptionView
+        taskSorting = dto.taskSorting
+        securityOption = dto.securityOption
     }
 }
 
 enum TaskSorting: String, PersistableEnum, CaseIterable {
     case manual = "Manual"
-    case creation = "By creation date on the top"
     case schedule = "By schedule on the top"
-    case nonSchedule = "Non-scheduled on the top"
-    case modifiedDate = "By modified date on the top"
     case reminders = "By reminders on the top"
     case recurring = "By recurring on the top"
 }
@@ -58,8 +58,13 @@ enum WeekStarts: String, PersistableEnum, CaseIterable {
 }
 
 enum TaskDateFormmat: String, PersistableEnum, CaseIterable {
-    case dayFirst = "dd/mm/yy"
-    case monthFirst = "mm/dd/yy"
+    case dayMonthYear = "dd/mm/yy"
+    case weekDayDayMonthYear = "Wed, dd/mm/yy"
+    case monthDayYear = "mm/dd/yy"
+    case weekDayMonthDayYear = "Wed, mm/dd/yy"
+    case weekDayDayNumberShortMoth = "Wed, 22 Nov"
+    case dayNumberShortMonthFullYear = "22 Nov 2024"
+    case dayNumberShortMonth = "22 Nov"
 }
 
 enum TaskDateSorting: String, PersistableEnum, CaseIterable {
@@ -75,7 +80,6 @@ enum AddingNewTask: String, PersistableEnum, CaseIterable {
 }
 
 enum CompletedTask: String, PersistableEnum, CaseIterable {
-    case leave = "Leave in the list"
     case hide = "Hide from the list"
     case moveToBottom = "Move to the button of the list"
 }
@@ -92,7 +96,4 @@ enum SecurityOption: String, PersistableEnum, CaseIterable {
     case none = "None"
 }
 
-enum TimeFormat: String, PersistableEnum, CaseIterable {
-    case twentyFour = "24h"
-    case twelve = "12h"
-}
+extension TimeFormat: PersistableEnum {}

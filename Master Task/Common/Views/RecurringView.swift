@@ -11,12 +11,12 @@ struct RecurringView: View {
     @StateObject var viewModel: NewTaskViewModel
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
+        VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
             repeatEveryView()
             if viewModel.repeatEvery == .weeks { repeatOnView() }
+            endsAfterView()
             endsView()
         }
-        .padding(.vertical, 15)
     }
 }
 
@@ -24,11 +24,12 @@ struct RecurringView: View {
 
 private extension RecurringView {
     func repeatEveryView() -> some View {
-        HStack(spacing: 15){
+        HStack(spacing: 10) {
             Text("Repeat every")
+            Spacer()
             TextField("", text: $viewModel.repeatCount)
                 .padding(EdgeInsets(top: 0, leading: 21, bottom: 0, trailing: 10))
-                .frame(width: 60, height: 45)
+                .frame(width: 50, height: 35)
                 .background(Color.textFieldColor)
                 .cornerRadius(7)
                 .keyboardType(.numberPad)
@@ -37,101 +38,127 @@ private extension RecurringView {
                 downAction: { viewModel.minusRecurringRepeatingCount() }
             )
             
-            Picker("", selection: $viewModel.repeatEvery) {
+            Menu(viewModel.repeatEvery.rawValue) {
                 ForEach(RepeatRecurring.allCases, id: \.self) { item in
-                    Text(item.rawValue)
+                    Button {
+                        viewModel.repeatEvery = item
+                    } label: {
+                        Text(item.rawValue)
+                    }
                 }
             }
-            .pickerStyle(.menu)
-            .frame(width: 90, height: 45, alignment: .leading)
+            .frame(width: 70, height: 35, alignment: .center)
             .background(Color.textFieldColor)
             .cornerRadius(7)
+            .padding(.trailing, 10)
         }
+        .modifier(SectionStyle())
     }
     
     func repeatOnView() -> some View {
-        VStack(alignment: .leading) {
+        HStack {
             Text("Repeat on")
-            HStack {
-                ForEach(viewModel.weekDays, id: \.self) { day in
-                    CheckBoxView(viewModel: viewModel, title: day)
-                }
+            Spacer()
+            ForEach(Constants.shared.calendar.weekdaySymbols, id: \.self) { day in
+                CheckBoxView(viewModel: viewModel, title: day)
             }
+        }
+        .padding(.trailing, 10)
+        .modifier(SectionStyle())
+    }
+    
+    func endsAfterView() -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("Ends after")
+                Spacer()
+                Button {
+                    viewModel.recurringEnds = .after
+                } label: {
+                    Image(viewModel.recurringEnds == .after ? "done-checkbox" : "empty-checkbox")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                }
+                
+                Text("Ocurrences")
+                TextField("", text: $viewModel.recurringEndsAfterOccurrences)
+                    .frame(width: 30, height: 35)
+                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                    .background(Color.textFieldColor)
+                    .cornerRadius(5)
+                    .keyboardType(.numberPad)
+                    .disabled(viewModel.recurringEnds != .after)
+                
+                upDownArrows(
+                    upAction: { viewModel.addRecurringEndsAfterOccurrences() },
+                    downAction: { viewModel.minusRecurringEndsAfterOccurrences() }
+                )
+                .disabled(viewModel.recurringEnds != .after)
+            }
+            .padding(.trailing, 10)
+            .modifier(SectionStyle())
         }
     }
     
     func endsView() -> some View {
-        VStack(alignment: .leading) {
+        HStack(spacing: 30) {
             Text("Ends")
-            HStack(alignment: .bottom, spacing: 30) {
-                VStack(alignment: .leading, spacing: 30) {
-                    ForEach(RecurringEnds.allCases, id: \.self) { rec in
-                        Button {
-                            viewModel.recurringEnds = rec
-                        } label: {
-                            HStack {
-                                if viewModel.recurringEnds == rec {
-                                    ZStack {
-                                        Circle()
-                                            .frame(width: 20, height: 20)
-                                            .foregroundColor(.blue)
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(lineWidth: 3)
-                                            .fill(Color.white)
-                                            .frame(width: 12, height: 12)
-                                    }
-                                } else {
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(lineWidth: 2)
-                                        .fill(Color.black.opacity(0.6))
-                                        .frame(width: 20, height: 20)
-                                }
-                                Text(rec.rawValue)
-                                    .foregroundColor(Color.textColor)
-                            }
-                        }
-                    }
-                }
-                VStack(alignment: .center, spacing: 5) {
-                    DatePicker("", selection: $viewModel.recurringEndsDate, displayedComponents: .date)
-                        .disabled(viewModel.recurringEnds != .on)
-                        .frame(width: 150, height: 45)
-                        .foregroundColor(viewModel.recurringEnds == .on ? .black : .secondary)
-                    HStack(spacing: 20) {
-                        TextField("", text: $viewModel.recurringEndsAfterOccurrences)
-                            .frame(width: 150, height: 35)
-                            .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
-                            .background(Color.textFieldColor)
-                            .cornerRadius(5)
-                            .overlay(alignment: .trailing) {
-                                Text("occurrences")
-                                    .padding(.trailing, 20)
-                            }
-                            .keyboardType(.numberPad)
-                        
-                        upDownArrows(
-                            upAction: { viewModel.addRecurringEndsAfterOccurrences() },
-                            downAction: { viewModel.minusRecurringEndsAfterOccurrences() }
-                        )
-                    }
-                    .disabled(viewModel.recurringEnds != .after)
+            Spacer()
+            Button {
+                viewModel.recurringEnds = .on
+            } label: {
+                Image(viewModel.recurringEnds == .on ? "done-checkbox" : "empty-checkbox")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 15, height: 15)
+            }
+            .padding(.leading)
+            
+            DatePicker("", selection: $viewModel.recurringEndsDate, displayedComponents: .date)
+                .disabled(viewModel.recurringEnds != .on)
+                .frame(width: 80, height: 35)
+                .foregroundColor(viewModel.recurringEnds == .on ? .black : .secondary)
+            
+            Button {
+                viewModel.recurringEnds = .never
+            } label: {
+                HStack {
+                    Image(viewModel.recurringEnds == .never ? "done-checkbox" : "empty-checkbox")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                    Text("Never")
                 }
             }
         }
+        .padding(.trailing, 10)
+        .modifier(SectionStyle())
     }
     
     func upDownArrows(upAction: @escaping (()->()), downAction: @escaping (()->())) -> some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 7) {
             Button {
                 upAction()
             } label: {
                 Image(systemName: "chevron.up")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 12, height: 12)
+                    .bold()
             }
             
             Button {
                 downAction()
             } label: {
                 Image(systemName: "chevron.down")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 12, height: 12)
+                    .bold()
             }
         }
     }
@@ -156,10 +183,19 @@ struct CheckBoxView: View {
         Button(title.firstLetter) {
             isSelected.toggle()
         }
-        .foregroundColor(.white)
         .frame(width: 30, height: 30, alignment: .center)
-        .background(isSelected ? .blue : .gray.opacity(0.3))
-        .cornerRadius(15)
+        .background {
+            if isSelected {
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color.teaGreenColor)
+            } else {
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(lineWidth: 3)
+                    .fill(Color.teaGreenColor)
+                
+            }
+        }
+        .cornerRadius(4)
         .onChange(of: isSelected) { isSelectDay in
             viewModel.controlSelectedDay(isSelectDay: isSelectDay, dayName: title)
         }
@@ -171,5 +207,6 @@ struct CheckBoxView: View {
 struct RecurringView_Previews: PreviewProvider {
     static var previews: some View {
         RecurringView(viewModel: NewTaskViewModel())
+            .environmentObject(AppThemeManager())
     }
 }

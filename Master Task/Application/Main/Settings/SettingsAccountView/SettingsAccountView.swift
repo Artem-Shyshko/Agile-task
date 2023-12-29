@@ -34,6 +34,6 @@ struct SettingsAccountView: View {
 }
 
 #Preview {
-    ProjectsView()
+    ProjectsView(vm: ProjectsViewModel())
         .environmentObject(AppThemeManager())
 }

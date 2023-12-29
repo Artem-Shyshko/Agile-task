@@ -19,21 +19,22 @@ extension Date {
     }
     
     var startOfMonth: Date {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: self)
-        return  calendar.date(from: components)!
+        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
     }
     
     var endOfMonth: Date {
+        return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth)!
+    }
+    
+    var nextMonth: Date {
         var components = DateComponents()
         components.month = 1
-        components.hour = -2
-        components.second = -1
+        components.day = 1
         return Calendar.current.date(byAdding: components, to: startOfMonth.startDay)!
     }
     
     func format(_ format: String) -> String {
-        var dateFormatter = DateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         
         return dateFormatter.string(from: self)
@@ -86,6 +87,14 @@ extension Date {
     /// - Returns: EE d/M/yy format
     var fullDateFormat: String {
         self.description
+    }
+    
+    var twentyFourTimeFormat: String {
+        self.format("HH:mm")
+    }
+    
+    var twelveTimeFormat: String {
+        self.format("hh:mm")
     }
     
     func byAdding(component: Calendar.Component, value: Int, wrappingComponents: Bool = false, using calendar: Calendar = .current) -> Date? {

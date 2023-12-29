@@ -10,98 +10,100 @@ import RealmSwift
 
 struct CompletedTaskView: View {
     @EnvironmentObject var theme: AppThemeManager
+    @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: CompletedTaskViewModel
-    @ObservedResults(Account.self, where: ( { $0.isSelected } )) var selectedSavedAccount
-    
-    private var filteredTaskByAccount: [TaskObject] {
-        guard let tasksList = selectedSavedAccount.first?.tasksList else {
-            return []
-        }
-        
-        let completedTasks: [TaskObject] = tasksList.filter{$0.isCompleted}
-        
-        if !viewModel.searchText.isEmpty {
-            return completedTasks
-                .filter({$0.title.contains(viewModel.searchText)})
-        } else {
-            return completedTasks
-        }
-    }
     
     var body: some View {
         VStack {
-            topView()
             underTopBar()
             List {
-                TaskList(taskArray: .constant(filteredTaskByAccount))
+                ForEach($viewModel.completedTasks, id: \.id) { task in
+                TaskRow(viewModel: TaskListViewModel(), task: task)
+                        .onChange(of: task.wrappedValue) { _ in
+                            viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
+                        }
+              }
+              .listRowSeparator(.hidden)
             }
+            .listRowSpacing(Constants.shared.listRowSpacing)
             .scrollContentBackground(.hidden)
             .listStyle(.plain)
-            .padding(.top, 20)
-            .listRowSpacing(MasterTaskConstants.shared.listRowSpacing)
             
             Spacer()
         }
         .modifier(TabViewChildModifier())
+        .navigationTitle("Completed tasks")
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                backButton {
+                    dismiss.callAsFunction()
+                }
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
+                NavigationLink {
+                    NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.completedTasks)
+                } label: {
+                    Image("plus")
+                }
+            }
+        }
+        .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.showDeleteAlert) {
+            Button {
+                viewModel.showDeleteAlert = false
+            } label: {
+                Text("Cancel")
+            }
+            
+            Button {
+                viewModel.deleteAll()
+            } label: {
+                Text("Delete")
+            }
+        }
+        .alert("Are you sure you want to restore all tasks?", isPresented: $viewModel.showRestoreAlert) {
+            Button {
+                viewModel.showRestoreAlert = false
+            } label: {
+                Text("Cancel")
+            }
+            
+            Button {
+                viewModel.completedTasks.forEach { task in
+                    viewModel.updateTask(task)
+                }
+            } label: {
+                Text("Restore")
+            }
+        }
     }
 }
 
+// MARK: - Private Views
+
 private extension CompletedTaskView {
-    func topView() -> some View {
+    func underTopBar() -> some View {
         HStack {
             Button {
-                viewModel.isSearchBarHidden.toggle()
+                viewModel.showRestoreAlert = true
             } label: {
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 12, height: 12)
+                Text("Restore all")
             }
-            Spacer()
-            Text("Completed tasks")
-                .font(.helveticaBold(size: 16))
-                .foregroundStyle(theme.selectedTheme.textColor)
+            
             Spacer()
             
-            NavigationLink(value: TaskListNavigationView.createTask) {
-                Image(systemName: "plus")
+            Button {
+                viewModel.showDeleteAlert = true
+            } label: {
+                Text("Delete all")
             }
         }
-        .padding(.horizontal, 20)
-        .padding(.top, 15)
-    }
-    
-    func underTopBar() -> some View {
-        VStack {
-            if viewModel.isSearchBarHidden {
-                HStack {
-                    Button {
-                        filteredTaskByAccount.forEach { task in
-                            viewModel.updateTask(task)
-                        }
-                    } label: {
-                        Text("Restore all")
-                    }
-                    
-                    Spacer()
-                    
-                    Button {
-                        filteredTaskByAccount.forEach { task in
-                            viewModel.deleteTask(task)
-                        }
-                    } label: {
-                        Text("Delete all")
-                    }
-                }
-                .padding(.horizontal, 15)
-                .padding(.top, 20)
-            } else {
-                SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
-                    .foregroundColor(theme.selectedTheme.textColor)
-            }
-        }
+        .padding(.horizontal, 15)
+        .padding(.top, 20)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     CompletedTaskView(viewModel: CompletedTaskViewModel())

@@ -11,9 +11,9 @@ struct SettingsButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.helveticaRegular(size: 16))
-            .frame(height: 45)
+            .frame(height: 40)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading)
+            .padding(.leading, 10)
             .background(Color.sectionColor)
             .padding(.horizontal, 5)
     }

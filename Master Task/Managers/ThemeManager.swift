@@ -15,26 +15,26 @@ enum AppMode: String {
 final class AppThemeManager: ObservableObject {
     private let defaults = UserDefaults.standard
     
-    @AppStorage("SelectedThemeIndex") var savedThemeIndex = 1 {
+    @AppStorage("SelectedThemeIndex") var savedThemeIndex = 0 {
         didSet {
             updateTheme()
         }
     }
     
     @Published var selectedTheme: Theme = GreenTheme()
-    var themes: [Theme] = [GreenTheme(), BlackTheme()]
+    var themes: [Theme] = [GreenTheme(), RubyTheme(), OceanTheme(), BlackTheme()]
     
     init() {
         updateTheme()
     }
     
     func setAppMode(mode: AppMode) {
-        defaults.set(mode.rawValue, forKey: MasterTaskConstants.appMode)
+        defaults.set(mode.rawValue, forKey: Constants.shared.appMode)
     }
     
     func getAppMode() -> AppMode {
-           let mode = defaults.string(forKey: MasterTaskConstants.appMode) ?? MasterTaskConstants.darkMode
-           return AppMode(rawValue: mode) ?? .dark
+        let mode = defaults.string(forKey: Constants.shared.appMode) ?? Constants.shared.lightMode
+           return AppMode(rawValue: mode) ?? .light
        }
     
     func setAppTheme() {
@@ -66,7 +66,7 @@ protocol Theme {
 }
 
 struct GreenTheme: Theme {
-    var name: String = "Green Gradient"
+    var name: String = Constants.shared.aquamarineTheme
     var textColor: Color = .white
     var sectionTextColor: Color = .black
     var sectionColor: Color = .sectionColor
@@ -74,8 +74,26 @@ struct GreenTheme: Theme {
     var backgroundGradient: LinearGradient? = Color.greenGradient
 }
 
+struct RubyTheme: Theme {
+    var name: String = Constants.shared.rubyTheme
+    var textColor: Color = .white
+    var sectionTextColor: Color = .black
+    var sectionColor: Color = .sectionColor
+    var backgroundColor: Color? = nil
+    var backgroundGradient: LinearGradient? = Color.rubyGradient
+}
+
+struct OceanTheme: Theme {
+    var name: String = Constants.shared.oceanTheme
+    var textColor: Color = .white
+    var sectionTextColor: Color = .black
+    var sectionColor: Color = .sectionColor
+    var backgroundColor: Color? = nil
+    var backgroundGradient: LinearGradient? = Color.oceanGradient
+}
+
 struct BlackTheme: Theme {
-    var name: String = "Dark"
+    var name: String = Constants.shared.nightTheme
     var textColor: Color = .white
     var sectionTextColor: Color = .white
     var sectionColor: Color = .sectionColor

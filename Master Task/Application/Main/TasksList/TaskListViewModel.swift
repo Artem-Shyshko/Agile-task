@@ -5,76 +5,82 @@
 //  Created by Artur Korol on 08.08.2023.
 //
 
-import Foundation
+import SwiftUI
 import RealmSwift
 
 final class TaskListViewModel: ObservableObject {
     @Published var isSearchBarHidden: Bool = true
     @Published var searchText: String = ""
     @Published var currentDate: Date = Date()
-    @Published var selectedCalendarDate: Date = Date()
-    var calendar = Calendar.current
-    let sortingManager = SortingManager()
-    var allTask = Account.allTasks()
+    @Published var settings: SettingsDTO
+    @Published var loadedTasks: [TaskDTO] = []
+    @Published var showAddNewTaskView = false
+    @Published var filteredTasks: [TaskDTO] = []
+    @Published var selectedCalendarDate = Date()
+    
+    let taskRepository: TaskRepository = TaskRepositoryImpl()
+    private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
+    private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private lazy var dateYearAgo: Date = {
-        let date = MasterTaskConstants.shared.currentDate
-        return calendar.date(byAdding: .year, value: -1, to: date) ?? date
+        let date = Constants.shared.currentDate
+        return Constants.shared.calendar.date(byAdding: .year, value: -1, to: date) ?? date
     }()
-    var settings: TaskSettings {
-        let realm = try! Realm()
-        return realm.objects(TaskSettings.self).first!
+    
+    init(loadedTasks: [TaskDTO] = []) {
+        self.loadedTasks = loadedTasks
+        let settings = settingsRepository.get()
+        self.settings = settings
+        loadTasks()
     }
     
-    func addToCurrentDate(component: Calendar.Component, value: Int) {
-        currentDate = calendar.date(byAdding: component, value: value, to: currentDate)!
+    // MARK: - Methods
+    
+    func loadTasks() {
+        let loaded = taskRepository.getTaskList()
+        let settings = settingsRepository.get()
+        self.loadedTasks = loaded
+        self.settings = settings
+        sortTask()
     }
     
-    func minusFromCurrentDate(component: Calendar.Component, value: Int) {
-        guard currentDate > dateYearAgo else { return }
-        currentDate = calendar.date(byAdding: component, value: -value, to: currentDate)!
+    func sortTask() {
+        let sorted = groupedTasks(with: loadedTasks, settings: settings)
+        self.loadedTasks = sortedCompletedTasks(sorted, settings: settings)
+        let sorted1 = groupedTasks(with: filteredTasks, settings: settings)
+        self.filteredTasks = sortedCompletedTasks(sorted1, settings: settings)
     }
     
-    func getAllDates(weekStarts: WeekStarts) -> [Date] {
+    func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
         
-        let prevMonth = getDaysFromPrevMonth(weekStarts: weekStarts)
-        let nextMonth = getDaysFromNextMonth(weekStarts: weekStarts)
-        let currentMonth = getDaysFromCurrentMonth()
-        
-        var result: [Date] = []
-        
-        result.insert(contentsOf: prevMonth, at: 0)
-        result.append(contentsOf: currentMonth)
-        result.append(contentsOf: nextMonth)
-        
-        return result
-    }
-    
-    func getWeekSymbols(weekStarts: WeekStarts) -> [String] {
-        let firstWeekday = weekStarts == .monday ? 2 : 1
-        let symbols = calendar.shortWeekdaySymbols
-        
-        return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
-    }
-    
-    func calendarTaskSorting(taskList: [TaskObject]) -> [TaskObject] {
-        if selectedCalendarDate.monthAndYearString == currentDate.monthAndYearString {
-            return sortingManager.filterTask(
-                taskArray: taskList,
-                date: selectedCalendarDate
-            )
-        } else {
-            return sortingManager.filterTaskByMonth(
-                taskArray: taskList,
-                date: currentDate
-            )
+        filteredTasks.move(fromOffsets: indices, toOffset: newOffset)
+        for (index, var task) in filteredTasks.reversed().enumerated() {
+            task.sortingOrder = index
+            taskRepository.saveTask(task)
         }
     }
-    func createWeekHeaders(tasks: [TaskObject]) -> [String] {
-        calendar.firstWeekday = settings.startWeekFrom == .monday ? 2 : 1
+    
+    func calendarTaskSorting(taskList: [TaskDTO]) -> [TaskDTO] {
+        if selectedCalendarDate.dateComponents([.year, .month]) == currentDate.dateComponents([.year, .month]) {
+            return filteredTasks.filter { $0.date?.dateComponents([.year, .month]) == selectedCalendarDate.dateComponents([.year, .month]) }
+        }
+        
+        return []
+    }
+    
+    func search(with query: String) {
+        if query.isEmpty {
+            filteredTasks = loadedTasks
+        } else {
+            filteredTasks = loadedTasks.filter { $0.title.contains(query) }
+        }
+    }
+    
+    func createWeekHeaders(tasks: [TaskDTO]) -> [String] {
+        Constants.shared.calendar.firstWeekday = settings.startWeekFrom == .monday ? 2 : 1
         let sortedDates = Set(tasks
             .filter {
-                ($0.date ?? $0.createdDate).dateComponents([.weekOfYear, .year], using: calendar)
-                == currentDate.dateComponents([.weekOfYear, .year], using: calendar)
+                ($0.date ?? $0.createdDate).dateComponents([.weekOfYear, .year])
+                == currentDate.dateComponents([.weekOfYear, .year])
             }
             .map { $0.date ?? $0.createdDate })
             .sorted { (date1, date2) -> Bool in
@@ -83,68 +89,149 @@ final class TaskListViewModel: ObservableObject {
         
         return sortedDates.map { $0.fullDayShortDateFormat }
     }
+    
+    func addToCurrentDate(component: Calendar.Component, value: Int) {
+        currentDate = Constants.shared.calendar.date(byAdding: component, value: value, to: currentDate)!
+    }
+    
+    func minusFromCurrentDate(component: Calendar.Component, value: Int) {
+        guard currentDate > dateYearAgo else { return }
+        currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
+    }
+    
+    func deleteTask(_ task: TaskDTO) {
+        let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == task.parentId })
+        filteredTasks.removeAll(where: { $0.parentId == task.parentId })
+        tasksToDelete.forEach { taskRepository.deleteTask(TaskObject($0)) }
+    }
+    
+    func updateTaskCompletion(_ task: inout TaskDTO) {
+        task.isCompleted.toggle()
+        taskRepository.saveTask(task)
+    }
+    
+    func updateTaskShowingCheckbox(_ task: inout TaskDTO) {
+        task.showCheckboxes.toggle()
+        taskRepository.saveTask(task)
+    }
+    
+    func updateCheckbox(_ checkbox: CheckboxDTO) {
+        var object = checkbox
+        object.isCompleted.toggle()
+        checkboxRepository.save(object)
+    }
+    
+    func completeCheckbox(_ checkbox: inout CheckboxDTO) {
+        checkbox.isCompleted.toggle()
+        checkboxRepository.save(checkbox)
+    }
+    
+    func dateFormat() -> String {
+        let settings = settingsRepository.get()
+        
+        switch settings.taskDateFormat {
+        case .dayMonthYear:
+            return "dd/MM/yy"
+        case .weekDayDayMonthYear:
+            return "EE, dd/MM/yy"
+        case .monthDayYear:
+            return "MM/dd/yy"
+        case .weekDayMonthDayYear:
+            return "EE, MM/dd/yy"
+        case .weekDayDayNumberShortMoth:
+            return "EE, dd MMM"
+        case .dayNumberShortMonthFullYear:
+            return "dd MMM yyyy"
+        case .dayNumberShortMonth:
+            return "dd MMM"
+        }
+    }
+    
+    func calculateDateColor(whit date: Date, themeTextColor: Color, isDate: Bool) -> Color {
+        let currentDate = Constants.shared.currentDate
+        return date < (isDate ? currentDate.startDay : currentDate) ? .red : themeTextColor
+    }
+    
+    func handleIncomingURL(_ url: URL) {
+        guard url.scheme == "mastertask" else {
+            return
+        }
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            print("Invalid URL")
+            return
+        }
+        
+        guard let action = components.host, action == "addnewtask" else {
+            print("Unknown URL, we can't handle this one!")
+            return
+        }
+        
+        showAddNewTaskView = true
+    }
 }
+
+// MARK: - Private Methods
 
 private extension TaskListViewModel {
-    func getDaysFromPrevMonth(weekStarts: WeekStarts) -> [Date] {
-        let startOfMonth = currentDate.startOfMonth.startDay
-        let startOfMonthWeekday = calendar.component(.weekday, from: startOfMonth)
-        
-        var trailOfPreviousMonth = startOfMonthWeekday - calendar.firstWeekday
-        
-        if weekStarts == .monday && startOfMonthWeekday == 1 {
-            trailOfPreviousMonth = 7 - startOfMonthWeekday
-        }
-        
-        return trailOfPreviousMonth > 0
-        ? Array(1...trailOfPreviousMonth).compactMap {
-            calendar.date(byAdding: .day, value: -$0, to: startOfMonth)?.startDay
-        }.reversed()
-        : []
-    }
     
-    func getDaysFromNextMonth(weekStarts: WeekStarts) -> [Date] {
-        let endOfMonth = currentDate.endOfMonth
-        let endOfMonthWeekday = calendar.component(.weekday, from: endOfMonth)
+    func groupedTasks(with tasks: [TaskDTO], settings: SettingsDTO) -> [TaskDTO] {
         
-        let startOfMonth = currentDate.startOfMonth.startDay
-        let startOfMonthWeekday = calendar.component(.weekday, from: startOfMonth)
+        let gropedTasks = Dictionary(grouping: tasks, by: \.parentId)
         
-        var headOfNextMonth = 7 - endOfMonthWeekday
-        
-        if weekStarts == .monday && startOfMonthWeekday == 1 {
-            headOfNextMonth = 8 - endOfMonthWeekday
-        }
-        
-        return headOfNextMonth > 0
-        ? Array(0...headOfNextMonth).compactMap {
-            calendar.date(byAdding: .day, value: $0, to: endOfMonth)
-        }
-        : []
-    }
-    
-    func getDaysFromCurrentMonth() -> [Date] {
-        let monthRange = calendar.range(of: .day, in: .month, for: currentDate.startOfMonth)!
-        return Array(monthRange).compactMap { calendar.date(byAdding: .day, value: $0 - 1, to: currentDate.startOfMonth.startDay)?.startDay }
-    }
-}
-
-extension TaskListViewModel: TaskGroupViewProtocol {
-    func completeTask(_ tasks: [TaskObject]) {
-        tasks.forEach { task in
-            let realm = try! Realm()
-            guard let edited = realm.object(ofType: TaskObject.self, forPrimaryKey: task.id) else { return }
-            do {
-                try realm.write {
-                    edited.isCompleted.toggle()
+        var tasks: [TaskDTO] = []
+        gropedTasks.keys.forEach { id in
+            
+            guard let group = gropedTasks[id] else { return }
+            
+            if group.count > 1 {
+                if let task = group.first(where: {
+                    $0.createdDate.dateComponents([.day, .month, .year]) == Date().dateComponents([.day, .month, .year])
+                }) {
+                    tasks.append(task)
                 }
-            } catch {
-                print(error.localizedDescription)
+            } else if group.count == 1 {
+                if let task = group.first {
+                    tasks.append(task)
+                }
             }
         }
+        
+        return sortedTasks(in: tasks)
     }
-}
-
-protocol TaskGroupViewProtocol {
-    func completeTask(_ tasks: [TaskObject])
+    
+    func sortedTasks(in taskArray: [TaskDTO]) -> [TaskDTO] {
+        
+        return taskArray
+            .sorted(by: {
+                switch settings.taskSorting {
+                case .manual:
+                    return $0.sortingOrder > $1.sortingOrder
+                case .schedule:
+                    if let lhsDueDate = $0.date, let rhsDueDate = $1.date {
+                        return lhsDueDate < rhsDueDate
+                    } else if $0.date == nil && $1.date != nil {
+                        return false
+                    } else {
+                        return true
+                    }
+                case .reminders:
+                    return $0.isReminder
+                case .recurring:
+                    return $0.isRecurring
+                }
+            })
+    }
+    
+    func sortedCompletedTasks(_ tasks: [TaskDTO], settings: SettingsDTO) -> [TaskDTO] {
+        let completedTask = tasks.filter { $0.isCompleted }
+        let unCompletedTask = tasks.filter { !$0.isCompleted }
+        
+        switch settings.completedTask {
+        case .hide:
+            return unCompletedTask
+        case .moveToBottom:
+            let groupedTasks = unCompletedTask + completedTask
+            return groupedTasks
+        }
+    }
 }

@@ -14,7 +14,7 @@ struct SetPasswordView: View {
     
     var body: some View {
         VStack(spacing: 1) {
-            if let userPassword = defaults.string(forKey: MasterTaskConstants.shared.userPassword) {
+            if let userPassword = defaults.string(forKey: Constants.shared.userPassword) {
                 TextField("Enter old password", text: $viewModel.oldPassword.max(viewModel.characterLimit))
                     .keyboardType(.numberPad)
                     .padding(.vertical, 10)
@@ -35,16 +35,16 @@ struct SetPasswordView: View {
         .toolbar(content: {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
-                    if defaults.value(forKey: MasterTaskConstants.shared.userPassword) == nil {
+                    if defaults.value(forKey: Constants.shared.userPassword) == nil {
                         if viewModel.newPassword == viewModel.confirmPassword {
-                            defaults.setValue(viewModel.confirmPassword, forKey: MasterTaskConstants.shared.userPassword)
+                            defaults.setValue(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
                             dismiss.callAsFunction()
                         }
                     } else {
-                        if let password = defaults.value(forKey: MasterTaskConstants.shared.userPassword) as? String,
+                        if let password = defaults.value(forKey: Constants.shared.userPassword) as? String,
                            password == viewModel.oldPassword,
                            viewModel.newPassword == viewModel.confirmPassword {
-                            defaults.set(viewModel.confirmPassword, forKey: MasterTaskConstants.shared.userPassword)
+                            defaults.set(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
                             dismiss.callAsFunction()
                         }
                     }

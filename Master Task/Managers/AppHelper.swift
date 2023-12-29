@@ -14,10 +14,10 @@ final class AppHelper {
     
     var isOnboarding: Bool {
         set {
-            UserDefaults.standard.setValue(newValue, forKey: MasterTaskConstants.showOnboarding)
+            UserDefaults.standard.setValue(newValue, forKey: Constants.shared.showOnboarding)
         }
         get {
-            UserDefaults.standard.bool(forKey: MasterTaskConstants.showOnboarding)
+            UserDefaults.standard.bool(forKey: Constants.shared.showOnboarding)
         }
     }
 }
