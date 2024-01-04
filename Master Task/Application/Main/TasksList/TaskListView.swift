@@ -132,13 +132,7 @@ private extension TaskListView {
       }
       .foregroundColor(.white)
       
-      Picker("", selection: selectedCalendarTab ? $calendarSorting : $taskDateSorting) {
-        ForEach(TaskDateSorting.allCases, id: \.self) { interval in
-          Text(interval.rawValue)
-            .font(.helveticaBold(size: 30))
-        }
-      }
-      .pickerStyle(.segmented)
+      DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $calendarSorting : $taskDateSorting)
       
       NavigationLink(value: TaskListNavigationView.createTask) {
         Image(systemName: "plus")

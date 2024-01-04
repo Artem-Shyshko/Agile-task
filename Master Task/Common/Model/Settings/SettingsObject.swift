@@ -67,13 +67,6 @@ enum TaskDateFormmat: String, PersistableEnum, CaseIterable {
     case dayNumberShortMonth = "22 Nov"
 }
 
-enum TaskDateSorting: String, PersistableEnum, CaseIterable {
-    case today = "Today"
-    case week = "Week"
-    case month = "Month"
-    case all = "All"
-}
-
 enum AddingNewTask: String, PersistableEnum, CaseIterable {
     case bottom = "At the bottom of the list"
     case top = "At the top of the list"
@@ -97,3 +90,4 @@ enum SecurityOption: String, PersistableEnum, CaseIterable {
 }
 
 extension TimeFormat: PersistableEnum {}
+extension TaskDateSorting: PersistableEnum {}
