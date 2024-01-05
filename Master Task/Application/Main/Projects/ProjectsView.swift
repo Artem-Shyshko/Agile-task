@@ -98,7 +98,7 @@ private extension ProjectsView {
                 Image(systemName: "magnifyingglass")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 12, height: 12)
+                    .frame(width: 18, height: 18)
             }
             
             Spacer()
@@ -111,6 +111,9 @@ private extension ProjectsView {
                 NewProjectView(vm: NewProjectViewModel())
             } label: {
                 Image(systemName: "plus")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
             }
         }
         .padding(.horizontal, 20)

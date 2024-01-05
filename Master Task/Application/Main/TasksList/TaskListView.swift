@@ -78,7 +78,7 @@ struct TaskListView: View {
         
         VStack(spacing: 5) {
           if taskDateSorting == .month || selectedCalendarTab, calendarSorting == .month {
-            CalendarView(viewModel: .constant(viewModel), settings: viewModel.settings, tasks: .constant(viewModel.filteredTasks))
+            CalendarView(viewModel: .constant(viewModel), settings: viewModel.settings, tasks: viewModel.filteredTasks)
           }
           taskList()
           
@@ -97,7 +97,7 @@ struct TaskListView: View {
         case .sorting:
           SortingView(viewModel: SortingViewModel())
         case .newCheckBox:
-            EmptyView()
+          EmptyView()
         }
       }
       .onAppear {

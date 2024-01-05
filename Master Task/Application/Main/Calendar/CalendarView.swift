@@ -13,14 +13,15 @@ struct CalendarView: View {
   @EnvironmentObject var theme: AppThemeManager
   @Binding var viewModel: TaskListViewModel
   var settings: SettingsDTO
-  @Binding var tasks: [TaskDTO]
+  var tasks: [TaskDTO]
   
   var body: some View {
     VStack(spacing: 11) {
       CustomCalendarView(
           selectedCalendarDay: $viewModel.selectedCalendarDate,
           currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-          backgroundColor: theme.selectedTheme.sectionColor
+          backgroundColor: theme.selectedTheme.sectionColor,
+          items: tasks
       )
     }
     .foregroundColor(.textColor)
@@ -32,7 +33,7 @@ struct CalendarView: View {
 
 struct CalendarView_Previews: PreviewProvider {
   static var previews: some View {
-    CalendarView(viewModel: .constant(TaskListViewModel()), settings: SettingsDTO(object: SettingsObject()), tasks: .constant([TaskDTO(object: TaskObject())]))
+    CalendarView(viewModel: .constant(TaskListViewModel()), settings: SettingsDTO(object: SettingsObject()), tasks: [TaskDTO(object: TaskObject())])
       .environmentObject(AppThemeManager())
   }
 }
