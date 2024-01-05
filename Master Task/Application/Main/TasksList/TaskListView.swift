@@ -128,7 +128,7 @@ private extension TaskListView {
         Image(systemName: "magnifyingglass")
           .resizable()
           .scaledToFit()
-          .frame(width: 12, height: 12)
+          .frame(width: 18, height: 18)
       }
       .foregroundColor(.white)
       
@@ -136,6 +136,9 @@ private extension TaskListView {
       
       NavigationLink(value: TaskListNavigationView.createTask) {
         Image(systemName: "plus")
+          .resizable()
+          .scaledToFit()
+          .frame(width: 18, height: 18)
       }
     }
     .padding(.top, 15)
@@ -223,6 +226,7 @@ private extension TaskListView {
             Text("All")
           }
         }
+        .frame(height: 30)
         .onTapGesture {
           viewModel.currentDate = Constants.shared.currentDate
         }
@@ -245,7 +249,7 @@ private extension TaskListView {
   @ViewBuilder
   func plusButton() -> some View {
     if viewModel.settings.showPlusButton {
-    NavigationLink(value: TaskListNavigationView.createTask) {
+      NavigationLink(value: TaskListNavigationView.createTask) {
         ZStack {
           Color.black
             .frame(width: 30, height: 30)
@@ -253,6 +257,7 @@ private extension TaskListView {
           Image(systemName: "plus")
         }
         .padding()
+        .padding(.bottom, 40)
       }
     }
   }

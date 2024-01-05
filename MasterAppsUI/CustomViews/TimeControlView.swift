@@ -27,7 +27,7 @@ public struct TimeControlView: View {
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 30, height: 45)
+                    .frame(width: 23, height: 45)
             }
             
             Text(title)
@@ -41,7 +41,7 @@ public struct TimeControlView: View {
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 30, height: 45)
+                    .frame(width: 23, height: 45)
             }
         }
     }

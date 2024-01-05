@@ -13,15 +13,18 @@ public struct CustomCalendarView: View {
     @State var currentDate = Date()
     var currentMonthDatesColor: Color
     var backgroundColor: Color
+    var items: [CalendarItem]?
     
     public init(
         selectedCalendarDay: Binding<Date>,
         currentMonthDatesColor: Color,
-        backgroundColor: Color
+        backgroundColor: Color,
+        items: [CalendarItem]? = nil
     ) {
         self._selectedCalendarDay = selectedCalendarDay
         self.currentMonthDatesColor = currentMonthDatesColor
         self.backgroundColor = backgroundColor
+        self.items = items
     }
     
     public var body: some View {
@@ -96,6 +99,16 @@ private extension CustomCalendarView {
                     }
                 }
                 .foregroundStyle(currentMonthDatesColor)
+                .overlay(alignment: .bottom) {
+                    if let items, items.contains(where: { item in
+                        (item.date ?? item.createdDate).shortDateFormat == date.shortDateFormat
+                    }) {
+                        Circle()
+                            .foregroundColor(.calendarSelectedDateCircleColor)
+                            .frame(width: 4, height: 4)
+                            .padding(.bottom, 6)
+                    }
+                }
             } else {
                 Text(date.format("dd"))
                     .foregroundColor(.gray)
@@ -195,7 +208,8 @@ struct CalendarView_Previews: PreviewProvider {
         CustomCalendarView(
             selectedCalendarDay: .constant(Date()), 
             currentMonthDatesColor: .white,
-            backgroundColor: .secondary
+            backgroundColor: .secondary, 
+            items: []
         )
     }
     

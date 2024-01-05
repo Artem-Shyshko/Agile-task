@@ -9,7 +9,7 @@ import Foundation
 import MasterAppsUI
 import RealmSwift
 
-struct TaskDTO {
+struct TaskDTO: CalendarItem {
     var id: ObjectId
     var parentId: ObjectId
     var title: String

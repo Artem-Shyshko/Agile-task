@@ -10,16 +10,6 @@ import RealmSwift
 
 struct TaskRow: View {
     
-    // MARK: - Enum
-    
-    enum Constrains {
-        static let triggerRightThreshHold: CGFloat = -210
-        static let expansionRightThreshHold: CGFloat = -60
-        static let expansionRightOffset: CGFloat = -80
-        static let expansionLeftThreshHold: CGFloat = 30
-        static let expansionLeftOffset: CGFloat = 35
-    }
-    
     // MARK: - Properties
     
     @StateObject var viewModel: TaskListViewModel
@@ -30,6 +20,7 @@ struct TaskRow: View {
     @State private var startOffset: CGFloat = 0
     @State private var isDragging = false
     @State private var isDeleteAlert = false
+    @State private var showAddNewTaskView = false
     
     // MARK: - Body
     
@@ -39,8 +30,6 @@ struct TaskRow: View {
             checkboxesView()
         }
         .font(.helveticaRegular(size: 16))
-        .gesture(swipeGesture())
-        .contentShape(Rectangle())
         .alert("Are you sure you want to delete", isPresented: $isDeleteAlert) {
             Button("Cancel", role: .cancel) {
                 isDeleteAlert = false
@@ -49,6 +38,32 @@ struct TaskRow: View {
             Button("Delete") {
                 viewModel.deleteTask(task)
             }
+        }
+        .navigationDestination(isPresented: $showAddNewTaskView) {
+            NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.filteredTasks, editTask: self.task)
+        }
+        .swipeActions(edge: .trailing) {
+            Button {
+                isDeleteAlert = true
+            } label: {
+                Image("trash")
+            }
+            .tint(.red)
+            
+            NavigationLink {
+                NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.filteredTasks, editTask: task)
+            } label: {
+                Image("edit")
+            }
+            .tint(Color.editButtonColor)
+        }
+        .swipeActions(edge: .leading) {
+            Button {
+                viewModel.updateTaskCompletion(&task)
+            } label: {
+                Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
+            }
+            .tint(.green)
         }
     }
 }
@@ -79,14 +94,17 @@ private extension TaskRow {
         HStack(spacing: 5) {
             HStack(spacing: 10) {
                 if !task.checkBoxArray.isEmpty {
-                    Image(systemName: task.showCheckboxes ? "chevron.up" : "chevron.down")
-                        .renderingMode(.template)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 10, height: 10)
-                        .onTapGesture {
+                    Button {
                             viewModel.updateTaskShowingCheckbox(&task)
-                        }
+                    } label: {
+                        Image(systemName: task.showCheckboxes ? "chevron.up" : "chevron.down")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 10, height: 10)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .frame(width: 10)
                 }
                 Text(task.title)
                     .font(.helveticaRegular(size: 16))
@@ -149,19 +167,8 @@ private extension TaskRow {
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
             viewModel.updateTaskCompletion(&task)
-            viewModel.sortTask()
+//            viewModel.sortTask()
         })
-        .overlay(alignment: .leading, content: {
-            rightSwipeViews()
-                .padding(.leading, -20)
-                .padding(.vertical, -13)
-        })
-        .overlay(alignment: .trailing, content: {
-            leftSwipeViews()
-                .padding(.trailing, -20)
-                .padding(.vertical, -12)
-        })
-        
     }
     
     @ViewBuilder
@@ -173,98 +180,6 @@ private extension TaskRow {
                 CheckboxTaskRow(viewModel: viewModel, checkbox: checkBox, colorName: task.colorName)
             }
         }
-    }
-}
-
-// MARK: - Swipes
-
-private extension TaskRow {
-    func swipeGesture() -> some Gesture {
-        DragGesture()
-            .onChanged {
-                if !isDragging {
-                    startOffset = draggingOffset
-                    isDragging = true
-                }
-                
-                draggingOffset = startOffset + $0.translation.width
-                
-                if draggingOffset < Constrains.triggerRightThreshHold {
-                    isDeleteAlert = true
-                    draggingOffset = 0
-                }
-            }
-            .onEnded { value in
-                isDragging = false
-                
-                withAnimation {
-                    if startOffset == .zero {
-                        if value.translation.width < 10 {
-                            if value.translation.width < Constrains.expansionRightThreshHold  {
-                                draggingOffset = Constrains.expansionRightOffset
-                            } else {
-                                draggingOffset = .zero
-                                startOffset = .zero
-                            }
-                        } else if value.translation.width > -10 {
-                            if value.translation.width > Constrains.expansionLeftThreshHold {
-                                draggingOffset = Constrains.expansionLeftOffset
-                            } else {
-                                draggingOffset = .zero
-                                startOffset = .zero
-                            }
-                        }
-                    } else {
-                        draggingOffset = .zero
-                        startOffset = .zero
-                    }
-                }
-            }
-    }
-    
-    func leftSwipeViews() -> some View {
-        HStack(spacing: 0) {
-            Button {
-                viewModel.showAddNewTaskView = true
-                draggingOffset = .zero
-            } label: {
-                Image("edit")
-                    .renderingMode(.template)
-                    .foregroundColor(.secondary)
-                    .padding(.leading, 5)
-            }
-            .buttonStyle(.borderless)
-            
-            Button {
-                isDeleteAlert = true
-                draggingOffset = .zero
-            } label: {
-                Image("trash")
-                    .renderingMode(.template)
-                    .foregroundColor(.red)
-                    .padding(.leading, 5)
-            }
-            .buttonStyle(.borderless)
-        }
-        .frame(width: startOffset == .zero ? -draggingOffset : .zero)
-        .background(theme.selectedTheme.sectionColor)
-        .cornerRadius(3)
-    }
-    
-    func rightSwipeViews() -> some View {
-        Button {
-            viewModel.updateTaskCompletion(&task)
-            draggingOffset = .zero
-        } label: {
-            Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
-                .renderingMode(.template)
-                .foregroundColor(.green)
-                .padding(.leading, 5)
-        }
-        .buttonStyle(.borderless)
-        .frame(width: startOffset == .zero ? draggingOffset : .zero)
-        .background(theme.selectedTheme.sectionColor)
-        .cornerRadius(3)
     }
 }
 
