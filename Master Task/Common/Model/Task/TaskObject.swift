@@ -7,10 +7,7 @@
 
 import RealmSwift
 import MasterAppsUI
-
-import RealmSwift
-import MasterAppsUI
-import Foundation
+import SwiftUI
 
 class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted(primaryKey: true) var id: ObjectId
@@ -29,11 +26,11 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var createdDate: Date = Date()
     @Persisted var modificationDate: Date?
     @Persisted var completedDate: Date?
-    @Persisted var colorName: String
+    @Persisted var colorName: String = Color.sectionColor.name
     @Persisted var isCompleted: Bool = false
     @Persisted var sortingOrder: Int = 0
     @Persisted var showCheckboxes = true
-    @Persisted var checkBoxList: List<CheckboxObject>
+    @Persisted var checkBoxList: RealmSwift.List<CheckboxObject>
     
     convenience init(
         parentId: ObjectId,
