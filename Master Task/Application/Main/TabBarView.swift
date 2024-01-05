@@ -19,59 +19,60 @@ enum SettingsNavigationView: Hashable {
     case account, taskSettings, security, more, contactUs
 }
 
-enum TabItem {
-    case taskList, calendar, projects, settings
+enum Tab: String, CaseIterable {
+    case taskList = "Tasks"
+    case calendar = "Calendar"
+    case projects = "Project"
+    case settings = "Settings"
+    
+    var imageName: String {
+        switch self {
+        case .taskList: return "tasks"
+        case .calendar: return "calendar"
+        case .projects: return "project"
+        case .settings: return "settings"
+        }
+    }
+    
+    var index: Int {
+        return Tab.allCases.firstIndex(of: self) ?? 0
+    }
 }
 
 struct TabBarView: View {
     
     // MARK: - Properties
-    @State private var selectedTab: TabItem = .taskList
+    @State private var selectedTab: Tab = .taskList
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
     
     // MARK: - Body
     
     var body: some View {
-        TabView(selection: tabSelection()) {
-            TaskListView(path: $taskListNavigationStack)
-                .tabItem {
-                    Label("Tasks", image: "tasks")
-                }
-                .tag(TabItem.taskList)
-            TaskListView(selectedCalendarTab: true, path: $taskListNavigationStack)
-                .tabItem {
-                    Label("Calendar", image: "calendar")
-                }
-                .tag(TabItem.calendar)
-            ProjectsView(vm: ProjectsViewModel())
-                .tabItem {
-                    Label("Projects", image: "project")
-                }
-                .tag(TabItem.projects)
-            SettingsView(path: $settingsNavigationStack)
-                .tabItem { tabLabel(icon: "settings", title: "Settings") }
-                .tag(TabItem.settings)
+        ZStack {
+            TabView(selection: $selectedTab) {
+                TaskListView(path: $taskListNavigationStack)
+                    .tag(Tab.taskList)
+                    .toolbar(.hidden, for: .tabBar)
+                TaskListView(selectedCalendarTab: true, path: $taskListNavigationStack)
+                    .tag(Tab.calendar)
+                    .toolbar(.hidden, for: .tabBar)
+                ProjectsView(vm: ProjectsViewModel())
+                    .tag(Tab.projects)
+                    .toolbar(.hidden, for: .tabBar)
+                SettingsView(path: $settingsNavigationStack)
+                    .tag(Tab.settings)
+                    .toolbar(.hidden, for: .tabBar)
+            }
+            
+            VStack {
+                Spacer()
+                customTabItem()
+            }
         }
-        .toolbar(.visible, for: .tabBar)
-        .tint(.white)
-        .navigationBarBackButtonHidden(true)
-        .onAppear {
-            UITabBar.appearance().backgroundColor = UIColor(Color.clear)
-            let standardAppearance = UITabBarAppearance()
-            standardAppearance.configureWithTransparentBackground()
-            standardAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-            standardAppearance.backgroundColor = UIColor(Color.clear)
-            UITabBar.appearance().standardAppearance = standardAppearance
-            UITabBar.appearance().unselectedItemTintColor = .white
-        }
-    }
-    
-    func tabLabel(icon: String, title: String) -> some View {
-        VStack(spacing: 10) {
-            Image(icon)
-                .padding(.bottom, 5)
-            Text(title)
+        .onChange(of: selectedTab) { newValue in
+            taskListNavigationStack = []
+            settingsNavigationStack = []
         }
     }
 }
@@ -82,14 +83,43 @@ struct TabBarView_Previews: PreviewProvider {
     }
 }
 
-extension TabBarView {
-    private func tabSelection() -> Binding<TabItem> {
-        Binding {
-            self.selectedTab
-        } set: { tappedTab in
-            self.selectedTab = tappedTab
-            taskListNavigationStack = []
-            settingsNavigationStack = []
+private extension TabBarView {
+    func customTabItem(_ tint: Color = .blue, inActiveTint: Color = .white) -> some View {
+        HStack(spacing: 0) {
+            ForEach(Tab.allCases, id: \.rawValue) {
+                TabItem(
+                    tint: tint,
+                    inActiveTint: inActiveTint,
+                    tab: $0,
+                    activeTab: $selectedTab
+                )
+            }
+        }
+        .padding(.vertical, 10)
+        .padding(.horizontal, 15)
+        .padding(.bottom, 10)
+    }
+}
+
+struct TabItem: View {
+    var tint: Color
+    var inActiveTint: Color
+    var tab: Tab
+    @Binding var activeTab: Tab
+    
+    var body: some View {
+        VStack(spacing: 10) {
+            Image(tab.imageName)
+                .frame(width: 26, height: 26)
+            
+            Text(tab.rawValue)
+                .font(.helveticaRegular(size: 14))
+                .foregroundColor(.white)
+        }
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            activeTab = tab
         }
     }
 }

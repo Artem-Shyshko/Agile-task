@@ -29,7 +29,7 @@ public struct DateSegmentedControl: View {
                     Text(dateSorting.rawValue)
                         .font(.helveticaRegular(size: 16))
                         .foregroundStyle(selectedDateSorting == dateSorting ? .black : .white)
-                        .padding(.vertical, 5)
+                        .padding(.vertical, 3)
                         .frame(maxWidth: .infinity)
                         .background {
                             ZStack {
