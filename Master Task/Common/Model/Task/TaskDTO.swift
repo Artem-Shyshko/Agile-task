@@ -12,6 +12,7 @@ import RealmSwift
 struct TaskDTO: CalendarItem {
     var id: ObjectId
     var parentId: ObjectId
+    var status: TaskStatus
     var title: String
     var date: Date?
     var dateOption: DateType = .none
@@ -53,6 +54,7 @@ extension TaskDTO {
     init(object: TaskObject) {
         id = object.id
         parentId = object.parentId
+        status = object.status
         title = object.title
         date = object.date
         dateOption = object.dateOption

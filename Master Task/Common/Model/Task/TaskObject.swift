@@ -15,6 +15,7 @@ import Foundation
 class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var parentId: ObjectId
+    @Persisted var status: TaskStatus
     @Persisted var title: String
     @Persisted var date: Date?
     @Persisted var dateOption: DateType = .none
@@ -74,6 +75,35 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     }
 }
 
+// MARK: - Convenience init
+
+extension TaskObject {
+    convenience init(_ dto: TaskDTO) {
+        self.init()
+        id = dto.id
+        parentId = dto.parentId
+        status = dto.status
+        title = dto.title
+        date = dto.date
+        dateOption = dto.dateOption
+        time = dto.time
+        timeOption = dto.timeOption
+        timePeriod = dto.timePeriod
+        recurring = dto.recurring
+        reminder = dto.reminder
+        reminderDate = dto.reminderDate
+        createdDate = dto.createdDate
+        modificationDate = dto.modificationDate
+        completedDate = dto.completedDate
+        colorName = dto.colorName
+        isCompleted = dto.isCompleted
+        showCheckboxes = dto.showCheckboxes
+        sortingOrder = dto.sortingOrder
+        
+        dto.checkBoxArray.forEach { checkBoxList.append(CheckboxObject($0)) }
+    }
+}
+
 // MARK: - Reminder
 
 enum Reminder: String, PersistableEnum, CaseIterable {
@@ -107,6 +137,8 @@ enum DateType: String, CaseIterable, PersistableEnum {
     case custom = "Custom"
 }
 
+// MARK: - TimeOption
+
 enum TimeOption: String, CaseIterable, PersistableEnum {
     case none = "None"
     case inOneHour = "In 1 hour"
@@ -115,28 +147,37 @@ enum TimeOption: String, CaseIterable, PersistableEnum {
 
 extension TimePeriod: PersistableEnum {}
 
-extension TaskObject {
-    convenience init(_ dto: TaskDTO) {
-        self.init()
-        id = dto.id
-        parentId = dto.parentId
-        title = dto.title
-        date = dto.date
-        dateOption = dto.dateOption
-        time = dto.time
-        timeOption = dto.timeOption
-        timePeriod = dto.timePeriod
-        recurring = dto.recurring
-        reminder = dto.reminder
-        reminderDate = dto.reminderDate
-        createdDate = dto.createdDate
-        modificationDate = dto.modificationDate
-        completedDate = dto.completedDate
-        colorName = dto.colorName
-        isCompleted = dto.isCompleted
-        showCheckboxes = dto.showCheckboxes
-        sortingOrder = dto.sortingOrder
-        
-        dto.checkBoxArray.forEach { checkBoxList.append(CheckboxObject($0)) }
+
+// MARK: - TaskStatus
+
+enum TaskStatus: String, CaseIterable, PersistableEnum {
+    case none = "None"
+    case `do` = "Do"
+    case high = "High"
+    case hold = "Hold"
+    case urgent = "Urgent"
+    case important = "Important"
+    case love = "Love"
+    case like = "Like"
+    
+    var iconName: String {
+        switch self {
+        case .none:
+            return ""
+        case .do:
+            return "Do"
+        case .high:
+            return "High"
+        case .hold:
+            return "Hold"
+        case .urgent:
+            return "Urgent"
+        case .important:
+            return "Important"
+        case .love:
+            return "Love"
+        case .like:
+            return "Like"
+        }
     }
 }

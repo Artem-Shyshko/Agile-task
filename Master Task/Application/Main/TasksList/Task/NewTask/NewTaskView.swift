@@ -31,6 +31,7 @@ struct NewTaskView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: Constants.shared.listRowSpacing) {
+                statusView()
                 titleView()
                 checkList()
                 dateView()
@@ -60,6 +61,7 @@ struct NewTaskView: View {
             viewModel.localNotificationManager = localNotificationManager
             
             if let editTask {
+                viewModel.taskStatus = editTask.status
                 viewModel.title = editTask.title
                 viewModel.checkBoxes = editTask.checkBoxArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
                 viewModel.selectedColor = Color(editTask.colorName)
@@ -117,7 +119,22 @@ struct NewTaskView: View {
 
 private extension NewTaskView {
     
-    // MARK: - TaskView
+    func statusView() -> some View {
+            HStack {
+                Text("Status")
+                Spacer()
+                Picker("", selection: $viewModel.taskStatus) {
+                    ForEach(TaskStatus.allCases, id: \.self) { status in
+                        Text(status.rawValue)
+                            .tag(status.rawValue)
+                    }
+                    .pickerStyle(.menu)
+                }
+            }
+            .tint(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .foregroundStyle(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .modifier(SectionStyle())
+    }
     
     func titleView() -> some View {
         TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.title) {

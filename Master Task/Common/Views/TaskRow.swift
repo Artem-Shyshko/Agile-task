@@ -92,7 +92,7 @@ private extension TaskRow {
     
     func generalRow() -> some View {
         HStack(spacing: 5) {
-            HStack(spacing: 10) {
+            HStack(spacing: 7) {
                 if !task.checkBoxArray.isEmpty {
                     Button {
                             viewModel.updateTaskShowingCheckbox(&task)
@@ -103,9 +103,17 @@ private extension TaskRow {
                             .scaledToFit()
                             .frame(width: 10, height: 10)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.borderless)
                     .frame(width: 10)
                 }
+                
+                if task.status != .none {
+                    Image(task.status.iconName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 16, height: 16)
+                }
+                
                 Text(task.title)
                     .font(.helveticaRegular(size: 16))
             }

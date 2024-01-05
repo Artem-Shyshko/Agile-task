@@ -17,6 +17,7 @@ enum RecurringEnds: String, CaseIterable {
 
 final class NewTaskViewModel: ObservableObject {
     private lazy var currentDate = Date()
+    @Published var taskStatus: TaskStatus = .none
     @Published var title: String = ""
     @Published var taskDate: Date = Date()
     @Published var selectedDateOption: DateType = .none
@@ -78,6 +79,7 @@ final class NewTaskViewModel: ObservableObject {
         compareDateAndTime()
         var task = TaskDTO(object: TaskObject())
         task.parentId = task.id
+        task.status = taskStatus
         task.title = title
         task.date = selectedDateOption != .none ? taskDate : nil
         task.dateOption = selectedDateOption
@@ -101,6 +103,7 @@ final class NewTaskViewModel: ObservableObject {
     func updateTask(task: TaskDTO) -> TaskDTO {
         compareDateAndTime()
         var task = task
+        task.status = taskStatus
         task.title = title
         task.date = selectedDateOption != .none ? taskDate : nil
         task.dateOption = selectedDateOption
@@ -124,6 +127,7 @@ final class NewTaskViewModel: ObservableObject {
     ) -> TaskDTO {
         var task = TaskDTO(object: TaskObject())
         task.parentId = parent.id
+        task.status = parent.status
         task.title = parent.title
         task.date = parent.date
         task.dateOption = parent.dateOption
