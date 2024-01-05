@@ -33,6 +33,7 @@ struct NewTaskView: View {
             VStack(spacing: Constants.shared.listRowSpacing) {
                 statusView()
                 titleView()
+                descriptionView()
                 checkList()
                 dateView()
                 timeView()
@@ -120,33 +121,37 @@ struct NewTaskView: View {
 private extension NewTaskView {
     
     func statusView() -> some View {
-            HStack {
-                Text("Status")
-                Spacer()
-                Picker("", selection: $viewModel.taskStatus) {
-                    ForEach(TaskStatus.allCases, id: \.self) { status in
-                        Text(status.rawValue)
-                            .tag(status.rawValue)
-                    }
-                    .pickerStyle(.menu)
+        HStack {
+            Text("Status")
+            Spacer()
+            Picker("", selection: $viewModel.taskStatus) {
+                ForEach(TaskStatus.allCases, id: \.self) { status in
+                    Text(status.rawValue)
+                        .tag(status.rawValue)
                 }
+                .pickerStyle(.menu)
             }
-            .tint(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .foregroundStyle(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .modifier(SectionStyle())
+        }
+        .tint(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+        .foregroundStyle(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+        .modifier(SectionStyle())
     }
     
     func titleView() -> some View {
         TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.title) {
-            let isSaved = viewModel.saveButtonAction(
-                hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                editTask: editTask,
-                taskList: taskList
-            )
-            
-            if isSaved { dismiss.callAsFunction() }
+            keyboardButtonAction()
         }
         .focused($isFocused)
+        .padding(.vertical, 8)
+        .tint(theme.selectedTheme.sectionTextColor)
+        .modifier(SectionStyle())
+    }
+    
+    func descriptionView() -> some View {
+        TextFieldWithEnterButton(placeholder: "Description", text: $viewModel.description.max(400)) {
+            keyboardButtonAction()
+        }
+        
         .padding(.vertical, 8)
         .tint(theme.selectedTheme.sectionTextColor)
         .modifier(SectionStyle())
@@ -361,6 +366,16 @@ private extension NewTaskView {
             .foregroundStyle(theme.selectedTheme.textColor)
             .padding(.top, 10)
         }
+    }
+    
+    func keyboardButtonAction() {
+        let isSaved = viewModel.saveButtonAction(
+            hasUnlockedPro: purchaseManager.hasUnlockedPro,
+            editTask: editTask,
+            taskList: taskList
+        )
+        
+        if isSaved { dismiss.callAsFunction() }
     }
     
     func colorsPanel() -> some View {

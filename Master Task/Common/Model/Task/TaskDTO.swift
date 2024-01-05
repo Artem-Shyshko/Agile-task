@@ -14,6 +14,7 @@ struct TaskDTO: CalendarItem {
     var parentId: ObjectId
     var status: TaskStatus
     var title: String
+    var description: String?
     var date: Date?
     var dateOption: DateType = .none
     var time: Date?
@@ -56,6 +57,7 @@ extension TaskDTO {
         parentId = object.parentId
         status = object.status
         title = object.title
+        description = object.taskDescription
         date = object.date
         dateOption = object.dateOption
         time = object.time

@@ -19,6 +19,7 @@ final class NewTaskViewModel: ObservableObject {
     private lazy var currentDate = Date()
     @Published var taskStatus: TaskStatus = .none
     @Published var title: String = ""
+    @Published var description: String = ""
     @Published var taskDate: Date = Date()
     @Published var selectedDateOption: DateType = .none
     @Published var taskTime: Date = Date()
@@ -81,6 +82,7 @@ final class NewTaskViewModel: ObservableObject {
         task.parentId = task.id
         task.status = taskStatus
         task.title = title
+        task.description = description.isEmpty ? nil : description
         task.date = selectedDateOption != .none ? taskDate : nil
         task.dateOption = selectedDateOption
         task.recurring = selectedRecurringOption
@@ -105,6 +107,7 @@ final class NewTaskViewModel: ObservableObject {
         var task = task
         task.status = taskStatus
         task.title = title
+        task.description = description.isEmpty ? nil : description
         task.date = selectedDateOption != .none ? taskDate : nil
         task.dateOption = selectedDateOption
         task.time = selectedTimeOption == .none ? nil : taskTime
@@ -129,6 +132,7 @@ final class NewTaskViewModel: ObservableObject {
         task.parentId = parent.id
         task.status = parent.status
         task.title = parent.title
+        task.description = parent.description
         task.date = parent.date
         task.dateOption = parent.dateOption
         task.recurring = parent.recurring

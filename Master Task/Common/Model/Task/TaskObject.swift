@@ -17,6 +17,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var parentId: ObjectId
     @Persisted var status: TaskStatus
     @Persisted var title: String
+    @Persisted var taskDescription: String?
     @Persisted var date: Date?
     @Persisted var dateOption: DateType = .none
     @Persisted var time: Date?
@@ -84,6 +85,7 @@ extension TaskObject {
         parentId = dto.parentId
         status = dto.status
         title = dto.title
+        taskDescription = dto.description
         date = dto.date
         dateOption = dto.dateOption
         time = dto.time

@@ -25,8 +25,9 @@ struct TaskRow: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 10) {
             generalRow()
+            descriptionView()
             checkboxesView()
         }
         .font(.helveticaRegular(size: 16))
@@ -177,6 +178,17 @@ private extension TaskRow {
             viewModel.updateTaskCompletion(&task)
 //            viewModel.sortTask()
         })
+    }
+    
+    @ViewBuilder
+    func descriptionView() -> some View {
+        if let description = task.description {
+            Text(description)
+                .font(.helveticaRegular(size: 16))
+                .foregroundColor(foregroundColor())
+                .padding(.horizontal, -10)
+                .strikethrough(task.isCompleted, color: .completedTaskLineColor)
+        }
     }
     
     @ViewBuilder
