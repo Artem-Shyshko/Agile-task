@@ -10,15 +10,17 @@ import RealmSwift
 
 final class TaskListViewModel: ObservableObject {
     @Published var isSearchBarHidden: Bool = true
+    @Published var showAddNewTaskView = false
     @Published var searchText: String = ""
     @Published var currentDate: Date = Date()
     @Published var settings: SettingsDTO
-    @Published var loadedTasks: [TaskDTO] = []
-    @Published var showAddNewTaskView = false
-    @Published var filteredTasks: [TaskDTO] = []
     @Published var selectedCalendarDate = Date()
+    @Published var quickTaskConfig = TaskDTO(object: TaskObject())
     
-    let taskRepository: TaskRepository = TaskRepositoryImpl()
+    @Published var loadedTasks: [TaskDTO] = []
+    @Published var filteredTasks: [TaskDTO] = []
+    
+    private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private lazy var dateYearAgo: Date = {
@@ -41,6 +43,13 @@ final class TaskListViewModel: ObservableObject {
         self.loadedTasks = loaded
         self.settings = settings
         sortTask()
+    
+    func createTask() {
+        taskRepository.saveTask(quickTaskConfig)
+        loadTasks()
+        quickTaskConfig = TaskDTO(object: TaskObject())
+    }
+    
     }
     
     func sortTask() {
@@ -51,8 +60,8 @@ final class TaskListViewModel: ObservableObject {
     }
     
     func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
-        
         filteredTasks.move(fromOffsets: indices, toOffset: newOffset)
+        
         for (index, var task) in filteredTasks.reversed().enumerated() {
             task.sortingOrder = index
             taskRepository.saveTask(task)
@@ -73,21 +82,6 @@ final class TaskListViewModel: ObservableObject {
         } else {
             filteredTasks = loadedTasks.filter { $0.title.contains(query) }
         }
-    }
-    
-    func createWeekHeaders(tasks: [TaskDTO]) -> [String] {
-        Constants.shared.calendar.firstWeekday = settings.startWeekFrom == .monday ? 2 : 1
-        let sortedDates = Set(tasks
-            .filter {
-                ($0.date ?? $0.createdDate).dateComponents([.weekOfYear, .year])
-                == currentDate.dateComponents([.weekOfYear, .year])
-            }
-            .map { $0.date ?? $0.createdDate })
-            .sorted { (date1, date2) -> Bool in
-                return date1 < date2
-            }
-        
-        return sortedDates.map { $0.fullDayShortDateFormat }
     }
     
     func addToCurrentDate(component: Calendar.Component, value: Int) {

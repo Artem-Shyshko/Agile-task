@@ -24,6 +24,7 @@ public struct TextFieldWithEnterButton: View {
             TextField(placeholder, text: $text ,axis: .vertical)
                 .lineLimit(1...10)
                 .lineSpacing(3)
+                .autocorrectionDisabled()
                 .frame(minHeight: 25)
                 .fixedSize(horizontal: false, vertical: true)
                 .submitLabel(.done)

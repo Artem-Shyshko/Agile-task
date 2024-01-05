@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import RealmSwift
 import MasterAppsUI
 
 struct TaskListView: View {
@@ -14,10 +13,13 @@ struct TaskListView: View {
   // MARK: - Properties
   
   @StateObject private var viewModel = TaskListViewModel()
-  @EnvironmentObject var userState: UserState
   @EnvironmentObject var notificationManager: LocalNotificationManager
   @EnvironmentObject var theme: AppThemeManager
-
+  @FocusState private var isFocused: Bool
+  @FocusState private var isAddTaskFocused: Bool
+  @State private var isShowingAddTask: Bool = false
+  
+  
   var selectedCalendarTab = false
   @State var calendarSorting: TaskDateSorting = .month
   @State var taskDateSorting: TaskDateSorting = .today
@@ -88,6 +90,10 @@ struct TaskListView: View {
       .overlay(alignment: .bottomTrailing) {
         plusButton()
       }
+      .overlay(alignment: .bottom, content: {
+       newTaskView()
+          .padding(.horizontal, -10)
+      })
       .navigationDestination(for: TaskListNavigationView.self) { views in
         switch views {
         case .createTask:
@@ -104,6 +110,8 @@ struct TaskListView: View {
         if selectedCalendarTab {
           calendarSorting = .month
         }
+        viewModel.loadTasks()
+        viewModel.search(with: "")
       }
       .task {
         try? await notificationManager.requestAuthorization()
@@ -134,7 +142,10 @@ private extension TaskListView {
       
       DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $calendarSorting : $taskDateSorting)
       
-      NavigationLink(value: TaskListNavigationView.createTask) {
+      Button {
+        isAddTaskFocused = true
+        isShowingAddTask = true
+      } label: {
         Image(systemName: "plus")
           .resizable()
           .scaledToFit()
@@ -190,6 +201,13 @@ private extension TaskListView {
     if !viewModel.isSearchBarHidden {
       SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
         .foregroundColor(theme.selectedTheme.textColor)
+        .onChange(of: viewModel.searchText) { newValue in
+          viewModel.search(with: newValue)
+        }
+        .focused($isFocused)
+        .onAppear {
+          isFocused = true
+        }
     } else {
       HStack {
         NavigationLink(value: TaskListNavigationView.sorting) {
@@ -261,6 +279,51 @@ private extension TaskListView {
       }
     }
   }
+  
+  @ViewBuilder
+  func newTaskView() -> some View {
+    VStack {
+    if isShowingAddTask {
+        TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
+          viewModel.createTask()
+          isAddTaskFocused = false
+          isShowingAddTask = false
+        }
+        .focused($isAddTaskFocused)
+        .padding(.vertical, 8)
+        .tint(theme.selectedTheme.sectionTextColor)
+        .modifier(SectionStyle())
+      
+        Rectangle()
+          .frame(maxWidth: .infinity)
+          .frame(height: 1)
+          .padding(.horizontal, 10)
+        
+        HStack {
+          Button("Tomorrow") {
+            viewModel.quickTaskConfig.dateOption = .tomorrow
+          }
+          
+          Button("Next week") {
+            viewModel.quickTaskConfig.dateOption = .nextWeek
+          }
+          Spacer()
+          Text("/")
+          Spacer()
+          Button("In 1 hour") {
+            viewModel.quickTaskConfig.reminder = .inOneHour
+          }
+          Button("Tomorrow") {
+            viewModel.quickTaskConfig.reminder = .tomorrow
+          }
+        }
+        .foregroundColor(theme.selectedTheme.sectionTextColor)
+        .padding(.horizontal, 10)
+      }
+    }
+    .padding(.bottom, 10)
+    .background(theme.selectedTheme.sectionColor)
+  }
 }
 
 // MARK: - TaskListView_Previews
@@ -268,7 +331,6 @@ private extension TaskListView {
 struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
     TaskListView(path: .constant([TaskListNavigationView.sorting]))
-      .environmentObject(UserState())
       .environmentObject(LocalNotificationManager())
       .environmentObject(AppThemeManager())
   }

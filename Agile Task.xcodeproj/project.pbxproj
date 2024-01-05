@@ -392,8 +392,8 @@
 		7533B1A42A8F5B91007CF2EE /* Task */ = {
 			isa = PBXGroup;
 			children = (
-				7590CF932AEFADC00015B396 /* CheckBox */,
 				75896DD32A83D7C700B0C6F2 /* NewTask */,
+				7590CF932AEFADC00015B396 /* CheckBox */,
 				7534A2BB2AA0E7840049431C /* Sorting */,
 			);
 			path = Task;
