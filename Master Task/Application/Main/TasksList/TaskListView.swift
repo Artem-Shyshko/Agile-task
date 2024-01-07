@@ -28,23 +28,30 @@ struct TaskListView: View {
   // MARK: - Computed Properties
   
   private var taskGropedByDate: [String: [TaskDTO]] {
-    Dictionary(grouping: viewModel.filteredTasks) { $0.date?.fullDayShortDateFormat ?? $0.createdDate.fullDayShortDateFormat }
+    switch selectedCalendarTab ? calendarSorting : taskDateSorting {
+    case .today:
+      return  Dictionary(grouping: viewModel.recurringAndAllTasks()) { ($0.date ?? Date()).fullDayShortDateFormat }
+    case .week:
+      return Dictionary(grouping: viewModel.sortedTasks()) { ($0.date ?? $0.createdDate).fullDayShortDateFormat }
+    case .month:
+      return  Dictionary(grouping: viewModel.sortedTasks()) { ($0.date ?? Date()).fullDayShortDateFormat }
+    case .all:
+      return  Dictionary(grouping: viewModel.recurringAndAllTasks()) { ($0.date ?? Date()).fullDayShortDateFormat }
+    }
   }
   
   var sectionHeaders: [String] {
     switch selectedCalendarTab ? calendarSorting : taskDateSorting {
     case .today:
-      return Array(Set(viewModel.filteredTasks
-        .map { $0.date?.fullDayShortDateFormat ?? Date().fullDayShortDateFormat }
-        .filter { $0 == viewModel.currentDate.fullDayShortDateFormat }))
+      return [viewModel.currentDate.fullDayShortDateFormat]
     case .week :
-      return Array(Set(viewModel.createWeekHeaders(tasks: viewModel.filteredTasks)))
+      return viewModel.currentDate.daysOfWeek().map { $0.fullDayShortDateFormat }
     case .month:
-      return Array(Set(viewModel.calendarTaskSorting(taskList: viewModel.filteredTasks)
-        .map { $0.date?.fullDayShortDateFormat ?? Date().fullDayShortDateFormat }))
+      return Array(Set(viewModel.calendarTaskSorting(taskList: viewModel.loadedTasks)
+        .map { ($0.date ?? Date()).fullDayShortDateFormat }))
     case .all:
-      return Array(Set(viewModel.filteredTasks
-        .map { $0.date?.fullDayShortDateFormat ?? Date().fullDayShortDateFormat }))
+      return Array(Set(viewModel.loadedTasks
+        .map { ($0.date ?? Date()).fullDayShortDateFormat }))
     }
   }
   
@@ -52,15 +59,22 @@ struct TaskListView: View {
     switch selectedCalendarTab ? calendarSorting : taskDateSorting {
     case .today:
       return (taskGropedByDate[key] ?? [])
-        .filter { ($0.date ?? Date()).shortDateFormat == viewModel.currentDate.shortDateFormat }
+        .filter {
+          let taskDate = $0.isRecurring ? $0.createdDate : Date()
+          return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == viewModel.currentDate.dateComponents([.year, .month, .day])
+        }
     case .week:
       return (taskGropedByDate[key] ?? [])
-        .filter { 
-          ($0.date ?? Date()).dateComponents([.weekOfYear, .year])
-          == viewModel.currentDate.dateComponents([.weekOfYear, .year]) }
+        .filter {
+          let taskDate = $0.isRecurring ? $0.createdDate : Date()
+            return ($0.date ?? taskDate).dateComponents([.year, .weekOfYear]) == viewModel.currentDate.dateComponents([.year, .weekOfYear])
+        }
     case .month:
       return (taskGropedByDate[key] ?? [])
-        .filter { ($0.date ?? Date()).monthString == viewModel.currentDate.monthString }
+        .filter {
+          let taskDate = $0.isRecurring ? $0.createdDate : Date()
+          return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == viewModel.selectedCalendarDate.dateComponents([.year, .month, .day])
+        }
     case .all:
       return taskGropedByDate[key] ?? []
     }
@@ -74,9 +88,11 @@ struct TaskListView: View {
   
   var body: some View {
     NavigationStack(path: $path) {
-      VStack(spacing: 20) {
-        topBarView()
-        dateBarView()
+      VStack(spacing: 10) {
+        VStack(spacing: 20) {
+          topBarView()
+          dateBarView()
+        }
         
         VStack(spacing: 5) {
           if taskDateSorting == .month || selectedCalendarTab, calendarSorting == .month {
@@ -163,22 +179,19 @@ private extension TaskListView {
     List {
       ForEach(sectionHeaders, id: \.self) { key  in
         Section {
-          List {
-            ForEach($viewModel.filteredTasks, id: \.id) { task in
-              TaskRow(viewModel: viewModel, task: task)
-                .listRowBackground(
-                  RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(task.colorName.wrappedValue))
-                )
-                .onChange(of: task.wrappedValue) { _ in
-                  viewModel.loadTasks()
-                }
-            }
-            .onMove(perform: { from, to in
-              viewModel.moveTask(fromOffsets: from, toOffset: to)
-            })
-            .listRowSeparator(.hidden)
+          ForEach(.constant(sectionContent(key)), id: \.id) { task in
+            TaskRow(viewModel: viewModel, task: task)
+              .listRowBackground(
+                RoundedRectangle(cornerRadius: 4)
+                  .fill(Color(task.colorName.wrappedValue))
+              )
+              .onChange(of: task.wrappedValue) { _ in
+                viewModel.loadTasks()
+              }
           }
+          .onMove(perform: { from, to in
+            viewModel.moveTask(fromOffsets: from, toOffset: to)
+          })
           .listRowSpacing(Constants.shared.listRowSpacing)
           .scrollContentBackground(.hidden)
           .listStyle(.plain)
@@ -187,6 +200,7 @@ private extension TaskListView {
             Text(sectionHeader(key))
           }
         }
+        .listSectionSeparatorTint(theme.selectedTheme.sectionColor)
       }
     }
     .listRowSpacing(Constants.shared.listRowSpacing)

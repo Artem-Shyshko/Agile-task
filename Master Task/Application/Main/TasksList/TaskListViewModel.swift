@@ -23,6 +23,7 @@ final class TaskListViewModel: ObservableObject {
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
     private lazy var dateYearAgo: Date = {
         let date = Constants.shared.currentDate
         return Constants.shared.calendar.date(byAdding: .year, value: -1, to: date) ?? date
@@ -38,25 +39,26 @@ final class TaskListViewModel: ObservableObject {
     // MARK: - Methods
     
     func loadTasks() {
-        let loaded = taskRepository.getTaskList()
-        let settings = settingsRepository.get()
-        self.loadedTasks = loaded
-        self.settings = settings
-        sortTask()
+        self.loadedTasks = taskRepository.getTaskList()
+        self.settings = settingsRepository.get()
+//        sortTask()
+    }
     
     func createTask() {
+        let selectedProject = projectRepository.getSelectedProject()
+        quickTaskConfig.project = selectedProject
         taskRepository.saveTask(quickTaskConfig)
         loadTasks()
         quickTaskConfig = TaskDTO(object: TaskObject())
     }
     
+    func recurringAndAllTasks() -> [TaskDTO] {
+        let recurringTasks = groupedTasks(with: loadedTasks)
+        return sortedCompletedTasks(recurringTasks, settings: settings)
     }
     
-    func sortTask() {
-        let sorted = groupedTasks(with: loadedTasks, settings: settings)
-        self.loadedTasks = sortedCompletedTasks(sorted, settings: settings)
-        let sorted1 = groupedTasks(with: filteredTasks, settings: settings)
-        self.filteredTasks = sortedCompletedTasks(sorted1, settings: settings)
+    func sortedTasks() -> [TaskDTO] {
+        return sortedCompletedTasks(loadedTasks, settings: settings)
     }
     
     func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
@@ -166,9 +168,9 @@ final class TaskListViewModel: ObservableObject {
 
 // MARK: - Private Methods
 
-private extension TaskListViewModel {
+extension TaskListViewModel {
     
-    func groupedTasks(with tasks: [TaskDTO], settings: SettingsDTO) -> [TaskDTO] {
+    func groupedTasks(with tasks: [TaskDTO]) -> [TaskDTO] {
         
         let gropedTasks = Dictionary(grouping: tasks, by: \.parentId)
         

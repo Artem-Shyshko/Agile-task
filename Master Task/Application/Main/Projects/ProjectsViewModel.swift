@@ -18,13 +18,17 @@ final class ProjectsViewModel: ObservableObject {
     func selectAnotherProject(_ project: ProjectDTO) {
         guard !project.isSelected else { return }
         
-        var selectedProject = projectsRepo.getSelectedProject()
-        selectedProject.isSelected = false
-        projectsRepo.saveProject(selectedProject)
+        let selectedProject = projectsRepo.getSelectedProject()
         
-        var projectToEdit = project
-        projectToEdit.isSelected = true
-        projectsRepo.saveProject(projectToEdit)
+        if let index = savedProjects.firstIndex(where: {$0.id == selectedProject.id }) {
+            savedProjects[index].isSelected = false
+            projectsRepo.saveProject(savedProjects[index])
+        }
+        
+        if let index = savedProjects.firstIndex(where: {$0.id == project.id }) {
+            savedProjects[index].isSelected = true
+            projectsRepo.saveProject(savedProjects[index])
+        }
     }
     
     func deleteProject(_ project: ProjectDTO) {

@@ -40,6 +40,7 @@ struct NewTaskView: View {
                 recurringView()
                 reminderView()
                 colorView()
+                projectView()
                 bottomButton()
                 Spacer()
             }
@@ -321,6 +322,24 @@ private extension NewTaskView {
                     .modifier(SectionStyle())
             }
         }
+    }
+    
+    func projectView() -> some View {
+        HStack {
+            Text("Project")
+            Spacer()
+            
+            Picker("", selection: $viewModel.selectedProject.name) {
+                ForEach(viewModel.projects, id: \.id) { project in
+                    Text(project.name)
+                        .tag(project.name)
+                }
+            }
+            .pickerStyle(.menu)
+        }
+        .tint(theme.selectedTheme.sectionTextColor)
+        .foregroundStyle(theme.selectedTheme.sectionTextColor)
+        .modifier(SectionStyle())
     }
     
     func tabBarCancelButton() -> some View {

@@ -19,13 +19,15 @@ protocol TaskRepository {
 
 final class TaskRepositoryImpl: TaskRepository {
     private let storage: StorageService
+    private let projectRepo: ProjectRepository = ProjectRepositoryImpl()
     
     init(storage: StorageService = StorageService()) {
         self.storage = storage
     }
     
     func getTaskList() -> [TaskDTO] {
-        let data = storage.fetch(by: TaskObject.self)
+        let selectedProject = projectRepo.getSelectedProject()
+        let data = storage.fetch(by: TaskObject.self).filter { $0.project?.id == selectedProject.id }
         return data.map(TaskDTO.init)
     }
     

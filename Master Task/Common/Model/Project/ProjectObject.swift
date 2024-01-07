@@ -12,7 +12,6 @@ final class ProjectObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var name: String
     @Persisted var isSelected: Bool = false
-    @Persisted var tasksList: List<TaskObject>
     
     convenience init(name: String) {
         self.init()
@@ -27,6 +26,5 @@ extension ProjectObject {
         self.id = dto.id
         self.name = dto.name
         self.isSelected = dto.isSelected
-        dto.tasksArray.forEach { tasksList.append(TaskObject($0)) }
     }
 }

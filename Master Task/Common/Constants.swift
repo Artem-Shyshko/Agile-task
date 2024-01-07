@@ -27,7 +27,7 @@ final class Constants {
     
     lazy var local = Locale(identifier: "us")
     
-    let mockTask = TaskObject(parentId: ObjectId(), title: "SS", date: Date(), recurring: .daily, reminder: .none, reminderDate: Date(), createdDate: Date(), colorName: Color.battleshipGray.name)
+    let mockTask = TaskObject(parentId: ObjectId(), title: "SS", date: Date(), recurring: .daily, reminder: .none, reminderDate: Date(), createdDate: Date(), colorName: Color.battleshipGray.name, project: ProjectObject())
     lazy var currentDate = Date()
     
     lazy var dateFormatter = DateFormatter()

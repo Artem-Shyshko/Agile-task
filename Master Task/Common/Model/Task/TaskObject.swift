@@ -30,6 +30,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var isCompleted: Bool = false
     @Persisted var sortingOrder: Int = 0
     @Persisted var showCheckboxes = true
+    @Persisted var project: ProjectObject?
     @Persisted var checkBoxList: RealmSwift.List<CheckboxObject>
     
     convenience init(
@@ -40,7 +41,8 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         reminder: Reminder,
         reminderDate: Date?,
         createdDate: Date,
-        colorName: String
+        colorName: String,
+        project: ProjectObject
     ) {
         self.init()
         self.parentId = parentId
@@ -52,6 +54,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         self.reminderDate = reminderDate
         self.createdDate = createdDate
         self.colorName = colorName
+        self.project = project
     }
     
     var isReminder: Bool {
@@ -98,6 +101,9 @@ extension TaskObject {
         isCompleted = dto.isCompleted
         showCheckboxes = dto.showCheckboxes
         sortingOrder = dto.sortingOrder
+        if let project = dto.project {
+            self.project = ProjectObject(project)
+        }
         
         dto.checkBoxArray.forEach { checkBoxList.append(CheckboxObject($0)) }
     }

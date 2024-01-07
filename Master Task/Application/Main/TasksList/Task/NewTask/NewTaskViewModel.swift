@@ -37,6 +37,8 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isCompleted = false
     @Published var showDeleteAlert = false
     @Published var showReminderAlert = false
+    @Published var selectedProject: ProjectDTO
+    @Published var projects: [ProjectDTO] = []
     
     // MARK: - Recurring view properties
     
@@ -55,6 +57,7 @@ final class NewTaskViewModel: ObservableObject {
     private let tasksLimit = 80000000
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
     
     var localNotificationManager: LocalNotificationManager?
     var settings: SettingsDTO
@@ -64,6 +67,8 @@ final class NewTaskViewModel: ObservableObject {
     
     init() {
         settings = settingsRepository.get()
+        selectedProject = projectRepository.getSelectedProject()
+        projects = projectRepository.getProjects()
     }
     
     // MARK: - Methods
@@ -94,6 +99,7 @@ final class NewTaskViewModel: ObservableObject {
         task.createdDate = Date()
         task.colorName = selectedColor.name
         task.checkBoxArray = checkBoxes
+        task.project = selectedProject
         
         return task
     }
@@ -120,6 +126,7 @@ final class NewTaskViewModel: ObservableObject {
         task.modificationDate = currentDate
         task.isCompleted = isCompleted
         task.checkBoxArray = checkBoxes
+        task.project = selectedProject
         
         return task
     }
@@ -144,6 +151,7 @@ final class NewTaskViewModel: ObservableObject {
         task.createdDate = date
         task.colorName = parent.colorName
         task.checkBoxArray = parent.checkBoxArray
+        task.project = parent.project
         
         return task
     }
