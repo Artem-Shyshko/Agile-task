@@ -103,11 +103,8 @@ private extension TaskListView {
       .foregroundColor(.white)
       
       DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $calendarSorting : $taskDateSorting)
-      
-      Button {
-        isAddTaskFocused = true
-        isShowingAddTask = true
-      } label: {
+
+      NavigationLink(value: TaskListNavigationView.createTask) {
         Image(systemName: "plus")
           .resizable()
           .scaledToFit()
@@ -227,7 +224,10 @@ private extension TaskListView {
   @ViewBuilder
   func plusButton() -> some View {
     if viewModel.settings.showPlusButton {
-      NavigationLink(value: TaskListNavigationView.createTask) {
+      Button {
+          isAddTaskFocused = true
+          isShowingAddTask = true
+      } label: {
         ZStack {
           Color.black
             .frame(width: 30, height: 30)
@@ -261,22 +261,36 @@ private extension TaskListView {
           .padding(.horizontal, 10)
         
         HStack {
+          Image(.calendarIcon)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 12, height: 14)
           Button("Tomorrow") {
             viewModel.quickTaskConfig.dateOption = .tomorrow
           }
+          .font(.helveticaRegular(size: 16))
           
           Button("Next week") {
             viewModel.quickTaskConfig.dateOption = .nextWeek
           }
+          .font(.helveticaRegular(size: 16))
           Spacer()
           Text("/")
           Spacer()
+          Image(.reminders)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 12, height: 14)
           Button("In 1 hour") {
             viewModel.quickTaskConfig.reminder = .inOneHour
           }
+          .font(.helveticaRegular(size: 16))
           Button("Tomorrow") {
             viewModel.quickTaskConfig.reminder = .tomorrow
           }
+          .font(.helveticaRegular(size: 16))
         }
         .foregroundColor(theme.selectedTheme.sectionTextColor)
         .padding(.horizontal, 10)
