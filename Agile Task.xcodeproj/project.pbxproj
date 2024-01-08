@@ -107,6 +107,7 @@
 		75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */; };
 		75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */; };
 		75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0D8822ACC60E7003FC01F /* SecurityView.swift */; };
+		75E11C6A2B4BEB2B003B891B /* TabViewChildModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */; };
 		75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */; };
 		75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD612ABCA72900660A99 /* LocalNotification.swift */; };
 		75F70CCD2A98A23C008E0C03 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F70CCC2A98A23C008E0C03 /* CalendarView.swift */; };
@@ -246,6 +247,7 @@
 		75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsThemeView.swift; sourceTree = "<group>"; };
 		75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SettingsTaskView.swift; sourceTree = "<group>"; };
 		75D0D8822ACC60E7003FC01F /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
+		75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewChildModifier.swift; sourceTree = "<group>"; };
 		75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		75F3AD612ABCA72900660A99 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		75F70CCC2A98A23C008E0C03 /* CalendarView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -734,6 +736,7 @@
 				75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */,
 				75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */,
 				759510C22ACD586B0087004A /* SectionStyle.swift */,
+				75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -933,6 +936,7 @@
 				752CEDE02B3C571000CA1612 /* CheckboxDTO.swift in Sources */,
 				7583617C2AB1D4DB0021FFDE /* AppHelper.swift in Sources */,
 				75A3CFFE2A99047D000F68BA /* Constants.swift in Sources */,
+				75E11C6A2B4BEB2B003B891B /* TabViewChildModifier.swift in Sources */,
 				757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */,
 				7590CF922AEFA81B0015B396 /* CheckboxObject.swift in Sources */,
 				75481B332AE01306003ABED5 /* CompletedTaskViewModel.swift in Sources */,
