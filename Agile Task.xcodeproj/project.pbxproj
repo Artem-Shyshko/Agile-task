@@ -114,6 +114,36 @@
 		75E11C732B4C1400003B891B /* BulletDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C722B4C1400003B891B /* BulletDTO.swift */; };
 		75E11C762B4C2679003B891B /* BulletTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C752B4C2679003B891B /* BulletTaskRow.swift */; };
 		75E11C782B4C28D3003B891B /* BulletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C772B4C28D3003B891B /* BulletRepository.swift */; };
+		75E11CB52B4C34AF003B891B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E11CB42B4C34AF003B891B /* WidgetKit.framework */; };
+		75E11CB72B4C34AF003B891B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E11CB62B4C34AF003B891B /* SwiftUI.framework */; };
+		75E11CBA2B4C34AF003B891B /* TaskWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CB92B4C34AF003B891B /* TaskWidgetBundle.swift */; };
+		75E11CC02B4C34B0003B891B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75E11CBF2B4C34B0003B891B /* Assets.xcassets */; };
+		75E11CC42B4C34B0003B891B /* TaskWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 75E11CB32B4C34AF003B891B /* TaskWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		75E11CD22B4C350A003B891B /* TaskEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CC92B4C350A003B891B /* TaskEntry.swift */; };
+		75E11CD32B4C350A003B891B /* TaskWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CCB2B4C350A003B891B /* TaskWidget.swift */; };
+		75E11CD42B4C350A003B891B /* MasterTaskWidgetEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CCC2B4C350A003B891B /* MasterTaskWidgetEntryView.swift */; };
+		75E11CD52B4C350A003B891B /* CompletedTaskIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CCE2B4C350A003B891B /* CompletedTaskIntent.swift */; };
+		75E11CD62B4C350A003B891B /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CCF2B4C350A003B891B /* AppIntent.swift */; };
+		75E11CD72B4C350A003B891B /* TaskDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CD02B4C350A003B891B /* TaskDataModel.swift */; };
+		75E11CD82B4C350A003B891B /* TimeLineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11CD12B4C350A003B891B /* TimeLineProvider.swift */; };
+		75E11CDC2B4C370F003B891B /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDD2B3C569C00CA1612 /* TaskRepository.swift */; };
+		75E11CDD2B4C3736003B891B /* TaskDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDA2B3C565C00CA1612 /* TaskDTO.swift */; };
+		75E11CDE2B4C3738003B891B /* TaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75896DD62A83DCC900B0C6F2 /* TaskObject.swift */; };
+		75E11CE02B4C374C003B891B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75E11CDF2B4C374C003B891B /* RealmSwift */; };
+		75E11CE22B4C376F003B891B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 75E11CE12B4C376F003B891B /* Realm */; };
+		75E11CE32B4C378D003B891B /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDE42B3C57DB00CA1612 /* StorageService.swift */; };
+		75E11CE42B4C379B003B891B /* CheckboxDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDF2B3C571000CA1612 /* CheckboxDTO.swift */; };
+		75E11CE52B4C37A1003B891B /* BulletDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C722B4C1400003B891B /* BulletDTO.swift */; };
+		75E11CE62B4C37AB003B891B /* ProjectRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE612B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift */; };
+		75E11CE72B4C37B2003B891B /* CheckboxObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF912AEFA81B0015B396 /* CheckboxObject.swift */; };
+		75E11CE82B4C37B8003B891B /* BulletObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C702B4C13DF003B891B /* BulletObject.swift */; };
+		75E11CE92B4C37CF003B891B /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */; };
+		75E11CEA2B4C37D2003B891B /* SettingDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE4A2B3C71FD00CA1612 /* SettingDTO.swift */; };
+		75E11CEB2B4C37D4003B891B /* SettingsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE4D2B3C763000CA1612 /* SettingsRepositoryImpl.swift */; };
+		75E11CED2B4C380A003B891B /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0D2A824C1400937923 /* Color+Ext.swift */; };
+		75E11CEE2B4C384F003B891B /* Font+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D062A8224ED00937923 /* Font+Ext.swift */; };
+		75E11CEF2B4C38B1003B891B /* ProjectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0262AAA391300F64175 /* ProjectObject.swift */; };
+		75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */; };
 		75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */; };
 		75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD612ABCA72900660A99 /* LocalNotification.swift */; };
 		75F70CCD2A98A23C008E0C03 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F70CCC2A98A23C008E0C03 /* CalendarView.swift */; };
@@ -136,6 +166,13 @@
 			remoteGlobalIDString = 757B83632ACF125C00A26D73;
 			remoteInfo = MasterAppsUI;
 		};
+		75E11CC22B4C34B0003B891B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 75677A202A813F360034C45B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 75E11CB22B4C34AF003B891B;
+			remoteInfo = TaskWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -148,6 +185,17 @@
 				757B836B2ACF125C00A26D73 /* MasterAppsUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75E11CC52B4C34B0003B891B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				75E11CC42B4C34B0003B891B /* TaskWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -260,6 +308,20 @@
 		75E11C722B4C1400003B891B /* BulletDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletDTO.swift; sourceTree = "<group>"; };
 		75E11C752B4C2679003B891B /* BulletTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletTaskRow.swift; sourceTree = "<group>"; };
 		75E11C772B4C28D3003B891B /* BulletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletRepository.swift; sourceTree = "<group>"; };
+		75E11CB32B4C34AF003B891B /* TaskWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TaskWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		75E11CB42B4C34AF003B891B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		75E11CB62B4C34AF003B891B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		75E11CB92B4C34AF003B891B /* TaskWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWidgetBundle.swift; sourceTree = "<group>"; };
+		75E11CBF2B4C34B0003B891B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		75E11CC12B4C34B0003B891B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		75E11CC92B4C350A003B891B /* TaskEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskEntry.swift; sourceTree = "<group>"; };
+		75E11CCB2B4C350A003B891B /* TaskWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskWidget.swift; sourceTree = "<group>"; };
+		75E11CCC2B4C350A003B891B /* MasterTaskWidgetEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterTaskWidgetEntryView.swift; sourceTree = "<group>"; };
+		75E11CCE2B4C350A003B891B /* CompletedTaskIntent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletedTaskIntent.swift; sourceTree = "<group>"; };
+		75E11CCF2B4C350A003B891B /* AppIntent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		75E11CD02B4C350A003B891B /* TaskDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskDataModel.swift; sourceTree = "<group>"; };
+		75E11CD12B4C350A003B891B /* TimeLineProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineProvider.swift; sourceTree = "<group>"; };
+		75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TaskWidgetExtension.entitlements; sourceTree = "<group>"; };
 		75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		75F3AD612ABCA72900660A99 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		75F70CCC2A98A23C008E0C03 /* CalendarView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -283,6 +345,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75E11CB02B4C34AF003B891B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75E11CE02B4C374C003B891B /* RealmSwift in Frameworks */,
+				75E11CB72B4C34AF003B891B /* SwiftUI.framework in Frameworks */,
+				75E11CE22B4C376F003B891B /* Realm in Frameworks */,
+				75E11CB52B4C34AF003B891B /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +548,8 @@
 		7547CD6D2ADEAFF700143598 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75E11CB42B4C34AF003B891B /* WidgetKit.framework */,
+				75E11CB62B4C34AF003B891B /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -491,9 +566,11 @@
 		75677A1F2A813F360034C45B = {
 			isa = PBXGroup;
 			children = (
+				75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */,
 				752CEE5C2B3DC0A800CA1612 /* Agile Task.entitlements */,
 				75677A2A2A813F360034C45B /* Master Task */,
 				757B83652ACF125C00A26D73 /* MasterAppsUI */,
+				75E11CB82B4C34AF003B891B /* TaskWidget */,
 				75677A292A813F360034C45B /* Products */,
 				7547CD6D2ADEAFF700143598 /* Frameworks */,
 			);
@@ -504,6 +581,7 @@
 			children = (
 				75677A282A813F360034C45B /* Agile Task.app */,
 				757B83642ACF125C00A26D73 /* MasterAppsUI.framework */,
+				75E11CB32B4C34AF003B891B /* TaskWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -755,6 +833,39 @@
 			path = Bullet;
 			sourceTree = "<group>";
 		};
+		75E11CB82B4C34AF003B891B /* TaskWidget */ = {
+			isa = PBXGroup;
+			children = (
+				75E11CB92B4C34AF003B891B /* TaskWidgetBundle.swift */,
+				75E11CD02B4C350A003B891B /* TaskDataModel.swift */,
+				75E11CC92B4C350A003B891B /* TaskEntry.swift */,
+				75E11CD12B4C350A003B891B /* TimeLineProvider.swift */,
+				75E11CCD2B4C350A003B891B /* AppIntent */,
+				75E11CCA2B4C350A003B891B /* Views */,
+				75E11CBF2B4C34B0003B891B /* Assets.xcassets */,
+				75E11CC12B4C34B0003B891B /* Info.plist */,
+			);
+			path = TaskWidget;
+			sourceTree = "<group>";
+		};
+		75E11CCA2B4C350A003B891B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				75E11CCB2B4C350A003B891B /* TaskWidget.swift */,
+				75E11CCC2B4C350A003B891B /* MasterTaskWidgetEntryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		75E11CCD2B4C350A003B891B /* AppIntent */ = {
+			isa = PBXGroup;
+			children = (
+				75E11CCE2B4C350A003B891B /* CompletedTaskIntent.swift */,
+				75E11CCF2B4C350A003B891B /* AppIntent.swift */,
+			);
+			path = AppIntent;
+			sourceTree = "<group>";
+		};
 		75F70CC92A98A214008E0C03 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -797,12 +908,14 @@
 				75677A252A813F360034C45B /* Frameworks */,
 				75677A262A813F360034C45B /* Resources */,
 				757B836C2ACF125D00A26D73 /* Embed Frameworks */,
+				75E11CC52B4C34B0003B891B /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				757B83692ACF125C00A26D73 /* PBXTargetDependency */,
 				7547CD702ADEAFF700143598 /* PBXTargetDependency */,
+				75E11CC32B4C34B0003B891B /* PBXTargetDependency */,
 			);
 			name = "Agile Task";
 			packageProductDependencies = (
@@ -831,6 +944,27 @@
 			productReference = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		75E11CB22B4C34AF003B891B /* TaskWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 75E11CC82B4C34B0003B891B /* Build configuration list for PBXNativeTarget "TaskWidgetExtension" */;
+			buildPhases = (
+				75E11CAF2B4C34AF003B891B /* Sources */,
+				75E11CB02B4C34AF003B891B /* Frameworks */,
+				75E11CB12B4C34AF003B891B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TaskWidgetExtension;
+			packageProductDependencies = (
+				75E11CDF2B4C374C003B891B /* RealmSwift */,
+				75E11CE12B4C376F003B891B /* Realm */,
+			);
+			productName = TaskWidgetExtension;
+			productReference = 75E11CB32B4C34AF003B891B /* TaskWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -838,7 +972,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					75677A272A813F360034C45B = {
@@ -847,6 +981,9 @@
 					757B83632ACF125C00A26D73 = {
 						CreatedOnToolsVersion = 14.3.1;
 						LastSwiftMigration = 1430;
+					};
+					75E11CB22B4C34AF003B891B = {
+						CreatedOnToolsVersion = 15.0;
 					};
 				};
 			};
@@ -868,6 +1005,7 @@
 			targets = (
 				75677A272A813F360034C45B /* Agile Task */,
 				757B83632ACF125C00A26D73 /* MasterAppsUI */,
+				75E11CB22B4C34AF003B891B /* TaskWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -894,6 +1032,14 @@
 				752CEE452B3C63C100CA1612 /* Helvetica.ttf in Resources */,
 				752CEE3D2B3C638600CA1612 /* plist.plist in Resources */,
 				752CEE462B3C63C100CA1612 /* SF-Pro.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		75E11CB12B4C34AF003B891B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75E11CC02B4C34B0003B891B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1010,6 +1156,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		75E11CAF2B4C34AF003B891B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75E11CDD2B4C3736003B891B /* TaskDTO.swift in Sources */,
+				75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */,
+				75E11CEA2B4C37D2003B891B /* SettingDTO.swift in Sources */,
+				75E11CE32B4C378D003B891B /* StorageService.swift in Sources */,
+				75E11CBA2B4C34AF003B891B /* TaskWidgetBundle.swift in Sources */,
+				75E11CEE2B4C384F003B891B /* Font+Ext.swift in Sources */,
+				75E11CD52B4C350A003B891B /* CompletedTaskIntent.swift in Sources */,
+				75E11CD22B4C350A003B891B /* TaskEntry.swift in Sources */,
+				75E11CD82B4C350A003B891B /* TimeLineProvider.swift in Sources */,
+				75E11CD42B4C350A003B891B /* MasterTaskWidgetEntryView.swift in Sources */,
+				75E11CEF2B4C38B1003B891B /* ProjectObject.swift in Sources */,
+				75E11CED2B4C380A003B891B /* Color+Ext.swift in Sources */,
+				75E11CE42B4C379B003B891B /* CheckboxDTO.swift in Sources */,
+				75E11CD32B4C350A003B891B /* TaskWidget.swift in Sources */,
+				75E11CDE2B4C3738003B891B /* TaskObject.swift in Sources */,
+				75E11CDC2B4C370F003B891B /* TaskRepository.swift in Sources */,
+				75E11CE92B4C37CF003B891B /* SettingsObject.swift in Sources */,
+				75E11CE52B4C37A1003B891B /* BulletDTO.swift in Sources */,
+				75E11CEB2B4C37D4003B891B /* SettingsRepositoryImpl.swift in Sources */,
+				75E11CE62B4C37AB003B891B /* ProjectRepositoryImpl.swift in Sources */,
+				75E11CE72B4C37B2003B891B /* CheckboxObject.swift in Sources */,
+				75E11CE82B4C37B8003B891B /* BulletObject.swift in Sources */,
+				75E11CD72B4C350A003B891B /* TaskDataModel.swift in Sources */,
+				75E11CD62B4C350A003B891B /* AppIntent.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1022,6 +1199,11 @@
 			isa = PBXTargetDependency;
 			target = 757B83632ACF125C00A26D73 /* MasterAppsUI */;
 			targetProxy = 757B83682ACF125C00A26D73 /* PBXContainerItemProxy */;
+		};
+		75E11CC32B4C34B0003B891B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 75E11CB22B4C34AF003B891B /* TaskWidgetExtension */;
+			targetProxy = 75E11CC22B4C34B0003B891B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1281,6 +1463,75 @@
 			};
 			name = Release;
 		};
+		75E11CC62B4C34B0003B891B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TaskWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L42WZN2QX6;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TaskWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TaskWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task.TaskWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		75E11CC72B4C34B0003B891B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = TaskWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = L42WZN2QX6;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TaskWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TaskWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task.TaskWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1311,6 +1562,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		75E11CC82B4C34B0003B891B /* Build configuration list for PBXNativeTarget "TaskWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				75E11CC62B4C34B0003B891B /* Debug */,
+				75E11CC72B4C34B0003B891B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -1334,6 +1594,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 75B1C8112AB85DFE00DAE207 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		75E11CDF2B4C374C003B891B /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75B1C8112AB85DFE00DAE207 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+		75E11CE12B4C376F003B891B /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75B1C8112AB85DFE00DAE207 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
