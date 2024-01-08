@@ -19,7 +19,8 @@ struct NewTaskView: View {
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     @StateObject var viewModel: NewTaskViewModel
     @FocusState private var isFocused: Bool
-    @State private var show: Bool = false
+    @State private var isShowingCheckBoxView: Bool = false
+    @State private var isShowingBulletView: Bool = false
     
     @Environment(\.dismiss) var dismiss
     var taskList: [TaskDTO]
@@ -35,6 +36,7 @@ struct NewTaskView: View {
                 titleView()
                 descriptionView()
                 checkList()
+                bulletListView()
                 dateView()
                 timeView()
                 recurringView()
@@ -66,6 +68,7 @@ struct NewTaskView: View {
                 viewModel.taskStatus = editTask.status
                 viewModel.title = editTask.title
                 viewModel.checkBoxes = editTask.checkBoxArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
+                viewModel.bullets = editTask.bulletArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
                 viewModel.selectedColor = Color(editTask.colorName)
                 viewModel.isCompleted = editTask.isCompleted
                 viewModel.selectedRecurringOption = editTask.recurring
@@ -87,11 +90,19 @@ struct NewTaskView: View {
         .navigationDestination(isPresented: $viewModel.showSubscriptionView) {
             SettingsSubscriptionView()
         }
-        .fullScreenCover(isPresented: $show, content: {
+        .fullScreenCover(isPresented: $isShowingCheckBoxView, content: {
             NewCheckBoxView(
                 viewModel: NewCheckBoxViewModel(),
                 taskCheckboxes: $viewModel.checkBoxes,
-                isShowing: $show,
+                isShowing: $isShowingCheckBoxView,
+                task: editTask
+            )
+        })
+        .fullScreenCover(isPresented: $isShowingBulletView, content: {
+            BulletView(
+                viewModel: BulletViewModel(),
+                taskBulletArray: $viewModel.bullets,
+                isShowing: $isShowingBulletView,
                 task: editTask
             )
         })
@@ -168,9 +179,28 @@ private extension NewTaskView {
                 .padding(.vertical, 8)
             Spacer()
             Button {
-                show = true
+                isShowingCheckBoxView = true
             } label: {
                 Text(viewModel.checkBoxes.isEmpty ? "Add" : "Edit")
+            }
+            .hAlign(alignment: .trailing)
+            .padding(.trailing, 10)
+        }
+        .tint(viewModel.checkBoxes.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .modifier(SectionStyle())
+    }
+    
+    func bulletListView() -> some View {
+        HStack(spacing: 5) {
+            setupIcon(with: .bullet)
+            Text("Bulletlist")
+                .padding(.vertical, 8)
+            Spacer()
+            Button {
+                isShowingBulletView = true
+            } label: {
+                Text(viewModel.bullets.isEmpty ? "Add" : "Edit")
             }
             .hAlign(alignment: .trailing)
             .padding(.trailing, 10)

@@ -18,7 +18,7 @@ extension Results {
 final class StorageService {
     private let storage: Realm?
     
-    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 1)) {
+    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 2)) {
         let realmURL = URL.storeURL(for: "group.agiletask.app", databaseName: "default.realm")
         
         print(realmURL.path())

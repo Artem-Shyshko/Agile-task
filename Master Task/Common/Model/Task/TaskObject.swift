@@ -32,6 +32,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var showCheckboxes = true
     @Persisted var project: ProjectObject?
     @Persisted var checkBoxList: RealmSwift.List<CheckboxObject>
+    @Persisted var bulletList: RealmSwift.List<BulletObject>
     
     convenience init(
         parentId: ObjectId,
@@ -106,6 +107,7 @@ extension TaskObject {
         }
         
         dto.checkBoxArray.forEach { checkBoxList.append(CheckboxObject($0)) }
+        dto.bulletArray.forEach { bulletList.append(BulletObject($0)) }
     }
 }
 

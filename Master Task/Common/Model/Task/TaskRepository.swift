@@ -15,6 +15,8 @@ protocol TaskRepository {
     func deleteTask(_ task: TaskObject)
     func saveCheckbox(_ checkbox: CheckboxDTO)
     func deleteCheckbox(_ taskId: ObjectId, checkboxId: ObjectId)
+    func saveBullet(_ bullet: BulletDTO)
+    func deleteBullet(_ taskId: ObjectId, bulletId: ObjectId)
 }
 
 final class TaskRepositoryImpl: TaskRepository {
@@ -40,6 +42,10 @@ final class TaskRepositoryImpl: TaskRepository {
         try? storage.saveOrUpdateObject(object: CheckboxObject(checkbox))
     }
     
+    func saveBullet(_ bullet: BulletDTO) {
+        try? storage.saveOrUpdateObject(object: BulletObject(bullet))
+    }
+    
     func saveTask(_ data: TaskDTO) {
         try? storage.saveOrUpdateObject(object: TaskObject(data))
     }
@@ -53,6 +59,13 @@ final class TaskRepositoryImpl: TaskRepository {
     func deleteCheckbox(_ taskId: ObjectId, checkboxId: ObjectId) {
         guard let task = storage.fetch(by: TaskObject.self).first(where: { $0.id == taskId }) else { return }
         guard let checkbox = task.checkBoxList.first(where: { $0.id == checkboxId }) else { return }
+        
+        try? storage.delete(object: checkbox)
+    }
+    
+    func deleteBullet(_ taskId: ObjectId, bulletId: ObjectId) {
+        guard let task = storage.fetch(by: TaskObject.self).first(where: { $0.id == taskId }) else { return }
+        guard let checkbox = task.bulletList.first(where: { $0.id == bulletId }) else { return }
         
         try? storage.delete(object: checkbox)
     }

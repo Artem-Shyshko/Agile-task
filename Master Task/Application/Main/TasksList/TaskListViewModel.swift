@@ -23,6 +23,7 @@ final class TaskListViewModel: ObservableObject {
     
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
+    private let bulletRepository: BulletRepository = BulletRepositoryImpl()
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
     private lazy var dateYearAgo: Date = {
@@ -91,6 +92,11 @@ final class TaskListViewModel: ObservableObject {
         var object = checkbox
         object.isCompleted.toggle()
         checkboxRepository.save(object)
+    }
+    
+    func completeBullet(_ bullet: inout BulletDTO) {
+        bullet.isCompleted.toggle()
+        bulletRepository.save(bullet)
     }
     
     func completeCheckbox(_ checkbox: inout CheckboxDTO) {

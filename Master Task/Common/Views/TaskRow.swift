@@ -29,6 +29,7 @@ struct TaskRow: View {
             generalRow()
             descriptionView()
             checkboxesView()
+            bulletView()
         }
         .font(.helveticaRegular(size: 16))
         .alert("Are you sure you want to delete", isPresented: $isDeleteAlert) {
@@ -94,9 +95,9 @@ private extension TaskRow {
     func generalRow() -> some View {
         HStack(spacing: 5) {
             HStack(spacing: 7) {
-                if !task.checkBoxArray.isEmpty {
+                if !task.checkBoxArray.isEmpty || !task.bulletArray.isEmpty || task.description != nil {
                     Button {
-                            viewModel.updateTaskShowingCheckbox(&task)
+                        viewModel.updateTaskShowingCheckbox(&task)
                     } label: {
                         Image(systemName: task.showCheckboxes ? "chevron.up" : "chevron.down")
                             .renderingMode(.template)
@@ -176,13 +177,12 @@ private extension TaskRow {
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
             viewModel.updateTaskCompletion(&task)
-//            viewModel.sortTask()
         })
     }
     
     @ViewBuilder
     func descriptionView() -> some View {
-        if let description = task.description {
+        if let description = task.description, task.showCheckboxes {
             Text(description)
                 .font(.helveticaRegular(size: 16))
                 .foregroundColor(foregroundColor())
@@ -198,6 +198,17 @@ private extension TaskRow {
                 .sorted(by: {$0.sortingOrder.wrappedValue < $1.sortingOrder.wrappedValue}), id: \.id.wrappedValue
             ) { checkBox in
                 CheckboxTaskRow(viewModel: viewModel, checkbox: checkBox, colorName: task.colorName)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func bulletView() -> some View {
+        if !task.bulletArray.isEmpty, task.showCheckboxes {
+            ForEach($task.bulletArray
+                .sorted(by: {$0.sortingOrder.wrappedValue < $1.sortingOrder.wrappedValue}), id: \.id.wrappedValue
+            ) { bullet in
+                BulletTaskRow(viewModel: viewModel, bullet: bullet, colorName: task.colorName)
             }
         }
     }

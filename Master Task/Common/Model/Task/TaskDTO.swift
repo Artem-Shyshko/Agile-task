@@ -31,6 +31,7 @@ struct TaskDTO: CalendarItem {
     var sortingOrder: Int = 0
     var showCheckboxes = true
     var checkBoxArray: [CheckboxDTO]
+    var bulletArray: [BulletDTO]
     var project: ProjectDTO?
     
     var isReminder: Bool {
@@ -75,6 +76,7 @@ extension TaskDTO {
         sortingOrder = object.sortingOrder
         showCheckboxes = object.showCheckboxes
         checkBoxArray = object.checkBoxList.map { CheckboxDTO(object: $0) }
+        bulletArray = object.bulletList.map { BulletDTO(object: $0) }
         if let project = object.project {
             self.project = ProjectDTO(project)
         }

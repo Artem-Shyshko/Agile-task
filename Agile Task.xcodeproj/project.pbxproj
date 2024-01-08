@@ -108,6 +108,12 @@
 		75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */; };
 		75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0D8822ACC60E7003FC01F /* SecurityView.swift */; };
 		75E11C6A2B4BEB2B003B891B /* TabViewChildModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */; };
+		75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C6C2B4C1202003B891B /* BulletView.swift */; };
+		75E11C6F2B4C1259003B891B /* BulletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C6E2B4C1259003B891B /* BulletViewModel.swift */; };
+		75E11C712B4C13DF003B891B /* BulletObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C702B4C13DF003B891B /* BulletObject.swift */; };
+		75E11C732B4C1400003B891B /* BulletDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C722B4C1400003B891B /* BulletDTO.swift */; };
+		75E11C762B4C2679003B891B /* BulletTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C752B4C2679003B891B /* BulletTaskRow.swift */; };
+		75E11C782B4C28D3003B891B /* BulletRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C772B4C28D3003B891B /* BulletRepository.swift */; };
 		75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */; };
 		75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD612ABCA72900660A99 /* LocalNotification.swift */; };
 		75F70CCD2A98A23C008E0C03 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F70CCC2A98A23C008E0C03 /* CalendarView.swift */; };
@@ -248,6 +254,12 @@
 		75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SettingsTaskView.swift; sourceTree = "<group>"; };
 		75D0D8822ACC60E7003FC01F /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
 		75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewChildModifier.swift; sourceTree = "<group>"; };
+		75E11C6C2B4C1202003B891B /* BulletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletView.swift; sourceTree = "<group>"; };
+		75E11C6E2B4C1259003B891B /* BulletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletViewModel.swift; sourceTree = "<group>"; };
+		75E11C702B4C13DF003B891B /* BulletObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletObject.swift; sourceTree = "<group>"; };
+		75E11C722B4C1400003B891B /* BulletDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletDTO.swift; sourceTree = "<group>"; };
+		75E11C752B4C2679003B891B /* BulletTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletTaskRow.swift; sourceTree = "<group>"; };
+		75E11C772B4C28D3003B891B /* BulletRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletRepository.swift; sourceTree = "<group>"; };
 		75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		75F3AD612ABCA72900660A99 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		75F70CCC2A98A23C008E0C03 /* CalendarView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -395,6 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				75896DD32A83D7C700B0C6F2 /* NewTask */,
+				75E11C6B2B4C11B4003B891B /* Bullet */,
 				7590CF932AEFADC00015B396 /* CheckBox */,
 				7534A2BB2AA0E7840049431C /* Sorting */,
 			);
@@ -656,6 +669,7 @@
 				752CEDDC2B3C567000CA1612 /* Task */,
 				752CEDE12B3C571A00CA1612 /* Checkbox */,
 				752CEE5D2B3DC27000CA1612 /* Project */,
+				75E11C742B4C155C003B891B /* Bullet */,
 				752CEE492B3C714100CA1612 /* Settings */,
 				75F3AD612ABCA72900660A99 /* LocalNotification.swift */,
 			);
@@ -680,6 +694,7 @@
 				75F96B742A86953C0062D2BA /* Style */,
 				75C7103E2A8CEEDB008E8A62 /* NavigationView.swift */,
 				752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */,
+				75E11C752B4C2679003B891B /* BulletTaskRow.swift */,
 				75A3CFFF2A990BD4000F68BA /* TaskRow.swift */,
 				752CEE6C2B3EF2DA00CA1612 /* MoreOurAppsView.swift */,
 				752CEE6A2B3EF2A000CA1612 /* MailView.swift */,
@@ -719,6 +734,25 @@
 				753649152AD4202900C98975 /* SetPassword */,
 			);
 			path = Security;
+			sourceTree = "<group>";
+		};
+		75E11C6B2B4C11B4003B891B /* Bullet */ = {
+			isa = PBXGroup;
+			children = (
+				75E11C6C2B4C1202003B891B /* BulletView.swift */,
+				75E11C6E2B4C1259003B891B /* BulletViewModel.swift */,
+			);
+			path = Bullet;
+			sourceTree = "<group>";
+		};
+		75E11C742B4C155C003B891B /* Bullet */ = {
+			isa = PBXGroup;
+			children = (
+				75E11C702B4C13DF003B891B /* BulletObject.swift */,
+				75E11C722B4C1400003B891B /* BulletDTO.swift */,
+				75E11C772B4C28D3003B891B /* BulletRepository.swift */,
+			);
+			path = Bullet;
 			sourceTree = "<group>";
 		};
 		75F70CC92A98A214008E0C03 /* Calendar */ = {
@@ -877,6 +911,7 @@
 				75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */,
 				75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */,
 				75A709AA2A828B68003894F7 /* Date+Ext.swift in Sources */,
+				75E11C782B4C28D3003B891B /* BulletRepository.swift in Sources */,
 				756D70742A8E4BCA00F616DA /* UserState.swift in Sources */,
 				752CEE522B3C87AD00CA1612 /* CheckboxTaskRow.swift in Sources */,
 				75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */,
@@ -884,6 +919,7 @@
 				752CEE6B2B3EF2A000CA1612 /* MailView.swift in Sources */,
 				752CEE692B3EE25700CA1612 /* ProjectRow.swift in Sources */,
 				75F70CCD2A98A23C008E0C03 /* CalendarView.swift in Sources */,
+				75E11C762B4C2679003B891B /* BulletTaskRow.swift in Sources */,
 				751BFB402A9E01AB00D3E0B8 /* RecurringView.swift in Sources */,
 				7561D8462AEBB3930073F1D9 /* AppFeaturesView.swift in Sources */,
 				751BFB4A2A9E4DC600D3E0B8 /* String+Ext.swift in Sources */,
@@ -907,6 +943,7 @@
 				752CEDE32B3C573800CA1612 /* CheckboxRepository.swift in Sources */,
 				75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */,
 				75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */,
+				75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */,
 				75677A2C2A813F360034C45B /* Master_TaskApp.swift in Sources */,
 				757B833C2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift in Sources */,
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
@@ -926,11 +963,13 @@
 				752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */,
 				75474BB42AE97132001119A9 /* SettingsSubscriptionView.swift in Sources */,
 				7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */,
+				75E11C732B4C1400003B891B /* BulletDTO.swift in Sources */,
 				75C7103D2A8CEE4F008E8A62 /* SettingsButtonStyle.swift in Sources */,
 				75B58D0B2A8234B900937923 /* TabBarView.swift in Sources */,
 				75B58D072A8224ED00937923 /* Font+Ext.swift in Sources */,
 				7562E6C32AD4479A00E895CD /* AuthManager.swift in Sources */,
 				753649142AD4202100C98975 /* SetPasswordView.swift in Sources */,
+				75E11C6F2B4C1259003B891B /* BulletViewModel.swift in Sources */,
 				7590CF9D2AF3FD790015B396 /* Binding+Ext.swift in Sources */,
 				759510C12ACD54EB0087004A /* SecurityViewModel.swift in Sources */,
 				752CEDE02B3C571000CA1612 /* CheckboxDTO.swift in Sources */,
@@ -945,6 +984,7 @@
 				75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */,
 				75B58D0E2A824C1400937923 /* Color+Ext.swift in Sources */,
 				75A709AF2A82900A003894F7 /* TaskListViewModel.swift in Sources */,
+				75E11C712B4C13DF003B891B /* BulletObject.swift in Sources */,
 				7537D01E2AA9DDC000F64175 /* ThemeManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

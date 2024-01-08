@@ -49,6 +49,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var recurringEndsAfterOccurrences = "2"
     @Published var selectedRepeatOnDays: [String] = []
     @Published var checkBoxes: [CheckboxDTO] = []
+    @Published var bullets: [BulletDTO] = []
     @Published var showSubscriptionView = false
     @Published var isButtonPress = false
     @Published var alertTitle: String = ""
@@ -99,6 +100,7 @@ final class NewTaskViewModel: ObservableObject {
         task.createdDate = Date()
         task.colorName = selectedColor.name
         task.checkBoxArray = checkBoxes
+        task.bulletArray = bullets
         task.project = selectedProject
         
         return task
@@ -126,6 +128,7 @@ final class NewTaskViewModel: ObservableObject {
         task.modificationDate = currentDate
         task.isCompleted = isCompleted
         task.checkBoxArray = checkBoxes
+        task.bulletArray = bullets
         task.project = selectedProject
         
         return task
@@ -151,6 +154,7 @@ final class NewTaskViewModel: ObservableObject {
         task.createdDate = date
         task.colorName = parent.colorName
         task.checkBoxArray = parent.checkBoxArray
+        task.bulletArray = parent.bulletArray
         task.project = parent.project
         
         return task
@@ -248,6 +252,22 @@ final class NewTaskViewModel: ObservableObject {
                 taskRepository.saveTask(task)
             }
         }
+        
+        for (index, item) in self.bullets.enumerated() {
+            if task.bulletArray.contains(where: { $0.id == item.id }) {
+                guard var bullet = task.bulletArray.first(where: {$0.id == item.id}) else { return }
+                bullet.sortingOrder = index
+                bullet.title = item.title
+                taskRepository.saveBullet(bullet)
+            } else {
+                var task = task
+                var item = item
+                item.sortingOrder = index
+                task.bulletArray.append(item)
+                taskRepository.saveTask(task)
+            }
+        }
+        
         let recurringTasks = tasksArray.filter { $0.id != edited.id }
         
         recurringTasks.forEach {
