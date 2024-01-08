@@ -18,71 +18,12 @@ struct TaskListView: View {
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
   @State private var isShowingAddTask: Bool = false
-  
+  @Environment(\.scenePhase) var scenePhase
   
   var selectedCalendarTab = false
   @State var calendarSorting: TaskDateSorting = .month
   @State var taskDateSorting: TaskDateSorting = .today
   @Binding var path: [TaskListNavigationView]
-  
-  // MARK: - Computed Properties
-  
-  private var taskGropedByDate: [String: [TaskDTO]] {
-    switch selectedCalendarTab ? calendarSorting : taskDateSorting {
-    case .today:
-      return  Dictionary(grouping: viewModel.recurringAndAllTasks()) { ($0.date ?? Date()).fullDayShortDateFormat }
-    case .week:
-      return Dictionary(grouping: viewModel.sortedTasks()) { ($0.date ?? $0.createdDate).fullDayShortDateFormat }
-    case .month:
-      return  Dictionary(grouping: viewModel.sortedTasks()) { ($0.date ?? Date()).fullDayShortDateFormat }
-    case .all:
-      return  Dictionary(grouping: viewModel.recurringAndAllTasks()) { ($0.date ?? Date()).fullDayShortDateFormat }
-    }
-  }
-  
-  var sectionHeaders: [String] {
-    switch selectedCalendarTab ? calendarSorting : taskDateSorting {
-    case .today:
-      return [viewModel.currentDate.fullDayShortDateFormat]
-    case .week :
-      return viewModel.currentDate.daysOfWeek().map { $0.fullDayShortDateFormat }
-    case .month:
-      return Array(Set(viewModel.calendarTaskSorting(taskList: viewModel.loadedTasks)
-        .map { ($0.date ?? Date()).fullDayShortDateFormat }))
-    case .all:
-      return Array(Set(viewModel.loadedTasks
-        .map { ($0.date ?? Date()).fullDayShortDateFormat }))
-    }
-  }
-  
-  func sectionContent(_ key: String) -> [TaskDTO] {
-    switch selectedCalendarTab ? calendarSorting : taskDateSorting {
-    case .today:
-      return (taskGropedByDate[key] ?? [])
-        .filter {
-          let taskDate = $0.isRecurring ? $0.createdDate : Date()
-          return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == viewModel.currentDate.dateComponents([.year, .month, .day])
-        }
-    case .week:
-      return (taskGropedByDate[key] ?? [])
-        .filter {
-          let taskDate = $0.isRecurring ? $0.createdDate : Date()
-            return ($0.date ?? taskDate).dateComponents([.year, .weekOfYear]) == viewModel.currentDate.dateComponents([.year, .weekOfYear])
-        }
-    case .month:
-      return (taskGropedByDate[key] ?? [])
-        .filter {
-          let taskDate = $0.isRecurring ? $0.createdDate : Date()
-          return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == viewModel.selectedCalendarDate.dateComponents([.year, .month, .day])
-        }
-    case .all:
-      return taskGropedByDate[key] ?? []
-    }
-  }
-  
-  func sectionHeader(_ key: String) -> String {
-    key
-  }
   
   // MARK: - Body
   
@@ -96,20 +37,13 @@ struct TaskListView: View {
         
         VStack(spacing: 5) {
           if taskDateSorting == .month || selectedCalendarTab, calendarSorting == .month {
-            CalendarView(viewModel: .constant(viewModel), settings: viewModel.settings, tasks: viewModel.filteredTasks)
+            CalendarView(viewModel: .constant(viewModel), settings: viewModel.settings, tasks: viewModel.loadedTasks)
           }
           taskList()
           
           Spacer()
         }
       }
-      .overlay(alignment: .bottomTrailing) {
-        plusButton()
-      }
-      .overlay(alignment: .bottom, content: {
-       newTaskView()
-          .padding(.horizontal, -10)
-      })
       .navigationDestination(for: TaskListNavigationView.self) { views in
         switch views {
         case .createTask:
@@ -133,6 +67,18 @@ struct TaskListView: View {
         try? await notificationManager.requestAuthorization()
       }
       .modifier(TabViewChildModifier())
+      .onChange(of: scenePhase) { newValue in
+        if newValue == .active {
+          viewModel.loadTasks()
+          viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+        }
+      }
+      .overlay(alignment: .bottomTrailing) {
+        plusButton()
+      }
+      .overlay(alignment: .bottom, content: {
+        newTaskView()
+      })
     }
   }
 }
@@ -170,6 +116,18 @@ private extension TaskListView {
     }
     .padding(.top, 15)
     .padding(.horizontal, 20)
+    .onChange(of: selectedCalendarTab ? calendarSorting : taskDateSorting) { _ in
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+    }
+    .onChange(of: viewModel.currentDate) { _ in
+        viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+    }
+    .onAppear {
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+    }
+    .onChange(of: viewModel.selectedCalendarDate) { _ in
+        viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+    }
   }
   
   // MARK: - taskList
@@ -177,31 +135,19 @@ private extension TaskListView {
   @ViewBuilder
   func taskList() -> some View {
     List {
-      ForEach(sectionHeaders, id: \.self) { key  in
-        Section {
-          ForEach(.constant(sectionContent(key)), id: \.id) { task in
-            TaskRow(viewModel: viewModel, task: task)
-              .listRowBackground(
-                RoundedRectangle(cornerRadius: 4)
-                  .fill(Color(task.colorName.wrappedValue))
-              )
-              .onChange(of: task.wrappedValue) { _ in
-                viewModel.loadTasks()
-              }
+      ForEach($viewModel.filteredTasks, id: \.id) { task in
+        TaskRow(viewModel: viewModel, task: task)
+          .listRowBackground(
+            RoundedRectangle(cornerRadius: 4)
+              .fill(Color(task.colorName.wrappedValue))
+          )
+          .onChange(of: task.wrappedValue) { _ in
+            viewModel.loadTasks()
           }
-          .onMove(perform: { from, to in
-            viewModel.moveTask(fromOffsets: from, toOffset: to)
-          })
-          .listRowSpacing(Constants.shared.listRowSpacing)
-          .scrollContentBackground(.hidden)
-          .listStyle(.plain)
-        } header: {
-          if taskDateSorting == .week {
-            Text(sectionHeader(key))
-          }
-        }
-        .listSectionSeparatorTint(theme.selectedTheme.sectionColor)
       }
+      .onMove(perform: { from, to in
+        viewModel.moveTask(fromOffsets: from, toOffset: to)
+      })
     }
     .listRowSpacing(Constants.shared.listRowSpacing)
     .scrollContentBackground(.hidden)
@@ -296,18 +242,19 @@ private extension TaskListView {
   
   @ViewBuilder
   func newTaskView() -> some View {
-    VStack {
-    if isShowingAddTask {
+      if isShowingAddTask {
+        VStack {
         TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
           viewModel.createTask()
+          viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
           isAddTaskFocused = false
           isShowingAddTask = false
         }
         .focused($isAddTaskFocused)
-        .padding(.vertical, 8)
+        .padding(.top, 8)
         .tint(theme.selectedTheme.sectionTextColor)
         .modifier(SectionStyle())
-      
+        
         Rectangle()
           .frame(maxWidth: .infinity)
           .frame(height: 1)
@@ -334,9 +281,9 @@ private extension TaskListView {
         .foregroundColor(theme.selectedTheme.sectionTextColor)
         .padding(.horizontal, 10)
       }
+        .padding(.bottom, 10)
+        .background(theme.selectedTheme.sectionColor)
     }
-    .padding(.bottom, 10)
-    .background(theme.selectedTheme.sectionColor)
   }
 }
 

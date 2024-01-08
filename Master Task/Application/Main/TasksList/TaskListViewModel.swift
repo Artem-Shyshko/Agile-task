@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealmSwift
+import MasterAppsUI
 
 final class TaskListViewModel: ObservableObject {
     @Published var isSearchBarHidden: Bool = true
@@ -41,7 +42,6 @@ final class TaskListViewModel: ObservableObject {
     func loadTasks() {
         self.loadedTasks = taskRepository.getTaskList()
         self.settings = settingsRepository.get()
-//        sortTask()
     }
     
     func createTask() {
@@ -52,38 +52,12 @@ final class TaskListViewModel: ObservableObject {
         quickTaskConfig = TaskDTO(object: TaskObject())
     }
     
-    func recurringAndAllTasks() -> [TaskDTO] {
-        let recurringTasks = groupedTasks(with: loadedTasks)
-        return sortedCompletedTasks(recurringTasks, settings: settings)
-    }
-    
-    func sortedTasks() -> [TaskDTO] {
-        return sortedCompletedTasks(loadedTasks, settings: settings)
-    }
-    
-    func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
-        filteredTasks.move(fromOffsets: indices, toOffset: newOffset)
-        
-        for (index, var task) in filteredTasks.reversed().enumerated() {
-            task.sortingOrder = index
-            taskRepository.saveTask(task)
-        }
-    }
-    
     func calendarTaskSorting(taskList: [TaskDTO]) -> [TaskDTO] {
         if selectedCalendarDate.dateComponents([.year, .month]) == currentDate.dateComponents([.year, .month]) {
             return filteredTasks.filter { $0.date?.dateComponents([.year, .month]) == selectedCalendarDate.dateComponents([.year, .month]) }
         }
         
         return []
-    }
-    
-    func search(with query: String) {
-        if query.isEmpty {
-            filteredTasks = loadedTasks
-        } else {
-            filteredTasks = loadedTasks.filter { $0.title.contains(query) }
-        }
     }
     
     func addToCurrentDate(component: Calendar.Component, value: Int) {
@@ -166,12 +140,61 @@ final class TaskListViewModel: ObservableObject {
     }
 }
 
-// MARK: - Private Methods
+// MARK: - Grouping and Sorting
 
 extension TaskListViewModel {
+    func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
+        filteredTasks.move(fromOffsets: indices, toOffset: newOffset)
+        
+        for (index, var task) in filteredTasks.reversed().enumerated() {
+            task.sortingOrder = index
+            taskRepository.saveTask(task)
+        }
+    }
+    
+    func groupedTasksBySelectedOption(_ option: TaskDateSorting) {
+        switch option {
+        case .all:
+            let gropedRecurringTasks = groupedTasks(with: loadedTasks)
+            let sortedCompletedTasks = sortedCompletedTasks(gropedRecurringTasks, settings: settings)
+            filteredTasks = sortedCompletedTasks
+        case .today:
+            let gropedRecurringTasks = groupedTasks(with: loadedTasks)
+            let sortedCompletedTasks = sortedCompletedTasks(gropedRecurringTasks, settings: settings)
+            filteredTasks = sortedCompletedTasks
+                .lazy
+                .filter {
+                    let taskDate = $0.isRecurring ? $0.createdDate : Date()
+                    return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == currentDate.dateComponents([.year, .month, .day])
+                }
+        case .week:
+            let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
+            filteredTasks = sortedCompletedTasks
+                .lazy
+                .filter {
+                    let taskDate = $0.isRecurring ? $0.createdDate : Date()
+                    return ($0.date ?? taskDate).dateComponents([.year, .weekOfYear]) == currentDate.dateComponents([.year, .weekOfYear])
+                }
+        case .month:
+            let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
+            filteredTasks = sortedCompletedTasks
+                .lazy
+                .filter {
+                    let taskDate = $0.isRecurring ? $0.createdDate : Date()
+                    return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == selectedCalendarDate.dateComponents([.year, .month, .day])
+                }
+        }
+    }
+    
+    func search(with query: String) {
+        if query.isEmpty {
+            filteredTasks = loadedTasks
+        } else {
+            filteredTasks = loadedTasks.filter { $0.title.contains(query) }
+        }
+    }
     
     func groupedTasks(with tasks: [TaskDTO]) -> [TaskDTO] {
-        
         let gropedTasks = Dictionary(grouping: tasks, by: \.parentId)
         
         var tasks: [TaskDTO] = []
@@ -196,7 +219,6 @@ extension TaskListViewModel {
     }
     
     func sortedTasks(in taskArray: [TaskDTO]) -> [TaskDTO] {
-        
         return taskArray
             .sorted(by: {
                 switch settings.taskSorting {
