@@ -45,6 +45,8 @@ final class TaskListViewModel: ObservableObject {
     }
     
     func createTask() {
+        guard !quickTaskConfig.title.isEmpty else { return }
+        
         let selectedProject = projectRepository.getSelectedProject()
         quickTaskConfig.project = selectedProject
         taskRepository.saveTask(quickTaskConfig)
