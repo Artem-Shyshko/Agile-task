@@ -122,7 +122,8 @@ struct NewTaskView: View {
 private extension NewTaskView {
     
     func statusView() -> some View {
-        HStack {
+        HStack(spacing: 5) {
+            setupIcon(with: .status)
             Text("Status")
             Spacer()
             Picker("", selection: $viewModel.taskStatus) {
@@ -149,21 +150,23 @@ private extension NewTaskView {
     }
     
     func descriptionView() -> some View {
-        TextFieldWithEnterButton(placeholder: "Description", text: $viewModel.description.max(400)) {
-            keyboardButtonAction()
+        HStack(spacing: 5) {
+            setupIcon(with: .description)
+            TextFieldWithEnterButton(placeholder: "Description", text: $viewModel.description.max(400)) {
+                keyboardButtonAction()
+            }
         }
-        
-        .padding(.vertical, 8)
-        .tint(theme.selectedTheme.sectionTextColor)
+        .tint(viewModel.description.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .foregroundStyle(viewModel.description.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
         .modifier(SectionStyle())
     }
     
     func checkList() -> some View {
-        ZStack {
+        HStack(spacing: 5) {
+            setupIcon(with: .doneCheckbox)
             Text("Checklist")
                 .padding(.vertical, 8)
-                .hAlign(alignment: .leading)
-            
+            Spacer()
             Button {
                 show = true
             } label: {
@@ -179,7 +182,8 @@ private extension NewTaskView {
     
     func dateView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack {
+            HStack(spacing: 5) {
+                setupIcon(with: .dateAndTime)
                 Text("Date")
                 Spacer()
                 Picker("", selection: $viewModel.selectedDateOption) {
@@ -209,7 +213,8 @@ private extension NewTaskView {
     
     func timeView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack {
+            HStack(spacing: 5) {
+                setupIcon(with: .dateAndTime)
                 Text("Time")
                 Spacer()
                 Picker("", selection: $viewModel.selectedTimeOption) {
@@ -240,7 +245,8 @@ private extension NewTaskView {
     
     func recurringView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack {
+            HStack(spacing: 5) {
+                setupIcon(with: .recurring)
                 Text("Recurring")
                 Spacer()
                 Picker("", selection: $viewModel.selectedRecurringOption) {
@@ -263,7 +269,8 @@ private extension NewTaskView {
     
     func reminderView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack {
+            HStack(spacing: 5) {
+                setupIcon(with: .reminders)
                 Text("Reminder")
                 Spacer()
                 Picker("", selection: $viewModel.reminder) {
@@ -298,7 +305,8 @@ private extension NewTaskView {
     
     func colorView() -> some View {
         VStack(spacing: 3) {
-            HStack {
+            HStack(spacing: 5) {
+                setupIcon(with: .color)
                 Text("Color")
                 Spacer()
                 Button {
@@ -325,7 +333,8 @@ private extension NewTaskView {
     }
     
     func projectView() -> some View {
-        HStack {
+        HStack(spacing: 5) {
+            setupIcon(with: .projectMini)
             Text("Project")
             Spacer()
             
@@ -363,6 +372,14 @@ private extension NewTaskView {
             Text("Save")
         }
         .font(.helveticaRegular(size: 16))
+    }
+    
+    func setupIcon(with imageResource: ImageResource) -> some View {
+            Image(imageResource)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 10, height: 10)
     }
     
     @ViewBuilder
