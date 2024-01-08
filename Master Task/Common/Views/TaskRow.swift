@@ -156,7 +156,7 @@ private extension TaskRow {
             }
             
             if task.reminder != .none {
-                Image("Reminder")
+                Image("Reminders")
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()

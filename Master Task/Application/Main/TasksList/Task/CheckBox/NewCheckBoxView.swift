@@ -88,7 +88,7 @@ private extension NewCheckBoxView {
     
     func textEditor(index: Int) -> some View {
         HStack(spacing: 4) {
-            Image("Checkbox")
+            Image(.emptyCheckbox)
                 .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
