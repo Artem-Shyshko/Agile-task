@@ -19,12 +19,14 @@ public struct CustomCalendarView: View {
         selectedCalendarDay: Binding<Date>,
         currentMonthDatesColor: Color,
         backgroundColor: Color,
-        items: [CalendarItem]? = nil
+        items: [CalendarItem]? = nil,
+        calendar: Calendar
     ) {
         self._selectedCalendarDay = selectedCalendarDay
         self.currentMonthDatesColor = currentMonthDatesColor
         self.backgroundColor = backgroundColor
         self.items = items
+        viewModel.calendar = calendar
     }
     
     public var body: some View {
@@ -209,7 +211,8 @@ struct CalendarView_Previews: PreviewProvider {
             selectedCalendarDay: .constant(Date()), 
             currentMonthDatesColor: .white,
             backgroundColor: .secondary, 
-            items: []
+            items: [],
+            calendar: Calendar.current
         )
     }
     

@@ -20,6 +20,7 @@ final class TaskListViewModel: ObservableObject {
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
+    var localNotificationManager: LocalNotificationManager?
     
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
@@ -45,12 +46,33 @@ final class TaskListViewModel: ObservableObject {
         self.settings = settingsRepository.get()
     }
     
+    func addNotification() {
+        guard let localNotificationManager else { return }
+        
+        Task {
+            await localNotificationManager.addNotification(to: TaskObject(quickTaskConfig))
+        }
+    }
+    
     func createTask() {
         guard !quickTaskConfig.title.isEmpty else { return }
+        setupTaskDate(with: quickTaskConfig.dateOption)
         
+        if settings.addNewTaskIn == .bottom {
+            if let taskWithMinSortingOrder = filteredTasks.min(by: { $0.sortingOrder < $1.sortingOrder }) {
+                quickTaskConfig.sortingOrder = taskWithMinSortingOrder.sortingOrder - 1
+                loadedTasks.append(quickTaskConfig)
+            }
+        } else {
+            quickTaskConfig.sortingOrder = filteredTasks.count + 1
+            loadedTasks.insert(quickTaskConfig, at: 0)
+        }
+        
+        addNotification()
         let selectedProject = projectRepository.getSelectedProject()
         quickTaskConfig.project = selectedProject
         taskRepository.saveTask(quickTaskConfig)
+        
         loadTasks()
         quickTaskConfig = TaskDTO(object: TaskObject())
     }
@@ -72,10 +94,17 @@ final class TaskListViewModel: ObservableObject {
         currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
     }
     
+    @MainActor
     func deleteTask(_ task: TaskDTO) {
+        guard let localNotificationManager else { return }
+        
         let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == task.parentId })
         filteredTasks.removeAll(where: { $0.parentId == task.parentId })
-        tasksToDelete.forEach { taskRepository.deleteTask(TaskObject($0)) }
+        loadedTasks.removeAll(where: { $0.parentId == task.parentId })
+        taskRepository.deleteAll(where: task.parentId)
+        tasksToDelete.forEach {
+            localNotificationManager.deleteNotification(with: $0.id.stringValue)
+        }
     }
     
     func updateTaskCompletion(_ task: inout TaskDTO) {
@@ -125,6 +154,25 @@ final class TaskListViewModel: ObservableObject {
         }
     }
     
+    func setupTaskDate(with type: DateType) {
+        switch type {
+        case .none, .custom:
+            quickTaskConfig.date = nil
+        case .today:
+            quickTaskConfig.date = Date()
+        case .tomorrow:
+            guard let tomorrowDate = Constants.shared.calendar.date(byAdding: .day, value: 1, to: currentDate)
+            else { return }
+            
+            quickTaskConfig.date = tomorrowDate
+        case .nextWeek:
+            guard let nextWeekDate = Constants.shared.calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate)
+            else { return }
+            
+            quickTaskConfig.date = nextWeekDate.startOfWeek(using: Constants.shared.calendar)
+        }
+    }
+    
     func calculateDateColor(whit date: Date, themeTextColor: Color, isDate: Bool) -> Color {
         let currentDate = Constants.shared.currentDate
         return date < (isDate ? currentDate.startDay : currentDate) ? .red : themeTextColor
@@ -154,7 +202,8 @@ extension TaskListViewModel {
     func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
         filteredTasks.move(fromOffsets: indices, toOffset: newOffset)
         
-        for (index, var task) in filteredTasks.reversed().enumerated() {
+        for (index, task) in filteredTasks.reversed().enumerated() {
+            var task = task
             task.sortingOrder = index
             taskRepository.saveTask(task)
         }

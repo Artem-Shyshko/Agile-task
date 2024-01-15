@@ -60,6 +60,30 @@ final class StorageService {
         reloadWidget()
     }
     
+    func saveAll(objects: [Object]) throws {
+        guard let storage else { return }
+        do {
+            try storage.write {
+                storage.add(objects, update: .all)
+                reloadWidget()
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func deleteAll(object: [Object]) throws {
+        guard let storage else { return }
+        do {
+            try storage.write {
+                storage.delete(object)
+                reloadWidget()
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
     func fetch<T: Object>(by type: T.Type) -> [T] {
         guard let storage else { return [] }
         reloadWidget()

@@ -21,6 +21,7 @@ struct SettingsTaskView: View {
       timeSection()
       newTasksSection()
       completedTaskSection()
+      weekStartsOnSection()
       addPlusButton()
       pushNotificationView()
       deleteAllTasksButton()
@@ -135,6 +136,27 @@ private extension SettingsTaskView {
     }
     .padding(.vertical, 3)
     .modifier(SectionStyle())
+  }
+  
+  func weekStartsOnSection() -> some View {
+    VStack(alignment: .leading) {
+      HStack {
+        Text("Week starts on")
+        Spacer()
+        Picker("", selection: $viewModel.settings.startWeekFrom) {
+          ForEach(WeekStarts.allCases, id: \.self) {
+            Text($0.rawValue)
+              .tag($0.rawValue)
+          }
+        }
+        .pickerStyle(.menu)
+      }
+    }
+    .padding(.vertical, 3)
+    .modifier(SectionStyle())
+    .onChange(of: viewModel.settings.startWeekFrom) { newValue in
+      UserDefaults.standard.set(newValue.value, forKey: "WeekStart")
+    }
   }
   
   func addPlusButton() -> some View {

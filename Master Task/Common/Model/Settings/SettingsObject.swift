@@ -55,6 +55,15 @@ enum TaskSorting: String, PersistableEnum, CaseIterable {
 enum WeekStarts: String, PersistableEnum, CaseIterable {
     case sunday = "Sunday"
     case monday = "Monday"
+    
+    var value: Int {
+        switch self {
+        case .sunday:
+            return 1
+        case .monday:
+            return 2
+        }
+    }
 }
 
 enum TaskDateFormmat: String, PersistableEnum, CaseIterable {

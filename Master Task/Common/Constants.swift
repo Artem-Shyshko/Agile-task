@@ -32,13 +32,18 @@ final class Constants {
     
     lazy var dateFormatter = DateFormatter()
     
-    lazy var calendar: Calendar = {
+    var calendar: Calendar  {
+        let weekStart = UserDefaults.standard.integer(forKey: "WeekStart")
+        
+        if weekStart == 0 {
+            UserDefaults.standard.setValue(2, forKey: "WeekStart")
+        }
+        
         var calendar = Calendar.current
-        calendar.locale = local
-        calendar.firstWeekday = 2
+        calendar.firstWeekday = UserDefaults.standard.integer(forKey: "WeekStart")
         
         return calendar
-    }()
+    }
     
     enum Constrains {
         static let viewsSpacing = 2

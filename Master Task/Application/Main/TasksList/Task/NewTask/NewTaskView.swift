@@ -232,7 +232,8 @@ private extension NewTaskView {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.taskDate,
                     currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-                    backgroundColor: theme.selectedTheme.sectionColor
+                    backgroundColor: theme.selectedTheme.sectionColor,
+                    calendar: Constants.shared.calendar
                 )
             }
         }
@@ -319,7 +320,8 @@ private extension NewTaskView {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.reminderDate,
                     currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-                    backgroundColor: theme.selectedTheme.sectionColor
+                    backgroundColor: theme.selectedTheme.sectionColor,
+                    calendar: Constants.shared.calendar
                 )
                 .modifier(SectionStyle())
                 

@@ -19,6 +19,10 @@ struct CompletedTaskView: View {
             List {
                 ForEach($viewModel.completedTasks, id: \.id) { task in
                 TaskRow(viewModel: TaskListViewModel(), task: task)
+                        .listRowBackground(
+                          RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(task.colorName.wrappedValue))
+                        )
                         .onChange(of: task.wrappedValue) { _ in
                             viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
                         }

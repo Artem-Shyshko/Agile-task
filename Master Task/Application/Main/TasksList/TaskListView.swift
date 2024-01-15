@@ -72,6 +72,9 @@ struct TaskListView: View {
           viewModel.loadTasks()
           viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
         }
+        
+        isAddTaskFocused = false
+        isShowingAddTask = false
       }
       .overlay(alignment: .bottomTrailing) {
         plusButton()
@@ -103,7 +106,7 @@ private extension TaskListView {
       .foregroundColor(.white)
       
       DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $calendarSorting : $taskDateSorting)
-
+      
       NavigationLink(value: TaskListNavigationView.createTask) {
         Image(systemName: "plus")
           .resizable()
@@ -117,13 +120,13 @@ private extension TaskListView {
       viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
     }
     .onChange(of: viewModel.currentDate) { _ in
-        viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
     }
     .onAppear {
       viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
     }
     .onChange(of: viewModel.selectedCalendarDate) { _ in
-        viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
     }
   }
   
@@ -225,8 +228,8 @@ private extension TaskListView {
   func plusButton() -> some View {
     if viewModel.settings.showPlusButton {
       Button {
-          isAddTaskFocused = true
-          isShowingAddTask = true
+        isAddTaskFocused = true
+        isShowingAddTask = true
       } label: {
         ZStack {
           Color.black
@@ -242,61 +245,105 @@ private extension TaskListView {
   
   @ViewBuilder
   func newTaskView() -> some View {
-      if isShowingAddTask {
-        VStack {
-        TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
-          viewModel.createTask()
-          viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+    if isShowingAddTask {
+      VStack(spacing: 0) {
+        Button {
           isAddTaskFocused = false
           isShowingAddTask = false
+        } label: {
+          Color.black.opacity(0.1)
+            .ignoresSafeArea()
         }
-        .focused($isAddTaskFocused)
-        .padding(.top, 8)
-        .tint(theme.selectedTheme.sectionTextColor)
-        .modifier(SectionStyle())
         
-        Rectangle()
-          .frame(maxWidth: .infinity)
-          .frame(height: 1)
-          .padding(.horizontal, 10)
-        
-        HStack {
-          Image(.calendarIcon)
-            .renderingMode(.template)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 12, height: 14)
-          Button("Tomorrow") {
-            viewModel.quickTaskConfig.dateOption = .tomorrow
+        VStack {
+          TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
+            viewModel.createTask()
+            isAddTaskFocused = false
+            isShowingAddTask = false
           }
-          .font(.helveticaRegular(size: 16))
+          .focused($isAddTaskFocused)
+          .padding(.top, 8)
+          .tint(theme.selectedTheme.sectionTextColor)
+          .modifier(SectionStyle())
           
-          Button("Next week") {
-            viewModel.quickTaskConfig.dateOption = .nextWeek
+          Rectangle()
+            .frame(maxWidth: .infinity)
+            .frame(height: 1)
+            .padding(.horizontal, 10)
+          
+          HStack(spacing: 6) {
+            Image(.calendarIcon)
+              .renderingMode(.template)
+              .resizable()
+              .scaledToFit()
+              .frame(width: 12, height: 14)
+            Button("Tomorrow") {
+              if viewModel.quickTaskConfig.dateOption == .tomorrow {
+                viewModel.quickTaskConfig.dateOption = .none
+              } else {
+                viewModel.quickTaskConfig.dateOption = .tomorrow
+              }
+            }
+            .font(
+              viewModel.quickTaskConfig.dateOption == .tomorrow
+              ? .helveticaBold(size: 14)
+              : .helveticaRegular(size: 15)
+            )
+            
+            Button("Next week") {
+              if viewModel.quickTaskConfig.dateOption == .nextWeek {
+                viewModel.quickTaskConfig.dateOption = .none
+              } else {
+                viewModel.quickTaskConfig.dateOption = .nextWeek
+              }
+            }
+            .font(
+              viewModel.quickTaskConfig.dateOption == .nextWeek
+              ? .helveticaBold(size: 14)
+              : .helveticaRegular(size: 15)
+            )
+            
+            Spacer()
+            Text("/")
+            Spacer()
+            
+            Image("Reminder")
+              .renderingMode(.template)
+              .resizable()
+              .scaledToFit()
+              .frame(width: 12, height: 14)
+            Button("In 1 hour") {
+              if viewModel.quickTaskConfig.reminder == .inOneHour {
+                viewModel.quickTaskConfig.reminder = .none
+              } else {
+                viewModel.quickTaskConfig.reminder = .inOneHour
+              }
+            }
+            .font(
+              viewModel.quickTaskConfig.reminder == .inOneHour
+              ? .helveticaBold(size: 14)
+              : .helveticaRegular(size: 15)
+            )
+            
+            Button("Tomorrow") {
+              if viewModel.quickTaskConfig.reminder == .tomorrow {
+                viewModel.quickTaskConfig.reminder = .none
+              } else {
+                viewModel.quickTaskConfig.reminder = .tomorrow
+              }
+            }
+            .font(
+              viewModel.quickTaskConfig.reminder == .tomorrow
+              ? .helveticaBold(size: 14)
+              : .helveticaRegular(size: 15)
+            )
           }
-          .font(.helveticaRegular(size: 16))
-          Spacer()
-          Text("/")
-          Spacer()
-          Image(.reminders)
-            .renderingMode(.template)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 12, height: 14)
-          Button("In 1 hour") {
-            viewModel.quickTaskConfig.reminder = .inOneHour
-          }
-          .font(.helveticaRegular(size: 16))
-          Button("Tomorrow") {
-            viewModel.quickTaskConfig.reminder = .tomorrow
-          }
-          .font(.helveticaRegular(size: 16))
+          .foregroundColor(theme.selectedTheme.sectionTextColor)
+          .padding(.horizontal, 10)
         }
-        .foregroundColor(theme.selectedTheme.sectionTextColor)
-        .padding(.horizontal, 10)
-      }
         .padding(.bottom, 10)
         .background(theme.selectedTheme.sectionColor)
+      }
     }
   }
 }

@@ -21,7 +21,8 @@ struct CalendarView: View {
           selectedCalendarDay: $viewModel.selectedCalendarDate,
           currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
           backgroundColor: theme.selectedTheme.sectionColor,
-          items: tasks
+          items: tasks,
+          calendar: Constants.shared.calendar
       )
     }
     .foregroundColor(.textColor)

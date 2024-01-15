@@ -13,6 +13,7 @@ final class CalendarViewModel: ObservableObject {
     
     @Published var showMonthList = false
     @Published var showYearList = false
+    @Published var calendar = Calendar.current
     
     let currentYear = Date().dateComponents([.year]).year ?? 0
     let currentYearPlusThen = Calendar.current.date(
@@ -21,7 +22,6 @@ final class CalendarViewModel: ObservableObject {
         to: Date())?.dateComponents([.year]).year ?? 0
     let months = Calendar.current.standaloneMonthSymbols
     let calendarGridLayout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
-    lazy var calendar = Calendar.current
     private lazy var dateYearAgo: Date = {
         let date = Date()
         return calendar.date(byAdding: .year, value: -1, to: date) ?? date

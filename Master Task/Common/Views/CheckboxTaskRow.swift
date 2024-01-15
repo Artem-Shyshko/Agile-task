@@ -22,7 +22,7 @@ struct CheckboxTaskRow: View {
                 .frame(width: 12, height: 12)
             Text(checkbox.title)
         }
-        .foregroundColor(checkbox.isCompleted ? .textColor.opacity(0.5) : theme.selectedTheme.sectionTextColor)
+        .foregroundColor(foregroundColor())
         .strikethrough(checkbox.isCompleted , color: .completedTaskLineColor)
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)
@@ -33,6 +33,26 @@ struct CheckboxTaskRow: View {
         .onTapGesture(count: 1, perform: {
             viewModel.completeCheckbox(&checkbox)
         })
+    }
+}
+
+private extension CheckboxTaskRow {
+    func foregroundColor() -> Color {
+        if checkbox.isCompleted {
+            if theme.selectedTheme.name == Constants.shared.nightTheme,
+               colorName != theme.selectedTheme.sectionColor.name {
+                return .black.opacity(0.5)
+            } else {
+                return  .textColor.opacity(0.5)
+            }
+        } else {
+            if theme.selectedTheme.name == Constants.shared.nightTheme,
+               colorName != theme.selectedTheme.sectionColor.name {
+                return .black
+            } else {
+                return  theme.selectedTheme.sectionTextColor
+            }
+        }
     }
 }
 

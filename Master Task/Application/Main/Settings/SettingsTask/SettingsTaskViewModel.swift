@@ -8,6 +8,7 @@
 import SwiftUI
 import MasterAppsUI
 
+@MainActor
 final class SettingsTaskViewModel: ObservableObject {
     @Published var settings: SettingsDTO
     @Published var isShowingAlert = false
@@ -37,8 +38,7 @@ final class SettingsTaskViewModel: ObservableObject {
     }
     
     func deleteAllTasks() {
-        let taskToDelete = tasksRepository.getTaskList()
-        taskToDelete.forEach { tasksRepository.deleteTask(TaskObject($0)) }
+        tasksRepository.deleteAll()
     }
     
     func requestNotificationPermission() {

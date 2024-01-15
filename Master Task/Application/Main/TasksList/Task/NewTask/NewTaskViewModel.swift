@@ -197,15 +197,8 @@ final class NewTaskViewModel: ObservableObject {
             )!
         }
         
-        if selectedDateOption == .custom {
-            self.taskDate = Constants.shared.calendar.date(
-                bySettingHour: taskTime.dateComponents([.hour]).hour ?? 12,
-                minute: taskTime.dateComponents([.minute]).minute ?? 00,
-                second: 0, of: taskDate
-            )!
-        }
-        
         if selectedTimeOption == .custom, selectedDateOption == .custom {
+            setupTime()
             var components = taskTime.dateComponents([.day, .month, .year, .hour, .minute])
             components.day = taskDate.dateComponents([.day]).day
             components.month = taskDate.dateComponents([.month]).month
@@ -213,6 +206,28 @@ final class NewTaskViewModel: ObservableObject {
             
             guard let newTimeDate = Constants.shared.calendar.date(from: components) else { return }
             taskTime = newTimeDate
+        } else if selectedDateOption == .custom {
+            self.taskDate = Constants.shared.calendar.date(
+                bySettingHour: taskTime.dateComponents([.hour]).hour ?? 12,
+                minute: taskTime.dateComponents([.minute]).minute ?? 00,
+                second: 0, of: taskDate
+            )!
+        } else if selectedTimeOption == .custom {
+            setupTime()
+        }
+    }
+    
+    func setupTime() {
+        let isTwelve = settings.timeFormat == .twelve
+        
+        let dateFormatter = Constants.shared.dateFormatter
+        dateFormatter.dateFormat = isTwelve ? "h:mm" : "HH:mm"
+        var timeString = dateFormatter.string(from: taskTime)
+        timeString +=  isTwelve ? " \(selectedDateTimePeriod.rawValue)" : ""
+        dateFormatter.dateFormat = isTwelve ? "h:mm a" : "HH:mm"
+        
+        if let date = dateFormatter.date(from: timeString) {
+            taskTime = date
         }
     }
     
@@ -230,11 +245,15 @@ final class NewTaskViewModel: ObservableObject {
         }
     }
     
+    func deleteNotification(for task: TaskDTO) {
+        guard let localNotificationManager else { return }
+        
+        Task {
+            await localNotificationManager.deleteNotification(with: task.id.stringValue)
+        }
+    }
+    
     @MainActor func writeEditedTask(_ task: TaskDTO) {
-        
-        let tasksArray = taskRepository.getTaskList()
-            .filter { $0.parentId == task.parentId }
-        
         let edited = self.updateTask(task: task)
         taskRepository.saveTask(edited)
         
@@ -249,7 +268,7 @@ final class NewTaskViewModel: ObservableObject {
                 var checkbox = checkbox
                 checkbox.sortingOrder = index
                 task.checkBoxArray.append(checkbox)
-                taskRepository.saveTask(task)
+                taskRepository.saveCheckbox(checkbox)
             }
         }
         
@@ -268,13 +287,12 @@ final class NewTaskViewModel: ObservableObject {
             }
         }
         
-        let recurringTasks = tasksArray.filter { $0.id != edited.id }
+        let tasksArray = taskRepository.getTaskList()
+            .filter { $0.parentId == task.parentId }
         
-        recurringTasks.forEach {
-            guard let localNotificationManager else { return }
-            
-            localNotificationManager.deleteNotification(with: $0.id.stringValue)
-            taskRepository.deleteTask(.init($0))
+        taskRepository.deleteAll(where: task.parentId)
+        tasksArray.forEach {
+            deleteNotification(for: $0)
         }
         
         writeRecurringTaskArray(
@@ -297,11 +315,9 @@ final class NewTaskViewModel: ObservableObject {
     @MainActor func deleteTask(parentId: ObjectId) {
         let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == parentId })
         tasksToDelete.forEach {
-            guard let localNotificationManager else { return }
-            
-            localNotificationManager.deleteNotification(with: $0.id.stringValue)
-            taskRepository.deleteTask(TaskObject($0))
+            deleteNotification(for: $0)
         }
+        taskRepository.deleteAll(where: parentId)
     }
     
     func toggleCompletionAction(_ editTask: TaskDTO) {

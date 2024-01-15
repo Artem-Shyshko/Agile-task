@@ -136,6 +136,10 @@ private extension TaskRow {
                     )
             }
             
+            if task.recurring == .none {
+                timeView()
+            }
+            
             if let time = task.time {
                 HStack {
                     Text(time.format("\(timeFormat):mm"))
@@ -165,6 +169,11 @@ private extension TaskRow {
             }
             
             if task.recurring != .none {
+                let timeFormat = viewModel.settings.timeFormat == .twelve ? "hh" : "HH"
+                
+                Text(task.createdDate.format(viewModel.dateFormat()))
+                    .font(.helveticaRegular(size: 14))
+                timeView()
                 Image("Recurring")
                     .renderingMode(.template)
                     .resizable()
@@ -178,6 +187,31 @@ private extension TaskRow {
         .onTapGesture(count: 2, perform: {
             viewModel.updateTaskCompletion(&task)
         })
+    }
+    
+    @ViewBuilder
+    func timeView() -> some View {
+        if let time = task.time {
+            let timeFormat = viewModel.settings.timeFormat == .twelve ? "hh" : "HH"
+            
+            HStack {
+                Text(time.format("\(timeFormat):mm"))
+                
+                if viewModel.settings.timeFormat == .twelve {
+                    Text(time.format("a"))
+                }
+            }
+            .font(.helveticaRegular(size: 14))
+            .foregroundStyle(
+                task.isCompleted
+                ? foregroundColor()
+                : viewModel.calculateDateColor(
+                    whit: time,
+                    themeTextColor: theme.selectedTheme.sectionTextColor,
+                    isDate: false
+                )
+            )
+        }
     }
     
     @ViewBuilder
