@@ -62,6 +62,7 @@ struct TaskListView: View {
         }
         viewModel.loadTasks()
         viewModel.search(with: "")
+        viewModel.localNotificationManager = notificationManager
       }
       .task {
         try? await notificationManager.requestAuthorization()
