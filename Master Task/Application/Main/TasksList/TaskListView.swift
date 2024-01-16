@@ -230,17 +230,12 @@ private extension TaskListView {
     if viewModel.settings.showPlusButton {
       Button {
         isAddTaskFocused = true
-        isShowingAddTask = true
+        viewModel.isShowingAddTask = true
       } label: {
-        ZStack {
-          Color.black
-            .frame(width: 30, height: 30)
-            .cornerRadius(5)
-          Image(systemName: "plus")
-        }
-        .padding()
-        .padding(.bottom, 40)
+        Image(.quickTaskButton)
       }
+      .padding(.trailing, 23)
+      .padding(.bottom, 70)
     }
   }
   
