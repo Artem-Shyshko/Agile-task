@@ -20,7 +20,7 @@ struct TaskDTO: CalendarItem {
     var time: Date?
     var timeOption: TimeOption
     var timePeriod: TimePeriod
-    var recurring: RecurringOptions
+    var recurring: RecurringConfigurationDTO?
     var reminder: Reminder
     var reminderDate: Date?
     var createdDate: Date = Date()
@@ -44,7 +44,8 @@ struct TaskDTO: CalendarItem {
     }
     
     var isRecurring: Bool {
-        switch recurring {
+        guard let recurring else { return false }
+        switch recurring.option {
         case .none:
             return false
         case .daily, .weekly, .monthly, .yearly, .custom, .weekdays:
@@ -65,7 +66,6 @@ extension TaskDTO {
         time = object.time
         timeOption = object.timeOption
         timePeriod = object.timePeriod
-        recurring = object.recurring
         reminder = object.reminder
         reminderDate = object.reminderDate
         createdDate = object.createdDate
@@ -79,6 +79,10 @@ extension TaskDTO {
         bulletArray = object.bulletList.map { BulletDTO(object: $0) }
         if let project = object.project {
             self.project = ProjectDTO(project)
+        }
+        
+        if let recurringConfig = object.recurring {
+            self.recurring = RecurringConfigurationDTO(recurringConfig)
         }
     }
 }

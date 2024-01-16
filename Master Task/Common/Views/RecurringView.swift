@@ -13,7 +13,7 @@ struct RecurringView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
             repeatEveryView()
-            if viewModel.repeatEvery == .weeks { repeatOnView() }
+            if viewModel.recurringConfiguration.repeatEvery == .weeks { repeatOnView() }
             endsAfterView()
             endsView()
         }
@@ -27,7 +27,7 @@ private extension RecurringView {
         HStack(spacing: 10) {
             Text("Repeat every")
             Spacer()
-            TextField("", text: $viewModel.repeatCount)
+            TextField("", text: $viewModel.recurringConfiguration.repeatCount)
                 .padding(EdgeInsets(top: 0, leading: 21, bottom: 0, trailing: 10))
                 .frame(width: 50, height: 35)
                 .background(Color.textFieldColor)
@@ -38,10 +38,10 @@ private extension RecurringView {
                 downAction: { viewModel.minusRecurringRepeatingCount() }
             )
             
-            Menu(viewModel.repeatEvery.rawValue) {
+            Menu(viewModel.recurringConfiguration.repeatEvery.rawValue) {
                 ForEach(RepeatRecurring.allCases, id: \.self) { item in
                     Button {
-                        viewModel.repeatEvery = item
+                        viewModel.recurringConfiguration.repeatEvery = item
                     } label: {
                         Text(item.rawValue)
                     }
@@ -73,9 +73,9 @@ private extension RecurringView {
                 Text("Ends after")
                 Spacer()
                 Button {
-                    viewModel.recurringEnds = .after
+                    viewModel.recurringConfiguration.endsOption = .after
                 } label: {
-                    Image(viewModel.recurringEnds == .after ? "done-checkbox" : "empty-checkbox")
+                    Image(viewModel.recurringConfiguration.endsOption == .after ? "done-checkbox" : "empty-checkbox")
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
@@ -83,19 +83,19 @@ private extension RecurringView {
                 }
                 
                 Text("Ocurrences")
-                TextField("", text: $viewModel.recurringEndsAfterOccurrences)
+                TextField("", text: $viewModel.recurringConfiguration.endsAfterOccurrences)
                     .frame(width: 30, height: 35)
                     .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
                     .background(Color.textFieldColor)
                     .cornerRadius(5)
                     .keyboardType(.numberPad)
-                    .disabled(viewModel.recurringEnds != .after)
+                    .disabled(viewModel.recurringConfiguration.endsOption != .after)
                 
                 upDownArrows(
                     upAction: { viewModel.addRecurringEndsAfterOccurrences() },
                     downAction: { viewModel.minusRecurringEndsAfterOccurrences() }
                 )
-                .disabled(viewModel.recurringEnds != .after)
+                .disabled(viewModel.recurringConfiguration.endsOption != .after)
             }
             .padding(.trailing, 10)
             .modifier(SectionStyle())
@@ -107,9 +107,9 @@ private extension RecurringView {
             Text("Ends")
             Spacer()
             Button {
-                viewModel.recurringEnds = .on
+                viewModel.recurringConfiguration.endsOption = .on
             } label: {
-                Image(viewModel.recurringEnds == .on ? "done-checkbox" : "empty-checkbox")
+                Image(viewModel.recurringConfiguration.endsOption == .on ? "done-checkbox" : "empty-checkbox")
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
@@ -117,16 +117,16 @@ private extension RecurringView {
             }
             .padding(.leading)
             
-            DatePicker("", selection: $viewModel.recurringEndsDate, displayedComponents: .date)
-                .disabled(viewModel.recurringEnds != .on)
+            DatePicker("", selection: $viewModel.recurringConfiguration.endsDate, displayedComponents: .date)
+                .disabled(viewModel.recurringConfiguration.endsOption != .on)
                 .frame(width: 80, height: 35)
-                .foregroundColor(viewModel.recurringEnds == .on ? .black : .secondary)
+                .foregroundColor(viewModel.recurringConfiguration.endsOption == .on ? .black : .secondary)
             
             Button {
-                viewModel.recurringEnds = .never
+                viewModel.recurringConfiguration.endsOption = .never
             } label: {
                 HStack {
-                    Image(viewModel.recurringEnds == .never ? "done-checkbox" : "empty-checkbox")
+                    Image(viewModel.recurringConfiguration.endsOption == .never ? "done-checkbox" : "empty-checkbox")
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()

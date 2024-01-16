@@ -71,7 +71,9 @@ struct NewTaskView: View {
                 viewModel.bullets = editTask.bulletArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
                 viewModel.selectedColor = Color(editTask.colorName)
                 viewModel.isCompleted = editTask.isCompleted
-                viewModel.selectedRecurringOption = editTask.recurring
+                if let recurring = editTask.recurring {
+                    viewModel.recurringConfiguration = recurring
+                }
                 viewModel.selectedDateTimePeriod = editTask.timePeriod
                 if let date = editTask.date {
                     viewModel.taskDate = date
@@ -287,7 +289,7 @@ private extension NewTaskView {
                 setupIcon(with: .recurring)
                 Text("Recurring")
                 Spacer()
-                Picker("", selection: $viewModel.selectedRecurringOption) {
+                Picker("", selection: $viewModel.recurringConfiguration.option) {
                     ForEach(RecurringOptions.allCases, id: \.self) { option in
                         Text(option.rawValue)
                             .tag(option.rawValue)
@@ -295,11 +297,11 @@ private extension NewTaskView {
                     .pickerStyle(.menu)
                 }
             }
-            .tint(viewModel.selectedRecurringOption == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .foregroundStyle(viewModel.selectedRecurringOption == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .tint(viewModel.recurringConfiguration.option == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .foregroundStyle(viewModel.recurringConfiguration.option == .none ? .secondary : theme.selectedTheme.sectionTextColor)
             .modifier(SectionStyle())
             
-            if viewModel.selectedRecurringOption == .custom {
+            if viewModel.recurringConfiguration.option == .custom {
                 RecurringView(viewModel: viewModel)
             }
         }

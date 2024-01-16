@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsSubscriptionView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         
@@ -20,7 +21,13 @@ struct SettingsSubscriptionView: View {
         .navigationTitle("Subscription")
         .padding(.top, 25)
         .modifier(TabViewChildModifier())
-        .navigationBarBackButtonHidden(false)
+        .toolbar {
+          ToolbarItem(placement: .topBarLeading) {
+            backButton {
+              dismiss.callAsFunction()
+            }
+          }
+        }
     }
 }
 

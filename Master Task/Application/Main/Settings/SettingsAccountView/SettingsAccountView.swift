@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsAccountView: View {
     @EnvironmentObject var theme: AppThemeManager
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
             VStack {
@@ -27,9 +28,15 @@ struct SettingsAccountView: View {
                 Spacer()
             }
             .navigationTitle("Account")
+            .toolbar {
+              ToolbarItem(placement: .topBarLeading) {
+                backButton {
+                  dismiss.callAsFunction()
+                }
+              }
+            }
             .padding(.top, 25)
             .modifier(TabViewChildModifier())
-            .navigationBarBackButtonHidden(false)
     }
 }
 

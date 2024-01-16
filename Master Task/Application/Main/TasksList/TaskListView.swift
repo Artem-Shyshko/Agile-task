@@ -29,7 +29,7 @@ struct TaskListView: View {
   
   var body: some View {
     NavigationStack(path: $path) {
-      VStack(spacing: 10) {
+      VStack(spacing: 20) {
         VStack(spacing: 20) {
           topBarView()
           dateBarView()

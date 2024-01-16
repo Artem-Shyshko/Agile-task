@@ -9,6 +9,10 @@ import Foundation
 
 final class ProjectsViewModel: ObservableObject {
     @Published var savedProjects: [ProjectDTO]
+    @Published var isAlert = false
+    @Published var isSearchBarHidden: Bool = true
+    @Published var searchText: String = ""
+    @Published var showNewProjectView = false
     let projectsRepo: ProjectRepository = ProjectRepositoryImpl()
     
     init() {

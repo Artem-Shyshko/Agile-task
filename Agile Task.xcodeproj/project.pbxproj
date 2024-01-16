@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		751BFB402A9E01AB00D3E0B8 /* RecurringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */; };
 		751BFB4A2A9E4DC600D3E0B8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB492A9E4DC600D3E0B8 /* String+Ext.swift */; };
-		751BFB4D2A9E4DFF00D3E0B8 /* RepeatRecurring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB4C2A9E4DFF00D3E0B8 /* RepeatRecurring.swift */; };
 		7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */; };
 		752CEDDB2B3C565C00CA1612 /* TaskDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDA2B3C565C00CA1612 /* TaskDTO.swift */; };
 		752CEDDE2B3C569C00CA1612 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDD2B3C569C00CA1612 /* TaskRepository.swift */; };
@@ -203,7 +202,6 @@
 /* Begin PBXFileReference section */
 		751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringView.swift; sourceTree = "<group>"; };
 		751BFB492A9E4DC600D3E0B8 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
-		751BFB4C2A9E4DFF00D3E0B8 /* RepeatRecurring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepeatRecurring.swift; sourceTree = "<group>"; };
 		7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
 		752CEDDA2B3C565C00CA1612 /* TaskDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDTO.swift; sourceTree = "<group>"; };
 		752CEDDD2B3C569C00CA1612 /* TaskRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRepository.swift; sourceTree = "<group>"; };
@@ -362,14 +360,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		751BFB4B2A9E4DF400D3E0B8 /* Enum */ = {
-			isa = PBXGroup;
-			children = (
-				751BFB4C2A9E4DFF00D3E0B8 /* RepeatRecurring.swift */,
-			);
-			path = Enum;
-			sourceTree = "<group>";
-		};
 		752CEDDC2B3C567000CA1612 /* Task */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,7 +722,6 @@
 			isa = PBXGroup;
 			children = (
 				75A3CFFD2A99047D000F68BA /* Constants.swift */,
-				751BFB4B2A9E4DF400D3E0B8 /* Enum */,
 				75C710392A8CE9B4008E8A62 /* Views */,
 				75B58D142A827BE200937923 /* Model */,
 				75B58D052A82249B00937923 /* Extensions */,
@@ -1052,7 +1041,6 @@
 			files = (
 				752CEDDE2B3C569C00CA1612 /* TaskRepository.swift in Sources */,
 				75C7103F2A8CEEDB008E8A62 /* NavigationView.swift in Sources */,
-				751BFB4D2A9E4DFF00D3E0B8 /* RepeatRecurring.swift in Sources */,
 				753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */,
 				75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */,
 				75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */,

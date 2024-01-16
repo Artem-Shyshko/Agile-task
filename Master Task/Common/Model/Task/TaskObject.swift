@@ -20,7 +20,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var time: Date?
     @Persisted var timeOption: TimeOption
     @Persisted var timePeriod: TimePeriod
-    @Persisted var recurring: RecurringOptions
+    @Persisted var recurring: RecurringConfiguration?
     @Persisted var reminder: Reminder
     @Persisted var reminderDate: Date?
     @Persisted var createdDate: Date = Date()
@@ -38,7 +38,6 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         parentId: ObjectId,
         title: String,
         date: Date?,
-        recurring: RecurringOptions,
         reminder: Reminder,
         reminderDate: Date?,
         createdDate: Date,
@@ -50,7 +49,6 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         self.title = title
         self.date = date
         self.dateOption = dateOption
-        self.recurring = recurring
         self.reminder = reminder
         self.reminderDate = reminderDate
         self.createdDate = createdDate
@@ -68,7 +66,9 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     }
     
     var isRecurring: Bool {
-        switch recurring {
+        guard let recurring else { return false }
+        
+        switch recurring.option {
         case .none:
             return false
         case .daily, .weekly, .monthly, .yearly, .custom, .weekdays:
@@ -92,7 +92,6 @@ extension TaskObject {
         time = dto.time
         timeOption = dto.timeOption
         timePeriod = dto.timePeriod
-        recurring = dto.recurring
         reminder = dto.reminder
         reminderDate = dto.reminderDate
         createdDate = dto.createdDate
@@ -104,6 +103,9 @@ extension TaskObject {
         sortingOrder = dto.sortingOrder
         if let project = dto.project {
             self.project = ProjectObject(project)
+        }
+        if let recurring = dto.recurring {
+            self.recurring = RecurringConfiguration(recurring)
         }
         
         dto.checkBoxArray.forEach { checkBoxList.append(CheckboxObject($0)) }
@@ -186,5 +188,70 @@ enum TaskStatus: String, CaseIterable, PersistableEnum {
         case .like:
             return "Like"
         }
+    }
+}
+
+enum RecurringEnds: String, CaseIterable, PersistableEnum {
+    case never = "Never"
+    case on = "On"
+    case after = "After"
+}
+
+enum RepeatRecurring: String, CaseIterable, PersistableEnum {
+    case days = "days"
+    case weeks = "weeks"
+    case month = "month"
+    case years = "years"
+}
+
+class RecurringConfiguration: Object {
+    @Persisted var date: Date = Date()
+    @Persisted var option: RecurringOptions = .none
+    @Persisted var repeatCount: String = "0"
+    @Persisted var repeatEvery: RepeatRecurring = .weeks
+    @Persisted var endsOption: RecurringEnds = .never
+    @Persisted var endsDate: Date = Date()
+    @Persisted var endsAfterOccurrences = "2"
+    @Persisted var repeatOnDays: RealmSwift.List<String>
+}
+
+extension RecurringConfiguration {
+    convenience init(_ dto: RecurringConfigurationDTO) {
+        self.init()
+        date = dto.date
+        option = dto.option
+        repeatCount = dto.repeatCount
+        repeatEvery = dto.repeatEvery
+        endsOption = dto.endsOption
+        endsDate = dto.endsDate
+        endsAfterOccurrences = dto.endsAfterOccurrences
+        
+        dto.repeatOnDays.forEach { repeatOnDays.append($0) }
+    }
+}
+
+struct RecurringConfigurationDTO {
+    var date: Date = Date()
+    var option: RecurringOptions = .none
+    var repeatCount: String = "0"
+    var repeatEvery: RepeatRecurring = .weeks
+    var endsOption: RecurringEnds = .never
+    var endsDate: Date = Date()
+    var endsAfterOccurrences = "2"
+    var repeatOnDays: [String] = []
+}
+
+extension RecurringConfigurationDTO {
+    init(_ object: RecurringConfiguration) {
+        self.init()
+        date = object.date
+        option = object.option
+        repeatCount = object.repeatCount
+        repeatEvery = object.repeatEvery
+        endsOption = object.endsOption
+        endsDate = object.endsDate
+        endsAfterOccurrences = object.endsAfterOccurrences
+        
+        object.repeatOnDays.forEach { repeatOnDays.append($0) }
     }
 }

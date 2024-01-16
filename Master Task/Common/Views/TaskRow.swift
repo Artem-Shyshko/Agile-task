@@ -136,7 +136,7 @@ private extension TaskRow {
                     )
             }
             
-            if task.recurring == .none {
+            if let recurring = task.recurring, recurring.option == .none {
                 timeView()
             }
             
@@ -168,9 +168,7 @@ private extension TaskRow {
                     .frame(width: 12, height: 15)
             }
             
-            if task.recurring != .none {
-                let timeFormat = viewModel.settings.timeFormat == .twelve ? "hh" : "HH"
-                
+            if let recurring = task.recurring, recurring.option != .none {
                 Text(task.createdDate.format(viewModel.dateFormat()))
                     .font(.helveticaRegular(size: 14))
                 timeView()

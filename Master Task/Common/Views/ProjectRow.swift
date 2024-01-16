@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ProjectRow: View {
-    @EnvironmentObject var userState: UserState
     @StateObject var vm: ProjectsViewModel
     var project: ProjectDTO
     
@@ -21,7 +20,33 @@ struct ProjectRow: View {
                 
                 Text(project.name)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .modifier(SectionStyle())
+        }
+        .swipeActions {
+            NavigationLink {
+                NewProjectView(vm: NewProjectViewModel(editedProject: project))
+            } label: {
+                Image("done-checkbox")
+            }
+            .tint(Color.editButtonColor)
+            
+            if !project.isSelected {
+                Button {
+                    vm.isAlert = true
+                } label: {
+                    Image("trash")
+                }
+                .tint(Color.red)
+            }
+        }
+        .alert("Are you sure you want to delete", isPresented: $vm.isAlert) {
+            Button("Cancel", role: .cancel) {
+                vm.isAlert = false
+            }
+            
+            Button("Delete") {
+                vm.deleteProject(project)
+            }
         }
     }
     
@@ -29,6 +54,6 @@ struct ProjectRow: View {
         Image("Check")
             .resizable()
             .scaledToFit()
-            .frame(width: 12, height: 12)
+            .frame(width: 15, height: 15)
     }
 }

@@ -14,7 +14,7 @@ struct AppFeaturesView: View {
                 label(image: "done-checkbox", text: "Advanced tasks")
                 label(image: "Reminders", text: "Reminders")
                 label(image: "Recurring", text: "Reccuring tasks")
-                label(image: "DateandTime", text: "Date and time")
+                label(image: "DateAndTime", text: "Date and time")
                 label(image: "empty-checkbox", text: "Color highlights")
             }
             

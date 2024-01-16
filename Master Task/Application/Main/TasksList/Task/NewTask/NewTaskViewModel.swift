@@ -9,12 +9,6 @@ import SwiftUI
 import MasterAppsUI
 import RealmSwift
 
-enum RecurringEnds: String, CaseIterable {
-    case never = "Never"
-    case on = "On"
-    case after = "After"
-}
-
 final class NewTaskViewModel: ObservableObject {
     private lazy var currentDate = Date()
     @Published var taskStatus: TaskStatus = .none
@@ -25,33 +19,24 @@ final class NewTaskViewModel: ObservableObject {
     @Published var taskTime: Date = Date()
     @Published var selectedTimeOption: TimeOption = .none
     @Published var selectedDateTimePeriod: TimePeriod = .am
-    @Published var recurringDate: Date = Date()
-    @Published var selectedRecurringOption: RecurringOptions = .none
     @Published var reminder: Reminder = .none
     @Published var reminderDate: Date = Date()
     @Published var reminderTime: Date = Date()
     @Published var isTypedReminderTime: Bool = false
     @Published var selectedReminderTimePeriod: TimePeriod = .am
     @Published var selectedColor: Color = .sectionColor
-    @Published var showColorPanel = false
     @Published var isCompleted = false
-    @Published var showDeleteAlert = false
-    @Published var showReminderAlert = false
     @Published var selectedProject: ProjectDTO
     @Published var projects: [ProjectDTO] = []
-    
-    // MARK: - Recurring view properties
-    
-    @Published var repeatCount: String = "0"
-    @Published var repeatEvery: RepeatRecurring = .weeks
-    @Published var recurringEnds: RecurringEnds = .never
-    @Published var recurringEndsDate: Date = Date()
-    @Published var recurringEndsAfterOccurrences = "2"
-    @Published var selectedRepeatOnDays: [String] = []
     @Published var checkBoxes: [CheckboxDTO] = []
     @Published var bullets: [BulletDTO] = []
+    @Published var recurringConfiguration = RecurringConfigurationDTO()
+    
     @Published var showSubscriptionView = false
     @Published var isButtonPress = false
+    @Published var showDeleteAlert = false
+    @Published var showReminderAlert = false
+    @Published var showColorPanel = false
     @Published var alertTitle: String = ""
     
 #warning("Change back to 8")
@@ -91,7 +76,7 @@ final class NewTaskViewModel: ObservableObject {
         task.description = description.isEmpty ? nil : description
         task.date = selectedDateOption != .none ? taskDate : nil
         task.dateOption = selectedDateOption
-        task.recurring = selectedRecurringOption
+        task.recurring = recurringConfiguration
         task.time = selectedTimeOption == .none ? nil : taskTime
         task.timePeriod = selectedDateTimePeriod
         task.timeOption = selectedTimeOption
@@ -121,7 +106,7 @@ final class NewTaskViewModel: ObservableObject {
         task.time = selectedTimeOption == .none ? nil : taskTime
         task.timePeriod = selectedDateTimePeriod
         task.timeOption = selectedTimeOption
-        task.recurring = selectedRecurringOption
+        task.recurring = recurringConfiguration
         task.reminder = reminder
         task.reminderDate = reminderDate
         task.colorName = selectedColor.name
@@ -161,30 +146,30 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func addRecurringRepeatingCount() {
-        repeatCount = String((Int(repeatCount) ?? 0) + 1)
+        recurringConfiguration.repeatCount = String((Int(recurringConfiguration.repeatCount) ?? 0) + 1)
     }
     
     func minusRecurringRepeatingCount() {
-        if (Int(repeatCount) ?? 0) > 0 {
-            repeatCount = String((Int(repeatCount) ?? 0) - 1)
+        if (Int(recurringConfiguration.repeatCount) ?? 0) > 0 {
+            recurringConfiguration.repeatCount = String((Int(recurringConfiguration.repeatCount) ?? 0) - 1)
         }
     }
     
     func addRecurringEndsAfterOccurrences() {
-        recurringEndsAfterOccurrences = String((Int(recurringEndsAfterOccurrences) ?? 0) + 1)
+        recurringConfiguration.endsAfterOccurrences = String((Int(recurringConfiguration.endsAfterOccurrences) ?? 0) + 1)
     }
     
     func minusRecurringEndsAfterOccurrences() {
-        if (Int(recurringEndsAfterOccurrences) ?? 0) > 0 {
-            recurringEndsAfterOccurrences = String((Int(recurringEndsAfterOccurrences) ?? 0) - 1)
+        if (Int(recurringConfiguration.endsAfterOccurrences) ?? 0) > 0 {
+            recurringConfiguration.endsAfterOccurrences = String((Int(recurringConfiguration.endsAfterOccurrences) ?? 0) - 1)
         }
     }
     
     func controlSelectedDay(isSelectDay: Bool, dayName: String) {
         if isSelectDay {
-            selectedRepeatOnDays.append(dayName)
+            recurringConfiguration.repeatOnDays.append(dayName)
         } else {
-            selectedRepeatOnDays.removeAll(where: {$0 == dayName})
+            recurringConfiguration.repeatOnDays.removeAll(where: {$0 == dayName})
         }
     }
     
@@ -234,14 +219,16 @@ final class NewTaskViewModel: ObservableObject {
     func writeRecurringTaskArray(
         for task: TaskDTO
     ) {
-        if selectedRecurringOption == .custom {
+        if recurringConfiguration.option == .custom {
             let taskArray = createCustomTaskRecurringArray(for: task)
             taskArray.forEach { addNotification(for: $0) }
             taskRepository.saveTasks(taskArray)
-        } else if selectedRecurringOption != .none {
+        } else if recurringConfiguration.option != .none {
             let taskArray = createTaskRecurringArray(for: task)
             taskArray.forEach { addNotification(for: $0) }
             taskRepository.saveTasks(taskArray)
+        } else {
+            writeTask(task)
         }
     }
     
@@ -291,13 +278,8 @@ final class NewTaskViewModel: ObservableObject {
             .filter { $0.parentId == task.parentId }
         
         taskRepository.deleteAll(where: task.parentId)
-        tasksArray.forEach {
-            deleteNotification(for: $0)
-        }
-        
-        writeRecurringTaskArray(
-            for: edited
-        )
+        tasksArray.forEach { deleteNotification(for: $0) }
+        writeRecurringTaskArray(for: edited)
     }
     
     func canCreateTask(hasSubscription: Bool) -> Bool {
@@ -407,7 +389,7 @@ private extension NewTaskViewModel {
         var createdTaskArray: [TaskDTO] = []
         
         while taskDate <= endsDate {
-            switch selectedRecurringOption {
+            switch recurringConfiguration.option {
             case .daily:
                 taskDate = Constants.shared.calendar.date(byAdding: .day, value: repeatEveryNextAddingValue, to: taskDate) ?? taskDate
             case .weekly:
@@ -432,7 +414,7 @@ private extension NewTaskViewModel {
                 }
             }
             
-            if selectedRecurringOption != .weekdays {
+            if recurringConfiguration.option != .weekdays {
                 let task = createRecurringTask(with: task, on: taskDate)
                 createdTaskArray.append(task)
             }
@@ -444,21 +426,21 @@ private extension NewTaskViewModel {
     func createCustomTaskRecurringArray(
         for task: TaskDTO
     ) -> [TaskDTO] {
-        let repeatCount = Int(repeatCount) ?? 1
+        let repeatCount = Int(recurringConfiguration.repeatCount) ?? 1
         var endsDate: Date
         var taskDate = task.createdDate
-        var recurringEndsAfterOccurrences = Int(recurringEndsAfterOccurrences) ?? 0
+        var recurringEndsAfterOccurrences = Int(recurringConfiguration.endsAfterOccurrences) ?? 0
         var createdTaskArray: [TaskDTO] = []
         
-        switch recurringEnds {
+        switch recurringConfiguration.endsOption {
         case .on:
-            endsDate = recurringEndsDate
+            endsDate = recurringConfiguration.endsDate
         case .after, .never:
             endsDate = Constants.shared.calendar.date(byAdding: .year, value: 1, to: taskDate) ?? taskDate
         }
         
         while taskDate <= endsDate {
-            if recurringEnds == .after {
+            if recurringConfiguration.endsOption == .after {
                 if recurringEndsAfterOccurrences >= 0 {
                     recurringEndsAfterOccurrences -= 1
                 } else {
@@ -466,7 +448,7 @@ private extension NewTaskViewModel {
                 }
             }
             
-            switch repeatEvery {
+            switch recurringConfiguration.repeatEvery {
             case .days:
                 taskDate = Constants.shared.calendar.date(byAdding: .day, value: repeatCount, to: taskDate) ?? taskDate
             case .weeks:
@@ -475,7 +457,7 @@ private extension NewTaskViewModel {
                 
                 weekDays.forEach { day in
                     let dayName = day.format("EEEE")
-                    if selectedRepeatOnDays.contains(dayName) {
+                    if recurringConfiguration.repeatOnDays.contains(dayName) {
                         let task = createRecurringTask(with: task, on: day)
                         createdTaskArray.append(task)
                     }
@@ -486,7 +468,7 @@ private extension NewTaskViewModel {
                 taskDate = Constants.shared.calendar.date(byAdding: .year, value: repeatCount, to: taskDate) ?? taskDate
             }
             
-            if repeatEvery != .weeks {
+            if recurringConfiguration.repeatEvery != .weeks {
                 let task = createRecurringTask(with: task, on: taskDate)
                 createdTaskArray.append(task)
             }
