@@ -10,7 +10,6 @@ import RealmSwift
 class BulletObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var title: String
-    @Persisted var isCompleted: Bool = false
     @Persisted var sortingOrder: Int = 0
     
     @Persisted(originProperty: "bulletList") var assignee: LinkingObjects<TaskObject>
@@ -29,7 +28,6 @@ extension BulletObject {
         
         id = dto.id
         title = dto.title
-        isCompleted = dto.isCompleted
         sortingOrder = dto.sortingOrder
     }
 }

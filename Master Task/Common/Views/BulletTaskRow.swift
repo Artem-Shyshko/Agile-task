@@ -22,17 +22,13 @@ struct BulletTaskRow: View {
                 .frame(width: 12, height: 12)
             Text(bullet.title)
         }
-        .foregroundColor(bullet.isCompleted ? .textColor.opacity(0.5) : theme.selectedTheme.sectionTextColor)
-        .strikethrough(bullet.isCompleted , color: .completedTaskLineColor)
+        .foregroundColor(theme.selectedTheme.sectionTextColor)
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)
                 .fill(Color(colorName))
         )
         .listRowSeparator(.hidden)
         .padding(.horizontal, -10)
-        .onTapGesture(count: 1, perform: {
-            viewModel.completeBullet(&bullet)
-        })
     }
 }
 
