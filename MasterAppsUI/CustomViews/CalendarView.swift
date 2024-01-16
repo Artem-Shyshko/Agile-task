@@ -8,7 +8,7 @@
 import SwiftUI
 
 public struct CustomCalendarView: View {
-    @StateObject var viewModel = CalendarViewModel()
+    @ObservedObject var viewModel = CalendarViewModel()
     @Binding var selectedCalendarDay: Date
     @State var currentDate = Date()
     var currentMonthDatesColor: Color
@@ -103,7 +103,7 @@ private extension CustomCalendarView {
                 .foregroundStyle(currentMonthDatesColor)
                 .overlay(alignment: .bottom) {
                     if let items, items.contains(where: { item in
-                        (item.date ?? item.createdDate).shortDateFormat == date.shortDateFormat
+                        (item.date ?? item.createdDate).dateComponents([.day, .month, .year]) == date.dateComponents([.day, .month, .year])
                     }) {
                         Circle()
                             .foregroundColor(.calendarSelectedDateCircleColor)

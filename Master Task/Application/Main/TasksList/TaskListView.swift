@@ -307,7 +307,7 @@ private extension TaskListView {
             Text("/")
             Spacer()
             
-            Image("Reminder")
+            Image(.reminders)
               .renderingMode(.template)
               .resizable()
               .scaledToFit()

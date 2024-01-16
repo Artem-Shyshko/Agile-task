@@ -74,6 +74,7 @@ struct TabBarView: View {
             taskListNavigationStack = []
             settingsNavigationStack = []
         }
+        .padding(.bottom, 15)
     }
 }
 

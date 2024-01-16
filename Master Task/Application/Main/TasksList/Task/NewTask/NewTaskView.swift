@@ -72,6 +72,7 @@ struct NewTaskView: View {
                 viewModel.selectedColor = Color(editTask.colorName)
                 viewModel.isCompleted = editTask.isCompleted
                 viewModel.selectedRecurringOption = editTask.recurring
+                viewModel.selectedDateTimePeriod = editTask.timePeriod
                 if let date = editTask.date {
                     viewModel.taskDate = date
                     viewModel.selectedDateOption = editTask.dateOption
@@ -84,6 +85,12 @@ struct NewTaskView: View {
                     viewModel.reminderDate = reminderDate
                     viewModel.reminder = editTask.reminder
                     viewModel.reminderTime = reminderDate
+                }
+                if let description = editTask.description {
+                    viewModel.description = description
+                }
+                if let project = editTask.project {
+                    viewModel.selectedProject = project
                 }
             }
         }
