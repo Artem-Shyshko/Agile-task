@@ -9,7 +9,6 @@ import SwiftUI
 import RealmSwift
 
 struct ProjectsView: View {
-    @EnvironmentObject var userState: UserState
     @EnvironmentObject var theme: AppThemeManager
     @StateObject var vm: ProjectsViewModel
     
@@ -49,7 +48,7 @@ struct AccountView_Previews: PreviewProvider {
 
 private extension ProjectsView {
     func accountsList() -> some View {
-        LazyVStack(spacing: Constants.shared.listRowSpacing) {
+        List {
             ForEach(vm.savedProjects, id: \.id) { project in
                 ProjectRow(vm: vm, project: project)
                     .listRowBackground(
@@ -58,6 +57,9 @@ private extension ProjectsView {
                     )
             }
         }
+        .listRowSpacing(Constants.shared.listRowSpacing)
+        .scrollContentBackground(.hidden)
+        .listStyle(.plain)
     }
     
     @ToolbarContentBuilder

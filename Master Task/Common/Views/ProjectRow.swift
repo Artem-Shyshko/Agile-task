@@ -10,39 +10,38 @@ import SwiftUI
 struct ProjectRow: View {
     @StateObject var vm: ProjectsViewModel
     var project: ProjectDTO
+    @State var isShowingDeleteAlert = false
     
     var body: some View {
         Button {
-            vm.selectAnotherProject(project)
+            vm.selectProject(project)
         } label: {
             HStack(spacing: 5) {
                 if project.isSelected { checkMark }
                 
                 Text(project.name)
+                    .font(.helveticaRegular(size: 15))
             }
-            .modifier(SectionStyle())
         }
         .swipeActions {
-            NavigationLink {
-                NewProjectView(vm: NewProjectViewModel(editedProject: project))
-            } label: {
-                Image("done-checkbox")
-            }
-            .tint(Color.editButtonColor)
-            
             if !project.isSelected {
                 Button {
-                    vm.isAlert = true
+                    isShowingDeleteAlert = true
                 } label: {
                     Image("trash")
                 }
                 .tint(Color.red)
             }
-        }
-        .alert("Are you sure you want to delete", isPresented: $vm.isAlert) {
-            Button("Cancel", role: .cancel) {
-                vm.isAlert = false
+            
+            NavigationLink {
+                NewProjectView(vm: NewProjectViewModel(editedProject: project))
+            } label: {
+                Image(.edit)
             }
+            .tint(Color.editButtonColor)
+        }
+        .alert("Are you sure you want to delete", isPresented: $isShowingDeleteAlert) {
+            Button("Cancel", role: .cancel) { }
             
             Button("Delete") {
                 vm.deleteProject(project)

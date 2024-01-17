@@ -30,8 +30,7 @@ final class TaskRepositoryImpl: TaskRepository {
     }
     
     func getTaskList() -> [TaskDTO] {
-        let selectedProject = projectRepo.getSelectedProject()
-        let data = storage.fetch(by: TaskObject.self).filter { $0.project?.id == selectedProject.id }
+        let data = storage.fetch(by: TaskObject.self)
         return data.map(TaskDTO.init)
     }
     

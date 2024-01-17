@@ -8,35 +8,35 @@
 import Foundation
 
 final class ProjectsViewModel: ObservableObject {
-    @Published var savedProjects: [ProjectDTO]
-    @Published var isAlert = false
+    @Published var savedProjects: [ProjectDTO] = []
     @Published var isSearchBarHidden: Bool = true
     @Published var searchText: String = ""
     @Published var showNewProjectView = false
     let projectsRepo: ProjectRepository = ProjectRepositoryImpl()
+    let taskRepo: TaskRepository = TaskRepositoryImpl()
     
     init() {
         savedProjects = projectsRepo.getProjects()
     }
     
-    func selectAnotherProject(_ project: ProjectDTO) {
-        guard !project.isSelected else { return }
-        
-        let selectedProject = projectsRepo.getSelectedProject()
-        
-        if let index = savedProjects.firstIndex(where: {$0.id == selectedProject.id }) {
-            savedProjects[index].isSelected = false
-            projectsRepo.saveProject(savedProjects[index])
-        }
-        
-        if let index = savedProjects.firstIndex(where: {$0.id == project.id }) {
+    func selectProject(_ project: ProjectDTO) {
+        if let index = savedProjects.firstIndex(where: { $0.id == project.id}) {
+            
+            for (index, _) in self.savedProjects.enumerated() {
+                savedProjects[index].isSelected = false
+            }
+            
             savedProjects[index].isSelected = true
-            projectsRepo.saveProject(savedProjects[index])
+            projectsRepo.saveAll(savedProjects)
         }
     }
     
     func deleteProject(_ project: ProjectDTO) {
+        guard project.isSelected == false else { return }
+        savedProjects.removeAll(where: { $0.id == project.id })
+        project.tasks.forEach { task in
+            taskRepo.deleteAll(where: task.id)
+        }
         projectsRepo.deleteProject(project)
-        savedProjects.removeAll(where: {$0.id == project.id} )
     }
 }

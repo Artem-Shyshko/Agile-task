@@ -12,7 +12,9 @@ protocol ProjectRepository {
     func getSelectedProject() -> ProjectDTO
     func getProjects() -> [ProjectDTO]
     func saveProject(_ dto: ProjectDTO)
+    func saveAll(_ data: [ProjectDTO])
     func deleteProject(_ project: ProjectDTO)
+    func saveTask(_ task: TaskDTO)
 }
 
 final class ProjectRepositoryImpl: ProjectRepository {
@@ -44,9 +46,19 @@ final class ProjectRepositoryImpl: ProjectRepository {
         try? storage.saveOrUpdateObject(object: ProjectObject(dto))
     }
     
+    func saveAll(_ data: [ProjectDTO]) {
+        let objects = data.map(ProjectObject.init)
+        try? storage.saveAll(objects: objects)
+    }
+    
     func deleteProject(_ project: ProjectDTO) {
-        if let object = storage.fetch(by: ProjectObject.self).first(where: { $0.id == project.id}) {
-            try? storage.delete(object: object)
+        let objects = storage.fetch(by: ProjectObject.self).filter { $0.id == project.id }
+        try? storage.deleteAll(object: objects)
+    }
+    
+    func saveTask(_ data: TaskDTO) {
+        if let object = storage.fetch(by: TaskObject.self).first(where: { $0.id == data.id}) {
+            try? storage.saveOrUpdateObject(object: object)
         }
     }
 }

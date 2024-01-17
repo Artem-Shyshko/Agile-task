@@ -91,9 +91,6 @@ struct NewTaskView: View {
                 if let description = editTask.description {
                     viewModel.description = description
                 }
-                if let project = editTask.project {
-                    viewModel.selectedProject = project
-                }
             }
         }
         .navigationDestination(isPresented: $viewModel.showSubscriptionView) {
@@ -379,10 +376,9 @@ private extension NewTaskView {
             Text("Project")
             Spacer()
             
-            Picker("", selection: $viewModel.selectedProject.name) {
-                ForEach(viewModel.projects, id: \.id) { project in
-                    Text(project.name)
-                        .tag(project.name)
+            Picker("", selection: $viewModel.selectedProjectName) {
+                ForEach(viewModel.projectsNames, id: \.self) { name in
+                    Text(name)
                 }
             }
             .pickerStyle(.menu)

@@ -26,8 +26,8 @@ final class NewTaskViewModel: ObservableObject {
     @Published var selectedReminderTimePeriod: TimePeriod = .am
     @Published var selectedColor: Color = .sectionColor
     @Published var isCompleted = false
-    @Published var selectedProject: ProjectDTO
-    @Published var projects: [ProjectDTO] = []
+    @Published var selectedProjectName: String
+    @Published var projectsNames: [String] = []
     @Published var checkBoxes: [CheckboxDTO] = []
     @Published var bullets: [BulletDTO] = []
     @Published var recurringConfiguration = RecurringConfigurationDTO()
@@ -53,8 +53,8 @@ final class NewTaskViewModel: ObservableObject {
     
     init() {
         settings = settingsRepository.get()
-        selectedProject = projectRepository.getSelectedProject()
-        projects = projectRepository.getProjects()
+        selectedProjectName = projectRepository.getSelectedProject().name
+        projectsNames = projectRepository.getProjects().map {$0.name}
     }
     
     // MARK: - Methods
@@ -86,13 +86,22 @@ final class NewTaskViewModel: ObservableObject {
         task.colorName = selectedColor.name
         task.checkBoxArray = checkBoxes
         task.bulletArray = bullets
-        task.project = selectedProject
         
         return task
     }
     
     func writeTask(_ task: TaskDTO) {
-        taskRepository.saveTask(task)
+        if var project = projectRepository.getProjects().first(where: { $0.name == selectedProjectName }) {
+            var tasks = project.tasks
+            if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+                tasks[index] = task
+                project.tasks = tasks
+                projectRepository.saveProject(project)
+            } else {
+                project.tasks.append(task)
+                projectRepository.saveProject(project)
+            }
+        }
     }
     
     func updateTask(task: TaskDTO) -> TaskDTO {
@@ -114,7 +123,6 @@ final class NewTaskViewModel: ObservableObject {
         task.isCompleted = isCompleted
         task.checkBoxArray = checkBoxes
         task.bulletArray = bullets
-        task.project = selectedProject
         
         return task
     }
@@ -140,7 +148,6 @@ final class NewTaskViewModel: ObservableObject {
         task.colorName = parent.colorName
         task.checkBoxArray = parent.checkBoxArray
         task.bulletArray = parent.bulletArray
-        task.project = parent.project
         
         return task
     }
@@ -242,7 +249,6 @@ final class NewTaskViewModel: ObservableObject {
     
     @MainActor func writeEditedTask(_ task: TaskDTO) {
         let edited = self.updateTask(task: task)
-        taskRepository.saveTask(edited)
         
         for (index, checkbox) in self.checkBoxes.enumerated() {
             if task.checkBoxArray.contains(where: { $0.id == checkbox.id }) {
@@ -270,11 +276,12 @@ final class NewTaskViewModel: ObservableObject {
                 var item = item
                 item.sortingOrder = index
                 task.bulletArray.append(item)
-                taskRepository.saveTask(task)
+                taskRepository.saveBullet(item)
             }
         }
         
-        let tasksArray = taskRepository.getTaskList()
+        let project = projectRepository.getSelectedProject()
+        let tasksArray = project.tasks
             .filter { $0.parentId == task.parentId }
         
         taskRepository.deleteAll(where: task.parentId)
@@ -339,7 +346,6 @@ final class NewTaskViewModel: ObservableObject {
                     task.sortingOrder = taskList.count + 1
                 }
                 
-                writeTask(task)
                 addNotification(for: task)
                 writeRecurringTaskArray(
                     for: task

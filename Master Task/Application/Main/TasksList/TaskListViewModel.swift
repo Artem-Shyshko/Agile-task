@@ -42,7 +42,8 @@ final class TaskListViewModel: ObservableObject {
     // MARK: - Methods
     
     func loadTasks() {
-        self.loadedTasks = taskRepository.getTaskList()
+        let project = projectRepository.getSelectedProject()
+        self.loadedTasks = project.tasks
         self.settings = settingsRepository.get()
     }
     
@@ -69,11 +70,14 @@ final class TaskListViewModel: ObservableObject {
         }
         
         addNotification()
-        let selectedProject = projectRepository.getSelectedProject()
-        quickTaskConfig.project = selectedProject
-        taskRepository.saveTask(quickTaskConfig)
+        var selectedProject = projectRepository.getSelectedProject()
+        selectedProject.tasks.append(quickTaskConfig)
+        projectRepository.saveProject(selectedProject)
         
-        loadTasks()
+        if calendarSorting == .all || taskDateSorting == .all {
+            groupedTasksBySelectedOption(.all)
+        }
+        
         quickTaskConfig = TaskDTO(object: TaskObject())
     }
     
@@ -98,7 +102,8 @@ final class TaskListViewModel: ObservableObject {
     func deleteTask(_ task: TaskDTO) {
         guard let localNotificationManager else { return }
         
-        let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == task.parentId })
+        let project = projectRepository.getSelectedProject()
+        let tasksToDelete = project.tasks.filter({ $0.parentId == task.parentId })
         filteredTasks.removeAll(where: { $0.parentId == task.parentId })
         loadedTasks.removeAll(where: { $0.parentId == task.parentId })
         taskRepository.deleteAll(where: task.parentId)
@@ -121,11 +126,6 @@ final class TaskListViewModel: ObservableObject {
         var object = checkbox
         object.isCompleted.toggle()
         checkboxRepository.save(object)
-    }
-    
-    func completeBullet(_ bullet: inout BulletDTO) {
-        bullet.isCompleted.toggle()
-        bulletRepository.save(bullet)
     }
     
     func completeCheckbox(_ checkbox: inout CheckboxDTO) {

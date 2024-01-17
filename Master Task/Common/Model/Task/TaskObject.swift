@@ -30,9 +30,10 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var isCompleted: Bool = false
     @Persisted var sortingOrder: Int = 0
     @Persisted var showCheckboxes = true
-    @Persisted var project: ProjectObject?
     @Persisted var checkBoxList: RealmSwift.List<CheckboxObject>
     @Persisted var bulletList: RealmSwift.List<BulletObject>
+    
+    @Persisted(originProperty: "tasks") var assignee: LinkingObjects<ProjectObject>
     
     convenience init(
         parentId: ObjectId,
@@ -53,7 +54,6 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         self.reminderDate = reminderDate
         self.createdDate = createdDate
         self.colorName = colorName
-        self.project = project
     }
     
     var isReminder: Bool {
@@ -101,9 +101,6 @@ extension TaskObject {
         isCompleted = dto.isCompleted
         showCheckboxes = dto.showCheckboxes
         sortingOrder = dto.sortingOrder
-        if let project = dto.project {
-            self.project = ProjectObject(project)
-        }
         if let recurring = dto.recurring {
             self.recurring = RecurringConfiguration(recurring)
         }
@@ -204,7 +201,7 @@ enum RepeatRecurring: String, CaseIterable, PersistableEnum {
     case years = "years"
 }
 
-class RecurringConfiguration: Object {
+class RecurringConfiguration: EmbeddedObject {
     @Persisted var date: Date = Date()
     @Persisted var option: RecurringOptions = .none
     @Persisted var repeatCount: String = "0"

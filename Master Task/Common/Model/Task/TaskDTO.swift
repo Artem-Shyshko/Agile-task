@@ -32,7 +32,6 @@ struct TaskDTO: CalendarItem {
     var showCheckboxes = true
     var checkBoxArray: [CheckboxDTO]
     var bulletArray: [BulletDTO]
-    var project: ProjectDTO?
     
     var isReminder: Bool {
         switch reminder {
@@ -77,9 +76,6 @@ extension TaskDTO {
         showCheckboxes = object.showCheckboxes
         checkBoxArray = object.checkBoxList.map { CheckboxDTO(object: $0) }
         bulletArray = object.bulletList.map { BulletDTO(object: $0) }
-        if let project = object.project {
-            self.project = ProjectDTO(project)
-        }
         
         if let recurringConfig = object.recurring {
             self.recurring = RecurringConfigurationDTO(recurringConfig)

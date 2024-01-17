@@ -12,6 +12,7 @@ struct ProjectDTO {
     var id: ObjectId
     var name: String
     var isSelected: Bool = false
+    var tasks: [TaskDTO] = []
 }
 
 extension ProjectDTO {
@@ -19,5 +20,6 @@ extension ProjectDTO {
         self.id = object.id
         self.name = object.name
         self.isSelected = object.isSelected
+        self.tasks = object.tasks.map(TaskDTO.init)
     }
 }
