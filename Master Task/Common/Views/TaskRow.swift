@@ -140,26 +140,6 @@ private extension TaskRow {
                 timeView()
             }
             
-            if let time = task.time {
-                HStack {
-                    Text(time.format("\(timeFormat):mm"))
-                    
-                    if viewModel.settings.timeFormat == .twelve {
-                        Text(task.timePeriod.rawValue)
-                    }
-                }
-                .font(.helveticaRegular(size: 14))
-                .foregroundStyle(
-                    task.isCompleted
-                    ? foregroundColor()
-                    : viewModel.calculateDateColor(
-                        whit: time,
-                        themeTextColor: theme.selectedTheme.sectionTextColor,
-                        isDate: false
-                    )
-                )
-            }
-            
             if task.reminder != .none {
                 Image("Reminders")
                     .renderingMode(.template)
