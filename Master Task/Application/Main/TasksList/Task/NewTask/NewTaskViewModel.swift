@@ -128,8 +128,8 @@ final class NewTaskViewModel: ObservableObject {
         task.status = parent.status
         task.title = parent.title
         task.description = parent.description
-        task.date = parent.date
-        task.dateOption = parent.dateOption
+        task.date = nil
+        task.dateOption = .none
         task.recurring = parent.recurring
         task.time = parent.time
         task.timePeriod = parent.timePeriod
