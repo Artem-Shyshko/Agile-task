@@ -214,8 +214,8 @@ private extension NewTaskView {
             .hAlign(alignment: .trailing)
             .padding(.trailing, 10)
         }
-        .tint(viewModel.checkBoxes.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
-        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .tint(viewModel.bullets.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .foregroundColor(viewModel.bullets.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
         .modifier(SectionStyle())
     }
     
