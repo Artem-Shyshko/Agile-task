@@ -17,12 +17,9 @@ struct TaskListView: View {
   @EnvironmentObject var theme: AppThemeManager
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
-  @State private var isShowingAddTask: Bool = false
   @Environment(\.scenePhase) var scenePhase
   
   var selectedCalendarTab = false
-  @State var calendarSorting: TaskDateSorting = .month
-  @State var taskDateSorting: TaskDateSorting = .today
   @Binding var path: [TaskListNavigationView]
   
   // MARK: - Body
@@ -36,8 +33,14 @@ struct TaskListView: View {
         }
         
         VStack(spacing: 5) {
-          if taskDateSorting == .month || selectedCalendarTab, calendarSorting == .month {
-            CalendarView(viewModel: .constant(viewModel), settings: viewModel.settings, tasks: viewModel.loadedTasks)
+          if viewModel.taskDateSorting == .month || selectedCalendarTab, viewModel.calendarSorting == .month {
+            CustomCalendarView(
+              selectedCalendarDay: $viewModel.selectedCalendarDate,
+              currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
+              backgroundColor: theme.selectedTheme.sectionColor,
+              items: viewModel.calendarTasks,
+              calendar: Constants.shared.calendar
+            )
           }
           taskList()
           
@@ -58,24 +61,30 @@ struct TaskListView: View {
       }
       .onAppear {
         if selectedCalendarTab {
-          calendarSorting = .month
+          viewModel.calendarSorting = .month
         }
         viewModel.loadTasks()
         viewModel.search(with: "")
         viewModel.localNotificationManager = notificationManager
+        viewModel.taskDateSorting = .all
       }
       .task {
         try? await notificationManager.requestAuthorization()
       }
+      .padding(.bottom, 40)
       .modifier(TabViewChildModifier())
       .onChange(of: scenePhase) { newValue in
         if newValue == .active {
           viewModel.loadTasks()
-          viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+          viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
         }
         
         isAddTaskFocused = false
-        isShowingAddTask = false
+        viewModel.isShowingAddTask = false
+      }
+      .onDisappear {
+        isAddTaskFocused = false
+        viewModel.isShowingAddTask = false
       }
       .overlay(alignment: .bottomTrailing) {
         plusButton()
@@ -106,7 +115,7 @@ private extension TaskListView {
       }
       .foregroundColor(.white)
       
-      DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $calendarSorting : $taskDateSorting)
+      DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $viewModel.calendarSorting : $viewModel.taskDateSorting)
       
       NavigationLink(value: TaskListNavigationView.createTask) {
         Image(systemName: "plus")
@@ -117,17 +126,17 @@ private extension TaskListView {
     }
     .padding(.top, 15)
     .padding(.horizontal, 20)
-    .onChange(of: selectedCalendarTab ? calendarSorting : taskDateSorting) { _ in
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+    .onChange(of: selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting) { _ in
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
     }
     .onChange(of: viewModel.currentDate) { _ in
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
     }
     .onAppear {
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
     }
     .onChange(of: viewModel.selectedCalendarDate) { _ in
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? calendarSorting : taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
     }
   }
   
@@ -180,7 +189,7 @@ private extension TaskListView {
         
         Spacer()
         VStack {
-          switch selectedCalendarTab ? calendarSorting : taskDateSorting {
+          switch selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting {
           case .today:
             TimeControlView(
               title: viewModel.currentDate.format(viewModel.dateFormat())
@@ -232,7 +241,7 @@ private extension TaskListView {
         isAddTaskFocused = true
         viewModel.isShowingAddTask = true
       } label: {
-        Image(.quickTaskButton)
+        Image(.quickTask)
       }
       .padding(.trailing, 23)
       .padding(.bottom, 70)
@@ -241,11 +250,11 @@ private extension TaskListView {
   
   @ViewBuilder
   func newTaskView() -> some View {
-    if isShowingAddTask {
+    if viewModel.isShowingAddTask {
       VStack(spacing: 0) {
         Button {
           isAddTaskFocused = false
-          isShowingAddTask = false
+          viewModel.isShowingAddTask = false
         } label: {
           Color.black.opacity(0.1)
             .ignoresSafeArea()
@@ -255,7 +264,7 @@ private extension TaskListView {
           TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
             viewModel.createTask()
             isAddTaskFocused = false
-            isShowingAddTask = false
+            viewModel.isShowingAddTask = false
           }
           .focused($isAddTaskFocused)
           .padding(.top, 8)

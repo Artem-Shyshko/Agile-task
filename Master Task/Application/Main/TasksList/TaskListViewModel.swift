@@ -17,9 +17,13 @@ final class TaskListViewModel: ObservableObject {
     @Published var settings: SettingsDTO
     @Published var selectedCalendarDate = Date()
     @Published var quickTaskConfig = TaskDTO(object: TaskObject())
+    @Published var isShowingAddTask: Bool = false
+    @Published var calendarSorting: TaskDateSorting = .month
+    @Published var taskDateSorting: TaskDateSorting = .all
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
+    @Published var calendarTasks: [TaskDTO] = []
     var localNotificationManager: LocalNotificationManager?
     
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
@@ -216,29 +220,61 @@ extension TaskListViewModel {
             let sortedCompletedTasks = sortedCompletedTasks(gropedRecurringTasks, settings: settings)
             filteredTasks = sortedCompletedTasks
         case .today:
-            let gropedRecurringTasks = groupedTasks(with: loadedTasks)
-            let sortedCompletedTasks = sortedCompletedTasks(gropedRecurringTasks, settings: settings)
+            let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
+            let components: Set<Calendar.Component> = [.year, .month, .day]
+            
             filteredTasks = sortedCompletedTasks
                 .lazy
                 .filter {
-                    let taskDate = $0.isRecurring ? $0.createdDate : Date()
-                    return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == currentDate.dateComponents([.year, .month, .day])
+                    if let taskDate = $0.date {
+                        return taskDate.dateComponents(components) == currentDate.dateComponents(components)
+                    } else if $0.isRecurring {
+                        return $0.createdDate.dateComponents(components) == currentDate.dateComponents(components)
+                    }
+                    
+                    return false
                 }
         case .week:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
+            let components: Set<Calendar.Component> = [.year, .weekOfYear]
+            
             filteredTasks = sortedCompletedTasks
                 .lazy
                 .filter {
-                    let taskDate = $0.isRecurring ? $0.createdDate : Date()
-                    return ($0.date ?? taskDate).dateComponents([.year, .weekOfYear]) == currentDate.dateComponents([.year, .weekOfYear])
+                    if let taskDate = $0.date {
+                        return taskDate.dateComponents(components) == currentDate.dateComponents(components)
+                    } else if $0.isRecurring {
+                        return $0.createdDate.dateComponents(components) == currentDate.dateComponents(components)
+                    }
+                    
+                    return false
                 }
         case .month:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
+            let components: Set<Calendar.Component> = [.year, .month, .day]
+            
+            calendarTasks = loadedTasks
+                .lazy
+                .filter({
+                    if let taskDate = $0.date {
+                        return taskDate.dateComponents([.month, .year]) == self.currentDate.dateComponents([.month, .year])
+                    } else if $0.isRecurring {
+                        return $0.createdDate.dateComponents([.month, .year]) == self.currentDate.dateComponents([.month, .year])
+                    }
+                    
+                    return false
+                })
+            
             filteredTasks = sortedCompletedTasks
                 .lazy
                 .filter {
-                    let taskDate = $0.isRecurring ? $0.createdDate : Date()
-                    return ($0.date ?? taskDate).dateComponents([.year, .month, .day]) == selectedCalendarDate.dateComponents([.year, .month, .day])
+                    if let taskDate = $0.date {
+                        return taskDate.dateComponents(components) == selectedCalendarDate.dateComponents(components)
+                    } else if $0.isRecurring {
+                        return $0.createdDate.dateComponents(components) == selectedCalendarDate.dateComponents(components)
+                    }
+                    
+                    return false
                 }
         }
     }
@@ -276,25 +312,27 @@ extension TaskListViewModel {
     }
     
     func sortedTasks(in taskArray: [TaskDTO]) -> [TaskDTO] {
-        return taskArray
-            .sorted(by: {
-                switch settings.taskSorting {
-                case .manual:
-                    return $0.sortingOrder > $1.sortingOrder
-                case .schedule:
-                    if let lhsDueDate = $0.date, let rhsDueDate = $1.date {
-                        return lhsDueDate < rhsDueDate
-                    } else if $0.date == nil && $1.date != nil {
-                        return false
-                    } else {
-                        return true
-                    }
-                case .reminders:
-                    return $0.isReminder
-                case .recurring:
-                    return $0.isRecurring
+        return taskArray.sorted(by: {
+            switch settings.taskSorting {
+            case .manual:
+                return $0.sortingOrder > $1.sortingOrder
+            case .schedule:
+                if let lhsDueDate = $0.date, let rhsDueDate = $1.date {
+                    return lhsDueDate < rhsDueDate
+                } else if $0.date == nil && $1.date != nil {
+                    return false
+                } else if $0.date != nil && $1.date == nil {
+                    return true
+                } else {
+                    // Secondary sorting for tasks without dates
+                    return $0.createdDate < $1.createdDate
                 }
-            })
+            case .reminders:
+                return $0.isReminder
+            case .recurring:
+                return $0.isRecurring
+            }
+        })
     }
     
     func sortedCompletedTasks(_ tasks: [TaskDTO], settings: SettingsDTO) -> [TaskDTO] {

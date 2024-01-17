@@ -14,7 +14,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var startWeekFrom: WeekStarts = .monday
     @Persisted var taskDateFormat: TaskDateFormmat = .dayMonthYear
     @Persisted var timeFormat: TimeFormat = .twentyFour
-    @Persisted var taskDateSorting: TaskDateSorting = .today
+    @Persisted var taskDateSorting: TaskDateSorting = .all
     @Persisted var addNewTaskIn: AddingNewTask = .top
     @Persisted var completedTask: CompletedTask = .hide
     @Persisted var defaultReminder: DefaultReminder = .oneHourBefore
