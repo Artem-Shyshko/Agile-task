@@ -30,10 +30,7 @@ final class TaskListViewModel: ObservableObject {
     private let bulletRepository: BulletRepository = BulletRepositoryImpl()
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
-    private lazy var dateYearAgo: Date = {
-        let date = Constants.shared.currentDate
-        return Constants.shared.calendar.date(byAdding: .year, value: -1, to: date) ?? date
-    }()
+    private lazy var pastDate = Date()
     
     init(loadedTasks: [TaskDTO] = []) {
         self.loadedTasks = loadedTasks
@@ -70,7 +67,7 @@ final class TaskListViewModel: ObservableObject {
     }
     
     func minusFromCurrentDate(component: Calendar.Component, value: Int) {
-        guard currentDate > dateYearAgo else { return }
+        guard currentDate > pastDate else { return }
         currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
     }
     
