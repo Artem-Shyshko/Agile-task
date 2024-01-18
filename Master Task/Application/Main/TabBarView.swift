@@ -45,16 +45,17 @@ struct TabBarView: View {
     @State private var selectedTab: Tab = .taskList
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
+    @State private var backToAllTasksSortingOption = false
     
     // MARK: - Body
     
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                TaskListView(path: $taskListNavigationStack)
+                TaskListView(path: $taskListNavigationStack, isAllTaskSortingOption: $backToAllTasksSortingOption)
                     .tag(Tab.taskList)
                     .toolbar(.hidden, for: .tabBar)
-                TaskListView(selectedCalendarTab: true, path: $taskListNavigationStack)
+                TaskListView(path: $taskListNavigationStack, isAllTaskSortingOption: .constant(false))
                     .tag(Tab.calendar)
                     .toolbar(.hidden, for: .tabBar)
                 ProjectsView(vm: ProjectsViewModel())
@@ -92,7 +93,8 @@ private extension TabBarView {
                     tint: tint,
                     inActiveTint: inActiveTint,
                     tab: $0,
-                    activeTab: $selectedTab
+                    activeTab: $selectedTab, 
+                    backToAllTasksSortingOption: $backToAllTasksSortingOption
                 )
             }
         }
@@ -107,6 +109,7 @@ struct TabItem: View {
     var inActiveTint: Color
     var tab: Tab
     @Binding var activeTab: Tab
+    @Binding var backToAllTasksSortingOption: Bool
     
     var body: some View {
         VStack(spacing: 10) {
@@ -121,6 +124,10 @@ struct TabItem: View {
         .contentShape(Rectangle())
         .onTapGesture {
             activeTab = tab
+            
+            if tab == .taskList {
+                backToAllTasksSortingOption = true
+            }
         }
     }
 }

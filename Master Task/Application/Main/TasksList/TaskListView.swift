@@ -19,8 +19,8 @@ struct TaskListView: View {
   @FocusState private var isAddTaskFocused: Bool
   @Environment(\.scenePhase) var scenePhase
   
-  var selectedCalendarTab = false
   @Binding var path: [TaskListNavigationView]
+  @Binding var isAllTaskSortingOption: Bool
   
   // MARK: - Body
   
@@ -87,6 +87,12 @@ struct TaskListView: View {
       .overlay(alignment: .bottom, content: {
         newTaskView()
       })
+      .onChange(of: isAllTaskSortingOption) { newValue in
+        if newValue {
+          viewModel.taskSortingOption = .all
+          isAllTaskSortingOption = false
+        }
+      }
     }
   }
 }
@@ -352,7 +358,7 @@ private extension TaskListView {
 
 struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
-    TaskListView(path: .constant([TaskListNavigationView.sorting]))
+    TaskListView(path: .constant([TaskListNavigationView.sorting]), isAllTaskSortingOption: .constant(false))
       .environmentObject(LocalNotificationManager())
       .environmentObject(AppThemeManager())
   }
