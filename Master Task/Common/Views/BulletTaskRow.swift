@@ -22,13 +22,24 @@ struct BulletTaskRow: View {
                 .frame(width: 12, height: 12)
             Text(bullet.title)
         }
-        .foregroundColor(theme.selectedTheme.sectionTextColor)
+        .foregroundColor(foregroundColor())
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)
                 .fill(Color(colorName))
         )
         .listRowSeparator(.hidden)
         .padding(.horizontal, -10)
+    }
+}
+
+private extension BulletTaskRow {
+    func foregroundColor() -> Color {
+            if theme.selectedTheme.name == Constants.shared.nightTheme,
+               colorName != theme.selectedTheme.sectionColor.name {
+                return .black
+            } else {
+                return  theme.selectedTheme.sectionTextColor
+            }
     }
 }
 
