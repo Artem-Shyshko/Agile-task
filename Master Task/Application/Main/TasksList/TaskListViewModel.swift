@@ -57,6 +57,44 @@ final class TaskListViewModel: ObservableObject {
         self.settings = settingsRepository.get()
     }
     
+    func calendarTaskSorting(taskList: [TaskDTO]) -> [TaskDTO] {
+        if selectedCalendarDate.dateComponents([.year, .month]) == currentDate.dateComponents([.year, .month]) {
+            return filteredTasks.filter { $0.date?.dateComponents([.year, .month]) == selectedCalendarDate.dateComponents([.year, .month]) }
+        }
+        
+        return []
+    }
+    
+    func addToCurrentDate(component: Calendar.Component, value: Int) {
+        currentDate = Constants.shared.calendar.date(byAdding: component, value: value, to: currentDate)!
+    }
+    
+    func minusFromCurrentDate(component: Calendar.Component, value: Int) {
+        guard currentDate > dateYearAgo else { return }
+        currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
+    }
+    
+    func handleIncomingURL(_ url: URL) {
+        guard url.scheme == "mastertask" else {
+            return
+        }
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
+            print("Invalid URL")
+            return
+        }
+        
+        guard let action = components.host, action == "addnewtask" else {
+            print("Unknown URL, we can't handle this one!")
+            return
+        }
+        
+        showAddNewTaskView = true
+    }
+}
+
+// MARK: - Quick Task
+
+extension TaskListViewModel {
     func addNotification() {
         guard let localNotificationManager else { return }
         
@@ -91,21 +129,33 @@ final class TaskListViewModel: ObservableObject {
         quickTaskConfig = TaskDTO(object: TaskObject())
     }
     
-    func calendarTaskSorting(taskList: [TaskDTO]) -> [TaskDTO] {
-        if selectedCalendarDate.dateComponents([.year, .month]) == currentDate.dateComponents([.year, .month]) {
-            return filteredTasks.filter { $0.date?.dateComponents([.year, .month]) == selectedCalendarDate.dateComponents([.year, .month]) }
+    func setupTaskDate(with type: DateType) {
+        switch type {
+        case .none, .custom:
+            quickTaskConfig.date = nil
+        case .today:
+            quickTaskConfig.date = Date()
+        case .tomorrow:
+            guard let tomorrowDate = Constants.shared.calendar.date(byAdding: .day, value: 1, to: currentDate)
+            else { return }
+            
+            quickTaskConfig.date = tomorrowDate
+        case .nextWeek:
+            guard let nextWeekDate = Constants.shared.calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate)
+            else { return }
+            
+            quickTaskConfig.date = nextWeekDate.startOfWeek(using: Constants.shared.calendar)
         }
-        
-        return []
     }
+}
+
+// MARK: - TaskRow
+
+extension TaskListViewModel {
     
-    func addToCurrentDate(component: Calendar.Component, value: Int) {
-        currentDate = Constants.shared.calendar.date(byAdding: component, value: value, to: currentDate)!
-    }
-    
-    func minusFromCurrentDate(component: Calendar.Component, value: Int) {
-        guard currentDate > dateYearAgo else { return }
-        currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
+    func calculateDateColor(whit date: Date, themeTextColor: Color, isDate: Bool) -> Color {
+        let currentDate = Constants.shared.currentDate
+        return date < (isDate ? currentDate.startDay : currentDate) ? .red : themeTextColor
     }
     
     @MainActor
@@ -163,47 +213,6 @@ final class TaskListViewModel: ObservableObject {
             return "dd MMM"
         }
     }
-    
-    func setupTaskDate(with type: DateType) {
-        switch type {
-        case .none, .custom:
-            quickTaskConfig.date = nil
-        case .today:
-            quickTaskConfig.date = Date()
-        case .tomorrow:
-            guard let tomorrowDate = Constants.shared.calendar.date(byAdding: .day, value: 1, to: currentDate)
-            else { return }
-            
-            quickTaskConfig.date = tomorrowDate
-        case .nextWeek:
-            guard let nextWeekDate = Constants.shared.calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate)
-            else { return }
-            
-            quickTaskConfig.date = nextWeekDate.startOfWeek(using: Constants.shared.calendar)
-        }
-    }
-    
-    func calculateDateColor(whit date: Date, themeTextColor: Color, isDate: Bool) -> Color {
-        let currentDate = Constants.shared.currentDate
-        return date < (isDate ? currentDate.startDay : currentDate) ? .red : themeTextColor
-    }
-    
-    func handleIncomingURL(_ url: URL) {
-        guard url.scheme == "mastertask" else {
-            return
-        }
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            print("Invalid URL")
-            return
-        }
-        
-        guard let action = components.host, action == "addnewtask" else {
-            print("Unknown URL, we can't handle this one!")
-            return
-        }
-        
-        showAddNewTaskView = true
-    }
 }
 
 // MARK: - Grouping and Sorting
@@ -216,6 +225,11 @@ extension TaskListViewModel {
             var task = task
             task.sortingOrder = index
             taskRepository.saveTask(task)
+        }
+        
+        if settings.taskSorting != .manual {
+            settings.taskSorting = .manual
+            settingsRepository.save(settings)
         }
     }
     
