@@ -21,6 +21,7 @@ extension Color {
         case .malachite: return "Malachite"
         case .timberwolf: return "Timberwolf"
         case .sectionColor: return "SectionColor"
+        case .aquamarineColor: return "Aquamarine"
         default: return "BattleshipGray"
         }
     }

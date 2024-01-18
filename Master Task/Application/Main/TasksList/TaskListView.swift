@@ -33,7 +33,7 @@ struct TaskListView: View {
         }
         
         VStack(spacing: 5) {
-          if viewModel.taskDateSorting == .month || selectedCalendarTab, viewModel.calendarSorting == .month {
+          if viewModel.taskSortingOption == .month {
             CustomCalendarView(
               selectedCalendarDay: $viewModel.selectedCalendarDate,
               currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
@@ -60,13 +60,8 @@ struct TaskListView: View {
         }
       }
       .onAppear {
-        if selectedCalendarTab {
-          viewModel.calendarSorting = .month
-        }
-        viewModel.loadTasks()
-        viewModel.search(with: "")
         viewModel.localNotificationManager = notificationManager
-        viewModel.taskDateSorting = .all
+        viewModel.onAppear()
       }
       .task {
         try? await notificationManager.requestAuthorization()
@@ -75,8 +70,8 @@ struct TaskListView: View {
       .modifier(TabViewChildModifier())
       .onChange(of: scenePhase) { newValue in
         if newValue == .active {
-          viewModel.loadTasks()
-          viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
+          viewModel.onAppear()
+          viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
         }
         
         isAddTaskFocused = false
@@ -115,7 +110,7 @@ private extension TaskListView {
       }
       .foregroundColor(.white)
       
-      DateSegmentedControl(selectedDateSorting: selectedCalendarTab ? $viewModel.calendarSorting : $viewModel.taskDateSorting)
+      DateSegmentedControl(selectedDateSorting: $viewModel.taskSortingOption)
       
       NavigationLink(value: TaskListNavigationView.createTask) {
         Image(systemName: "plus")
@@ -126,17 +121,17 @@ private extension TaskListView {
     }
     .padding(.top, 15)
     .padding(.horizontal, 20)
-    .onChange(of: selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting) { _ in
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
+    .onChange(of: viewModel.taskSortingOption) { _ in
+      viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
     .onChange(of: viewModel.currentDate) { _ in
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
     .onAppear {
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
     .onChange(of: viewModel.selectedCalendarDate) { _ in
-      viewModel.groupedTasksBySelectedOption(selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting)
+      viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
   }
   
@@ -189,7 +184,7 @@ private extension TaskListView {
         
         Spacer()
         VStack {
-          switch selectedCalendarTab ? viewModel.calendarSorting : viewModel.taskDateSorting {
+          switch viewModel.taskSortingOption {
           case .today:
             TimeControlView(
               title: viewModel.currentDate.format(viewModel.dateFormat())

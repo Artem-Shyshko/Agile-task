@@ -18,8 +18,7 @@ final class TaskListViewModel: ObservableObject {
     @Published var selectedCalendarDate = Date()
     @Published var quickTaskConfig = TaskDTO(object: TaskObject())
     @Published var isShowingAddTask: Bool = false
-    @Published var calendarSorting: TaskDateSorting = .month
-    @Published var taskDateSorting: TaskDateSorting = .all
+    @Published var taskSortingOption: TaskDateSorting = .all
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
@@ -44,6 +43,13 @@ final class TaskListViewModel: ObservableObject {
     }
     
     // MARK: - Methods
+    
+    func onAppear() {
+        currentDate = Date()
+        loadTasks()
+        search(with: "")
+        taskSortingOption = .all
+    }
     
     func loadTasks() {
         let project = projectRepository.getSelectedProject()
@@ -78,7 +84,7 @@ final class TaskListViewModel: ObservableObject {
         selectedProject.tasks.append(quickTaskConfig)
         projectRepository.saveProject(selectedProject)
         
-        if calendarSorting == .all || taskDateSorting == .all {
+        if taskSortingOption == .all {
             groupedTasksBySelectedOption(.all)
         }
         
