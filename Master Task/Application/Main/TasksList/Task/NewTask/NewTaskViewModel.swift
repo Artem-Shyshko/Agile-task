@@ -223,19 +223,21 @@ final class NewTaskViewModel: ObservableObject {
         }
     }
     
-    func writeRecurringTaskArray(
-        for task: TaskDTO
-    ) {
-        if recurringConfiguration.option == .custom {
-            let taskArray = createCustomTaskRecurringArray(for: task)
-            taskArray.forEach { addNotification(for: $0) }
-            taskRepository.saveTasks(taskArray)
-        } else if recurringConfiguration.option != .none {
-            let taskArray = createTaskRecurringArray(for: task)
-            taskArray.forEach { addNotification(for: $0) }
-            taskRepository.saveTasks(taskArray)
-        } else {
-            writeTask(task)
+    func writeRecurringTaskArray(for task: TaskDTO) {
+        if var project = projectRepository.getProjects().first(where: { $0.name == selectedProjectName }) {
+            if recurringConfiguration.option == .custom {
+                let taskArray = createCustomTaskRecurringArray(for: task)
+                taskArray.forEach { addNotification(for: $0) }
+                project.tasks += taskArray
+                projectRepository.saveProject(project)
+            } else if recurringConfiguration.option != .none {
+                let taskArray = createTaskRecurringArray(for: task)
+                taskArray.forEach { addNotification(for: $0) }
+                project.tasks += taskArray
+                projectRepository.saveProject(project)
+            } else {
+                writeTask(task)
+            }
         }
     }
     
