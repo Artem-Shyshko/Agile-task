@@ -13,55 +13,80 @@ struct SetPasswordView: View {
     private let defaults = UserDefaults.standard
     
     var body: some View {
-        VStack(spacing: 1) {
-            if let userPassword = defaults.string(forKey: Constants.shared.userPassword) {
-                TextField("Enter old password", text: $viewModel.oldPassword.max(viewModel.characterLimit))
-                    .keyboardType(.numberPad)
-                    .padding(.vertical, 10)
-                    .modifier(SectionStyle())
+        VStack {
+            navigationBar()
+            VStack(spacing: 1) {
+                oldPasswordFieldView()
+                passwordFieldView()
+                repeatPasswordFieldView()
+                Spacer()
             }
-            TextField("Password", text: $viewModel.newPassword.max(viewModel.characterLimit))
-                .keyboardType(.numberPad)
-                .padding(.vertical, 10)
-                .modifier(SectionStyle())
-            TextField("Repeat password", text: $viewModel.confirmPassword.max(viewModel.characterLimit))
-                .keyboardType(.numberPad)
-                .padding(.vertical, 10)
-                .modifier(SectionStyle())
-            Spacer()
         }
-        .padding(.top, 25)
         .modifier(TabViewChildModifier())
-        .toolbar(content: {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    if defaults.value(forKey: Constants.shared.userPassword) == nil {
-                        if viewModel.newPassword == viewModel.confirmPassword {
-                            defaults.setValue(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
-                            dismiss.callAsFunction()
-                        }
-                    } else {
-                        if let password = defaults.value(forKey: Constants.shared.userPassword) as? String,
-                           password == viewModel.oldPassword,
-                           viewModel.newPassword == viewModel.confirmPassword {
-                            defaults.set(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
-                            dismiss.callAsFunction()
-                        }
-                    }
-                } label: {
-                    Text("Save")
-                }
-                .foregroundColor(.white)
-            }
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
+    }
+}
+
+private extension SetPasswordView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: cancelButton(),
+            header: NavigationTitle("Password"),
+            rightItem: saveButton()
+        )
+    }
+    
+    func saveButton() -> some View {
+        Button {
+            if defaults.value(forKey: Constants.shared.userPassword) == nil {
+                if viewModel.newPassword == viewModel.confirmPassword {
+                    defaults.setValue(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
                     dismiss.callAsFunction()
-                } label: {
-                    Text("Cancel")
                 }
-                .foregroundColor(.white)
+            } else {
+                if let password = defaults.value(forKey: Constants.shared.userPassword) as? String,
+                   password == viewModel.oldPassword,
+                   viewModel.newPassword == viewModel.confirmPassword {
+                    defaults.set(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
+                    dismiss.callAsFunction()
+                }
             }
-        })
+        } label: {
+            Text("Save")
+        }
+    }
+    
+    func cancelButton() -> some View {
+        Button {
+            dismiss.callAsFunction()
+        } label: {
+            Text("Cancel")
+        }
+        .foregroundColor(.white)
+    }
+    
+    @ViewBuilder
+    func oldPasswordFieldView() -> some View {
+        if let userPassword = defaults.string(forKey: Constants.shared.userPassword) {
+            TextField("Enter old password", text: $viewModel.oldPassword.max(viewModel.characterLimit))
+                .keyboardType(.numberPad)
+                .padding(.vertical, 10)
+                .modifier(SectionStyle())
+        }
+    }
+    
+    func passwordFieldView() -> some View {
+        TextField("Password", text: $viewModel.newPassword.max(viewModel.characterLimit))
+            .keyboardType(.numberPad)
+            .padding(.vertical, 10)
+            .modifier(SectionStyle())
+    }
+    
+    func repeatPasswordFieldView() -> some View {
+        TextField("Repeat password", text: $viewModel.confirmPassword.max(viewModel.characterLimit))
+            .keyboardType(.numberPad)
+            .padding(.vertical, 10)
+            .modifier(SectionStyle())
     }
 }
 

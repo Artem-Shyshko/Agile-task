@@ -31,36 +31,27 @@ struct NewTaskView: View {
     // MARK: - Body
     
     var body: some View {
-        ScrollView {
-            VStack(spacing: Constants.shared.listRowSpacing) {
-                statusView()
-                titleView()
-                descriptionView()
-                checkList()
-                bulletListView()
-                dateView()
-                timeView()
-                recurringView()
-                reminderView()
-                colorView()
-                projectView()
-                bottomButton()
-                Spacer()
+        VStack {
+            navigationBar()
+            ScrollView {
+                VStack(spacing: Constants.shared.listRowSpacing) {
+                    statusView()
+                    titleView()
+                    descriptionView()
+                    checkList()
+                    bulletListView()
+                    dateView()
+                    timeView()
+                    recurringView()
+                    reminderView()
+                    colorView()
+                    projectView()
+                    bottomButton()
+                    Spacer()
+                }
             }
         }
-        .padding(.top, 15)
-        .toolbar(.visible, for: .navigationBar)
-        .navigationTitle("New Task")
         .modifier(TabViewChildModifier())
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                tabBarCancelButton()
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                tabBarSaveButton()
-            }
-        }
         .onAppear {
             isFocused = true
             viewModel.localNotificationManager = localNotificationManager
@@ -418,11 +409,11 @@ private extension NewTaskView {
     }
     
     func setupIcon(with imageResource: ImageResource) -> some View {
-            Image(imageResource)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 10, height: 10)
+        Image(imageResource)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 10, height: 10)
     }
     
     @ViewBuilder
@@ -459,6 +450,14 @@ private extension NewTaskView {
     
     func colorsPanel() -> some View {
         ColorPanel(selectedColor: $viewModel.selectedColor, colors: viewModel.colors)
+    }
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: tabBarCancelButton(),
+            header: NavigationTitle("New Task"),
+            rightItem: tabBarSaveButton()
+        )
     }
 }
 

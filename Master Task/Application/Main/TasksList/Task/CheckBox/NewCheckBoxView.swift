@@ -25,23 +25,8 @@ struct NewCheckBoxView: View {
     
     var body: some View {
         VStack {
-            topView()
-            
-            List {
-                Group {
-                    listOfTextEditor()
-                    
-                    addPointButton()
-                }
-                .scrollContentBackground(.hidden)
-                .listRowSeparator(.hidden)
-                .listRowBackground(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color(theme.selectedTheme.sectionColor.name))
-                )
-            }
-            .listStyle(.plain)
-            .listRowSpacing(Constants.shared.listRowSpacing)
+            navigationBar()
+            checkBoxesList()
         }
         .modifier(TabViewChildModifier())
         .onAppear(perform: {
@@ -71,19 +56,23 @@ struct NewCheckBoxView: View {
 // MARK: - Private views
 
 private extension NewCheckBoxView {
-    func topView() -> some View {
-        HStack {
-            tabBarCancelButton()
-            Text("Check list")
-                .font(.helveticaBold(size: 16))
-                .foregroundStyle(theme.selectedTheme.textColor)
-                .padding(.trailing, 7)
-                .frame(maxWidth: .infinity, alignment: .center)
-            tabBarSaveButton()
+    
+    func checkBoxesList() -> some View {
+        List {
+            Group {
+                listOfTextEditor()
+                
+                addPointButton()
+            }
+            .scrollContentBackground(.hidden)
+            .listRowSeparator(.hidden)
+            .listRowBackground(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color(theme.selectedTheme.sectionColor.name))
+            )
         }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 20)
-        .padding(.top, 10)
+        .listStyle(.plain)
+        .listRowSpacing(Constants.shared.listRowSpacing)
     }
     
     func textEditor(index: Int) -> some View {
@@ -102,11 +91,11 @@ private extension NewCheckBoxView {
                 .submitLabel(.done)
                 .tint(theme.selectedTheme.sectionTextColor)
             
-                HStack {
-                    ThreeHorizontalLinesView()
-                    trashButton(index: index)
-                }
-                .disabled(focusedInput == index)
+            HStack {
+                ThreeHorizontalLinesView()
+                trashButton(index: index)
+            }
+            .disabled(focusedInput == index)
         }
     }
     
@@ -130,7 +119,7 @@ private extension NewCheckBoxView {
             textEditor(index: index)
                 .id(viewModel.checkboxes[index].id)
                 .focused($focusedInput, equals: index)
-               
+            
         }
         .onMove(perform: viewModel.move)
     }
@@ -171,6 +160,14 @@ private extension NewCheckBoxView {
             Text("Save")
         }
         .font(.helveticaRegular(size: 16))
+    }
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: tabBarCancelButton(),
+            header: NavigationTitle("Check list"),
+            rightItem: tabBarSaveButton()
+        )
     }
 }
 

@@ -102,10 +102,12 @@
 		75B58D102A8250CF00937923 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0F2A8250CF00937923 /* TaskListView.swift */; };
 		75C710382A8CE4BC008E8A62 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710372A8CE4BC008E8A62 /* SettingsView.swift */; };
 		75C7103D2A8CEE4F008E8A62 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */; };
-		75C7103F2A8CEEDB008E8A62 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103E2A8CEEDB008E8A62 /* NavigationView.swift */; };
+		75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */; };
 		75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */; };
 		75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */; };
 		75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0D8822ACC60E7003FC01F /* SecurityView.swift */; };
+		75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D516552B59676B002D351C /* MagnifyingGlassButton.swift */; };
+		75D5165A2B59881F002D351C /* NavigationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D516592B59881F002D351C /* NavigationTitle.swift */; };
 		75E11C6A2B4BEB2B003B891B /* TabViewChildModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */; };
 		75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C6C2B4C1202003B891B /* BulletView.swift */; };
 		75E11C6F2B4C1259003B891B /* BulletViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C6E2B4C1259003B891B /* BulletViewModel.swift */; };
@@ -145,7 +147,6 @@
 		75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */; };
 		75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */; };
 		75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD612ABCA72900660A99 /* LocalNotification.swift */; };
-		75F70CCD2A98A23C008E0C03 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F70CCC2A98A23C008E0C03 /* CalendarView.swift */; };
 		75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B722A8648440062D2BA /* NewTaskViewModel.swift */; };
 		75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */; };
 /* End PBXBuildFile section */
@@ -295,10 +296,12 @@
 		75B58D0F2A8250CF00937923 /* TaskListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		75C710372A8CE4BC008E8A62 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
-		75C7103E2A8CEEDB008E8A62 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsThemeView.swift; sourceTree = "<group>"; };
 		75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SettingsTaskView.swift; sourceTree = "<group>"; };
 		75D0D8822ACC60E7003FC01F /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
+		75D516552B59676B002D351C /* MagnifyingGlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifyingGlassButton.swift; sourceTree = "<group>"; };
+		75D516592B59881F002D351C /* NavigationTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitle.swift; sourceTree = "<group>"; };
 		75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewChildModifier.swift; sourceTree = "<group>"; };
 		75E11C6C2B4C1202003B891B /* BulletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletView.swift; sourceTree = "<group>"; };
 		75E11C6E2B4C1259003B891B /* BulletViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulletViewModel.swift; sourceTree = "<group>"; };
@@ -322,7 +325,6 @@
 		75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TaskWidgetExtension.entitlements; sourceTree = "<group>"; };
 		75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		75F3AD612ABCA72900660A99 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
-		75F70CCC2A98A23C008E0C03 /* CalendarView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		75F96B722A8648440062D2BA /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextFieldStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -472,7 +474,6 @@
 				75896DD32A83D7C700B0C6F2 /* NewTask */,
 				75E11C6B2B4C11B4003B891B /* Bullet */,
 				7590CF932AEFADC00015B396 /* CheckBox */,
-				7534A2BB2AA0E7840049431C /* Sorting */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -700,7 +701,6 @@
 			children = (
 				75B58D0A2A8234B900937923 /* TabBarView.swift */,
 				75B58D122A826CD500937923 /* TasksList */,
-				75F70CC92A98A214008E0C03 /* Calendar */,
 				7537D0202AAA0FF400F64175 /* Projects */,
 				75C710362A8CE49F008E8A62 /* Settings */,
 			);
@@ -713,6 +713,7 @@
 				75B58D0F2A8250CF00937923 /* TaskListView.swift */,
 				75A709AE2A82900A003894F7 /* TaskListViewModel.swift */,
 				7533B1A42A8F5B91007CF2EE /* Task */,
+				7534A2BB2AA0E7840049431C /* Sorting */,
 				75481B2F2AE0112A003ABED5 /* CompletedTask */,
 			);
 			path = TasksList;
@@ -759,7 +760,9 @@
 			isa = PBXGroup;
 			children = (
 				75F96B742A86953C0062D2BA /* Style */,
-				75C7103E2A8CEEDB008E8A62 /* NavigationView.swift */,
+				75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */,
+				75D516592B59881F002D351C /* NavigationTitle.swift */,
+				75D516552B59676B002D351C /* MagnifyingGlassButton.swift */,
 				752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */,
 				75E11C752B4C2679003B891B /* BulletTaskRow.swift */,
 				75A3CFFF2A990BD4000F68BA /* TaskRow.swift */,
@@ -853,14 +856,6 @@
 				75E11CCF2B4C350A003B891B /* AppIntent.swift */,
 			);
 			path = AppIntent;
-			sourceTree = "<group>";
-		};
-		75F70CC92A98A214008E0C03 /* Calendar */ = {
-			isa = PBXGroup;
-			children = (
-				75F70CCC2A98A23C008E0C03 /* CalendarView.swift */,
-			);
-			path = Calendar;
 			sourceTree = "<group>";
 		};
 		75F96B742A86953C0062D2BA /* Style */ = {
@@ -1040,19 +1035,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				752CEDDE2B3C569C00CA1612 /* TaskRepository.swift in Sources */,
-				75C7103F2A8CEEDB008E8A62 /* NavigationView.swift in Sources */,
+				75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */,
 				753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */,
 				75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */,
 				75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */,
 				75A709AA2A828B68003894F7 /* Date+Ext.swift in Sources */,
 				75E11C782B4C28D3003B891B /* BulletRepository.swift in Sources */,
+				75D5165A2B59881F002D351C /* NavigationTitle.swift in Sources */,
 				756D70742A8E4BCA00F616DA /* UserState.swift in Sources */,
 				752CEE522B3C87AD00CA1612 /* CheckboxTaskRow.swift in Sources */,
 				75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */,
 				7590CF972AEFAE900015B396 /* NewCheckBoxViewModel.swift in Sources */,
 				752CEE6B2B3EF2A000CA1612 /* MailView.swift in Sources */,
 				752CEE692B3EE25700CA1612 /* ProjectRow.swift in Sources */,
-				75F70CCD2A98A23C008E0C03 /* CalendarView.swift in Sources */,
 				75E11C762B4C2679003B891B /* BulletTaskRow.swift in Sources */,
 				751BFB402A9E01AB00D3E0B8 /* RecurringView.swift in Sources */,
 				7561D8462AEBB3930073F1D9 /* AppFeaturesView.swift in Sources */,
@@ -1080,6 +1075,7 @@
 				75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */,
 				75677A2C2A813F360034C45B /* Master_TaskApp.swift in Sources */,
 				757B833C2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift in Sources */,
+				75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */,
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
 				75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */,
 				75481B312AE01144003ABED5 /* CompletedTaskView.swift in Sources */,

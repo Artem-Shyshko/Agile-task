@@ -25,23 +25,8 @@ struct BulletView: View {
     
     var body: some View {
         VStack {
-            topView()
-            
-            List {
-                Group {
-                    listOfTextEditor()
-                    
-                    addPointButton()
-                }
-                .scrollContentBackground(.hidden)
-                .listRowSeparator(.hidden)
-                .listRowBackground(
-                    RoundedRectangle(cornerRadius: 4)
-                        .fill(Color(theme.selectedTheme.sectionColor.name))
-                )
-            }
-            .listStyle(.plain)
-            .listRowSpacing(Constants.shared.listRowSpacing)
+            navigationBar()
+            bulletsList()
         }
         .modifier(TabViewChildModifier())
         .onAppear(perform: {
@@ -71,20 +56,6 @@ struct BulletView: View {
 // MARK: - Private views
 
 private extension BulletView {
-    func topView() -> some View {
-        HStack {
-            tabBarCancelButton()
-            Text("Bullet list")
-                .font(.helveticaBold(size: 16))
-                .foregroundStyle(theme.selectedTheme.textColor)
-                .padding(.trailing, 7)
-                .frame(maxWidth: .infinity, alignment: .center)
-            tabBarSaveButton()
-        }
-        .padding(.horizontal, 15)
-        .padding(.bottom, 20)
-        .padding(.top, 10)
-    }
     
     func textEditor(index: Int) -> some View {
         HStack(spacing: 4) {
@@ -102,12 +73,29 @@ private extension BulletView {
                 .submitLabel(.done)
                 .tint(theme.selectedTheme.sectionTextColor)
             
-                HStack {
-                    ThreeHorizontalLinesView()
-                    trashButton(index: index)
-                }
-                .disabled(focusedInput == index)
+            HStack {
+                ThreeHorizontalLinesView()
+                trashButton(index: index)
+            }
+            .disabled(focusedInput == index)
         }
+    }
+    
+    func bulletsList() -> some View {
+        List {
+            Group {
+                listOfTextEditor()
+                addPointButton()
+            }
+            .scrollContentBackground(.hidden)
+            .listRowSeparator(.hidden)
+            .listRowBackground(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color(theme.selectedTheme.sectionColor.name))
+            )
+        }
+        .listStyle(.plain)
+        .listRowSpacing(Constants.shared.listRowSpacing)
     }
     
     func trashButton(index: Int) -> some View {
@@ -130,7 +118,7 @@ private extension BulletView {
             textEditor(index: index)
                 .id(viewModel.bulletArray[index].id)
                 .focused($focusedInput, equals: index)
-               
+            
         }
         .onMove(perform: viewModel.move)
     }
@@ -171,6 +159,14 @@ private extension BulletView {
             Text("Save")
         }
         .font(.helveticaRegular(size: 16))
+    }
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: tabBarCancelButton(),
+            header: NavigationTitle("Bullet list"),
+            rightItem: tabBarSaveButton()
+        )
     }
 }
 

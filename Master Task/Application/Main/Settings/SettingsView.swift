@@ -19,42 +19,19 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: Constants.shared.listRowSpacing) {
-                NavigationLink(value: SettingsNavigationView.account) {
-                        Text("Account")
-                            .modifier(SectionStyle())
+            VStack {
+                navigationBar()
+                VStack(spacing: Constants.shared.listRowSpacing) {
+                    accountView()
+                    SettingsThemeView()
+                    settingsView()
+                    securityView()
+                    moreAppsView()
+                    emailView()
+                    Spacer()
                 }
-                
-                SettingsThemeView()
-                
-                NavigationLink(value: SettingsNavigationView.taskSettings) {
-                    Text("Settings")
-                        .modifier(SectionStyle())
-                }
-                
-                NavigationLink(value: SettingsNavigationView.security) {
-                    Text("Security")
-                        .modifier(SectionStyle())
-                }
-                
-                NavigationLink(value: SettingsNavigationView.more) {
-                    Text("More Agile App")
-                        .modifier(SectionStyle())
-                }
-                
-                Button {
-                    showMailView = true
-                } label: {
-                    Text("Write to us on the email")
-                        .modifier(SectionStyle())
-                }
-                
-                Spacer()
             }
-            .padding(.top, 25)
             .modifier(TabViewChildModifier())
-            .navigationTitle("Settings")
-            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: SettingsNavigationView.self) { views in
                 switch views {
                 case .account:
@@ -75,6 +52,55 @@ struct SettingsView: View {
             })
         }
     }
+}
+
+private extension SettingsView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: EmptyView(),
+            header: NavigationTitle("Settings"),
+            rightItem: EmptyView()
+        )
+    }
+    
+    func accountView () -> some View {
+        NavigationLink(value: SettingsNavigationView.account) {
+            Text("Account")
+                .modifier(SectionStyle())
+        }
+    }
+    
+    func settingsView() -> some View {
+        NavigationLink(value: SettingsNavigationView.taskSettings) {
+            Text("Settings")
+                .modifier(SectionStyle())
+        }
+    }
+    
+    func securityView() -> some View {
+        NavigationLink(value: SettingsNavigationView.security) {
+            Text("Security")
+                .modifier(SectionStyle())
+        }
+    }
+    
+    func moreAppsView() -> some View {
+        NavigationLink(value: SettingsNavigationView.more) {
+            Text("More Agile App")
+                .modifier(SectionStyle())
+        }
+    }
+    
+    func emailView() -> some View {
+        Button {
+            showMailView = true
+        } label: {
+            Text("Write to us on the email")
+                .modifier(SectionStyle())
+        }
+    }
+    
 }
 
 struct SettingsView_Previews: PreviewProvider {

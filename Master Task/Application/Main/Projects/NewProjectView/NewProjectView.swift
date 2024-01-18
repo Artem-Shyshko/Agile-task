@@ -15,29 +15,32 @@ struct NewProjectView: View {
     
     var body: some View {
         VStack {
-                TextField(
-                    vm.editedProject == nil ? "Enter new name" : "Enter name for new account",
-                    text: $vm.projectName
-                )
+            navigationBar()
+            textFieldView()
             Spacer()
         }
-        .padding(.top, 30)
-        .navigationTitle("Projects")
         .textFieldStyle(NewTextFieldStyle())
         .modifier(TabViewChildModifier())
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                cancelButton()
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                saveButton()
-            }
-        }
     }
 }
 
 private extension NewProjectView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: cancelButton(),
+            header: NavigationTitle("Projects"),
+            rightItem: saveButton()
+        )
+    }
+    
+    func textFieldView() -> some View {
+        TextField(
+            vm.editedProject == nil ? "Enter new name" : "Enter name for new account",
+            text: $vm.projectName
+        )
+    }
+    
     func saveButton() -> some View {
         Button {
             let isSaved = vm.saveButtonAction(purchaseManager: purchaseManager)

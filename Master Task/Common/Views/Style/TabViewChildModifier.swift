@@ -16,10 +16,10 @@ struct TabViewChildModifier: ViewModifier {
       
       content
         .padding(.horizontal, 5)
-        .padding(.bottom, 35)
     }
     .scrollContentBackground(.hidden)
     .navigationBarBackButtonHidden()
+    .toolbar(.hidden, for: .navigationBar)
     .onAppear {
       UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
     }

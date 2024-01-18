@@ -19,22 +19,28 @@ struct MoreOurAppsView: View {
             leaveReviewButton()
             Spacer()
         }
-        .navigationTitle("Settings")
-        .padding(.top, 25)
         .modifier(TabViewChildModifier())
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                backButton {
-                    dismiss.callAsFunction()
-                }
-            }
-        }
     }
 }
 
 // MARK: - Private views
 
 private extension MoreOurAppsView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: backButton(),
+            header: NavigationTitle("Settings"),
+            rightItem: EmptyView()
+        )
+    }
+    
+    func backButton() -> some View {
+        backButton {
+            dismiss.callAsFunction()
+        }
+    }
+    
     @ViewBuilder
     func visitOurWebsiteButton() -> some View {
         if let url = URL(string: "https://embrox.com/") {

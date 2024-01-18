@@ -13,6 +13,30 @@ struct SortingView: View {
     @StateObject var viewModel: SortingViewModel
     
     var body: some View {
+        VStack {
+            navigationBar()
+            sortingOptions()
+        }
+        .modifier(TabViewChildModifier())
+        .onChange(of: viewModel.settings) { _ in
+            viewModel.settingsRepository.save(viewModel.settings)
+        }
+    }
+}
+
+// MARK: - Private Views
+
+private extension SortingView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: backButton(),
+            header: NavigationTitle("Sorting"),
+            rightItem: EmptyView()
+        )
+    }
+    
+    func sortingOptions() -> some View {
         VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
             ForEach(TaskSorting.allCases, id: \.self) { option in
                 Button {
@@ -30,26 +54,14 @@ struct SortingView: View {
             }
             Spacer()
         }
-        .padding(.top, 20)
-        .navigationTitle("Sorting")
-        .toolbar(.visible, for: .navigationBar)
-        .modifier(TabViewChildModifier())
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                backButton {
-                    dismiss.callAsFunction()
-                }
-            }
-        }
-        .onChange(of: viewModel.settings) { _ in
-          viewModel.settingsRepository.save(viewModel.settings)
+    }
+    
+    func backButton() -> some View {
+        backButton {
+            dismiss.callAsFunction()
         }
     }
-}
-
-// MARK: - Private Views
-
-private extension SortingView {
+    
     var checkMark: some View {
         Image(systemName: "checkmark")
             .foregroundColor(.black)

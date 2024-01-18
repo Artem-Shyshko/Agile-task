@@ -15,23 +15,15 @@ struct ProjectsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                if !vm.isSearchBarHidden {
-                    SearchableView(searchText: $vm.searchText, isSearchBarHidden: $vm.isSearchBarHidden)
-                        .foregroundColor(theme.selectedTheme.textColor)
-                }
+                navigationBar()
+                searchView()
                 accountsList()
                 Spacer()
             }
-            .padding(.top, 25)
             .modifier(TabViewChildModifier())
             .onAppear {
                 vm.savedProjects = vm.projectsRepo.getProjects()
             }
-            .toolbar {
-                toolBarView()
-            }
-            .navigationTitle("Projects")
-            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $vm.showNewProjectView) {
                 NewProjectView(vm: NewProjectViewModel())
             }
@@ -47,6 +39,23 @@ struct AccountView_Previews: PreviewProvider {
 }
 
 private extension ProjectsView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: magnifyingGlassButton(),
+            header: NavigationTitle("Projects"),
+            rightItem: rightNavigationButton()
+        )
+    }
+    
+    @ViewBuilder
+    func searchView() -> some View {
+        if !vm.isSearchBarHidden {
+            SearchableView(searchText: $vm.searchText, isSearchBarHidden: $vm.isSearchBarHidden)
+                .foregroundColor(theme.selectedTheme.textColor)
+        }
+    }
+    
     func accountsList() -> some View {
         List {
             ForEach(vm.savedProjects, id: \.id) { project in
@@ -62,28 +71,20 @@ private extension ProjectsView {
         .listStyle(.plain)
     }
     
-    @ToolbarContentBuilder
-    func toolBarView() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button {
-                vm.isSearchBarHidden.toggle()
-            } label: {
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 18, height: 18)
-            }
+    func magnifyingGlassButton() -> some View {
+        MagnifyingGlassButton {
+            vm.isSearchBarHidden.toggle()
         }
-        
-        ToolbarItem(placement: .topBarTrailing) {
-            Button {
-                vm.showNewProjectView = true
-            } label: {
-                Image(systemName: "plus")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 18, height: 18)
-            }
+    }
+    
+    func rightNavigationButton() -> some View {
+        Button {
+            vm.showNewProjectView = true
+        } label: {
+            Image(systemName: "plus")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 18, height: 18)
         }
     }
 }

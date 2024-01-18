@@ -19,14 +19,15 @@ struct SecurityView: View {
     }
     
     var body: some View {
-        VStack(spacing: Constants.shared.listRowSpacing) {
-            securitySection()
-            changePasswordView()
-            Spacer()
+        VStack {
+            navigationBar()
+            VStack(spacing: Constants.shared.listRowSpacing) {
+                securitySection()
+                changePasswordView()
+                Spacer()
+            }
         }
-        .padding(.top, 25)
         .modifier(TabViewChildModifier())
-        .navigationTitle("Security")
         .navigationDestination(isPresented: $viewModel.showPasswordView) {
             SetPasswordView(viewModel: SetPasswordViewModel())
         }
@@ -38,19 +39,27 @@ struct SecurityView: View {
         .onChange(of: viewModel.settings) { _ in
             viewModel.settingsRepository.save(viewModel.settings)
         }
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                backButton {
-                    dismiss.callAsFunction()
-                }
-            }
-        }
     }
 }
 
 // MARK: - Private Views
 
 private extension SecurityView {
+    
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: backButton(),
+            header: NavigationTitle("Security"),
+            rightItem: emptyView()
+        )
+    }
+    
+    func backButton() -> some View {
+        backButton {
+            dismiss.callAsFunction()
+        }
+    }
+    
     func securitySection() -> some View {
         HStack {
             Text("Security")

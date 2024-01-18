@@ -27,10 +27,8 @@ struct TaskListView: View {
   var body: some View {
     NavigationStack(path: $path) {
       VStack(spacing: 20) {
-        VStack(spacing: 20) {
-          topBarView()
+          navigationBar()
           dateBarView()
-        }
         
         VStack(spacing: 5) {
           if viewModel.taskSortingOption == .month {
@@ -103,30 +101,12 @@ private extension TaskListView {
   
   // MARK: - topbar
   
-  func topBarView() -> some View {
-    HStack(spacing: 15) {
-      Button {
-        viewModel.isSearchBarHidden.toggle()
-        viewModel.searchText.removeAll()
-      } label: {
-        Image(systemName: "magnifyingglass")
-          .resizable()
-          .scaledToFit()
-          .frame(width: 18, height: 18)
-      }
-      .foregroundColor(.white)
-      
-      DateSegmentedControl(selectedDateSorting: $viewModel.taskSortingOption)
-      
-      NavigationLink(value: TaskListNavigationView.createTask) {
-        Image(systemName: "plus")
-          .resizable()
-          .scaledToFit()
-          .frame(width: 18, height: 18)
-      }
-    }
-    .padding(.top, 15)
-    .padding(.horizontal, 20)
+  func navigationBar() -> some View {
+    NavigationBarView(
+      leftItem: navigationBarLeftItem(),
+      header: DateSegmentedControl(selectedDateSorting: $viewModel.taskSortingOption),
+      rightItem: navigationBarRightItem()
+    )
     .onChange(of: viewModel.taskSortingOption) { _ in
       viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
@@ -138,6 +118,22 @@ private extension TaskListView {
     }
     .onChange(of: viewModel.selectedCalendarDate) { _ in
       viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
+    }
+  }
+  
+  func navigationBarLeftItem() -> some View {
+    MagnifyingGlassButton(action: {
+      viewModel.isSearchBarHidden.toggle()
+      viewModel.searchText.removeAll()
+    })
+  }
+  
+  func navigationBarRightItem() -> some View {
+    NavigationLink(value: TaskListNavigationView.createTask) {
+      Image(systemName: "plus")
+        .resizable()
+        .scaledToFit()
+        .frame(width: 18, height: 18)
     }
   }
   

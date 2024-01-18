@@ -75,7 +75,7 @@ struct TabBarView: View {
             taskListNavigationStack = []
             settingsNavigationStack = []
         }
-        .padding(.bottom, 15)
+        .padding(.bottom, 30)
     }
 }
 
@@ -98,9 +98,7 @@ private extension TabBarView {
                 )
             }
         }
-        .padding(.vertical, 10)
         .padding(.horizontal, 15)
-        .padding(.bottom, 10)
     }
 }
 

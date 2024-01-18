@@ -16,37 +16,31 @@ struct SettingsTaskView: View {
   @Environment(\.scenePhase) var scenePhase
   
   var body: some View {
-    VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
-      dateSection()
-      timeSection()
-      newTasksSection()
-      completedTaskSection()
-      weekStartsOnSection()
-      addPlusButton()
-      pushNotificationView()
-      deleteAllTasksButton()
-      versionView()
-      Spacer()
-    }
-    .navigationTitle("Settings")
-    .padding(.top, 25)
-    .modifier(TabViewChildModifier())
-    .toolbar {
-      ToolbarItem(placement: .topBarLeading) {
-        backButton {
-          dismiss.callAsFunction()
-        }
+    VStack {
+      navigationBar()
+      VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
+        dateSection()
+        timeSection()
+        newTasksSection()
+        completedTaskSection()
+        weekStartsOnSection()
+        addPlusButton()
+        pushNotificationView()
+        deleteAllTasksButton()
+        versionView()
+        Spacer()
       }
     }
+    .modifier(TabViewChildModifier())
     .onChange(of: viewModel.settings) { _ in
       viewModel.settingsRepository.save(viewModel.settings)
     }
     .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.isShowingAlert) {
-        Button("Cancel", role: .cancel) {}
-        
-        Button("Delete") {
-            viewModel.deleteAllTasks()
-        }
+      Button("Cancel", role: .cancel) {}
+      
+      Button("Delete") {
+        viewModel.deleteAllTasks()
+      }
     }
     .onAppear(perform: {
       Task {
@@ -66,6 +60,21 @@ struct SettingsTaskView: View {
 // MARK: - Private Views
 
 private extension SettingsTaskView {
+  
+  func navigationBar() -> some View {
+    NavigationBarView(
+      leftItem: backButton(),
+      header: NavigationTitle("Settings"),
+      rightItem: EmptyView()
+    )
+  }
+  
+  func backButton() -> some View {
+    backButton {
+      dismiss.callAsFunction()
+    }
+  }
+  
   func dateSection() -> some View {
     VStack(alignment: .leading) {
       HStack {
@@ -195,7 +204,7 @@ private extension SettingsTaskView {
     Button {
       viewModel.isShowingAlert = true
     } label: {
-        Text("Delete all tasks")
+      Text("Delete all tasks")
     }
     .padding(.vertical, 10)
     .modifier(SectionStyle())

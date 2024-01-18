@@ -12,21 +12,27 @@ struct SettingsSubscriptionView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        
         VStack {
+            navigationBar()
             SubscriptionView()
-            
             Spacer()
         }
-        .navigationTitle("Subscription")
-        .padding(.top, 25)
         .modifier(TabViewChildModifier())
-        .toolbar {
-          ToolbarItem(placement: .topBarLeading) {
-            backButton {
-              dismiss.callAsFunction()
-            }
-          }
+    }
+}
+
+private extension SettingsSubscriptionView {
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: backButton(),
+            header: NavigationTitle("Subscription"),
+            rightItem: EmptyView()
+        )
+    }
+    
+    func backButton() -> some View {
+        backButton {
+            dismiss.callAsFunction()
         }
     }
 }

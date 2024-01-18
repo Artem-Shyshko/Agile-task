@@ -15,43 +15,12 @@ struct CompletedTaskView: View {
     
     var body: some View {
         VStack {
+            navigationBar()
             underTopBar()
-            List {
-                ForEach($viewModel.completedTasks, id: \.id) { task in
-                TaskRow(viewModel: TaskListViewModel(), task: task)
-                        .listRowBackground(
-                          RoundedRectangle(cornerRadius: 4)
-                            .fill(Color(task.colorName.wrappedValue))
-                        )
-                        .onChange(of: task.wrappedValue) { _ in
-                            viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
-                        }
-              }
-              .listRowSeparator(.hidden)
-            }
-            .listRowSpacing(Constants.shared.listRowSpacing)
-            .scrollContentBackground(.hidden)
-            .listStyle(.plain)
-            
+            completedTasksList()
             Spacer()
         }
         .modifier(TabViewChildModifier())
-        .navigationTitle("Completed tasks")
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                backButton {
-                    dismiss.callAsFunction()
-                }
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                NavigationLink {
-                    NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.completedTasks)
-                } label: {
-                    Image("plus")
-                }
-            }
-        }
         .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.showDeleteAlert) {
             Button {
                 viewModel.showDeleteAlert = false
@@ -86,6 +55,20 @@ struct CompletedTaskView: View {
 // MARK: - Private Views
 
 private extension CompletedTaskView {
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: backButton(),
+            header: NavigationTitle("Completed tasks"),
+            rightItem: EmptyView()
+        )
+    }
+    
+    func backButton() -> some View {
+        backButton {
+            dismiss.callAsFunction()
+        }
+    }
+    
     func underTopBar() -> some View {
         HStack {
             Button {
@@ -103,7 +86,27 @@ private extension CompletedTaskView {
             }
         }
         .padding(.horizontal, 15)
-        .padding(.top, 20)
+    }
+    
+    func completedTasksList() -> some View {
+        List {
+            ForEach($viewModel.completedTasks, id: \.id) { task in
+                TaskRow(viewModel: TaskListViewModel(), task: task)
+                    .listRowBackground(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(Color(task.colorName.wrappedValue))
+                    )
+                    .onChange(of: task.wrappedValue) { _ in
+                        viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
+                    }
+            }
+            .listRowSeparator(.hidden)
+        }
+        .listRowSpacing(Constants.shared.listRowSpacing)
+        .scrollContentBackground(.hidden)
+        .listStyle(.plain)
+        .padding(.bottom, 40)
+        
     }
 }
 

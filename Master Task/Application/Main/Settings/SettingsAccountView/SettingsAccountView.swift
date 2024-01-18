@@ -12,31 +12,43 @@ struct SettingsAccountView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-            VStack {
-                NavigationLink {
-                    SettingsSubscriptionView()
-                } label: {
-                    HStack {
-                        Text("Subscription")
-                        Spacer()
-                        Text("Selected plane")
-                    }
-                    .padding(.horizontal, 5)
-                }
-                .buttonStyle(SettingsButtonStyle())
-                .padding(.horizontal, 5)
+        VStack {
+            navigationBar()
+            subscriptionView()
+            Spacer()
+        }
+        .modifier(TabViewChildModifier())
+    }
+}
+
+private extension SettingsAccountView {
+    func navigationBar() -> some View {
+        NavigationBarView(
+            leftItem: backButton(),
+            header: NavigationTitle("Account"),
+            rightItem: EmptyView()
+        )
+    }
+    
+    func backButton() -> some View {
+        backButton {
+            dismiss.callAsFunction()
+        }
+    }
+    
+    func subscriptionView() -> some View {
+        NavigationLink {
+            SettingsSubscriptionView()
+        } label: {
+            HStack {
+                Text("Subscription")
                 Spacer()
+                Text("Selected plane")
             }
-            .navigationTitle("Account")
-            .toolbar {
-              ToolbarItem(placement: .topBarLeading) {
-                backButton {
-                  dismiss.callAsFunction()
-                }
-              }
-            }
-            .padding(.top, 25)
-            .modifier(TabViewChildModifier())
+            .padding(.horizontal, 5)
+        }
+        .buttonStyle(SettingsButtonStyle())
+        .padding(.horizontal, 5)
     }
 }
 
