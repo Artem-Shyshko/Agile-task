@@ -21,6 +21,7 @@ struct NewTaskView: View {
     @FocusState private var isFocused: Bool
     @State private var isShowingCheckBoxView: Bool = false
     @State private var isShowingBulletView: Bool = false
+    @State private var isDescriptionEmpty = true
     
     @Environment(\.dismiss) var dismiss
     var taskList: [TaskDTO]
@@ -166,16 +167,21 @@ private extension NewTaskView {
         .modifier(SectionStyle())
     }
     
+    @ViewBuilder
     func descriptionView() -> some View {
         HStack(spacing: 5) {
             setupIcon(with: .description)
+                .offset(y: isDescriptionEmpty ? -2 : 0)
             TextFieldWithEnterButton(placeholder: "Description", text: $viewModel.description.max(400)) {
                 keyboardButtonAction()
             }
         }
-        .tint(viewModel.description.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
-        .foregroundStyle(viewModel.description.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .tint(isDescriptionEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .foregroundStyle(isDescriptionEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
         .modifier(SectionStyle())
+        .onChange(of: viewModel.description) { newValue in
+            isDescriptionEmpty = newValue.isEmpty
+        }
     }
     
     func checkList() -> some View {
