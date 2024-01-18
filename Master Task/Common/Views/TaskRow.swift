@@ -121,7 +121,6 @@ private extension TaskRow {
             }
             Spacer()
             
-            let timeFormat = viewModel.settings.timeFormat == .twelve ? "hh" : "HH"
             if let date = task.date {
                 Text(date.format(viewModel.dateFormat()))
                     .font(.helveticaRegular(size: 14))
@@ -164,6 +163,10 @@ private extension TaskRow {
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
             viewModel.updateTaskCompletion(&task)
+            viewModel.filteredTasks = viewModel.sortedCompletedTasks(
+                viewModel.filteredTasks, 
+                settings: viewModel.settings
+            )
         })
     }
     
