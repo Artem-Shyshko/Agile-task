@@ -144,12 +144,12 @@ private extension NewCheckBoxView {
                 focusedInput! += 1
             }
         }, label: {
-            Image("plus")
+            Image(systemName: "plus")
                 .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
                 .bold()
-                .frame(width: 20, height: 20)
+                .frame(width: 10, height: 10)
                 .hAlign(alignment: .leading)
         })
     }
