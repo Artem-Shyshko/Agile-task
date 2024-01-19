@@ -149,7 +149,7 @@ private extension NewTaskView {
     }
     
     func titleView() -> some View {
-        TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.title) {
+        TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.title.max(200)) {
             keyboardButtonAction()
         }
         .focused($isFocused)
