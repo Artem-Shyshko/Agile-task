@@ -300,9 +300,9 @@ extension TaskListViewModel {
     
     func search(with query: String) {
         if query.isEmpty {
-            filteredTasks = loadedTasks
+            groupedTasksBySelectedOption(taskSortingOption)
         } else {
-            filteredTasks = loadedTasks.filter { $0.title.contains(query) }
+            filteredTasks = filteredTasks.filter { $0.title.contains(query) }
         }
     }
     
