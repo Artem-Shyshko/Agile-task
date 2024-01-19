@@ -10,7 +10,6 @@ import RealmSwift
 
 final class NewCheckBoxViewModel: ObservableObject {
     let taskRepository = TaskRepositoryImpl()
-    let checkboxRepository = CheckboxRepositoryImpl()
     @Published var deletedCheckboxes: [CheckboxDTO] = []
     @Published var checkboxes: [CheckboxDTO] = []
     @Published var showDeleteAlert = false

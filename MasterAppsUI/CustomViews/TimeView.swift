@@ -104,7 +104,7 @@ public struct TimeView: View {
 class TimeViewModel: ObservableObject {
     func formatTimeInput(_ input: String, format: TimeFormat) -> String {
         let allowedCharacterSet = CharacterSet(charactersIn: "0123456789")
-        let maxHourTime = format == .twelve ? 12 : 24
+        let maxHourTime = format == .twelve ? 12 : 23
         
         let numericString = input.components(separatedBy: allowedCharacterSet.inverted).joined()
         

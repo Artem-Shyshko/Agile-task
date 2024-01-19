@@ -20,7 +20,7 @@ struct TaskListView: View {
   @Environment(\.scenePhase) var scenePhase
   
   @Binding var path: [TaskListNavigationView]
-  @Binding var isAllTaskSortingOption: Bool
+  @Binding var taskSortingOption: TaskDateSorting
   
   // MARK: - Body
   
@@ -60,6 +60,7 @@ struct TaskListView: View {
       .onAppear {
         viewModel.localNotificationManager = notificationManager
         viewModel.onAppear()
+        viewModel.taskSortingOption = taskSortingOption
       }
       .task {
         try? await notificationManager.requestAuthorization()
@@ -85,12 +86,6 @@ struct TaskListView: View {
       .overlay(alignment: .bottom, content: {
         newTaskView()
       })
-      .onChange(of: isAllTaskSortingOption) { newValue in
-        if newValue {
-          viewModel.taskSortingOption = .all
-          isAllTaskSortingOption = false
-        }
-      }
     }
   }
 }
@@ -201,13 +196,7 @@ private extension TaskListView {
             } rightButtonAction: {
               viewModel.addToCurrentDate(component: .weekOfYear, value: 1)
             }
-          case .month:
-            TimeControlView(title: "") {
-              viewModel.minusFromCurrentDate(component: .month, value: 1)
-            } rightButtonAction: {
-              viewModel.addToCurrentDate(component: .month, value: 1)
-            }
-          case .all:
+          case .month, .all:
             EmptyView()
           }
         }
@@ -354,7 +343,7 @@ private extension TaskListView {
 
 struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
-    TaskListView(path: .constant([TaskListNavigationView.sorting]), isAllTaskSortingOption: .constant(false))
+    TaskListView(path: .constant([TaskListNavigationView.sorting]), taskSortingOption: .constant(.all))
       .environmentObject(LocalNotificationManager())
       .environmentObject(AppThemeManager())
   }

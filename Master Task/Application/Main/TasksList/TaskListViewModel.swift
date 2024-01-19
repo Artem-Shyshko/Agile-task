@@ -42,10 +42,12 @@ final class TaskListViewModel: ObservableObject {
     // MARK: - Methods
     
     func onAppear() {
-        currentDate = Date()
+        let newDate = Date()
+        currentDate = newDate
+        pastDate = newDate
+        selectedCalendarDate = newDate
         loadTasks()
         search(with: "")
-        taskSortingOption = .all
     }
     
     func loadTasks() {

@@ -15,7 +15,7 @@ struct SectionStyle: ViewModifier {
             .font(.helveticaRegular(size: 16))
             .foregroundColor(theme.selectedTheme.sectionTextColor)
             .tint(.gray)
-            .frame(minHeight: 40)
+            .frame(minHeight: 44)
             .hAlign(alignment: .leading)
             .padding(.leading, 10)
             .background(theme.selectedTheme.sectionColor)

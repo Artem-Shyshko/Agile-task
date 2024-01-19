@@ -20,7 +20,7 @@ struct ProjectRow: View {
                 if project.isSelected { checkMark }
                 
                 Text(project.name)
-                    .font(.helveticaRegular(size: 15))
+                    .font(.helveticaRegular(size: 16))
             }
         }
         .swipeActions {

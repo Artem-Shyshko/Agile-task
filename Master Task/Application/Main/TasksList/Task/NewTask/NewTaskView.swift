@@ -166,6 +166,7 @@ private extension NewTaskView {
                 keyboardButtonAction()
             }
         }
+        .padding(.vertical, 8)
         .tint(isDescriptionEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
         .foregroundStyle(isDescriptionEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
         .modifier(SectionStyle())

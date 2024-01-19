@@ -35,7 +35,7 @@ public struct TextFieldWithEnterButton: View {
                     }
                     isButtonPress = false
                 }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 35))
                 .overlay(alignment: .leading) {
                     if text.isEmpty {
                         Text(placeholder)

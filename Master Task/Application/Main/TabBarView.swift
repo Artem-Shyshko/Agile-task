@@ -7,7 +7,7 @@
 
 import SwiftUI
 import RealmSwift
-
+import MasterAppsUI
 
 // MARK: - Enum
 
@@ -45,17 +45,17 @@ struct TabBarView: View {
     @State private var selectedTab: Tab = .taskList
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
-    @State private var backToAllTasksSortingOption = false
+    @State private var tasksSortingOption: TaskDateSorting = .all
     
     // MARK: - Body
     
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                TaskListView(path: $taskListNavigationStack, isAllTaskSortingOption: $backToAllTasksSortingOption)
+                TaskListView(path: $taskListNavigationStack, taskSortingOption: $tasksSortingOption)
                     .tag(Tab.taskList)
                     .toolbar(.hidden, for: .tabBar)
-                TaskListView(path: $taskListNavigationStack, isAllTaskSortingOption: .constant(false))
+                TaskListView(path: $taskListNavigationStack, taskSortingOption: $tasksSortingOption)
                     .tag(Tab.calendar)
                     .toolbar(.hidden, for: .tabBar)
                 ProjectsView(vm: ProjectsViewModel())
@@ -94,7 +94,7 @@ private extension TabBarView {
                     inActiveTint: inActiveTint,
                     tab: $0,
                     activeTab: $selectedTab, 
-                    backToAllTasksSortingOption: $backToAllTasksSortingOption
+                    tasksSortingOption: $tasksSortingOption
                 )
             }
         }
@@ -107,7 +107,7 @@ struct TabItem: View {
     var inActiveTint: Color
     var tab: Tab
     @Binding var activeTab: Tab
-    @Binding var backToAllTasksSortingOption: Bool
+    @Binding var tasksSortingOption: TaskDateSorting
     
     var body: some View {
         VStack(spacing: 10) {
@@ -124,7 +124,9 @@ struct TabItem: View {
             activeTab = tab
             
             if tab == .taskList {
-                backToAllTasksSortingOption = true
+                tasksSortingOption = .all
+            } else if tab == .calendar {
+                tasksSortingOption = .month
             }
         }
     }
