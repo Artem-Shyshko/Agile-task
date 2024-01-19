@@ -202,13 +202,13 @@ private extension TaskListView {
               viewModel.addToCurrentDate(component: .weekOfYear, value: 1)
             }
           case .month:
-            TimeControlView(title: viewModel.currentDate.format("MMMM")) {
+            TimeControlView(title: "") {
               viewModel.minusFromCurrentDate(component: .month, value: 1)
             } rightButtonAction: {
               viewModel.addToCurrentDate(component: .month, value: 1)
             }
           case .all:
-            Text("All")
+            EmptyView()
           }
         }
         .frame(height: 30)
