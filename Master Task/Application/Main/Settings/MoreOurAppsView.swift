@@ -14,6 +14,7 @@ struct MoreOurAppsView: View {
     
     var body: some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
+            navigationBar()
             visitOurWebsiteButton()
             reviewOurAppsButton()
             leaveReviewButton()

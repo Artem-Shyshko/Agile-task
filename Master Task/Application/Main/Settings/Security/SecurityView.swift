@@ -50,7 +50,7 @@ private extension SecurityView {
         NavigationBarView(
             leftItem: backButton(),
             header: NavigationTitle("Security"),
-            rightItem: emptyView()
+            rightItem: EmptyView()
         )
     }
     

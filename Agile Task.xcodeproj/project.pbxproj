@@ -748,6 +748,7 @@
 			isa = PBXGroup;
 			children = (
 				75C710372A8CE4BC008E8A62 /* SettingsView.swift */,
+				752CEE6C2B3EF2DA00CA1612 /* MoreOurAppsView.swift */,
 				75474BAF2AE97054001119A9 /* SettingsAccountView */,
 				75C710442A8D1630008E8A62 /* SettingsTheme */,
 				75C710472A8D1AC0008E8A62 /* SettingsTask */,
@@ -766,7 +767,6 @@
 				752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */,
 				75E11C752B4C2679003B891B /* BulletTaskRow.swift */,
 				75A3CFFF2A990BD4000F68BA /* TaskRow.swift */,
-				752CEE6C2B3EF2DA00CA1612 /* MoreOurAppsView.swift */,
 				752CEE6A2B3EF2A000CA1612 /* MailView.swift */,
 				752CEE682B3EE25700CA1612 /* ProjectRow.swift */,
 				751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */,
