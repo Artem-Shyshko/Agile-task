@@ -23,6 +23,8 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func addNotification(to task: TaskObject) async  {
+        deleteNotification(with: task.id.stringValue)
+        
         var reminderTime: Date
         switch task.reminder {
         case .none: return
@@ -52,14 +54,14 @@ final class LocalNotificationManager: NSObject, ObservableObject {
             title: "Master Task",
             body: task.title,
             dateComponents: dateComponents,
-            repeats: false
+            repeats: true
         )
-        
         await schedule(localNotification: notification)
     }
     
     func deleteNotification(with identifier: String) {
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
+        notificationCenter.removeAllDeliveredNotifications()
     }
 }
 

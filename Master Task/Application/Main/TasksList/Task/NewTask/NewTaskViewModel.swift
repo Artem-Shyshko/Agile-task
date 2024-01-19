@@ -181,13 +181,11 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func compareDateAndTime() {
-        if reminder == .custom {
             self.reminderDate = Constants.shared.calendar.date(
                 bySettingHour: reminderTime.dateComponents([.hour]).hour ?? 12,
                 minute: reminderTime.dateComponents([.minute]).minute ?? 00,
                 second: 0, of: reminderDate
             )!
-        }
         
         if selectedTimeOption == .custom, selectedDateOption == .custom {
             setupTime()
@@ -241,11 +239,11 @@ final class NewTaskViewModel: ObservableObject {
         }
     }
     
-    func deleteNotification(for task: TaskDTO) {
+    func deleteNotification(for id: String) {
         guard let localNotificationManager else { return }
         
         Task {
-            await localNotificationManager.deleteNotification(with: task.id.stringValue)
+            await localNotificationManager.deleteNotification(with: id)
         }
     }
     
@@ -285,9 +283,10 @@ final class NewTaskViewModel: ObservableObject {
         let project = projectRepository.getSelectedProject()
         let tasksArray = project.tasks
             .filter { $0.parentId == task.parentId }
-        
         taskRepository.deleteAll(where: task.parentId)
-        tasksArray.forEach { deleteNotification(for: $0) }
+        tasksArray.forEach { deleteNotification(for: $0.id.stringValue) }
+        
+        addNotification(for: edited)
         writeRecurringTaskArray(for: edited)
     }
     
@@ -306,7 +305,7 @@ final class NewTaskViewModel: ObservableObject {
     @MainActor func deleteTask(parentId: ObjectId) {
         let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == parentId })
         tasksToDelete.forEach {
-            deleteNotification(for: $0)
+            deleteNotification(for: $0.id.stringValue)
         }
         taskRepository.deleteAll(where: parentId)
     }
