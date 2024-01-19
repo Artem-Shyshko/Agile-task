@@ -10,7 +10,7 @@ import RealmSwift
 
 final class BulletViewModel: ObservableObject {
     let taskRepository = TaskRepositoryImpl()
-    @Published var deletedCheckboxes: [BulletDTO] = []
+    @Published var deletedBullets: [BulletDTO] = []
     @Published var bulletArray: [BulletDTO] = []
     @Published var showDeleteAlert = false
     @Published var deletedCheckboxIndex = 0
@@ -25,9 +25,9 @@ final class BulletViewModel: ObservableObject {
     
     func trashButtonAction(task: TaskDTO?, index: Int) {
         if let task {
-            guard task.checkBoxArray.contains(where: { $0.id == bulletArray[index].id }) else { return }
+            guard task.bulletArray.contains(where: { $0.id == bulletArray[index].id }) else { return }
             
-            deletedCheckboxes.append(bulletArray[index])
+            deletedBullets.append(bulletArray[index])
         }
         
         bulletArray.remove(at: index)
@@ -35,8 +35,8 @@ final class BulletViewModel: ObservableObject {
     
     func saveButtonAction(task: TaskDTO?, taskBullets: inout [BulletDTO]) {
         if let task {
-            deletedCheckboxes.forEach { deletedCheckbox in
-                taskRepository.deleteCheckbox(task.id, checkboxId: deletedCheckbox.id)
+            deletedBullets.forEach { deletedBullet in
+                taskRepository.deleteBullet(task.id, bulletId: deletedBullet.id)
             }
         }
         
