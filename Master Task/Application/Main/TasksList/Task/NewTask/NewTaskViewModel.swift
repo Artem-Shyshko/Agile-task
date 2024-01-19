@@ -395,6 +395,10 @@ private extension NewTaskViewModel {
         var taskDate = task.createdDate
         var createdTaskArray: [TaskDTO] = []
         
+        if recurringConfiguration.option != .weekdays {
+            createdTaskArray.append(task)
+        }
+        
         while taskDate <= endsDate {
             switch recurringConfiguration.option {
             case .daily:
