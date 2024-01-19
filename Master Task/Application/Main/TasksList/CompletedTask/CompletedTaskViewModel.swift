@@ -16,9 +16,11 @@ final class CompletedTaskViewModel: ObservableObject {
     @Published var showRestoreAlert: Bool = false
     
     let taskRepository: TaskRepository = TaskRepositoryImpl()
+    let projectRepository: ProjectRepository = ProjectRepositoryImpl()
     
     init() {
-        completedTasks = taskRepository.getTaskList().filter { $0.isCompleted }
+        let selectedProject = projectRepository.getSelectedProject()
+        completedTasks = selectedProject.tasks.filter { $0.isCompleted }
     }
     
     func updateTask(_ task: TaskDTO) {
