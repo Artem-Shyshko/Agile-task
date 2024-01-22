@@ -47,7 +47,7 @@ struct TaskDTO: CalendarItem {
         switch recurring.option {
         case .none:
             return false
-        case .daily, .weekly, .monthly, .yearly, .custom, .weekdays:
+        case .daily, .weekly, .monthly, .yearly, .custom, .weekdays, .inADay:
             return true
         }
     }

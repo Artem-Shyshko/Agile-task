@@ -71,7 +71,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         switch recurring.option {
         case .none:
             return false
-        case .daily, .weekly, .monthly, .yearly, .custom, .weekdays:
+        case .daily, .weekly, .monthly, .yearly, .custom, .weekdays, .inADay:
             return true
         }
     }
@@ -126,6 +126,7 @@ enum Reminder: String, PersistableEnum, CaseIterable {
 enum RecurringOptions: String, CaseIterable, PersistableEnum {
     case none = "None"
     case daily = "Daily"
+    case inADay = "In a day"
     case weekdays = "Weekdays (Mon to Fri)"
     case weekly = "Weekly"
     case monthly = "Monthly"

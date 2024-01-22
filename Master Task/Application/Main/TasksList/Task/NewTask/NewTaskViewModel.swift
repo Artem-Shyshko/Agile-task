@@ -181,11 +181,11 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func compareDateAndTime() {
-            self.reminderDate = Constants.shared.calendar.date(
-                bySettingHour: reminderTime.dateComponents([.hour]).hour ?? 12,
-                minute: reminderTime.dateComponents([.minute]).minute ?? 00,
-                second: 0, of: reminderDate
-            )!
+        self.reminderDate = Constants.shared.calendar.date(
+            bySettingHour: reminderTime.dateComponents([.hour]).hour ?? 12,
+            minute: reminderTime.dateComponents([.minute]).minute ?? 00,
+            second: 0, of: reminderDate
+        )!
         
         if selectedTimeOption == .custom, selectedDateOption == .custom {
             setupTime()
@@ -391,7 +391,9 @@ private extension NewTaskViewModel {
         for task: TaskDTO
     ) -> [TaskDTO] {
         let repeatEveryNextAddingValue = 1
-        let endsDate: Date = Constants.shared.calendar.date(byAdding: .year, value: 1, to: taskDate) ?? taskDate
+        let inADayAddingValue = 2
+        let maxYears = 1
+        let endsDate: Date = Constants.shared.calendar.date(byAdding: .year, value: maxYears, to: taskDate) ?? taskDate
         var taskDate = task.createdDate
         var createdTaskArray: [TaskDTO] = []
         
@@ -401,23 +403,51 @@ private extension NewTaskViewModel {
         
         while taskDate <= endsDate {
             switch recurringConfiguration.option {
-            case .daily:
-                taskDate = Constants.shared.calendar.date(byAdding: .day, value: repeatEveryNextAddingValue, to: taskDate) ?? taskDate
-            case .weekly:
-                taskDate = Constants.shared.calendar.date(byAdding: .weekOfYear, value: repeatEveryNextAddingValue, to: taskDate) ?? taskDate
-            case .monthly:
-                taskDate = Constants.shared.calendar.date(byAdding: .month, value: repeatEveryNextAddingValue, to: taskDate) ?? taskDate
-            case .yearly:
-                taskDate = Constants.shared.calendar.date(byAdding: .year, value: repeatEveryNextAddingValue, to: taskDate) ?? taskDate
             case .none, .custom:
                 break
+            case .daily:
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .day,
+                    value: repeatEveryNextAddingValue,
+                    to: taskDate
+                ) ?? taskDate
+            case .inADay:
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .day,
+                    value: inADayAddingValue,
+                    to: taskDate
+                ) ?? taskDate
+            case .weekly:
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .weekOfYear,
+                    value: repeatEveryNextAddingValue,
+                    to: taskDate
+                ) ?? taskDate
+            case .monthly:
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .month,
+                    value: repeatEveryNextAddingValue,
+                    to: taskDate
+                ) ?? taskDate
+            case .yearly:
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .year,
+                    value: repeatEveryNextAddingValue,
+                    to: taskDate
+                ) ?? taskDate
             case .weekdays:
                 let weekDays = taskDate.daysOfWeek(using: Constants.shared.calendar)
                 let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
                 
                 weekDays.forEach { day in
-                    taskDate = Constants.shared.calendar.date(byAdding: .day, value: repeatEveryNextAddingValue, to: taskDate) ?? taskDate
+                    taskDate = Constants.shared.calendar.date(
+                        byAdding: .day,
+                        value: repeatEveryNextAddingValue,
+                        to: taskDate
+                    ) ?? taskDate
+                    
                     let dayName = day.format("EEEE")
+                    
                     if days.contains(dayName) {
                         let task = createRecurringTask(with: task, on: day)
                         createdTaskArray.append(task)
@@ -461,9 +491,17 @@ private extension NewTaskViewModel {
             
             switch recurringConfiguration.repeatEvery {
             case .days:
-                taskDate = Constants.shared.calendar.date(byAdding: .day, value: repeatCount, to: taskDate) ?? taskDate
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .day, value:
+                        repeatCount, to:
+                        taskDate
+                ) ?? taskDate
             case .weeks:
-                taskDate = Constants.shared.calendar.date(byAdding: .weekOfMonth, value: repeatCount, to: taskDate) ?? taskDate
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .weekOfMonth,
+                    value: repeatCount,
+                    to: taskDate
+                ) ?? taskDate
                 let weekDays = taskDate.daysOfWeek(using: Constants.shared.calendar)
                 
                 weekDays.forEach { day in
@@ -474,9 +512,17 @@ private extension NewTaskViewModel {
                     }
                 }
             case .month:
-                taskDate = Constants.shared.calendar.date(byAdding: .month, value: repeatCount, to: taskDate) ?? taskDate
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .month,
+                    value: repeatCount,
+                    to: taskDate
+                ) ?? taskDate
             case .years:
-                taskDate = Constants.shared.calendar.date(byAdding: .year, value: repeatCount, to: taskDate) ?? taskDate
+                taskDate = Constants.shared.calendar.date(
+                    byAdding: .year,
+                    value: repeatCount,
+                    to: taskDate
+                ) ?? taskDate
             }
             
             if recurringConfiguration.repeatEvery != .weeks {
