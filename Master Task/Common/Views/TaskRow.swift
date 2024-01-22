@@ -61,7 +61,7 @@ struct TaskRow: View {
         }
         .swipeActions(edge: .leading) {
             Button {
-                viewModel.updateTaskCompletion(&task)
+                viewModel.updateTaskCompletion(task)
             } label: {
                 Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
             }
@@ -162,11 +162,7 @@ private extension TaskRow {
         .padding(.horizontal, -10)
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
-            viewModel.updateTaskCompletion(&task)
-            viewModel.filteredTasks = viewModel.sortedCompletedTasks(
-                viewModel.filteredTasks, 
-                settings: viewModel.settings
-            )
+            viewModel.updateTaskCompletion(task)
         })
     }
     

@@ -164,9 +164,15 @@ extension TaskListViewModel {
         }
     }
     
-    func updateTaskCompletion(_ task: inout TaskDTO) {
-        task.isCompleted.toggle()
-        taskRepository.saveTask(task)
+    func updateTaskCompletion(_ task: TaskDTO) {
+        if let index = filteredTasks.firstIndex(where: { $0.id == task.id }) {
+            filteredTasks[index].isCompleted.toggle()
+            filteredTasks = sortedCompletedTasks(filteredTasks, settings: settings)
+            taskRepository.saveTask(task)
+        }
+        if let index = loadedTasks.firstIndex(where: { $0.id == task.id }) {
+            loadedTasks[index].isCompleted.toggle()
+        }
     }
     
     func updateTaskShowingCheckbox(_ task: inout TaskDTO) {
