@@ -38,6 +38,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var showReminderAlert = false
     @Published var showColorPanel = false
     @Published var alertTitle: String = ""
+    @Published var calendarDate = Date()
     
 #warning("Change back to 8")
     private let tasksLimit = 80000000

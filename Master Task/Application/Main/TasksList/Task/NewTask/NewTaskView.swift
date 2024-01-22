@@ -207,7 +207,7 @@ private extension NewTaskView {
             if viewModel.selectedDateOption == .custom {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.taskDate, 
-                    calendarDate: .constant(Date()),
+                    calendarDate: $viewModel.calendarDate,
                     currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
                     backgroundColor: theme.selectedTheme.sectionColor,
                     calendar: Constants.shared.calendar
@@ -296,7 +296,7 @@ private extension NewTaskView {
             if viewModel.reminder == .custom {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.reminderDate,
-                    calendarDate: .constant(Date()),
+                    calendarDate: $viewModel.calendarDate,
                     currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
                     backgroundColor: theme.selectedTheme.sectionColor,
                     calendar: Constants.shared.calendar
