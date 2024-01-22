@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Date {
+public extension Date {
     var startDay: Date {
         let calendar = Calendar.current
         var components = calendar.dateComponents(in: .autoupdatingCurrent, from: self)
@@ -121,5 +121,17 @@ extension Date {
     func daysOfWeek(using calendar: Calendar = .current) -> [Date] {
         let startOfWeek = self.startOfWeek(using: calendar).noon
         return (0...6).map { startOfWeek.byAdding(component: .day, value: $0, using: calendar)! }
+    }
+    
+    func isSameDay(with date: Date) -> Bool {
+        self.dateComponents([.day, .month, .year]) == date.dateComponents([.day, .month, .year])
+    }
+    
+    func isSameMonth(with date: Date) -> Bool {
+        self.dateComponents([.month, .year]) == date.dateComponents([.month, .year])
+    }
+    
+    func isSameWeek(with date: Date) -> Bool {
+        self.dateComponents([.year, .weekOfYear]) == date.dateComponents([.year, .weekOfYear])
     }
 }

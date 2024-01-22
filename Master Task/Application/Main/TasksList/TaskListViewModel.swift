@@ -57,14 +57,6 @@ final class TaskListViewModel: ObservableObject {
         self.settings = settingsRepository.get()
     }
     
-    func calendarTaskSorting(taskList: [TaskDTO]) -> [TaskDTO] {
-        if selectedCalendarDate.dateComponents([.year, .month]) == currentDate.dateComponents([.year, .month]) {
-            return filteredTasks.filter { $0.date?.dateComponents([.year, .month]) == selectedCalendarDate.dateComponents([.year, .month]) }
-        }
-        
-        return []
-    }
-    
     func addToCurrentDate(component: Calendar.Component, value: Int) {
         currentDate = Constants.shared.calendar.date(byAdding: component, value: value, to: currentDate)!
     }
@@ -241,37 +233,34 @@ extension TaskListViewModel {
             filteredTasks = sortedCompletedTasks
         case .today:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
-            let components: Set<Calendar.Component> = [.year, .month, .day]
             
             filteredTasks = sortedCompletedTasks
                 .lazy
                 .filter {
                     if let taskDate = $0.date {
-                        return taskDate.dateComponents(components) == currentDate.dateComponents(components)
+                        return taskDate.isSameDay(with: currentDate)
                     } else if $0.isRecurring {
-                        return $0.createdDate.dateComponents(components) == currentDate.dateComponents(components)
+                        return $0.createdDate.isSameDay(with: currentDate)
                     }
                     
                     return false
                 }
         case .week:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
-            let components: Set<Calendar.Component> = [.year, .weekOfYear]
             
             filteredTasks = sortedCompletedTasks
                 .lazy
                 .filter {
                     if let taskDate = $0.date {
-                        return taskDate.dateComponents(components) == currentDate.dateComponents(components)
+                        return taskDate.isSameWeek(with: currentDate)
                     } else if $0.isRecurring {
-                        return $0.createdDate.dateComponents(components) == currentDate.dateComponents(components)
+                        return $0.createdDate.isSameWeek(with: currentDate)
                     }
                     
                     return false
                 }
         case .month:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
-            let components: Set<Calendar.Component> = [.year, .month, .day]
             
             udateCalendarInfo()
             
@@ -279,9 +268,9 @@ extension TaskListViewModel {
                 .lazy
                 .filter {
                     if let taskDate = $0.date {
-                        return taskDate.dateComponents(components) == selectedCalendarDate.dateComponents(components)
+                        return taskDate.isSameDay(with: selectedCalendarDate)
                     } else if $0.isRecurring {
-                        return $0.createdDate.dateComponents(components) == selectedCalendarDate.dateComponents(components)
+                        return $0.createdDate.isSameDay(with: selectedCalendarDate)
                     }
                     
                     return false
@@ -294,9 +283,9 @@ extension TaskListViewModel {
             .lazy
             .filter({
                 if let taskDate = $0.date {
-                    return taskDate.dateComponents([.month, .year]) == self.calendarDate.dateComponents([.month, .year])
+                    return taskDate.isSameMonth(with: calendarDate)
                 } else if $0.isRecurring {
-                    return $0.createdDate.dateComponents([.month, .year]) == self.calendarDate.dateComponents([.month, .year])
+                    return $0.createdDate.isSameMonth(with: calendarDate)
                 }
                 
                 return false
@@ -321,7 +310,7 @@ extension TaskListViewModel {
             
             if group.count > 1 {
                 if let task = group.first(where: {
-                    $0.createdDate.dateComponents([.day, .month, .year]) == Date().dateComponents([.day, .month, .year])
+                    $0.createdDate.isSameDay(with: Date())
                 }) {
                     tasks.append(task)
                 }

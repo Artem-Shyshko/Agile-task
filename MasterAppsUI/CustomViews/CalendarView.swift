@@ -80,12 +80,11 @@ private extension CustomCalendarView {
     
     func calendarCell(date: Date) -> some View {
         VStack {
-            if date.dateComponents([.year, .month]) == calendarDate.dateComponents([.year, .month]) {
-                
+            if date.isSameMonth(with: calendarDate) {
                 Button {
                     selectedCalendarDay = date
                 } label: {
-                    if date.dateComponents([.day, .month, .year]) == selectedCalendarDay.dateComponents([.day, .month, .year]) {
+                    if date.isSameDay(with: selectedCalendarDay) {
                         Text(date.format("d"))
                             .frame(width: 40, height: 40)
                             .background {
@@ -105,7 +104,7 @@ private extension CustomCalendarView {
                 .foregroundStyle(currentMonthDatesColor)
                 .overlay(alignment: .bottom) {
                     if let items, items.contains(where: { item in
-                        (item.date ?? item.createdDate).dateComponents([.day, .month, .year]) == date.dateComponents([.day, .month, .year])
+                        (item.date ?? item.createdDate).isSameDay(with: date)
                     }) {
                         Circle()
                             .foregroundColor(.calendarSelectedDateCircleColor)
