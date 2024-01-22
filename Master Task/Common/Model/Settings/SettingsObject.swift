@@ -21,7 +21,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var showPlusButton: Bool = true
     @Persisted var isPushNotificationEnabled: Bool = true
     @Persisted var rememberLastPickedOptionView: Bool = true
-    @Persisted var taskSorting: TaskSorting = .schedule
+    @Persisted var taskSorting: TaskSorting = .manual
     @Persisted var securityOption: SecurityOption = .none
 }
 

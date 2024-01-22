@@ -146,7 +146,7 @@ extension TaskListViewModel {
 extension TaskListViewModel {
     
     func calculateDateColor(whit date: Date, themeTextColor: Color, isDate: Bool) -> Color {
-        let currentDate = Constants.shared.currentDate
+        let currentDate = Date()
         return date < (isDate ? currentDate.startDay : currentDate) ? .red : themeTextColor
     }
     
@@ -341,9 +341,25 @@ extension TaskListViewModel {
                     return $0.createdDate < $1.createdDate
                 }
             case .reminders:
-                return $0.isReminder
+                if $0.isReminder, $1.isReminder {
+                    return $0.createdDate > $1.createdDate
+                } else if $0.isReminder && !$1.isReminder {
+                    return true
+                } else if !$0.isReminder && $1.isReminder {
+                    return false
+                } else {
+                    return $0.createdDate < $1.createdDate
+                }
             case .recurring:
-                return $0.isRecurring
+                if $0.isRecurring, $1.isRecurring {
+                    return $0.createdDate > $1.createdDate
+                } else if $0.isRecurring && !$1.isRecurring {
+                    return true
+                } else if !$0.isRecurring && $1.isRecurring {
+                    return false
+                } else {
+                    return $0.createdDate < $1.createdDate
+                }
             }
         })
     }
@@ -354,9 +370,9 @@ extension TaskListViewModel {
         
         switch settings.completedTask {
         case .hide:
-            return unCompletedTask
+            return sortedTasks(in: unCompletedTask)
         case .moveToBottom:
-            let groupedTasks = unCompletedTask + completedTask
+            let groupedTasks = sortedTasks(in: unCompletedTask) + completedTask
             return groupedTasks
         }
     }

@@ -21,7 +21,7 @@ struct SettingsDTO {
     var showPlusButton: Bool = true
     var isPushNotificationEnabled: Bool = true
     var rememberLastPickedOptionView: Bool = true
-    var taskSorting: TaskSorting = .schedule
+    var taskSorting: TaskSorting = .manual
     var securityOption: SecurityOption = .none
 }
 
