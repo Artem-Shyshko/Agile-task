@@ -187,24 +187,7 @@ final class NewTaskViewModel: ObservableObject {
             second: 0, of: reminderDate
         )!
         
-        if selectedTimeOption == .custom, selectedDateOption == .custom {
-            setupTime()
-            var components = taskTime.dateComponents([.day, .month, .year, .hour, .minute])
-            components.day = taskDate.dateComponents([.day]).day
-            components.month = taskDate.dateComponents([.month]).month
-            components.year = taskDate.dateComponents([.year]).year
-            
-            guard let newTimeDate = Constants.shared.calendar.date(from: components) else { return }
-            taskTime = newTimeDate
-        } else if selectedDateOption == .custom {
-            self.taskDate = Constants.shared.calendar.date(
-                bySettingHour: taskTime.dateComponents([.hour]).hour ?? 12,
-                minute: taskTime.dateComponents([.minute]).minute ?? 00,
-                second: 0, of: taskDate
-            )!
-        } else if selectedTimeOption == .custom {
-            setupTime()
-        }
+        setupTime()
     }
     
     func updateFromEditTask(_ editTask: TaskDTO?) {
@@ -252,8 +235,17 @@ final class NewTaskViewModel: ObservableObject {
         timeString +=  isTwelve ? " \(selectedDateTimePeriod.rawValue)" : ""
         dateFormatter.dateFormat = isTwelve ? "h:mm a" : "HH:mm"
         
-        if let date = dateFormatter.date(from: timeString) {
-            taskTime = date
+        if let timeDate = dateFormatter.date(from: timeString) {
+            let time = timeDate
+            
+            var components = time.dateComponents([.day, .month, .year, .hour, .minute])
+            components.day = taskDate.dateComponents([.day]).day
+            components.month = taskDate.dateComponents([.month]).month
+            components.year = taskDate.dateComponents([.year]).year
+            
+            guard let newTimeDate = Constants.shared.calendar.date(from: components) else { return }
+            taskTime = newTimeDate
+            taskDate = newTimeDate
         }
     }
     
