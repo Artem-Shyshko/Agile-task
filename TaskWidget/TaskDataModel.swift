@@ -11,6 +11,7 @@ class TaskDataModel {
     static let shared = TaskDataModel()
     let taskRepo: TaskRepository = TaskRepositoryImpl()
     let settingsRepo: SettingsRepository = SettingsRepositoryImpl()
+    let projectRepo: ProjectRepository = ProjectRepositoryImpl()
     var tasks = [TaskDTO]()
     var settings: SettingsDTO
     
@@ -20,7 +21,8 @@ class TaskDataModel {
     }
     
     func getTasks() {
-        let loadedTasks = taskRepo.getTaskList().filter { !$0.isCompleted }
+        let selectedProject = projectRepo.getSelectedProject()
+        let loadedTasks = selectedProject.tasks.filter { !$0.isCompleted }
         tasks = groupedTasks(with: loadedTasks, settings: settings)
     }
     
