@@ -22,6 +22,7 @@ final class CalendarViewModel: ObservableObject {
         to: Date())?.dateComponents([.year]).year ?? 0
     let months = Calendar.current.standaloneMonthSymbols
     let calendarGridLayout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
+    
     private lazy var dateYearAgo: Date = {
         let date = Date()
         return calendar.date(byAdding: .year, value: -1, to: date) ?? date
@@ -30,19 +31,19 @@ final class CalendarViewModel: ObservableObject {
     // MARK: - Method
     
     func changeMoth(index: Int, current: inout Date) {
-        var dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: current)
+        var dateComponents = calendar.dateComponents([.day, .month, .year], from: current)
         dateComponents.month = index + 1
-        current = Calendar.current.date(from: dateComponents)!
+        current = calendar.date(from: dateComponents)!
     }
     
     func changeYear(_ year: Int, current: inout Date) {
         var dateComponents = Calendar.current.dateComponents([.day, .month, .year], from: current)
         dateComponents.year = year
-        current = Calendar.current.date(from: dateComponents)!
+        current = calendar.date(from: dateComponents)!
     }
     
     func getWeekSymbols() -> [String] {
-        let firstWeekday = 1
+        let firstWeekday = calendar.firstWeekday
         let symbols = calendar.shortWeekdaySymbols
         
         return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
@@ -85,7 +86,7 @@ private extension CalendarViewModel {
     func getDaysFromPrevMonth(currentDate: Date) -> [Date] {
         let startOfMonth = currentDate.startOfMonth.startDay
         let startOfMonthWeekday = calendar.component(.weekday, from: startOfMonth)
-        let trailOfPreviousMonth = startOfMonthWeekday - 1
+        let trailOfPreviousMonth = startOfMonthWeekday - calendar.firstWeekday
         
         return trailOfPreviousMonth > 0
         ? Array(1...trailOfPreviousMonth).compactMap {
@@ -98,7 +99,8 @@ private extension CalendarViewModel {
         let endOfMonth = currentDate.endOfMonth.startDay
         let starNextMonth = calendar.date(byAdding: .day, value: 1, to: endOfMonth) ?? endOfMonth
         let endOfMonthWeekday = calendar.component(.weekday, from: starNextMonth)
-        let headOfNextMonth = 7 - endOfMonthWeekday
+        var headOfNextMonth = 7 - endOfMonthWeekday
+        headOfNextMonth += calendar.firstWeekday == 2 ? 1 : 0
         
         return headOfNextMonth > 0
         ? Array(0...headOfNextMonth).compactMap {
@@ -109,6 +111,8 @@ private extension CalendarViewModel {
     
     func getDaysFromCurrentMonth(currentDate: Date) -> [Date] {
         let monthRange = calendar.range(of: .day, in: .month, for: currentDate.startOfMonth)!
-        return Array(monthRange).compactMap { calendar.date(byAdding: .day, value: $0 - 1, to: currentDate.startOfMonth.startDay)?.startDay }
+        return Array(monthRange).compactMap {
+            calendar.date(byAdding: .day, value: $0 - 1, to: currentDate.startOfMonth.startDay)?.startDay
+        }
     }
 }

@@ -134,4 +134,8 @@ public extension Date {
     func isSameWeek(with date: Date) -> Bool {
         self.dateComponents([.year, .weekOfYear]) == date.dateComponents([.year, .weekOfYear])
     }
+    
+    var isNotPastDay: Bool {
+        self > Date().byAdding(component: .day, value: -1)!.startDay
+    }
 }

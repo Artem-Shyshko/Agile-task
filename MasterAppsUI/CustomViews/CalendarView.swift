@@ -32,7 +32,7 @@ public struct CustomCalendarView: View {
     }
     
     public var body: some View {
-            calendar()
+        calendar()
     }
 }
 
@@ -92,22 +92,18 @@ private extension CustomCalendarView {
                                     .cornerRadius(20)
                                     .clipShape(Circle())
                             }
-                    } else if calendarDate == date {
-                        Text(date.format("d"))
-                            .foregroundColor(.calendarSelectedDateCircleColor)
-                            .frame(width: 40, height: 40)
                     } else {
                         Text(date.format("d"))
                             .frame(width: 40, height: 40)
                     }
                 }
-                .foregroundStyle(currentMonthDatesColor)
+                .foregroundStyle(date.isNotPastDay ? currentMonthDatesColor : .secondary)
                 .overlay(alignment: .bottom) {
                     if let items, items.contains(where: { item in
                         (item.date ?? item.createdDate).isSameDay(with: date)
                     }) {
                         Circle()
-                            .foregroundColor(.calendarSelectedDateCircleColor)
+                            .foregroundColor(date.isNotPastDay ? .calendarSelectedDateCircleColor : .secondary)
                             .frame(width: 4, height: 4)
                             .padding(.bottom, 6)
                     }
@@ -127,8 +123,8 @@ private extension CustomCalendarView {
                 Button(action: {
                     viewModel.changeMoth(index: index, current: &calendarDate)
                 }, label: {
-                        Text(viewModel.months[index])
-                            .font(.helveticaRegular(size: 14))
+                    Text(viewModel.months[index])
+                        .font(.helveticaRegular(size: 14))
                 })
             }
         } label: {
@@ -152,8 +148,8 @@ private extension CustomCalendarView {
                     viewModel.changeYear(year, current: &calendarDate)
                     viewModel.showYearList = false
                 }, label: {
-                        Text(year.description)
-                            .font(.helveticaRegular(size: 14))
+                    Text(year.description)
+                        .font(.helveticaRegular(size: 14))
                 })
             }
         } label: {
@@ -209,10 +205,10 @@ public protocol CalendarItem {
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CustomCalendarView(
-            selectedCalendarDay: .constant(Date()), 
+            selectedCalendarDay: .constant(Date()),
             calendarDate: .constant(Date()),
             currentMonthDatesColor: .white,
-            backgroundColor: .secondary, 
+            backgroundColor: .secondary,
             items: [],
             calendar: Calendar.current
         )
