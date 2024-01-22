@@ -24,8 +24,8 @@ struct NewTaskView: View {
     @State private var isDescriptionEmpty = true
     
     @Environment(\.dismiss) var dismiss
-    var taskList: [TaskDTO]
     
+    var taskList: [TaskDTO]
     var editTask: TaskDTO?
     
     // MARK: - Body
@@ -51,39 +51,12 @@ struct NewTaskView: View {
                 }
             }
         }
+        .padding(.bottom, 40)
         .modifier(TabViewChildModifier())
         .onAppear {
             isFocused = true
             viewModel.localNotificationManager = localNotificationManager
-            
-            if let editTask {
-                viewModel.taskStatus = editTask.status
-                viewModel.title = editTask.title
-                viewModel.checkBoxes = editTask.checkBoxArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
-                viewModel.bullets = editTask.bulletArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
-                viewModel.selectedColor = Color(editTask.colorName)
-                viewModel.isCompleted = editTask.isCompleted
-                if let recurring = editTask.recurring {
-                    viewModel.recurringConfiguration = recurring
-                }
-                viewModel.selectedDateTimePeriod = editTask.timePeriod
-                if let date = editTask.date {
-                    viewModel.taskDate = date
-                    viewModel.selectedDateOption = editTask.dateOption
-                }
-                if let time = editTask.time {
-                    viewModel.taskTime = time
-                    viewModel.selectedTimeOption = editTask.timeOption
-                }
-                if let reminderDate = editTask.reminderDate {
-                    viewModel.reminderDate = reminderDate
-                    viewModel.reminder = editTask.reminder
-                    viewModel.reminderTime = reminderDate
-                }
-                if let description = editTask.description {
-                    viewModel.description = description
-                }
-            }
+            viewModel.updateFromEditTask(editTask)
         }
         .navigationDestination(isPresented: $viewModel.showSubscriptionView) {
             SettingsSubscriptionView()

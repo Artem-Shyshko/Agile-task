@@ -207,6 +207,42 @@ final class NewTaskViewModel: ObservableObject {
         }
     }
     
+    func updateFromEditTask(_ editTask: TaskDTO?) {
+        if let editTask {
+            taskStatus = editTask.status
+            title = editTask.title
+            checkBoxes = editTask.checkBoxArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
+            bullets = editTask.bulletArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
+            selectedColor = Color(editTask.colorName)
+            isCompleted = editTask.isCompleted
+            
+            if let recurring = editTask.recurring {
+                recurringConfiguration = recurring
+            }
+            selectedDateTimePeriod = editTask.timePeriod
+            
+            if let date = editTask.date {
+                taskDate = date
+                selectedDateOption = editTask.dateOption
+            }
+            
+            if let time = editTask.time {
+                taskTime = time
+                selectedTimeOption = editTask.timeOption
+            }
+            
+            if let reminderDate = editTask.reminderDate {
+                self.reminderDate = reminderDate
+                reminder = editTask.reminder
+                reminderTime = reminderDate
+            }
+            
+            if let description = editTask.description {
+                self.description = description
+            }
+        }
+    }
+    
     func setupTime() {
         let isTwelve = settings.timeFormat == .twelve
         
