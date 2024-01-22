@@ -10,19 +10,21 @@ import SwiftUI
 public struct CustomCalendarView: View {
     @ObservedObject var viewModel = CalendarViewModel()
     @Binding var selectedCalendarDay: Date
-    @State var currentDate = Date()
+    @Binding var calendarDate: Date
     var currentMonthDatesColor: Color
     var backgroundColor: Color
     var items: [CalendarItem]?
     
     public init(
         selectedCalendarDay: Binding<Date>,
+        calendarDate: Binding<Date>,
         currentMonthDatesColor: Color,
         backgroundColor: Color,
         items: [CalendarItem]? = nil,
         calendar: Calendar
     ) {
         self._selectedCalendarDay = selectedCalendarDay
+        self._calendarDate = calendarDate
         self.currentMonthDatesColor = currentMonthDatesColor
         self.backgroundColor = backgroundColor
         self.items = items
@@ -51,7 +53,7 @@ private extension CustomCalendarView {
                 }
                 
                 LazyVGrid(columns: viewModel.calendarGridLayout, spacing: 5) {
-                    ForEach(viewModel.getAllDates(currentDate: currentDate), id: \.self) { date in
+                    ForEach(viewModel.getAllDates(currentDate: calendarDate), id: \.self) { date in
                         calendarCell(date: date)
                             .id(date)
                             .disabled(viewModel.isDisabledDate(date))
@@ -78,7 +80,7 @@ private extension CustomCalendarView {
     
     func calendarCell(date: Date) -> some View {
         VStack {
-            if date.dateComponents([.year, .month]) == currentDate.dateComponents([.year, .month]) {
+            if date.dateComponents([.year, .month]) == calendarDate.dateComponents([.year, .month]) {
                 
                 Button {
                     selectedCalendarDay = date
@@ -91,7 +93,7 @@ private extension CustomCalendarView {
                                     .cornerRadius(20)
                                     .clipShape(Circle())
                             }
-                    } else if currentDate == date {
+                    } else if calendarDate == date {
                         Text(date.format("d"))
                             .foregroundColor(.calendarSelectedDateCircleColor)
                             .frame(width: 40, height: 40)
@@ -124,7 +126,7 @@ private extension CustomCalendarView {
         Menu {
             ForEach(0..<viewModel.months.count, id: \.self) { index in
                 Button(action: {
-                    viewModel.changeMoth(index: index, current: &currentDate)
+                    viewModel.changeMoth(index: index, current: &calendarDate)
                 }, label: {
                         Text(viewModel.months[index])
                             .font(.helveticaRegular(size: 14))
@@ -136,7 +138,7 @@ private extension CustomCalendarView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 10, height: 10)
-                Text(currentDate.monthString)
+                Text(calendarDate.monthString)
             }
             .font(.helveticaBold(size: 14))
             .foregroundStyle(currentMonthDatesColor)
@@ -148,7 +150,7 @@ private extension CustomCalendarView {
         Menu {
             ForEach(viewModel.currentYear..<viewModel.currentYearPlusThen, id: \.self) { year in
                 Button(action: {
-                    viewModel.changeYear(year, current: &currentDate)
+                    viewModel.changeYear(year, current: &calendarDate)
                     viewModel.showYearList = false
                 }, label: {
                         Text(year.description)
@@ -158,7 +160,7 @@ private extension CustomCalendarView {
         } label: {
             HStack {
                 Image(systemName: "chevron.down")
-                Text(currentDate.yearString)
+                Text(calendarDate.yearString)
             }
             .font(.helveticaBold(size: 14))
             .foregroundStyle(currentMonthDatesColor)
@@ -168,7 +170,7 @@ private extension CustomCalendarView {
     
     func addMonthButton() -> some View {
         Button {
-            viewModel.addToCurrentDate(currentDate: &currentDate, component: .month, value: 1)
+            viewModel.addToCurrentDate(currentDate: &calendarDate, component: .month, value: 1)
         } label: {
             Image(systemName: "chevron.right")
         }
@@ -178,7 +180,7 @@ private extension CustomCalendarView {
     func backToCurrentDateButton() -> some View {
         Button(action: {
             viewModel.backToCurrentDateButtonAction(&selectedCalendarDay)
-            viewModel.backToCurrentDateButtonAction(&currentDate)
+            viewModel.backToCurrentDateButtonAction(&calendarDate)
         }, label: {
             Image(systemName: "arrow.uturn.backward")
         })
@@ -187,7 +189,7 @@ private extension CustomCalendarView {
     
     func minusMonthButton() -> some View {
         Button {
-            viewModel.minusFromCurrentDate(currentDate: &currentDate, component: .month, value: 1)
+            viewModel.minusFromCurrentDate(currentDate: &calendarDate, component: .month, value: 1)
         } label: {
             Image(systemName: "chevron.left")
         }
@@ -209,6 +211,7 @@ struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
         CustomCalendarView(
             selectedCalendarDay: .constant(Date()), 
+            calendarDate: .constant(Date()),
             currentMonthDatesColor: .white,
             backgroundColor: .secondary, 
             items: [],

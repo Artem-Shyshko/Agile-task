@@ -34,6 +34,7 @@ struct TaskListView: View {
           if viewModel.taskSortingOption == .month {
             CustomCalendarView(
               selectedCalendarDay: $viewModel.selectedCalendarDate,
+              calendarDate: $viewModel.calendarDate,
               currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
               backgroundColor: theme.selectedTheme.sectionColor,
               items: viewModel.calendarTasks,
@@ -86,6 +87,9 @@ struct TaskListView: View {
       .overlay(alignment: .bottom, content: {
         newTaskView()
       })
+      .onChange(of: viewModel.calendarDate) { _ in
+        viewModel.udateCalendarInfo()
+      }
     }
   }
 }

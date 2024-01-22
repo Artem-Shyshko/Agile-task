@@ -19,10 +19,11 @@ final class TaskListViewModel: ObservableObject {
     @Published var quickTaskConfig = TaskDTO(object: TaskObject())
     @Published var isShowingAddTask: Bool = false
     @Published var taskSortingOption: TaskDateSorting = .all
+    @Published var calendarDate = Date()
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
-    @Published var calendarTasks: [TaskDTO] = []
+    @Published var calendarTasks: [CalendarItem] = []
     var localNotificationManager: LocalNotificationManager?
     
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
@@ -272,17 +273,7 @@ extension TaskListViewModel {
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
             let components: Set<Calendar.Component> = [.year, .month, .day]
             
-            calendarTasks = loadedTasks
-                .lazy
-                .filter({
-                    if let taskDate = $0.date {
-                        return taskDate.dateComponents([.month, .year]) == self.currentDate.dateComponents([.month, .year])
-                    } else if $0.isRecurring {
-                        return $0.createdDate.dateComponents([.month, .year]) == self.currentDate.dateComponents([.month, .year])
-                    }
-                    
-                    return false
-                })
+            udateCalendarInfo()
             
             filteredTasks = sortedCompletedTasks
                 .lazy
@@ -296,6 +287,20 @@ extension TaskListViewModel {
                     return false
                 }
         }
+    }
+    
+    func udateCalendarInfo() {
+        calendarTasks = loadedTasks
+            .lazy
+            .filter({
+                if let taskDate = $0.date {
+                    return taskDate.dateComponents([.month, .year]) == self.calendarDate.dateComponents([.month, .year])
+                } else if $0.isRecurring {
+                    return $0.createdDate.dateComponents([.month, .year]) == self.calendarDate.dateComponents([.month, .year])
+                }
+                
+                return false
+            })
     }
     
     func search(with query: String) {
