@@ -90,6 +90,9 @@ struct TaskListView: View {
       .onChange(of: viewModel.calendarDate) { _ in
         viewModel.udateCalendarInfo()
       }
+      .onChange(of: viewModel.searchText) { newValue in
+        viewModel.search(with: newValue)
+      }
     }
   }
 }
@@ -167,9 +170,6 @@ private extension TaskListView {
     if !viewModel.isSearchBarHidden {
       SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
         .foregroundColor(theme.selectedTheme.textColor)
-        .onChange(of: viewModel.searchText) { newValue in
-          viewModel.search(with: newValue)
-        }
         .focused($isFocused)
         .onAppear {
           isFocused = true
