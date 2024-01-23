@@ -13,7 +13,7 @@ final class BulletViewModel: ObservableObject {
     @Published var deletedBullets: [BulletDTO] = []
     @Published var bulletArray: [BulletDTO] = []
     @Published var showDeleteAlert = false
-    @Published var deletedCheckboxIndex = 0
+    @Published var deletedIndex = 0
     
     func onSubmit(checkBoxesCount: Int, textFieldIndex: Int, focusedInput: inout Int?) {
         if textFieldIndex < checkBoxesCount {
@@ -23,14 +23,15 @@ final class BulletViewModel: ObservableObject {
         }
     }
     
-    func trashButtonAction(task: TaskDTO?, index: Int) {
+    func trashButtonAction(task: TaskDTO?) {
         if let task {
-            guard task.bulletArray.contains(where: { $0.id == bulletArray[index].id }) else { return }
-            
-            deletedBullets.append(bulletArray[index])
+            guard task.bulletArray.contains(where: { $0.id == bulletArray[deletedIndex].id }) else {
+                bulletArray.remove(at: deletedIndex)
+                return
+            }
+            deletedBullets.append(bulletArray[deletedIndex])
         }
-        
-        bulletArray.remove(at: index)
+        bulletArray.remove(at: deletedIndex)
     }
     
     func saveButtonAction(task: TaskDTO?, taskBullets: inout [BulletDTO]) {

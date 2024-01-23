@@ -10,9 +10,8 @@ import RealmSwift
 
 final class NewCheckBoxViewModel: ObservableObject {
     let taskRepository = TaskRepositoryImpl()
-    @Published var deletedCheckboxes: [CheckboxDTO] = []
+    var deletedCheckboxes: [CheckboxDTO] = []
     @Published var checkboxes: [CheckboxDTO] = []
-    @Published var showDeleteAlert = false
     @Published var deletedCheckboxIndex = 0
     
     func onSubmit(checkBoxesCount: Int, textFieldIndex: Int, focusedInput: inout Int?) {
@@ -23,14 +22,15 @@ final class NewCheckBoxViewModel: ObservableObject {
         }
     }
     
-    func trashButtonAction(task: TaskDTO?, index: Int) {
+    func trashButtonAction(task: TaskDTO?) {
         if let task {
-            guard task.checkBoxArray.contains(where: { $0.id == checkboxes[index].id }) else { return }
-            
-            deletedCheckboxes.append(checkboxes[index])
+            guard task.checkBoxArray.contains(where: { $0.id == checkboxes[deletedCheckboxIndex].id }) else {
+                checkboxes.remove(at: deletedCheckboxIndex)
+                return
+            }
+            deletedCheckboxes.append(checkboxes[deletedCheckboxIndex])
         }
-        
-        checkboxes.remove(at: index)
+        checkboxes.remove(at: deletedCheckboxIndex)
     }
     
     func saveButtonAction(task: TaskDTO?, taskCheckboxes: inout [CheckboxDTO]) {

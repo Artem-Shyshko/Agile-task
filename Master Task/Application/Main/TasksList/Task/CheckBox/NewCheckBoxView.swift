@@ -20,6 +20,8 @@ struct NewCheckBoxView: View {
     
     @Environment(\.dismiss) private var dismiss
     @FocusState private var focusedInput: Int?
+    @State var showDeleteAlert = false
+    @State var deletedCheckboxIndex = 0
     
     // MARK: - Body
     
@@ -37,15 +39,15 @@ struct NewCheckBoxView: View {
                 focusedInput = 0
             }
         })
-        .alert("Are you sure you want to delete task?", isPresented: $viewModel.showDeleteAlert) {
+        .alert("Are you sure you want to delete task?", isPresented: $showDeleteAlert) {
             Button {
-                viewModel.showDeleteAlert = false
+                showDeleteAlert = false
             } label: {
                 Text("Cancel")
             }
             
             Button {
-                viewModel.trashButtonAction(task: task, index: viewModel.deletedCheckboxIndex)
+                viewModel.trashButtonAction(task: task)
             } label: {
                 Text("Delete")
             }
@@ -102,7 +104,7 @@ private extension NewCheckBoxView {
     func trashButton(index: Int) -> some View {
         Button(action: {
             viewModel.deletedCheckboxIndex = index
-            viewModel.showDeleteAlert = true
+            showDeleteAlert = true
         }, label: {
             Image("trash")
                 .renderingMode(.template)

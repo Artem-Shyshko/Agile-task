@@ -45,7 +45,7 @@ struct BulletView: View {
             }
             
             Button {
-                viewModel.trashButtonAction(task: task, index: viewModel.deletedCheckboxIndex)
+                viewModel.trashButtonAction(task: task)
             } label: {
                 Text("Delete")
             }
@@ -100,7 +100,7 @@ private extension BulletView {
     
     func trashButton(index: Int) -> some View {
         Button(action: {
-            viewModel.deletedCheckboxIndex = index
+            viewModel.deletedIndex = index
             viewModel.showDeleteAlert = true
         }, label: {
             Image("trash")
