@@ -10,10 +10,12 @@ import SwiftUI
 struct SearchableView: View {
     @Binding var searchText: String
     @Binding var isSearchBarHidden: Bool
+    @FocusState var isFocused: Bool
     
     var body: some View {
         HStack(spacing: 5) {
             TextField("What are you looking for", text: $searchText)
+                .focused($isFocused)
                 .padding(EdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30))
                 .frame(height: 45)
                 .cornerRadius(4)
@@ -30,6 +32,9 @@ struct SearchableView: View {
                             .imageScale(.small)
                             .padding(.trailing, 9.5)
                     }
+                }
+                .onAppear {
+                    isFocused = true
                 }
             
             Button {
