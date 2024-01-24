@@ -12,6 +12,7 @@ struct WelcomeView: View {
     // MARK: - Properties
     
     @EnvironmentObject var theme: AppThemeManager
+    @State var showTabBar = false
     
     // MARK: - body
     
@@ -34,6 +35,9 @@ struct WelcomeView: View {
             }
             .font(.sfProRegular(size: 14))
             .foregroundColor(theme.selectedTheme.textColor)
+            .navigationDestination(isPresented: $showTabBar) {
+                TabBarView()
+            }
         }
     }
 }
@@ -55,8 +59,9 @@ private extension WelcomeView {
     }
     
     func startButton() -> some View {
-        NavigationLink {
-            OnboardingSubscriptionView()
+        Button {
+            AppHelper.shared.isOnboarding = true
+            showTabBar = true
         } label: {
             Text("Start")
         }

@@ -74,7 +74,6 @@
 		75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A322A813F380034C45B /* Preview Assets.xcassets */; };
 		756D70742A8E4BCA00F616DA /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756D70732A8E4BCA00F616DA /* UserState.swift */; };
 		757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */; };
-		757B833C2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757B833B2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift */; };
 		757B83672ACF125C00A26D73 /* MasterAppsUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 757B83662ACF125C00A26D73 /* MasterAppsUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		757B836A2ACF125C00A26D73 /* MasterAppsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */; };
 		757B836B2ACF125C00A26D73 /* MasterAppsUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -270,7 +269,6 @@
 		756D70732A8E4BCA00F616DA /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		757B83372ACDB4C200A26D73 /* MasterTaskConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MasterTaskConfiguration.storekit; sourceTree = "<group>"; };
 		757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
-		757B833B2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSubscriptionView.swift; sourceTree = "<group>"; };
 		757B83642ACF125C00A26D73 /* MasterAppsUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MasterAppsUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		757B83662ACF125C00A26D73 /* MasterAppsUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterAppsUI.h; sourceTree = "<group>"; };
 		7583617B2AB1D4DB0021FFDE /* AppHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHelper.swift; sourceTree = "<group>"; };
@@ -554,6 +552,15 @@
 			path = CompletedTask;
 			sourceTree = "<group>";
 		};
+		755B9B3F2B6160D2005D0A0C /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				758B22852AD59C1A00D4654D /* AuthView.swift */,
+				752CEE532B3C886A00CA1612 /* AuthViewModel.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		75677A1F2A813F360034C45B = {
 			isa = PBXGroup;
 			children = (
@@ -597,16 +604,6 @@
 				75677A322A813F380034C45B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		757B833A2ACEA08000A26D73 /* Subscription */ = {
-			isa = PBXGroup;
-			children = (
-				757B833B2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift */,
-				758B22852AD59C1A00D4654D /* AuthView.swift */,
-				752CEE532B3C886A00CA1612 /* AuthViewModel.swift */,
-			);
-			path = Subscription;
 			sourceTree = "<group>";
 		};
 		757B83652ACF125C00A26D73 /* MasterAppsUI */ = {
@@ -690,8 +687,8 @@
 		75B58D0C2A8237A600937923 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				755B9B3F2B6160D2005D0A0C /* Auth */,
 				75B58D042A82246C00937923 /* SignIn */,
-				757B833A2ACEA08000A26D73 /* Subscription */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1074,7 +1071,6 @@
 				75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */,
 				75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */,
 				75677A2C2A813F360034C45B /* Master_TaskApp.swift in Sources */,
-				757B833C2ACEA0BD00A26D73 /* OnboardingSubscriptionView.swift in Sources */,
 				75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */,
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
 				75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */,
