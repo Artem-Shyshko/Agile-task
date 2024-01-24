@@ -99,7 +99,7 @@ private extension TaskRow {
                     Button {
                         viewModel.updateTaskShowingCheckbox(&task)
                     } label: {
-                        Image(systemName: task.showCheckboxes ? "chevron.up" : "chevron.down")
+                        Image(systemName: task.showCheckboxes ? "chevron.down" : "chevron.right")
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
