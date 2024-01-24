@@ -96,6 +96,9 @@ struct NewTaskView: View {
         .alert("You can't create task reminder without date/time", isPresented: $viewModel.showReminderAlert) {
             Button("OK") {}
         }
+        .alert("Task should have title", isPresented: $viewModel.showTitleAlert) {
+            Button("OK") {}
+        }
     }
 }
 

@@ -36,6 +36,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isButtonPress = false
     @Published var showDeleteAlert = false
     @Published var showReminderAlert = false
+    @Published var showTitleAlert = false
     @Published var showColorPanel = false
     @Published var alertTitle: String = ""
     @Published var calendarDate = Date()
@@ -347,7 +348,10 @@ final class NewTaskViewModel: ObservableObject {
         hasUnlockedPro: Bool,
         editTask: TaskDTO?,
         taskList: [TaskDTO]) -> Bool {
-            guard !title.isEmpty else { return false}
+            guard !title.isEmpty else {
+                showTitleAlert = true
+                return false
+            }
             
             if reminder == .custom, !isTypedReminderTime {
                 alertTitle = "You can't create task reminder without date/time"
