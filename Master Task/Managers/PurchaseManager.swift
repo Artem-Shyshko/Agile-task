@@ -60,6 +60,10 @@ final class PurchaseManager: ObservableObject {
             }
         }
     }
+    
+    func restore() async -> Bool {
+        return ((try? await AppStore.sync()) != nil)
+    }
 }
 
 private extension PurchaseManager {

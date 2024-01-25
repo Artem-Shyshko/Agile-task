@@ -9,12 +9,16 @@ import SwiftUI
 
 struct SettingsAccountView: View {
     @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.dismiss) var dismiss
+    @State var showPurchasesAlert = false
+    @State var isRestored = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.listRowSpacing) {
             navigationBar()
             subscriptionView()
+            restoreSubscription()
             Spacer()
         }
         .modifier(TabViewChildModifier())
@@ -44,15 +48,27 @@ private extension SettingsAccountView {
                 Text("Subscription")
                 Spacer()
                 Text("Selected plane")
+                    .padding(.trailing, 10)
             }
-            .padding(.horizontal, 5)
         }
-        .buttonStyle(SettingsButtonStyle())
-        .padding(.horizontal, 5)
+        .modifier(SectionStyle())
+    }
+    
+    func restoreSubscription() -> some View {
+        Button {
+            Task {
+                self.isRestored = await purchaseManager.restore()
+                showPurchasesAlert = true
+            }
+        } label: {
+                Text("Restore subscription")
+        }
+        .modifier(SectionStyle())
     }
 }
 
 #Preview {
-    ProjectsView(vm: ProjectsViewModel())
+    SettingsAccountView()
         .environmentObject(AppThemeManager())
+        .environmentObject(PurchaseManager())
 }
