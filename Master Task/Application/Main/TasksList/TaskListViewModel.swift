@@ -34,33 +34,6 @@ final class TaskListViewModel: ObservableObject {
     private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
     private lazy var pastDate = Date()
     
-    var taskGropedByDate: [String: [TaskDTO]] {
-      Dictionary(grouping: filteredTasks) { ($0.date ?? $0.createdDate).fullDayNameFormat }
-    }
-    
-    var sectionHeaders: [String] {
-      switch taskSortingOption {
-      case .week :
-        return getWeekSymbols()
-      default:
-          return [""]
-      }
-    }
-    
-    func sectionContent(_ key: String) -> [TaskDTO] {
-      switch taskSortingOption {
-      case .week:
-        return (taskGropedByDate[key] ?? [])
-          .filter { ($0.date ?? Date()).isSameWeek(with: currentDate) }
-      default:
-          return []
-      }
-    }
-    
-    func sectionHeader(_ key: String) -> String {
-      key
-    }
-    
     init(loadedTasks: [TaskDTO] = []) {
         self.loadedTasks = loadedTasks
         let settings = settingsRepository.get()
@@ -442,5 +415,44 @@ extension TaskListViewModel {
             let groupedTasks = sortedTasks(in: unCompletedTask) + completedTask
             return groupedTasks
         }
+    }
+}
+
+// MARK: - Week List Sorting
+
+extension TaskListViewModel {
+    var taskGropedByDate: [String: [TaskDTO]] {
+      Dictionary(grouping: filteredTasks) { ($0.date ?? $0.createdDate).fullDayNameFormat }
+    }
+    
+    var sectionHeaders: [String] {
+      switch taskSortingOption {
+      case .week :
+        return getWeekSymbols()
+      default:
+          return [""]
+      }
+    }
+    
+    func sectionContent(_ key: String) -> [TaskDTO] {
+      switch taskSortingOption {
+      case .week:
+        return (taskGropedByDate[key] ?? [])
+              .filter {
+                  if let taskDate = $0.date {
+                      return taskDate.isSameWeek(with: currentDate)
+                  } else if $0.isRecurring {
+                      return $0.createdDate.isSameWeek(with: currentDate)
+                  }
+                  
+                  return false
+              }
+      default:
+          return []
+      }
+    }
+    
+    func sectionHeader(_ key: String) -> String {
+      key
     }
 }
