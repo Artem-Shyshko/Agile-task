@@ -32,9 +32,4 @@ final class CompletedTaskViewModel: ObservableObject {
         }
     }
     
-    func deleteAll() {
-        let tasksToDelete = completedTasks
-        completedTasks.removeAll()
-        tasksToDelete.forEach { taskRepository.deleteTask(TaskObject($0)) }
-    }
 }

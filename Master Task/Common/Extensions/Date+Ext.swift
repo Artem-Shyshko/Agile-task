@@ -73,6 +73,13 @@ extension Date {
         self.format("EEEE d/M/yy")
     }
     
+    /// Return string with day name.
+    ///
+    /// - Returns: EEEE  format
+    var fullDayNameFormat: String {
+        self.format("EEEE")
+    }
+    
     /// Return full date string.
     ///
     /// - Returns: EE d/M/yy format

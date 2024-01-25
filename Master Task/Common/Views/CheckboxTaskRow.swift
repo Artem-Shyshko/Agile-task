@@ -12,6 +12,7 @@ struct CheckboxTaskRow: View {
     var viewModel: TaskListViewModel
     @Binding var checkbox: CheckboxDTO
     var colorName: String
+    var taskId: String
     
     var body: some View {
         HStack {
@@ -31,7 +32,7 @@ struct CheckboxTaskRow: View {
         .listRowSeparator(.hidden)
         .padding(.horizontal, -10)
         .onTapGesture(count: 1, perform: {
-            viewModel.completeCheckbox(&checkbox)
+            viewModel.completeCheckbox(checkbox, with: taskId)
         })
     }
 }
@@ -60,6 +61,7 @@ private extension CheckboxTaskRow {
     CheckboxTaskRow(
         viewModel: TaskListViewModel(),
         checkbox: .constant(CheckboxDTO(object: CheckboxObject())),
-        colorName: "red"
+        colorName: "red", 
+        taskId: ""
     )
 }

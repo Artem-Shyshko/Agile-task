@@ -97,7 +97,7 @@ private extension TaskRow {
             HStack(spacing: 7) {
                 if !task.checkBoxArray.isEmpty || !task.bulletArray.isEmpty || task.description != nil {
                     Button {
-                        viewModel.updateTaskShowingCheckbox(&task)
+                        viewModel.updateTaskShowingCheckbox(task)
                     } label: {
                         Image(systemName: task.showCheckboxes ? "chevron.down" : "chevron.right")
                             .renderingMode(.template)
@@ -139,7 +139,8 @@ private extension TaskRow {
                 timeView()
             }
             
-            if task.reminder != .none {
+            if task.reminder != .none, let reminderDate = task.reminderDate {
+//                Text("Rem: \(reminderDate)")
                 Image("Reminders")
                     .renderingMode(.template)
                     .resizable()
@@ -208,7 +209,7 @@ private extension TaskRow {
             ForEach($task.checkBoxArray
                 .sorted(by: {$0.sortingOrder.wrappedValue < $1.sortingOrder.wrappedValue}), id: \.id.wrappedValue
             ) { checkBox in
-                CheckboxTaskRow(viewModel: viewModel, checkbox: checkBox, colorName: task.colorName)
+                CheckboxTaskRow(viewModel: viewModel, checkbox: checkBox, colorName: task.colorName, taskId: task.id.stringValue)
             }
         }
     }

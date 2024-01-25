@@ -9,9 +9,11 @@ import SwiftUI
 import RealmSwift
 
 struct CompletedTaskView: View {
+    @StateObject var viewModel: TaskListViewModel
     @EnvironmentObject var theme: AppThemeManager
     @Environment(\.dismiss) var dismiss
-    @StateObject var viewModel: CompletedTaskViewModel
+    @State private var showDeleteAlert = false
+    @State private var showRestoreAlert = false
     
     var body: some View {
         VStack {
@@ -21,9 +23,9 @@ struct CompletedTaskView: View {
             Spacer()
         }
         .modifier(TabViewChildModifier())
-        .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.showDeleteAlert) {
+        .alert("Are you sure you want to delete all tasks?", isPresented: $showDeleteAlert) {
             Button {
-                viewModel.showDeleteAlert = false
+                showDeleteAlert = false
             } label: {
                 Text("Cancel")
             }
@@ -34,20 +36,23 @@ struct CompletedTaskView: View {
                 Text("Delete")
             }
         }
-        .alert("Are you sure you want to restore all tasks?", isPresented: $viewModel.showRestoreAlert) {
+        .alert("Are you sure you want to restore all tasks?", isPresented: $showRestoreAlert) {
             Button {
-                viewModel.showRestoreAlert = false
+                showRestoreAlert = false
             } label: {
                 Text("Cancel")
             }
             
             Button {
                 viewModel.completedTasks.forEach { task in
-                    viewModel.updateTask(task)
+                    viewModel.updateTaskCompletion(task)
                 }
             } label: {
                 Text("Restore")
             }
+        }
+        .onAppear {
+            viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
         }
     }
 }
@@ -72,7 +77,7 @@ private extension CompletedTaskView {
     func underTopBar() -> some View {
         HStack {
             Button {
-                viewModel.showRestoreAlert = true
+                showRestoreAlert = true
             } label: {
                 Text("Restore all")
             }
@@ -80,7 +85,7 @@ private extension CompletedTaskView {
             Spacer()
             
             Button {
-                viewModel.showDeleteAlert = true
+                showDeleteAlert = true
             } label: {
                 Text("Delete all")
             }
@@ -91,14 +96,11 @@ private extension CompletedTaskView {
     func completedTasksList() -> some View {
         List {
             ForEach($viewModel.completedTasks, id: \.id) { task in
-                TaskRow(viewModel: TaskListViewModel(), task: task)
+                TaskRow(viewModel: viewModel, task: task)
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color(task.colorName.wrappedValue))
                     )
-                    .onChange(of: task.wrappedValue) { _ in
-                        viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
-                    }
             }
             .listRowSeparator(.hidden)
         }
@@ -113,6 +115,6 @@ private extension CompletedTaskView {
 // MARK: - Preview
 
 #Preview {
-    CompletedTaskView(viewModel: CompletedTaskViewModel())
+    CompletedTaskView(viewModel: TaskListViewModel())
         .environmentObject(AppThemeManager())
 }

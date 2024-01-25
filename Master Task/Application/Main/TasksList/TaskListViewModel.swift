@@ -24,14 +24,42 @@ final class TaskListViewModel: ObservableObject {
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
     @Published var calendarTasks: [CalendarItem] = []
+    @Published var completedTasks: [TaskDTO] = []
     var localNotificationManager: LocalNotificationManager?
     
-    private let taskRepository: TaskRepository = TaskRepositoryImpl()
+    let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
     private let bulletRepository: BulletRepository = BulletRepositoryImpl()
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
     private lazy var pastDate = Date()
+    
+    var taskGropedByDate: [String: [TaskDTO]] {
+      Dictionary(grouping: filteredTasks) { ($0.date ?? $0.createdDate).fullDayNameFormat }
+    }
+    
+    var sectionHeaders: [String] {
+      switch taskSortingOption {
+      case .week :
+        return getWeekSymbols()
+      default:
+          return [""]
+      }
+    }
+    
+    func sectionContent(_ key: String) -> [TaskDTO] {
+      switch taskSortingOption {
+      case .week:
+        return (taskGropedByDate[key] ?? [])
+          .filter { ($0.date ?? Date()).isSameWeek(with: currentDate) }
+      default:
+          return []
+      }
+    }
+    
+    func sectionHeader(_ key: String) -> String {
+      key
+    }
     
     init(loadedTasks: [TaskDTO] = []) {
         self.loadedTasks = loadedTasks
@@ -81,6 +109,19 @@ final class TaskListViewModel: ObservableObject {
         }
         
         showAddNewTaskView = true
+    }
+    
+    func getWeekSymbols() -> [String] {
+        let firstWeekday = Constants.shared.calendar.firstWeekday
+        let symbols = Constants.shared.calendar.weekdaySymbols
+        
+        return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
+    }
+    
+    func deleteAll() {
+        let tasksToDelete = completedTasks
+        completedTasks.removeAll()
+        tasksToDelete.forEach { taskRepository.deleteTask(TaskObject($0)) }
     }
 }
 
@@ -168,16 +209,27 @@ extension TaskListViewModel {
         if let index = filteredTasks.firstIndex(where: { $0.id == task.id }) {
             filteredTasks[index].isCompleted.toggle()
             filteredTasks = sortedCompletedTasks(filteredTasks, settings: settings)
-            taskRepository.saveTask(task)
         }
         if let index = loadedTasks.firstIndex(where: { $0.id == task.id }) {
             loadedTasks[index].isCompleted.toggle()
+            taskRepository.saveTask(loadedTasks[index])
+        }
+        if let index = completedTasks.firstIndex(where: { $0.id == task.id }) {
+            completedTasks[index].isCompleted.toggle()
+            taskRepository.saveTask(completedTasks[index])
+            completedTasks.remove(at: index)
         }
     }
     
-    func updateTaskShowingCheckbox(_ task: inout TaskDTO) {
-        task.showCheckboxes.toggle()
-        taskRepository.saveTask(task)
+    func updateTaskShowingCheckbox(_ task: TaskDTO) {
+        if let index = filteredTasks.firstIndex(where: { $0.id == task.id }) {
+            filteredTasks[index].showCheckboxes.toggle()
+            filteredTasks = sortedCompletedTasks(filteredTasks, settings: settings)
+        }
+        if let index = loadedTasks.firstIndex(where: { $0.id == task.id }) {
+            loadedTasks[index].showCheckboxes.toggle()
+            taskRepository.saveTask(loadedTasks[index])
+        }
     }
     
     func updateCheckbox(_ checkbox: CheckboxDTO) {
@@ -186,9 +238,18 @@ extension TaskListViewModel {
         checkboxRepository.save(object)
     }
     
-    func completeCheckbox(_ checkbox: inout CheckboxDTO) {
-        checkbox.isCompleted.toggle()
-        checkboxRepository.save(checkbox)
+    func completeCheckbox(_ checkbox: CheckboxDTO, with taskId: String) {
+        if let taskIndex = filteredTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
+            if let checkboxIndex = filteredTasks[taskIndex].checkBoxArray.firstIndex(where: { $0.id == checkbox.id }) {
+                filteredTasks[taskIndex].checkBoxArray[checkboxIndex].isCompleted.toggle()
+            }
+        }
+        if let taskIndex = loadedTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
+            if let checkboxIndex = loadedTasks[taskIndex].checkBoxArray.firstIndex(where: { $0.id == checkbox.id }) {
+                loadedTasks[taskIndex].checkBoxArray[checkboxIndex].isCompleted.toggle()
+                checkboxRepository.save(loadedTasks[taskIndex].checkBoxArray[checkboxIndex])
+            }
+        }
     }
     
     func dateFormat() -> String {

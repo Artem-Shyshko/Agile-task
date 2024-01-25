@@ -27,8 +27,8 @@ struct TaskListView: View {
   var body: some View {
     NavigationStack(path: $path) {
       VStack(spacing: 20) {
-          navigationBar()
-          dateBarView()
+        navigationBar()
+        dateBarView()
         
         VStack(spacing: 5) {
           if viewModel.taskSortingOption == .month {
@@ -51,7 +51,7 @@ struct TaskListView: View {
         case .createTask:
           NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.filteredTasks)
         case .completedTasks:
-          CompletedTaskView(viewModel: CompletedTaskViewModel())
+          CompletedTaskView(viewModel: viewModel)
         case .sorting:
           SortingView(viewModel: SortingViewModel())
         case .newCheckBox:
@@ -144,6 +144,22 @@ private extension TaskListView {
   @ViewBuilder
   func taskList() -> some View {
     List {
+      switch viewModel.taskSortingOption {
+      case .week:
+        ForEach(viewModel.sectionHeaders, id: \.self) { key  in
+          Section {
+            ForEach(.constant(viewModel.sectionContent(key)), id: \.self) { task in
+              TaskRow(viewModel: viewModel, task: task)
+                .listRowBackground(
+                  RoundedRectangle(cornerRadius: 4)
+                    .fill(Color(task.colorName.wrappedValue))
+                )
+            }
+          } header: {
+            weekSectionHeader(key: key)
+          }
+        }
+    default:
       ForEach($viewModel.filteredTasks, id: \.id) { task in
         TaskRow(viewModel: viewModel, task: task)
           .listRowBackground(
@@ -158,189 +174,200 @@ private extension TaskListView {
         viewModel.moveTask(fromOffsets: from, toOffset: to)
       })
     }
+  }
     .listRowSpacing(Constants.shared.listRowSpacing)
     .scrollContentBackground(.hidden)
     .listStyle(.plain)
-  }
-  
-  // MARK: - dateBarView
-  
-  @ViewBuilder
-  func dateBarView() -> some View {
-    if !viewModel.isSearchBarHidden {
-      SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
-        .foregroundColor(theme.selectedTheme.textColor)
-        .focused($isFocused)
-        .onAppear {
-          isFocused = true
-        }
-    } else {
-      HStack {
-        NavigationLink(value: TaskListNavigationView.sorting) {
-          Image("Sorting")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 30)
-        }
-        
-        Spacer()
-        VStack {
-          switch viewModel.taskSortingOption {
-          case .today:
-            TimeControlView(
-              title: viewModel.currentDate.format(viewModel.dateFormat())
-            ) {
-              viewModel.minusFromCurrentDate(component: .day, value: 1)
-            } rightButtonAction: {
-              viewModel.addToCurrentDate(component: .day, value: 1)
-            }
-          case .week:
-            TimeControlView(title: "Week " + viewModel.currentDate.weekString) {
-              viewModel.minusFromCurrentDate(component: .weekOfYear, value: 1)
-            } rightButtonAction: {
-              viewModel.addToCurrentDate(component: .weekOfYear, value: 1)
-            }
-          case .month, .all:
-            EmptyView()
+}
+
+// MARK: - dateBarView
+
+@ViewBuilder
+func dateBarView() -> some View {
+  if !viewModel.isSearchBarHidden {
+    SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
+      .foregroundColor(theme.selectedTheme.textColor)
+      .focused($isFocused)
+      .onAppear {
+        isFocused = true
+      }
+  } else {
+    HStack {
+      NavigationLink(value: TaskListNavigationView.sorting) {
+        Image("Sorting")
+          .resizable()
+          .scaledToFit()
+          .frame(width: 30)
+      }
+      
+      Spacer()
+      VStack {
+        switch viewModel.taskSortingOption {
+        case .today:
+          TimeControlView(
+            title: viewModel.currentDate.format(viewModel.dateFormat())
+          ) {
+            viewModel.minusFromCurrentDate(component: .day, value: 1)
+          } rightButtonAction: {
+            viewModel.addToCurrentDate(component: .day, value: 1)
           }
+        case .week:
+          TimeControlView(title: "Week " + viewModel.currentDate.weekString) {
+            viewModel.minusFromCurrentDate(component: .weekOfYear, value: 1)
+          } rightButtonAction: {
+            viewModel.addToCurrentDate(component: .weekOfYear, value: 1)
+          }
+        case .month, .all:
+          EmptyView()
         }
-        .frame(height: 30)
-        .onTapGesture {
-          viewModel.currentDate = Constants.shared.currentDate
-        }
-        
+      }
+      .frame(height: 30)
+      .onTapGesture {
+        viewModel.currentDate = Constants.shared.currentDate
+      }
+      
+      Spacer()
+      
+      NavigationLink(value: TaskListNavigationView.completedTasks) {
+        Image("CompletedTasks")
+          .resizable()
+          .scaledToFit()
+          .frame(width: 30)
+      }
+    }
+    .foregroundColor(.white)
+    .padding(.horizontal, 17)
+    .frame(maxWidth: .infinity)
+  }
+}
+  
+  func weekSectionHeader(key: String) -> some View {
+      HStack {
         Spacer()
-        
-        NavigationLink(value: TaskListNavigationView.completedTasks) {
-          Image("CompletedTasks")
-            .resizable()
-            .scaledToFit()
-            .frame(width: 30)
-        }
+        Text("--- \(viewModel.sectionHeader(key)) ---")
+        Spacer()
       }
-      .foregroundColor(.white)
-      .padding(.horizontal, 17)
-      .frame(maxWidth: .infinity)
-    }
+      .font(.helveticaRegular(size: 14))
+      .foregroundStyle(theme.selectedTheme.textColor)
   }
-  
-  @ViewBuilder
-  func plusButton() -> some View {
-    if viewModel.settings.showPlusButton {
+
+@ViewBuilder
+func plusButton() -> some View {
+  if viewModel.settings.showPlusButton {
+    Button {
+      isAddTaskFocused = true
+      viewModel.isShowingAddTask = true
+    } label: {
+      Image(.quickTask)
+    }
+    .padding(.trailing, 23)
+    .padding(.bottom, 70)
+  }
+}
+
+@ViewBuilder
+func newTaskView() -> some View {
+  if viewModel.isShowingAddTask {
+    VStack(spacing: 0) {
       Button {
-        isAddTaskFocused = true
-        viewModel.isShowingAddTask = true
+        isAddTaskFocused = false
+        viewModel.isShowingAddTask = false
       } label: {
-        Image(.quickTask)
+        Color.black.opacity(0.1)
+          .ignoresSafeArea()
       }
-      .padding(.trailing, 23)
-      .padding(.bottom, 70)
-    }
-  }
-  
-  @ViewBuilder
-  func newTaskView() -> some View {
-    if viewModel.isShowingAddTask {
-      VStack(spacing: 0) {
-        Button {
+      
+      VStack {
+        TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
+          viewModel.createTask()
           isAddTaskFocused = false
           viewModel.isShowingAddTask = false
-        } label: {
-          Color.black.opacity(0.1)
-            .ignoresSafeArea()
         }
+        .focused($isAddTaskFocused)
+        .padding(.top, 8)
+        .tint(theme.selectedTheme.sectionTextColor)
+        .modifier(SectionStyle())
         
-        VStack {
-          TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.quickTaskConfig.title) {
-            viewModel.createTask()
-            isAddTaskFocused = false
-            viewModel.isShowingAddTask = false
-          }
-          .focused($isAddTaskFocused)
-          .padding(.top, 8)
-          .tint(theme.selectedTheme.sectionTextColor)
-          .modifier(SectionStyle())
-          
-          Rectangle()
-            .frame(maxWidth: .infinity)
-            .frame(height: 1)
-            .padding(.horizontal, 10)
-          
-          HStack(spacing: 6) {
-            Image(.calendarIcon)
-              .renderingMode(.template)
-              .resizable()
-              .scaledToFit()
-              .frame(width: 12, height: 14)
-            Button("Tomorrow") {
-              if viewModel.quickTaskConfig.dateOption == .tomorrow {
-                viewModel.quickTaskConfig.dateOption = .none
-              } else {
-                viewModel.quickTaskConfig.dateOption = .tomorrow
-              }
-            }
-            .font(
-              viewModel.quickTaskConfig.dateOption == .tomorrow
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
-            
-            Button("Next week") {
-              if viewModel.quickTaskConfig.dateOption == .nextWeek {
-                viewModel.quickTaskConfig.dateOption = .none
-              } else {
-                viewModel.quickTaskConfig.dateOption = .nextWeek
-              }
-            }
-            .font(
-              viewModel.quickTaskConfig.dateOption == .nextWeek
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
-            
-            Spacer()
-            Text("/")
-            Spacer()
-            
-            Image(.reminders)
-              .renderingMode(.template)
-              .resizable()
-              .scaledToFit()
-              .frame(width: 12, height: 14)
-            Button("In 1 hour") {
-              if viewModel.quickTaskConfig.reminder == .inOneHour {
-                viewModel.quickTaskConfig.reminder = .none
-              } else {
-                viewModel.quickTaskConfig.reminder = .inOneHour
-              }
-            }
-            .font(
-              viewModel.quickTaskConfig.reminder == .inOneHour
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
-            
-            Button("Tomorrow") {
-              if viewModel.quickTaskConfig.reminder == .tomorrow {
-                viewModel.quickTaskConfig.reminder = .none
-              } else {
-                viewModel.quickTaskConfig.reminder = .tomorrow
-              }
-            }
-            .font(
-              viewModel.quickTaskConfig.reminder == .tomorrow
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
-          }
-          .foregroundColor(theme.selectedTheme.sectionTextColor)
+        Rectangle()
+          .frame(maxWidth: .infinity)
+          .frame(height: 1)
           .padding(.horizontal, 10)
+        
+        HStack(spacing: 6) {
+          Image(.calendarIcon)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 12, height: 14)
+          Button("Tomorrow") {
+            if viewModel.quickTaskConfig.dateOption == .tomorrow {
+              viewModel.quickTaskConfig.dateOption = .none
+            } else {
+              viewModel.quickTaskConfig.dateOption = .tomorrow
+            }
+          }
+          .font(
+            viewModel.quickTaskConfig.dateOption == .tomorrow
+            ? .helveticaBold(size: 14)
+            : .helveticaRegular(size: 15)
+          )
+          
+          Button("Next week") {
+            if viewModel.quickTaskConfig.dateOption == .nextWeek {
+              viewModel.quickTaskConfig.dateOption = .none
+            } else {
+              viewModel.quickTaskConfig.dateOption = .nextWeek
+            }
+          }
+          .font(
+            viewModel.quickTaskConfig.dateOption == .nextWeek
+            ? .helveticaBold(size: 14)
+            : .helveticaRegular(size: 15)
+          )
+          
+          Spacer()
+          Text("/")
+          Spacer()
+          
+          Image(.reminders)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(width: 12, height: 14)
+          Button("In 1 hour") {
+            if viewModel.quickTaskConfig.reminder == .inOneHour {
+              viewModel.quickTaskConfig.reminder = .none
+            } else {
+              viewModel.quickTaskConfig.reminder = .inOneHour
+            }
+          }
+          .font(
+            viewModel.quickTaskConfig.reminder == .inOneHour
+            ? .helveticaBold(size: 14)
+            : .helveticaRegular(size: 15)
+          )
+          
+          Button("Tomorrow") {
+            if viewModel.quickTaskConfig.reminder == .tomorrow {
+              viewModel.quickTaskConfig.reminder = .none
+            } else {
+              viewModel.quickTaskConfig.reminder = .tomorrow
+            }
+          }
+          .font(
+            viewModel.quickTaskConfig.reminder == .tomorrow
+            ? .helveticaBold(size: 14)
+            : .helveticaRegular(size: 15)
+          )
         }
-        .padding(.bottom, 10)
-        .background(theme.selectedTheme.sectionColor)
+        .foregroundColor(theme.selectedTheme.sectionTextColor)
+        .padding(.horizontal, 10)
       }
+      .padding(.bottom, 10)
+      .background(theme.selectedTheme.sectionColor)
     }
   }
+}
 }
 
 // MARK: - TaskListView_Previews
