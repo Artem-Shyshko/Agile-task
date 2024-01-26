@@ -97,19 +97,7 @@ private extension TaskRow {
     func generalRow() -> some View {
         HStack(spacing: 5) {
             HStack(spacing: 7) {
-                if !task.checkBoxArray.isEmpty || !task.bulletArray.isEmpty || task.description != nil {
-                    Button {
-                        viewModel.updateTaskShowingCheckbox(task)
-                    } label: {
-                        Image(systemName: task.showCheckboxes ? "chevron.down" : "chevron.right")
-                            .renderingMode(.template)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 10, height: 10)
-                    }
-                    .buttonStyle(.borderless)
-                    .frame(width: 10)
-                }
+                chevronButton()
                 
                 if task.status != .none {
                     Image(task.status.iconName)
@@ -123,43 +111,11 @@ private extension TaskRow {
             }
             Spacer()
             
-            if let date = task.date {
-                Text(date.format(viewModel.dateFormat()))
-                    .font(.helveticaRegular(size: 14))
-                    .foregroundStyle(
-                        task.isCompleted
-                        ? foregroundColor()
-                        : viewModel.calculateDateColor(
-                            whit: date,
-                            themeTextColor: themeManager.theme.sectionTextColor(colorScheme),
-                            isDate: true
-                        )
-                    )
-            }
-            
-            if let recurring = task.recurring, recurring.option == .none {
-                timeView()
-            }
-            
-            if task.reminder != .none, let reminderDate = task.reminderDate {
-//                Text("Rem: \(reminderDate)")
-                Image("Reminders")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 12, height: 15)
-            }
-            
-            if let recurring = task.recurring, recurring.option != .none {
-                Text(task.createdDate.format(viewModel.dateFormat()))
-                    .font(.helveticaRegular(size: 14))
-                timeView()
-                Image("Recurring")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 12, height: 15)
-            }
+            dateView()
+            timeView()
+            recurringDateView()
+            reminderImage()
+            recurringImage()
         }
         .foregroundColor(foregroundColor())
         .padding(.horizontal, -10)
@@ -167,6 +123,72 @@ private extension TaskRow {
         .onTapGesture(count: 2, perform: {
             viewModel.updateTaskCompletion(task)
         })
+    }
+    
+    @ViewBuilder
+    func recurringImage() -> some View {
+        if let recurring = task.recurring, recurring.option != .none {
+            Image("Recurring")
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 12, height: 15)
+        }
+    }
+    
+    @ViewBuilder
+    func reminderImage() -> some View {
+        if task.reminder != .none {
+            //                Text("Rem: \(reminderDate)")
+            Image("Reminders")
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 12, height: 15)
+        }
+    }
+    
+    @ViewBuilder
+    func recurringDateView() -> some View {
+        if let recurring = task.recurring, recurring.option != .none {
+            Text(task.createdDate.format(viewModel.dateFormat()))
+                .font(.helveticaRegular(size: 14))
+                .foregroundStyle(foregroundColor())
+        }
+    }
+    
+    @ViewBuilder
+    func chevronButton() -> some View {
+        if !task.checkBoxArray.isEmpty || !task.bulletArray.isEmpty || task.description != nil {
+            Button {
+                viewModel.updateTaskShowingCheckbox(task)
+            } label: {
+                Image(systemName: task.showCheckboxes ? "chevron.down" : "chevron.right")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 10)
+            }
+            .buttonStyle(.borderless)
+            .frame(width: 10)
+        }
+    }
+    
+    @ViewBuilder
+    func dateView() -> some View {
+        if let date = task.date {
+            Text(date.format(viewModel.dateFormat()))
+                .font(.helveticaRegular(size: 14))
+                .foregroundStyle(
+                    task.isCompleted
+                    ? foregroundColor()
+                    : viewModel.calculateDateColor(
+                        whit: date,
+                        themeTextColor: foregroundColor(),
+                        isDate: true
+                    )
+                )
+        }
     }
     
     @ViewBuilder

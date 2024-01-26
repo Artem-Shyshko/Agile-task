@@ -41,20 +41,11 @@ struct CheckboxTaskRow: View {
 
 private extension CheckboxTaskRow {
     func foregroundColor() -> Color {
-        if checkbox.isCompleted {
-            if themeManager.theme.rawValue == Constants.shared.nightTheme,
-               colorName != themeManager.theme.sectionColor(colorScheme).name {
-                return .black.opacity(0.5)
-            } else {
-                return  .textColor.opacity(0.5)
-            }
+        if colorScheme == .dark,
+           colorName != themeManager.theme.sectionColor(colorScheme).name {
+            return .black
         } else {
-            if themeManager.theme.rawValue == Constants.shared.nightTheme,
-               colorName != themeManager.theme.sectionColor(colorScheme).name {
-                return .black
-            } else {
-                return  themeManager.theme.sectionTextColor(colorScheme)
-            }
+            return  themeManager.theme.sectionTextColor(colorScheme)
         }
     }
 }

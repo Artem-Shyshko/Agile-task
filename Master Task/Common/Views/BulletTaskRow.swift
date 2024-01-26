@@ -36,12 +36,12 @@ struct BulletTaskRow: View {
 
 private extension BulletTaskRow {
     func foregroundColor() -> Color {
-            if themeManager.theme.rawValue == Constants.shared.nightTheme,
-               colorName != themeManager.theme.sectionColor(colorScheme).name {
-                return .black
-            } else {
-                return  themeManager.theme.sectionTextColor(colorScheme)
-            }
+        if colorScheme == .dark,
+           colorName != themeManager.theme.sectionColor(colorScheme).name {
+            return .black
+        } else {
+            return  themeManager.theme.sectionTextColor(colorScheme)
+        }
     }
 }
 
