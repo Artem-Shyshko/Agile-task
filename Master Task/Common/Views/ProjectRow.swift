@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ProjectRow: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject var vm: ProjectsViewModel
     var project: ProjectDTO
     @State var isShowingDeleteAlert = false
@@ -21,6 +24,7 @@ struct ProjectRow: View {
                 
                 Text(project.name)
                     .font(.helveticaRegular(size: 16))
+                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
             }
         }
         .swipeActions {
@@ -51,8 +55,10 @@ struct ProjectRow: View {
     
     var checkMark: some View {
         Image("Check")
+            .renderingMode(.template)
             .resizable()
             .scaledToFit()
             .frame(width: 15, height: 15)
+            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
     }
 }

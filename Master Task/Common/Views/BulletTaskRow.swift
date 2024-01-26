@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct BulletTaskRow: View {
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     var viewModel: TaskListViewModel
     @Binding var bullet: BulletDTO
     var colorName: String
@@ -34,11 +36,11 @@ struct BulletTaskRow: View {
 
 private extension BulletTaskRow {
     func foregroundColor() -> Color {
-            if theme.selectedTheme.name == Constants.shared.nightTheme,
-               colorName != theme.selectedTheme.sectionColor.name {
+            if themeManager.theme.rawValue == Constants.shared.nightTheme,
+               colorName != themeManager.theme.sectionColor(colorScheme).name {
                 return .black
             } else {
-                return  theme.selectedTheme.sectionTextColor
+                return  themeManager.theme.sectionTextColor(colorScheme)
             }
     }
 }

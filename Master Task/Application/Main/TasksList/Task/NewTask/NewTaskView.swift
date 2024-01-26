@@ -14,9 +14,11 @@ struct NewTaskView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var purchaseManager: PurchaseManager
-    @EnvironmentObject var theme: AppThemeManager
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
+    @EnvironmentObject var purchaseManager: PurchaseManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject var viewModel: NewTaskViewModel
     @FocusState private var isFocused: Bool
     @State private var isShowingCheckBoxView: Bool = false
@@ -119,8 +121,8 @@ private extension NewTaskView {
                 .pickerStyle(.menu)
             }
         }
-        .tint(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-        .foregroundStyle(viewModel.taskStatus == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+        .tint(viewModel.taskStatus == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+        .foregroundStyle(viewModel.taskStatus == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
     }
     
@@ -130,7 +132,7 @@ private extension NewTaskView {
         }
         .focused($isFocused)
         .padding(.vertical, 8)
-        .tint(theme.selectedTheme.sectionTextColor)
+        .tint(themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
     }
     
@@ -143,8 +145,8 @@ private extension NewTaskView {
             }
         }
         .padding(.vertical, 8)
-        .tint(isDescriptionEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
-        .foregroundStyle(isDescriptionEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .tint(isDescriptionEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+        .foregroundStyle(isDescriptionEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
         .onChange(of: viewModel.description) { newValue in
             isDescriptionEmpty = newValue.isEmpty
@@ -165,8 +167,8 @@ private extension NewTaskView {
             .hAlign(alignment: .trailing)
             .padding(.trailing, 10)
         }
-        .tint(viewModel.checkBoxes.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
-        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
     }
     
@@ -184,8 +186,8 @@ private extension NewTaskView {
             .hAlign(alignment: .trailing)
             .padding(.trailing, 10)
         }
-        .tint(viewModel.bullets.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
-        .foregroundColor(viewModel.bullets.isEmpty ? .secondary : theme.selectedTheme.sectionTextColor)
+        .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+        .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
     }
     
@@ -203,16 +205,16 @@ private extension NewTaskView {
                 }
                 .pickerStyle(.menu)
             }
-            .tint(viewModel.selectedDateOption == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .foregroundStyle(viewModel.selectedDateOption == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .tint(viewModel.selectedDateOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .foregroundStyle(viewModel.selectedDateOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .modifier(SectionStyle())
             
             if viewModel.selectedDateOption == .custom {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.taskDate, 
                     calendarDate: $viewModel.calendarDate,
-                    currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-                    backgroundColor: theme.selectedTheme.sectionColor,
+                    currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                    backgroundColor:themeManager.theme.sectionColor(colorScheme),
                     calendar: Constants.shared.calendar
                 )
             }
@@ -236,8 +238,8 @@ private extension NewTaskView {
                 }
                 .pickerStyle(.menu)
             }
-            .tint(viewModel.selectedTimeOption == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .foregroundStyle(viewModel.selectedTimeOption == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .tint(viewModel.selectedTimeOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .foregroundStyle(viewModel.selectedTimeOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .modifier(SectionStyle())
             
             if viewModel.selectedTimeOption == .custom {
@@ -268,8 +270,8 @@ private extension NewTaskView {
                     .pickerStyle(.menu)
                 }
             }
-            .tint(viewModel.recurringConfiguration.option == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .foregroundStyle(viewModel.recurringConfiguration.option == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .tint(viewModel.recurringConfiguration.option == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .foregroundStyle(viewModel.recurringConfiguration.option == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .modifier(SectionStyle())
             
             if viewModel.recurringConfiguration.option == .custom {
@@ -292,16 +294,16 @@ private extension NewTaskView {
                     .pickerStyle(.menu)
                 }
             }
-            .tint(viewModel.reminder == .none ? .secondary : theme.selectedTheme.sectionTextColor)
-            .foregroundStyle(viewModel.reminder == .none ? .secondary : theme.selectedTheme.sectionTextColor)
+            .tint(viewModel.reminder == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .foregroundStyle(viewModel.reminder == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .modifier(SectionStyle())
             
             if viewModel.reminder == .custom {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.reminderDate,
                     calendarDate: $viewModel.calendarDate,
-                    currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-                    backgroundColor: theme.selectedTheme.sectionColor,
+                    currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                    backgroundColor: themeManager.theme.sectionColor(colorScheme),
                     calendar: Constants.shared.calendar
                 )
                 .modifier(SectionStyle())
@@ -331,7 +333,7 @@ private extension NewTaskView {
                         .overlay {
                             RoundedRectangle(cornerRadius: 4)
                                 .stroke(lineWidth: 1)
-                                .foregroundColor(theme.selectedTheme.sectionTextColor)
+                                .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
                         }
                 }
                 .padding(.trailing, 10)
@@ -358,8 +360,8 @@ private extension NewTaskView {
             }
             .pickerStyle(.menu)
         }
-        .tint(theme.selectedTheme.sectionTextColor)
-        .foregroundStyle(theme.selectedTheme.sectionTextColor)
+        .tint(themeManager.theme.sectionTextColor(colorScheme))
+        .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
     }
     
@@ -411,7 +413,7 @@ private extension NewTaskView {
                     Text("Delete")
                 }
             }
-            .foregroundStyle(theme.selectedTheme.textColor)
+            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
             .padding(.top, 10)
         }
     }
@@ -446,6 +448,6 @@ struct NewTaskView_Previews: PreviewProvider {
         NewTaskView(viewModel: NewTaskViewModel(), taskList: [TaskDTO(object: Constants.shared.mockTask)], editTask: TaskDTO(object: TaskObject()))
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
-            .environmentObject(AppThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

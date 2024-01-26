@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SubscriptionView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(spacing: 2) {
@@ -40,7 +41,7 @@ struct SubscriptionView: View {
             }
             
             AppFeaturesView()
-            .foregroundColor(theme.selectedTheme.textColor)
+                .foregroundColor(themeManager.theme.textColor(colorScheme))
             .padding(.top, 40)
         }
         .padding(.horizontal, 2)
@@ -78,11 +79,11 @@ private extension SubscriptionView {
             }
             .padding(.horizontal, 30)
         }
-        .foregroundColor(theme.selectedTheme.sectionTextColor)
+        .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
         .padding(15)
         .frame(height: 110)
         .frame(maxWidth: .infinity)
-        .background(theme.selectedTheme.sectionColor)
+        .background(themeManager.theme.sectionColor(colorScheme))
         .cornerRadius(4)
     }
 }
@@ -90,5 +91,5 @@ private extension SubscriptionView {
 #Preview {
     SubscriptionView()
         .environmentObject(PurchaseManager())
-        .environmentObject(AppThemeManager())
+        .environmentObject(ThemeManager())
 }

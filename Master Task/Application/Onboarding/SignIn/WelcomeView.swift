@@ -11,30 +11,28 @@ struct WelcomeView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     @State var showTabBar = false
     
     // MARK: - body
     
     var body: some View {
         ZStack {
-            Group {
-                theme.selectedTheme.backgroundColor
-                theme.selectedTheme.backgroundGradient
-            }
-            .ignoresSafeArea()
+            themeManager.theme.gradient(colorScheme)
+                .ignoresSafeArea()
             
             VStack(spacing: 80) {
                 VStack(spacing: 20) {
                     title()
                     subTitle()
                 }
-                    AppFeaturesView()
+                AppFeaturesView()
                 
                 startButton()
             }
             .font(.sfProRegular(size: 14))
-            .foregroundColor(theme.selectedTheme.textColor)
+            .foregroundColor(themeManager.theme.textColor(colorScheme))
             .navigationDestination(isPresented: $showTabBar) {
                 TabBarView()
             }
@@ -84,6 +82,6 @@ private extension WelcomeView {
 struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
-            .environmentObject(AppThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

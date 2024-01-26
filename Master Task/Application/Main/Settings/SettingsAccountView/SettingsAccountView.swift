@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SettingsAccountView: View {
-    @EnvironmentObject var theme: AppThemeManager
     @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.dismiss) var dismiss
     @State var showPurchasesAlert = false
@@ -69,6 +68,5 @@ private extension SettingsAccountView {
 
 #Preview {
     SettingsAccountView()
-        .environmentObject(AppThemeManager())
         .environmentObject(PurchaseManager())
 }

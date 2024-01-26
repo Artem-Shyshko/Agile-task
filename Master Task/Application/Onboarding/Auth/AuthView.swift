@@ -10,16 +10,16 @@ import RealmSwift
 
 struct AuthView: View {
     @EnvironmentObject var authManager: AuthManager
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scene
+    
     @StateObject var vm: AuthViewModel
     @Binding var isShowing: Bool
     
     var body: some View {
         ZStack {
-            theme.selectedTheme.backgroundColor
-                .ignoresSafeArea()
-            theme.selectedTheme.backgroundGradient
+            themeManager.theme.gradient(colorScheme)
                 .ignoresSafeArea()
             securityView()
         }

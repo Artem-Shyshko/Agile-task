@@ -24,6 +24,7 @@ final class Constants {
     let oceanTheme = "Ocean"
     let rubyTheme = "Ruby"
     let aquamarineTheme = "Aquamarine"
+    let userTheme = "userTheme"
     
     lazy var local = Locale(identifier: "us")
     

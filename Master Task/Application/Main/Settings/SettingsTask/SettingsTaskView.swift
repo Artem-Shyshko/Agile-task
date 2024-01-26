@@ -11,7 +11,6 @@ import MasterAppsUI
 
 struct SettingsTaskView: View {
   @StateObject var viewModel: SettingsTaskViewModel
-  @EnvironmentObject var themeManager: AppThemeManager
   @Environment(\.dismiss) var dismiss
   @Environment(\.scenePhase) var scenePhase
   

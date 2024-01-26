@@ -55,6 +55,7 @@
 		7537D0222AAA101300F64175 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0212AAA101300F64175 /* ProjectsView.swift */; };
 		7537D0242AAA316200F64175 /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0232AAA316200F64175 /* NewProjectView.swift */; };
 		7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0262AAA391300F64175 /* ProjectObject.swift */; };
+		753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DFB692B62A7FE00D4FD11 /* Theme.swift */; };
 		753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F581A2AC70293007FC650 /* SortingViewModel.swift */; };
 		75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB02AE97065001119A9 /* SettingsAccountView.swift */; };
 		75474BB42AE97132001119A9 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB32AE97132001119A9 /* SettingsSubscriptionView.swift */; };
@@ -249,6 +250,7 @@
 		7537D0212AAA101300F64175 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		7537D0232AAA316200F64175 /* NewProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectView.swift; sourceTree = "<group>"; };
 		7537D0262AAA391300F64175 /* ProjectObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectObject.swift; sourceTree = "<group>"; };
+		753DFB692B62A7FE00D4FD11 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		753F581A2AC70293007FC650 /* SortingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewModel.swift; sourceTree = "<group>"; };
 		75474BB02AE97065001119A9 /* SettingsAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountView.swift; sourceTree = "<group>"; };
 		75474BB32AE97132001119A9 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
@@ -737,6 +739,7 @@
 				75E11C742B4C155C003B891B /* Bullet */,
 				752CEE492B3C714100CA1612 /* Settings */,
 				75F3AD612ABCA72900660A99 /* LocalNotification.swift */,
+				753DFB692B62A7FE00D4FD11 /* Theme.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1108,6 +1111,7 @@
 				759510C32ACD586B0087004A /* SectionStyle.swift in Sources */,
 				752CEE622B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift in Sources */,
 				75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */,
+				753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */,
 				75B58D0E2A824C1400937923 /* Color+Ext.swift in Sources */,
 				75A709AF2A82900A003894F7 /* TaskListViewModel.swift in Sources */,
 				75E11C712B4C13DF003B891B /* BulletObject.swift in Sources */,

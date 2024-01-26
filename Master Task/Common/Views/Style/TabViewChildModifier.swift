@@ -8,29 +8,27 @@
 import SwiftUI
 
 struct TabViewChildModifier: ViewModifier {
-  @EnvironmentObject var theme: AppThemeManager
-  
-  func body(content: Content) -> some View {
-    ZStack {
-      background()
-      
-      content
-        .padding(.horizontal, 5)
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
+    func body(content: Content) -> some View {
+        ZStack {
+            background()
+            
+            content
+                .padding(.horizontal, 5)
+        }
+        .scrollContentBackground(.hidden)
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
+        }
     }
-    .scrollContentBackground(.hidden)
-    .navigationBarBackButtonHidden()
-    .toolbar(.hidden, for: .navigationBar)
-    .onAppear {
-      UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
+    
+    func background() -> some View {
+        themeManager.theme.gradient(colorScheme)
+            .ignoresSafeArea()
     }
-  }
-  
-  func background() -> some View {
-    ZStack {
-      theme.selectedTheme.backgroundColor
-      theme.selectedTheme.backgroundGradient
-    }
-    .ignoresSafeArea()
-  }
 }
 

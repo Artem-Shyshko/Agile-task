@@ -12,8 +12,10 @@ struct TaskRow: View {
     
     // MARK: - Properties
     
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject var viewModel: TaskListViewModel
-    @EnvironmentObject var theme: AppThemeManager
     @Binding var task: TaskDTO
     
     @State private var draggingOffset: CGFloat = .zero
@@ -76,18 +78,18 @@ private extension TaskRow {
     
     func foregroundColor() -> Color {
         if task.isCompleted {
-            if theme.selectedTheme.name == Constants.shared.nightTheme,
-               task.colorName != theme.selectedTheme.sectionColor.name {
+            if colorScheme == .dark,
+               task.colorName != themeManager.theme.sectionColor(colorScheme).name {
                 return .black.opacity(0.5)
             } else {
                 return  .textColor.opacity(0.5)
             }
         } else {
-            if theme.selectedTheme.name == Constants.shared.nightTheme,
-               task.colorName != theme.selectedTheme.sectionColor.name {
+            if colorScheme == .dark,
+               task.colorName != themeManager.theme.sectionColor(colorScheme).name {
                 return .black
             } else {
-                return  theme.selectedTheme.sectionTextColor
+                return  themeManager.theme.sectionTextColor(colorScheme)
             }
         }
     }
@@ -129,7 +131,7 @@ private extension TaskRow {
                         ? foregroundColor()
                         : viewModel.calculateDateColor(
                             whit: date,
-                            themeTextColor: theme.selectedTheme.sectionTextColor,
+                            themeTextColor: themeManager.theme.sectionTextColor(colorScheme),
                             isDate: true
                         )
                     )
@@ -185,7 +187,7 @@ private extension TaskRow {
                 ? foregroundColor()
                 : viewModel.calculateDateColor(
                     whit: time,
-                    themeTextColor: theme.selectedTheme.sectionTextColor,
+                    themeTextColor: themeManager.theme.sectionTextColor(colorScheme),
                     isDate: false
                 )
             )
@@ -231,6 +233,6 @@ private extension TaskRow {
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
         TaskRow(viewModel: TaskListViewModel(), task: .constant(TaskDTO(object: Constants.shared.mockTask)))
-            .environmentObject(AppThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct CheckboxTaskRow: View {
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     var viewModel: TaskListViewModel
     @Binding var checkbox: CheckboxDTO
     var colorName: String
@@ -40,18 +42,18 @@ struct CheckboxTaskRow: View {
 private extension CheckboxTaskRow {
     func foregroundColor() -> Color {
         if checkbox.isCompleted {
-            if theme.selectedTheme.name == Constants.shared.nightTheme,
-               colorName != theme.selectedTheme.sectionColor.name {
+            if themeManager.theme.rawValue == Constants.shared.nightTheme,
+               colorName != themeManager.theme.sectionColor(colorScheme).name {
                 return .black.opacity(0.5)
             } else {
                 return  .textColor.opacity(0.5)
             }
         } else {
-            if theme.selectedTheme.name == Constants.shared.nightTheme,
-               colorName != theme.selectedTheme.sectionColor.name {
+            if themeManager.theme.rawValue == Constants.shared.nightTheme,
+               colorName != themeManager.theme.sectionColor(colorScheme).name {
                 return .black
             } else {
-                return  theme.selectedTheme.sectionTextColor
+                return  themeManager.theme.sectionTextColor(colorScheme)
             }
         }
     }

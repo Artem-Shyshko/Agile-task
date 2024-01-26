@@ -12,12 +12,14 @@ struct TaskListView: View {
   
   // MARK: - Properties
   
-  @StateObject private var viewModel = TaskListViewModel()
   @EnvironmentObject var notificationManager: LocalNotificationManager
-  @EnvironmentObject var theme: AppThemeManager
+  @EnvironmentObject var themeManager: ThemeManager
+  @Environment(\.colorScheme) var colorScheme
+  @Environment(\.scenePhase) var scenePhase
+  @StateObject private var viewModel = TaskListViewModel()
+  
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
-  @Environment(\.scenePhase) var scenePhase
   
   @Binding var path: [TaskListNavigationView]
   @Binding var taskSortingOption: TaskDateSorting
@@ -35,8 +37,8 @@ struct TaskListView: View {
             CustomCalendarView(
               selectedCalendarDay: $viewModel.selectedCalendarDate,
               calendarDate: $viewModel.calendarDate,
-              currentMonthDatesColor: theme.selectedTheme.sectionTextColor,
-              backgroundColor: theme.selectedTheme.sectionColor,
+              currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+              backgroundColor: themeManager.theme.sectionColor(colorScheme),
               items: viewModel.calendarTasks,
               calendar: Constants.shared.calendar
             )
@@ -93,6 +95,7 @@ struct TaskListView: View {
       .onChange(of: viewModel.searchText) { newValue in
         viewModel.search(with: newValue)
       }
+      .preferredColorScheme(themeManager.theme.colorScheme)
     }
   }
 }
@@ -186,7 +189,7 @@ private extension TaskListView {
 func dateBarView() -> some View {
   if !viewModel.isSearchBarHidden {
     SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
-      .foregroundColor(theme.selectedTheme.textColor)
+      .foregroundColor(themeManager.theme.textColor(colorScheme))
       .focused($isFocused)
       .onAppear {
         isFocused = true
@@ -248,7 +251,7 @@ func dateBarView() -> some View {
         Spacer()
       }
       .font(.helveticaRegular(size: 14))
-      .foregroundStyle(theme.selectedTheme.textColor)
+      .foregroundStyle(themeManager.theme.textColor(colorScheme))
   }
 
 @ViewBuilder
@@ -285,7 +288,7 @@ func newTaskView() -> some View {
         }
         .focused($isAddTaskFocused)
         .padding(.top, 8)
-        .tint(theme.selectedTheme.sectionTextColor)
+        .tint(themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
         
         Rectangle()
@@ -360,11 +363,11 @@ func newTaskView() -> some View {
             : .helveticaRegular(size: 15)
           )
         }
-        .foregroundColor(theme.selectedTheme.sectionTextColor)
+        .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
         .padding(.horizontal, 10)
       }
       .padding(.bottom, 10)
-      .background(theme.selectedTheme.sectionColor)
+      .background(themeManager.theme.sectionColor(colorScheme))
     }
   }
 }
@@ -376,6 +379,6 @@ struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
     TaskListView(path: .constant([TaskListNavigationView.sorting]), taskSortingOption: .constant(.all))
       .environmentObject(LocalNotificationManager())
-      .environmentObject(AppThemeManager())
+      .environmentObject(ThemeManager())
   }
 }

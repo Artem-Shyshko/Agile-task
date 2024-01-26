@@ -11,7 +11,8 @@ struct SettingsThemeView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var appThemeManager: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     
     // MARK: - Body
     
@@ -30,52 +31,22 @@ struct SettingsThemeView: View {
 private extension SettingsThemeView {
     func colorButton() -> some View {
         Menu {
-            ForEach(appThemeManager.themes.indices, id: \.self) { i in
+            ForEach(Theme.allCases, id: \.rawValue) { theme in
                 Button {
-                    appThemeManager.savedThemeIndex = i
-                    switch i {
-                    case 3:
-                        appThemeManager.changeTheme(mode: .dark)
-                    default:
-                        appThemeManager.changeTheme(mode: .light)
-                    }
+                    themeManager.theme = theme
                 } label: {
-                    switch i {
-                    case 0:
-                        HStack {
-                            Image("AquamarineColorImage")
-                            Text(appThemeManager.themes[i].name)
-                        }
-                    case 1:
-                        HStack {
-                            Image("RubyColorImage")
-                            Text(appThemeManager.themes[i].name)
-                        }
-                    case 2:
-                        HStack {
-                            Image("OceanColorImage")
-                            Text(appThemeManager.themes[i].name)
-                        }
-                    default:
-                        HStack {
-                            Image("NightColorImage")
-                            Text(appThemeManager.themes[i].name)
-                        }
+                    HStack {
+                        Image(theme.gradientImageName(colorScheme))
+                        Text(theme.rawValue)
                     }
                 }
                 .modifier(SectionStyle())
             }
         } label: {
-            ZStack {
-                appThemeManager.selectedTheme.backgroundColor
+            themeManager.theme.gradient(colorScheme)
                     .frame(width: 25, height: 25)
                     .cornerRadius(3)
                     .padding(.trailing, 15)
-                appThemeManager.selectedTheme.backgroundGradient
-                    .frame(width: 25, height: 25)
-                    .cornerRadius(3)
-                    .padding(.trailing, 15)
-            }
         }
     }
 }
@@ -85,6 +56,6 @@ private extension SettingsThemeView {
 struct SettingsThemeView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsThemeView()
-            .environmentObject(AppThemeManager())
+            .environmentObject(ThemeManager())
     }
 }

@@ -39,6 +39,4 @@ private extension SettingsSubscriptionView {
 
 #Preview {
     SettingsSubscriptionView()
-        .environmentObject(AppThemeManager())
-        .environmentObject(PurchaseManager())
 }

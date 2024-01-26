@@ -9,7 +9,9 @@ import SwiftUI
 import RealmSwift
 
 struct ProjectsView: View {
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+
     @StateObject var vm: ProjectsViewModel
     
     var body: some View {
@@ -34,7 +36,7 @@ struct ProjectsView: View {
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
         ProjectsView(vm: ProjectsViewModel())
-            .environmentObject(AppThemeManager())
+            .environmentObject(ThemeManager())
     }
 }
 
@@ -52,7 +54,7 @@ private extension ProjectsView {
     func searchView() -> some View {
         if !vm.isSearchBarHidden {
             SearchableView(searchText: $vm.searchText, isSearchBarHidden: $vm.isSearchBarHidden)
-                .foregroundColor(theme.selectedTheme.textColor)
+                .foregroundColor(themeManager.theme.textColor(colorScheme))
         }
     }
     
@@ -62,7 +64,7 @@ private extension ProjectsView {
                 ProjectRow(vm: vm, project: project)
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 4)
-                            .fill(theme.selectedTheme.sectionColor)
+                            .fill(themeManager.theme.sectionColor(colorScheme))
                     )
             }
         }

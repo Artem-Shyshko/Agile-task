@@ -12,7 +12,9 @@ struct BulletView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject var viewModel: BulletViewModel
     @Binding var taskBulletArray: [BulletDTO]
     @Binding var isShowing: Bool
@@ -71,7 +73,7 @@ private extension BulletView {
                 .frame(minHeight: 35)
                 .fixedSize(horizontal: false, vertical: true)
                 .submitLabel(.done)
-                .tint(theme.selectedTheme.sectionTextColor)
+                .tint(themeManager.theme.sectionTextColor(colorScheme))
             
             HStack {
                 ThreeHorizontalLinesView()
@@ -91,7 +93,7 @@ private extension BulletView {
             .listRowSeparator(.hidden)
             .listRowBackground(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(theme.selectedTheme.sectionColor.name))
+                    .fill(themeManager.theme.sectionColor(colorScheme))
             )
         }
         .listStyle(.plain)
@@ -174,5 +176,5 @@ private extension BulletView {
 
 #Preview {
     BulletView(viewModel: BulletViewModel(), taskBulletArray: .constant([]), isShowing: .constant(true))
-        .environmentObject(AppThemeManager())
+        .environmentObject(ThemeManager())
 }

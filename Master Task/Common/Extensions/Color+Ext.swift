@@ -55,6 +55,12 @@ extension Color {
     static let launch = Color("LaunchScreenBackgroundColor")
     static let teaGreenColor = Color("TeaGreen")
     
+    static let nightGradient = LinearGradient(
+        colors: [.black],
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    
     static let greenGradient = LinearGradient(
         colors: [Color(hex: "#556085"), Color(hex: "#4D8990"), Color(hex: "#3D9E90"), Color(hex: "#82E8CB")],
         startPoint: .topLeading,

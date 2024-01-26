@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct PrimaryButtonStyle: ButtonStyle {
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
@@ -16,7 +17,7 @@ struct PrimaryButtonStyle: ButtonStyle {
             .foregroundColor(Color(hex: "#F77062"))
             .frame(maxWidth: .infinity)
             .padding(.vertical, 15)
-            .background(theme.selectedTheme.sectionColor)
+            .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(3)
             .padding(.horizontal, 50)
             .shadow(

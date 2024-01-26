@@ -10,7 +10,6 @@ import RealmSwift
 
 struct CompletedTaskView: View {
     @StateObject var viewModel: TaskListViewModel
-    @EnvironmentObject var theme: AppThemeManager
     @Environment(\.dismiss) var dismiss
     @State private var showDeleteAlert = false
     @State private var showRestoreAlert = false
@@ -116,5 +115,4 @@ private extension CompletedTaskView {
 
 #Preview {
     CompletedTaskView(viewModel: TaskListViewModel())
-        .environmentObject(AppThemeManager())
 }

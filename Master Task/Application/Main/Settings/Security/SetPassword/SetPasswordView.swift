@@ -93,6 +93,5 @@ private extension SetPasswordView {
 struct SetPasswordView_Previews: PreviewProvider {
     static var previews: some View {
         SetPasswordView(viewModel: SetPasswordViewModel())
-            .environmentObject(AppThemeManager())
     }
 }

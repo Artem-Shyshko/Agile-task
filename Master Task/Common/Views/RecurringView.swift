@@ -207,6 +207,5 @@ struct CheckBoxView: View {
 struct RecurringView_Previews: PreviewProvider {
     static var previews: some View {
         RecurringView(viewModel: NewTaskViewModel())
-            .environmentObject(AppThemeManager())
     }
 }

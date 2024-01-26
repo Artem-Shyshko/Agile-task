@@ -12,7 +12,9 @@ struct NewCheckBoxView: View {
     
     // MARK: - Properties
     
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
     @StateObject var viewModel: NewCheckBoxViewModel
     @Binding var taskCheckboxes: [CheckboxDTO]
     @Binding var isShowing: Bool
@@ -70,7 +72,7 @@ private extension NewCheckBoxView {
             .listRowSeparator(.hidden)
             .listRowBackground(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(theme.selectedTheme.sectionColor.name))
+                    .fill(Color(themeManager.theme.sectionColor(colorScheme).name))
             )
         }
         .listStyle(.plain)
@@ -91,7 +93,7 @@ private extension NewCheckBoxView {
                 .frame(minHeight: 35)
                 .fixedSize(horizontal: false, vertical: true)
                 .submitLabel(.done)
-                .tint(theme.selectedTheme.sectionTextColor)
+                .tint(themeManager.theme.sectionTextColor(colorScheme))
             
             HStack {
                 ThreeHorizontalLinesView()
@@ -177,5 +179,5 @@ private extension NewCheckBoxView {
 
 #Preview {
     NewCheckBoxView(viewModel: NewCheckBoxViewModel(), taskCheckboxes: .constant([]), isShowing: .constant(true))
-        .environmentObject(AppThemeManager())
+        .environmentObject(ThemeManager())
 }

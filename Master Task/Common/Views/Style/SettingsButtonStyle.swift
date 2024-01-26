@@ -8,16 +8,17 @@
 import SwiftUI
 
 struct SettingsButtonStyle: ButtonStyle {
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.helveticaRegular(size: 16))
-            .foregroundColor(theme.selectedTheme.sectionTextColor)
+            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
             .frame(height: 40)
             .hAlign(alignment: .leading)
             .padding(.leading)
-            .background(theme.selectedTheme.sectionColor)
+            .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(4)
     }
 }

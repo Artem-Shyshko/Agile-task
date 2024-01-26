@@ -8,17 +8,18 @@
 import SwiftUI
 
 struct SectionStyle: ViewModifier {
-    @EnvironmentObject var theme: AppThemeManager
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     
     func body(content: Content) -> some View {
         content
             .font(.helveticaRegular(size: 16))
-            .foregroundColor(theme.selectedTheme.sectionTextColor)
+            .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
             .tint(.gray)
             .frame(minHeight: 44)
             .hAlign(alignment: .leading)
             .padding(.leading, 10)
-            .background(theme.selectedTheme.sectionColor)
+            .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(4)
     }
 }

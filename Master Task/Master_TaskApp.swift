@@ -16,7 +16,7 @@ struct Master_TaskApp: App {
     @StateObject var localNotificationManager = LocalNotificationManager()
     @StateObject var purchaseManager = PurchaseManager()
     @StateObject var authManager = AuthManager()
-    @StateObject var appThemeManager = AppThemeManager()
+    @StateObject var appThemeManager = ThemeManager()
     
     @State private var isDarkModeOn = false
     @State private var showAuthView = false
@@ -58,7 +58,6 @@ struct Master_TaskApp: App {
             .environmentObject(appThemeManager)
             .onAppear {
                 UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-                appThemeManager.setAppTheme()
                 let settings = settingsRepository.get()
                 let _ = projectRepository.getSelectedProject()
                 if settings.securityOption != .none {
