@@ -67,21 +67,21 @@ final class TaskListViewModel: ObservableObject {
         currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
     }
     
-    func handleIncomingURL(_ url: URL) {
-        guard url.scheme == "mastertask" else {
-            return
+    func handleIncomingURL(_ url: URL) -> Bool {
+        guard url.scheme == "agiletask" else {
+            return false
         }
         guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
             print("Invalid URL")
-            return
+            return false
         }
         
         guard let action = components.host, action == "addnewtask" else {
             print("Unknown URL, we can't handle this one!")
-            return
+            return false
         }
         
-        showAddNewTaskView = true
+        return true
     }
     
     func getWeekSymbols() -> [String] {
