@@ -215,15 +215,15 @@ func dateBarView() -> some View {
           TimeControlView(
             title: viewModel.currentDate.format(viewModel.dateFormat())
           ) {
-            viewModel.minusFromCurrentDate(component: .day, value: 1)
+            viewModel.minusFromCurrentDate(component: .day)
           } rightButtonAction: {
-            viewModel.addToCurrentDate(component: .day, value: 1)
+            viewModel.addToCurrentDate(component: .day)
           }
         case .week:
           TimeControlView(title: "Week " + viewModel.currentDate.weekString) {
-            viewModel.minusFromCurrentDate(component: .weekOfYear, value: 1)
+              viewModel.minusFromCurrentDate(component: .weekOfYear)
           } rightButtonAction: {
-            viewModel.addToCurrentDate(component: .weekOfYear, value: 1)
+            viewModel.addToCurrentDate(component: .weekOfYear)
           }
         case .month, .all:
           EmptyView()

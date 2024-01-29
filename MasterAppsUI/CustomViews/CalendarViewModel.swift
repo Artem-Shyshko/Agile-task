@@ -23,10 +23,7 @@ final class CalendarViewModel: ObservableObject {
     let months = Calendar.current.standaloneMonthSymbols
     let calendarGridLayout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
-    private lazy var dateYearAgo: Date = {
-        let date = Date()
-        return calendar.date(byAdding: .year, value: -1, to: date) ?? date
-    }()
+    private lazy var pastDate = Date()
     
     // MARK: - Method
     
@@ -54,7 +51,7 @@ final class CalendarViewModel: ObservableObject {
     }
     
     func minusFromCurrentDate(currentDate: inout Date, component: Calendar.Component, value: Int) {
-        guard currentDate > dateYearAgo else { return }
+        guard currentDate > pastDate else { return }
         currentDate = calendar.date(byAdding: component, value: -value, to: currentDate)!
     }
     

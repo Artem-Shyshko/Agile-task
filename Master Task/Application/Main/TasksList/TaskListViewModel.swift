@@ -32,7 +32,7 @@ final class TaskListViewModel: ObservableObject {
     private let bulletRepository: BulletRepository = BulletRepositoryImpl()
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
-    private lazy var pastDate = Date()
+    var pastDate = Date()
     
     init(loadedTasks: [TaskDTO] = []) {
         self.loadedTasks = loadedTasks
@@ -58,13 +58,13 @@ final class TaskListViewModel: ObservableObject {
         self.settings = settingsRepository.get()
     }
     
-    func addToCurrentDate(component: Calendar.Component, value: Int) {
-        currentDate = Constants.shared.calendar.date(byAdding: component, value: value, to: currentDate)!
+    func addToCurrentDate(component: Calendar.Component) {
+        currentDate = Constants.shared.calendar.date(byAdding: component, value: 1, to: currentDate)!
     }
     
-    func minusFromCurrentDate(component: Calendar.Component, value: Int) {
+    func minusFromCurrentDate(component: Calendar.Component) {
         guard currentDate > pastDate else { return }
-        currentDate = Constants.shared.calendar.date(byAdding: component, value: -value, to: currentDate)!
+        currentDate = Constants.shared.calendar.date(byAdding: component, value: -1, to: currentDate)!
     }
     
     func handleIncomingURL(_ url: URL) -> Bool {
