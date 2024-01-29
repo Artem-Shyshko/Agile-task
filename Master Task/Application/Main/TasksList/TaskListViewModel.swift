@@ -67,6 +67,16 @@ final class TaskListViewModel: ObservableObject {
         currentDate = Constants.shared.calendar.date(byAdding: component, value: -1, to: currentDate)!
     }
     
+    func isValidWeek() -> Bool {
+        guard let startOfCurrentWeek = Date().startOfWeek().byAdding(component: .day, value: 1),
+                let endOfPreviousWeek = Constants.shared.calendar.date(byAdding: .day, value: -1, to: startOfCurrentWeek),
+              endOfPreviousWeek < currentDate.startOfWeek() else {
+            return false
+        }
+        
+        return true
+    }
+    
     func handleIncomingURL(_ url: URL) -> Bool {
         guard url.scheme == "agiletask" else {
             return false

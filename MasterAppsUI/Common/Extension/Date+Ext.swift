@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension Date {
+ extension Date {
     var startDay: Date {
         let calendar = Calendar.current
         var components = calendar.dateComponents(in: .autoupdatingCurrent, from: self)

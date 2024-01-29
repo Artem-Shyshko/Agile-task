@@ -107,4 +107,20 @@ extension Date {
         let startOfWeek = self.startOfWeek(using: calendar).noon
         return (0...6).map { startOfWeek.byAdding(component: .day, value: $0, using: calendar)! }
     }
+    
+    func isSameDay(with date: Date) -> Bool {
+        self.dateComponents([.day, .month, .year]) == date.dateComponents([.day, .month, .year])
+    }
+    
+    func isSameMonth(with date: Date) -> Bool {
+        self.dateComponents([.month, .year]) == date.dateComponents([.month, .year])
+    }
+    
+    func isSameWeek(with date: Date) -> Bool {
+        self.dateComponents([.year, .weekOfYear]) == date.dateComponents([.year, .weekOfYear])
+    }
+    
+    var isNotPastDay: Bool {
+        self > Date().byAdding(component: .day, value: -1)!.startDay
+    }
 }

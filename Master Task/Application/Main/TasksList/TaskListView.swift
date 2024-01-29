@@ -221,7 +221,9 @@ func dateBarView() -> some View {
           }
         case .week:
           TimeControlView(title: "Week " + viewModel.currentDate.weekString) {
+            if viewModel.isValidWeek() {
               viewModel.minusFromCurrentDate(component: .weekOfYear)
+            }
           } rightButtonAction: {
             viewModel.addToCurrentDate(component: .weekOfYear)
           }
