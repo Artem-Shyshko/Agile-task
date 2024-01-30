@@ -21,7 +21,7 @@ public struct TextFieldWithEnterButton: View {
     
     public var body: some View {
         ZStack {
-            TextField(placeholder, text: $text ,axis: .vertical)
+            TextField("", text: $text ,axis: .vertical)
                 .lineLimit(1...10)
                 .lineSpacing(3)
                 .autocorrectionDisabled()
@@ -36,6 +36,12 @@ public struct TextFieldWithEnterButton: View {
                     isButtonPress = false
                 }
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                .overlay(alignment: .leading) {
+                    if text.isEmpty {
+                        Text(placeholder)
+                            .foregroundStyle(.secondary)
+                    }
+                }
             
             Button {
                 isButtonPress = true
@@ -55,5 +61,5 @@ public struct TextFieldWithEnterButton: View {
 }
 
 #Preview {
-    TextFieldWithEnterButton(placeholder: "Empty", text: .constant("2321")) {}
+    TextFieldWithEnterButton(placeholder: "Placeholder", text: .constant("")) {}
 }

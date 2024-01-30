@@ -162,7 +162,6 @@ private extension NewTaskView {
     func descriptionView() -> some View {
         HStack(spacing: 5) {
             setupIcon(with: .description)
-                .offset(y: isDescriptionEmpty ? -2 : 0)
             TextFieldWithEnterButton(placeholder: "Description", text: $viewModel.description.max(400)) {
                 keyboardButtonAction()
             }
