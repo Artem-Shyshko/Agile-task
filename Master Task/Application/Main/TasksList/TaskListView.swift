@@ -156,7 +156,7 @@ private extension TaskListView {
       case .week:
         ForEach(viewModel.sectionHeaders, id: \.self) { key  in
           Section {
-            ForEach(.constant(viewModel.sectionContent(key)), id: \.self) { task in
+            ForEach(.constant(viewModel.sectionContent(key)), id: \.id) { task in
               TaskRow(viewModel: viewModel, task: task)
                 .listRowBackground(
                   RoundedRectangle(cornerRadius: 4)

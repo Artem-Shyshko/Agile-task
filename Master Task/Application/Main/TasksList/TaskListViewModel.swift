@@ -69,7 +69,7 @@ final class TaskListViewModel: ObservableObject {
     
     func isValidWeek() -> Bool {
         guard let startOfCurrentWeek = Date().startOfWeek().byAdding(component: .day, value: 1),
-                let endOfPreviousWeek = Constants.shared.calendar.date(byAdding: .day, value: -1, to: startOfCurrentWeek),
+              let endOfPreviousWeek = Constants.shared.calendar.date(byAdding: .day, value: -1, to: startOfCurrentWeek),
               endOfPreviousWeek < currentDate.startOfWeek() else {
             return false
         }
@@ -431,35 +431,25 @@ extension TaskListViewModel {
 // MARK: - Week List Sorting
 
 extension TaskListViewModel {
-    var taskGropedByDate: [String: [TaskDTO]] {
-        Dictionary(grouping: filteredTasks) { ($0.date ?? $0.createdDate).fullDayShortDateFormat }
+    private var taskGropedByDate: [String: [TaskDTO]] {
+        Dictionary(grouping: filteredTasks) { $0.createdDate.fullDayShortDateFormat }
     }
     
     var sectionHeaders: [String] {
-        switch taskSortingOption {
-        case .week :
-            return currentDate.daysOfWeek().map { $0.fullDayShortDateFormat }
-        default:
-            return [""]
-        }
+        currentDate.daysOfWeek().map { $0.fullDayShortDateFormat }
     }
     
     func sectionContent(_ key: String) -> [TaskDTO] {
-        switch taskSortingOption {
-        case .week:
-            return (taskGropedByDate[key] ?? [])
-                .filter {
-                    if let taskDate = $0.date {
-                        return taskDate.isSameWeek(with: currentDate)
-                    } else if $0.isRecurring {
-                        return $0.createdDate.isSameWeek(with: currentDate)
-                    }
-                    
-                    return false
+        taskGropedByDate[key] ?? []
+            .filter {
+                if let taskDate = $0.date {
+                    return taskDate.isSameWeek(with: currentDate)
+                } else if $0.isRecurring {
+                    return $0.createdDate.isSameWeek(with: currentDate)
                 }
-        default:
-            return []
-        }
+                
+                return false
+            }
     }
     
     func sectionHeader(_ key: String) -> String {
