@@ -62,13 +62,19 @@ extension Color {
     )
     
     static let rubyGradient = LinearGradient(
-        colors: [Color(hex: "#604CF7"), Color(hex: "#8734C4"), Color(hex: "#B21C8D"), Color(hex: "#C00B6B"), Color(hex: "#AD0447")],
+        gradient: Gradient(stops: [
+            Gradient.Stop(color: Color(hex: "#604CF7"), location: 0.0),
+            Gradient.Stop(color: Color(hex: "#8734C4"), location: 0.47),
+            Gradient.Stop(color: Color(hex: "#B21C8D"), location: 0.67),
+            Gradient.Stop(color: Color(hex: "#C00B6B"), location: 0.78),
+            Gradient.Stop(color: Color(hex: "#AD0447"), location: 0.99)
+        ]),
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
     
     static let oceanGradient = LinearGradient(
-        colors: [Color(hex: "#223E9E"), Color(hex: "#006BFF"), Color(hex: "#67A2FC"), Color(hex: "#9AE3FF")],
+        colors: [Color(hex: "#1A4C99"), Color(hex: "#1E8BE1"), Color(hex: "#1FC2FF"), Color(hex: "#9AF5FF")],
         startPoint: .topLeading,
         endPoint: .bottomTrailing
     )
