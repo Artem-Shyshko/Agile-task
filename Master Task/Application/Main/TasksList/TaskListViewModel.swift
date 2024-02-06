@@ -213,6 +213,11 @@ extension TaskListViewModel {
             loadedTasks[index].showCheckboxes.toggle()
             taskRepository.saveTask(loadedTasks[index])
         }
+        
+        if let index = completedTasks.firstIndex(where: { $0.id == task.id }) {
+            completedTasks[index].showCheckboxes.toggle()   
+            taskRepository.saveTask(completedTasks[index])
+        }
     }
     
     func updateCheckbox(_ checkbox: CheckboxDTO) {
