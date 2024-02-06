@@ -12,7 +12,7 @@ final class NewCheckBoxViewModel: ObservableObject {
     let taskRepository = TaskRepositoryImpl()
     var deletedCheckboxes: [CheckboxDTO] = []
     @Published var checkboxes: [CheckboxDTO] = []
-    @Published var deletedCheckboxIndex = 0
+    @Published var deletedCheckbox: CheckboxDTO?
     
     func onSubmit(checkBoxesCount: Int, textFieldIndex: Int, focusedInput: inout Int?) {
         if textFieldIndex < checkBoxesCount {
@@ -23,14 +23,23 @@ final class NewCheckBoxViewModel: ObservableObject {
     }
     
     func trashButtonAction(task: TaskDTO?) {
+        guard let deletedCheckbox else { return }
         if let task {
-            guard task.checkBoxArray.contains(where: { $0.id == checkboxes[deletedCheckboxIndex].id }) else {
-                checkboxes.remove(at: deletedCheckboxIndex)
+            guard task.checkBoxArray.contains(where: { $0.id == deletedCheckbox.id }) else {
+                checkboxes.removeAll(where: { $0.id == deletedCheckbox.id })
                 return
             }
-            deletedCheckboxes.append(checkboxes[deletedCheckboxIndex])
+            deletedCheckboxes.append(deletedCheckbox)
         }
-        checkboxes.remove(at: deletedCheckboxIndex)
+        checkboxes.removeAll(where: { $0.id == deletedCheckbox.id })
+    }
+    
+    func focusNumber(checkbox: CheckboxDTO) -> Int {
+        if let index = checkboxes.firstIndex(where: { $0.id == checkbox.id}) {
+            return index
+        }
+        
+        return 0
     }
     
     func saveButtonAction(task: TaskDTO?, taskCheckboxes: inout [CheckboxDTO]) {

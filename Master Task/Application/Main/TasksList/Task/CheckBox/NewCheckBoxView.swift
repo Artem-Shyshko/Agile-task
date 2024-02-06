@@ -23,7 +23,6 @@ struct NewCheckBoxView: View {
     @Environment(\.dismiss) private var dismiss
     @FocusState private var focusedInput: Int?
     @State var showDeleteAlert = false
-    @State var deletedCheckboxIndex = 0
     
     // MARK: - Body
     
@@ -79,51 +78,18 @@ private extension NewCheckBoxView {
         .listRowSpacing(Constants.shared.listRowSpacing)
     }
     
-    func textEditor(index: Int) -> some View {
-        HStack(spacing: 4) {
-            Image(.emptyCheckbox)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.gray)
-                .frame(width: 13,height: 13)
-            
-            TextField("Write check point title", text: $viewModel.checkboxes[index].title)
-                .lineLimit(1...10)
-                .frame(minHeight: 35)
-                .fixedSize(horizontal: false, vertical: true)
-                .submitLabel(.done)
-                .tint(themeManager.theme.sectionTextColor(colorScheme))
-            
-            HStack {
-                ThreeHorizontalLinesView()
-                trashButton(index: index)
-            }
-            .disabled(focusedInput == index)
-        }
-    }
-    
-    func trashButton(index: Int) -> some View {
-        Button(action: {
-            viewModel.deletedCheckboxIndex = index
-            showDeleteAlert = true
-        }, label: {
-            Image("trash")
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(focusedInput == index ? .gray.opacity(0.5) : .red)
-        })
-        .buttonStyle(.borderless)
-        .frame(width: 20, height: 20)
-    }
-    
     func listOfTextEditor() -> some View {
-        ForEach($viewModel.checkboxes.indices, id: \.self) { index in
-            textEditor(index: index)
-                .id(viewModel.checkboxes[index].id)
-                .focused($focusedInput, equals: index)
-            
+        ForEach($viewModel.checkboxes, id: \.id) { checkbox in
+            TextEditor(
+                viewModel: viewModel,
+                showAlert: $showDeleteAlert,
+                checkbox: checkbox,
+                isDisabledDeleteButton: focusedInput == viewModel.focusNumber(checkbox: checkbox.wrappedValue)
+            )
+            .focused(
+                $focusedInput,
+                equals: viewModel.focusNumber(checkbox: checkbox.wrappedValue)
+            )
         }
         .onMove(perform: viewModel.move)
     }
@@ -180,4 +146,51 @@ private extension NewCheckBoxView {
 #Preview {
     NewCheckBoxView(viewModel: NewCheckBoxViewModel(), taskCheckboxes: .constant([]), isShowing: .constant(true))
         .environmentObject(ThemeManager())
+}
+
+
+fileprivate struct TextEditor: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
+    @StateObject var viewModel: NewCheckBoxViewModel
+    @Binding var showAlert: Bool
+    @Binding var checkbox: CheckboxDTO
+    var isDisabledDeleteButton: Bool
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(.emptyCheckbox)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.gray)
+                .frame(width: 13,height: 13)
+            
+            TextField("Write check point title", text: $checkbox.title)
+                .lineLimit(1...10)
+                .frame(minHeight: 35)
+                .fixedSize(horizontal: false, vertical: true)
+                .submitLabel(.done)
+                .tint(themeManager.theme.sectionTextColor(colorScheme))
+            
+            HStack {
+                ThreeHorizontalLinesView()
+                
+                Button(action: {
+                    viewModel.deletedCheckbox = checkbox
+                    showAlert = true
+                }, label: {
+                    Image("trash")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(isDisabledDeleteButton ? .gray.opacity(0.5) : .red)
+                })
+                .buttonStyle(.borderless)
+                .frame(width: 20, height: 20)
+            }
+            .disabled(isDisabledDeleteButton)
+        }
+    }
 }
