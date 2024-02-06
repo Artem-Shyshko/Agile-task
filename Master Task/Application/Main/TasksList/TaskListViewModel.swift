@@ -459,6 +459,6 @@ extension TaskListViewModel {
     }
     
     func sectionHeader(_ key: String) -> String {
-        key.components(separatedBy: " ").first ?? ""
+        key
     }
 }
