@@ -12,7 +12,7 @@ import SwiftUI
 class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var parentId: ObjectId
-    @Persisted var status: TaskStatus
+    @Persisted var status: TaskStatus?
     @Persisted var title: String
     @Persisted var taskDescription: String?
     @Persisted var date: Date?
@@ -21,7 +21,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var timeOption: TimeOption
     @Persisted var timePeriod: TimePeriod
     @Persisted var recurring: RecurringConfiguration?
-    @Persisted var reminder: Reminder
+    @Persisted var reminder: Reminder?
     @Persisted var reminderDate: Date?
     @Persisted var createdDate: Date = Date()
     @Persisted var modificationDate: Date?
@@ -57,6 +57,8 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     }
     
     var isReminder: Bool {
+        guard let reminder else { return false }
+        
         switch reminder {
         case .custom, .inOneHour, .tomorrow, .nextWeek, .withRecurring:
             return true
@@ -115,9 +117,9 @@ extension TaskObject {
 enum Reminder: String, PersistableEnum, CaseIterable {
     case none = "None"
     case inOneHour = "In 1 hour"
-    case tomorrow = "Tomorrow at 12 hour"
-    case nextWeek = "Next Week at 12 hour"
-    case withRecurring = "With recurring"
+    case tomorrow = "Tomorrow at 12"
+    case nextWeek = "Next week at 12"
+    case withRecurring = "Recurring"
     case custom = "Custom"
 }
 
@@ -159,9 +161,9 @@ extension TimePeriod: PersistableEnum {}
 
 enum TaskStatus: String, CaseIterable, PersistableEnum {
     case none = "None"
-    case `do` = "Do"
-    case high = "High"
-    case hold = "Hold"
+    case `do` = "To do"
+    case high = "High priority"
+    case hold = "On hold"
     case urgent = "Urgent"
     case important = "Important"
     case love = "Love"

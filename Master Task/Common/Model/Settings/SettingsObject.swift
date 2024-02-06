@@ -15,13 +15,13 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var taskDateFormat: TaskDateFormmat = .dayMonthYear
     @Persisted var timeFormat: TimeFormat = .twentyFour
     @Persisted var taskDateSorting: TaskDateSorting = .all
-    @Persisted var addNewTaskIn: AddingNewTask = .top
-    @Persisted var completedTask: CompletedTask = .hide
+    @Persisted var addNewTaskIn: AddingNewTask? = .top
+    @Persisted var completedTask: CompletedTask? = .hide
     @Persisted var defaultReminder: DefaultReminder = .oneHourBefore
     @Persisted var showPlusButton: Bool = true
     @Persisted var isPushNotificationEnabled: Bool = true
     @Persisted var rememberLastPickedOptionView: Bool = true
-    @Persisted var taskSorting: TaskSorting = .manual
+    @Persisted var taskSorting: TaskSorting? = .manual
     @Persisted var securityOption: SecurityOption = .none
 }
 
@@ -46,10 +46,10 @@ extension SettingsObject {
 }
 
 enum TaskSorting: String, PersistableEnum, CaseIterable {
-    case manual = "Manual"
-    case schedule = "By schedule on the top"
-    case reminders = "By reminders on the top"
-    case recurring = "By recurring on the top"
+    case manual = "Manual (Drag and Drop)"
+    case schedule = "Tasks with schedule on top"
+    case reminders = "Tasks with reminders on top"
+    case recurring = "Recurring tasks on top"
 }
 
 enum WeekStarts: String, PersistableEnum, CaseIterable {
@@ -78,12 +78,12 @@ enum TaskDateFormmat: String, PersistableEnum, CaseIterable {
 
 enum AddingNewTask: String, PersistableEnum, CaseIterable {
     case bottom = "At the bottom of the list"
-    case top = "At the top of the list"
+    case top = "On top of the list"
 }
 
 enum CompletedTask: String, PersistableEnum, CaseIterable {
     case hide = "Hide from the list"
-    case moveToBottom = "Move to the button of the list"
+    case moveToBottom = "Move to the bottom of the list"
 }
 
 enum DefaultReminder: String, PersistableEnum, CaseIterable {

@@ -22,7 +22,7 @@ enum SettingsNavigationView: Hashable {
 enum Tab: String, CaseIterable {
     case taskList = "Tasks"
     case calendar = "Calendar"
-    case projects = "Project"
+    case projects = "Projects"
     case settings = "Settings"
     
     var imageName: String {

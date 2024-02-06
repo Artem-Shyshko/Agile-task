@@ -176,7 +176,7 @@ private extension SettingsTaskView {
           checkMark
         }
         
-        Text("Additional add button")
+        Text("Quick input button")
       }
     }
     .padding(.vertical, 10)

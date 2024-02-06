@@ -57,7 +57,7 @@ extension TaskDTO {
     init(object: TaskObject) {
         id = object.id
         parentId = object.parentId
-        status = object.status
+        status = object.status ?? .none
         title = object.title
         description = object.taskDescription
         date = object.date
@@ -65,7 +65,7 @@ extension TaskDTO {
         time = object.time
         timeOption = object.timeOption
         timePeriod = object.timePeriod
-        reminder = object.reminder
+        reminder = object.reminder ?? .none
         reminderDate = object.reminderDate
         createdDate = object.createdDate
         modificationDate = object.modificationDate

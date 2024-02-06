@@ -66,7 +66,7 @@ private extension SettingsView {
     
     func accountView () -> some View {
         NavigationLink(value: SettingsNavigationView.account) {
-            Text("Account")
+            Text("Subscription")
                 .modifier(SectionStyle())
         }
     }
@@ -87,7 +87,7 @@ private extension SettingsView {
     
     func moreAppsView() -> some View {
         NavigationLink(value: SettingsNavigationView.more) {
-            Text("More Agile App")
+            Text("App credentials")
                 .modifier(SectionStyle())
         }
     }
@@ -96,7 +96,7 @@ private extension SettingsView {
         Button {
             showMailView = true
         } label: {
-            Text("Write to us on the email")
+            Text("Email us")
                 .modifier(SectionStyle())
         }
     }

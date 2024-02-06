@@ -40,7 +40,7 @@ struct NewCheckBoxView: View {
                 focusedInput = 0
             }
         })
-        .alert("Are you sure you want to delete task?", isPresented: $showDeleteAlert) {
+        .alert("Are you sure you want to delete the point?", isPresented: $showDeleteAlert) {
             Button {
                 showDeleteAlert = false
             } label: {
@@ -135,7 +135,7 @@ private extension NewCheckBoxView {
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: tabBarCancelButton(),
-            header: NavigationTitle("Check list"),
+            header: NavigationTitle("Checklist"),
             rightItem: tabBarSaveButton()
         )
     }
@@ -167,7 +167,7 @@ fileprivate struct TextEditor: View {
                 .foregroundColor(.gray)
                 .frame(width: 13,height: 13)
             
-            TextField("Write check point title", text: $checkbox.title)
+            TextField("add a point", text: $checkbox.title)
                 .lineLimit(1...10)
                 .frame(minHeight: 35)
                 .fixedSize(horizontal: false, vertical: true)

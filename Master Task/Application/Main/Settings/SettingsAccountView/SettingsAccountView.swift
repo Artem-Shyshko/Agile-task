@@ -46,7 +46,7 @@ private extension SettingsAccountView {
             HStack {
                 Text("Subscription")
                 Spacer()
-                Text("Selected plane")
+                Text("Select plan")
                     .padding(.trailing, 10)
             }
         }

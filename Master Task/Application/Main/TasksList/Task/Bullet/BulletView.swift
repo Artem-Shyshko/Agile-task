@@ -39,7 +39,7 @@ struct BulletView: View {
                 focusedInput = 0
             }
         })
-        .alert("Are you sure you want to delete bullet?", isPresented: $viewModel.showDeleteAlert) {
+        .alert("Are you sure you want to delete the point?", isPresented: $viewModel.showDeleteAlert) {
             Button {
                 viewModel.showDeleteAlert = false
             } label: {
@@ -68,7 +68,7 @@ private extension BulletView {
                 .foregroundColor(.gray)
                 .frame(width: 13,height: 13)
             
-            TextField("Write bullet point title", text: $viewModel.bulletArray[index].title)
+            TextField("add a point", text: $viewModel.bulletArray[index].title)
                 .lineLimit(1...10)
                 .frame(minHeight: 35)
                 .fixedSize(horizontal: false, vertical: true)

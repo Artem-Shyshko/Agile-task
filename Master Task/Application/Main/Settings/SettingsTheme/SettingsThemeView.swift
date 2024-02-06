@@ -17,7 +17,7 @@ struct SettingsThemeView: View {
     // MARK: - Body
     
     var body: some View {
-            Text("Theme")
+            Text("Themes")
                 .padding(.vertical, 10)
                 .modifier(SectionStyle())
                 .overlay(alignment: .trailing) {

@@ -24,9 +24,10 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     
     func addNotification(to task: TaskObject) async  {
         deleteNotification(with: task.id.stringValue)
+        guard let reminder = task.reminder else { return }
         
         var reminderTime: Date
-        switch task.reminder {
+        switch reminder {
         case .none: return
         case .inOneHour:
             guard let reminderDate = task.reminderDate else { return }
