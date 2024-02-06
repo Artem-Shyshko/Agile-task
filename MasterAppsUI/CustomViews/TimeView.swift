@@ -43,6 +43,9 @@ public struct TimeView: View {
                 .textContentType(.none)
                 .keyboardType(.numberPad)
                 .frame(width: 60)
+                .onAppear {
+                    time = date.format(timeFormat == .twelve ? "h:mm" : "HH:mm")
+                }
                 .onChange(of: time) { newValue in
                     time = viewModel.formatTimeInput(newValue, format: timeFormat)
                     date = Calendar.current.date(

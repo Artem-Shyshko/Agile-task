@@ -246,7 +246,8 @@ private extension NewTaskView {
                 TimeView(
                     date: $viewModel.taskTime,
                     timePeriod: $viewModel.selectedDateTimePeriod,
-                    timeFormat: viewModel.settings.timeFormat, isTypedTime: .constant(false)
+                    timeFormat: viewModel.settings.timeFormat,
+                    isTypedTime: .constant(false)
                 )
                 .modifier(SectionStyle())
             }
