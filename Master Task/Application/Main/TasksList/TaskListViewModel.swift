@@ -432,7 +432,13 @@ extension TaskListViewModel {
 
 extension TaskListViewModel {
     private var taskGropedByDate: [String: [TaskDTO]] {
-        Dictionary(grouping: filteredTasks) { $0.createdDate.fullDayShortDateFormat }
+        Dictionary(grouping: filteredTasks) {
+            if let taskDate = $0.date {
+                return taskDate.fullDayShortDateFormat
+            } else {
+                return $0.createdDate.fullDayShortDateFormat
+            }
+        }
     }
     
     var sectionHeaders: [String] {
