@@ -21,14 +21,12 @@ enum SettingsNavigationView: Hashable {
 
 enum Tab: String, CaseIterable {
     case taskList = "Tasks"
-    case calendar = "Calendar"
     case projects = "Projects"
     case settings = "Settings"
     
     var imageName: String {
         switch self {
         case .taskList: return "tasks"
-        case .calendar: return "calendar"
         case .projects: return "project"
         case .settings: return "settings"
         }
@@ -54,9 +52,6 @@ struct TabBarView: View {
             TabView(selection: $selectedTab) {
                 TaskListView(path: $taskListNavigationStack, taskSortingOption: $tasksSortingOption)
                     .tag(Tab.taskList)
-                    .toolbar(.hidden, for: .tabBar)
-                TaskListView(path: $taskListNavigationStack, taskSortingOption: $tasksSortingOption)
-                    .tag(Tab.calendar)
                     .toolbar(.hidden, for: .tabBar)
                 ProjectsView(vm: ProjectsViewModel())
                     .tag(Tab.projects)
@@ -125,8 +120,6 @@ struct TabItem: View {
             
             if tab == .taskList {
                 tasksSortingOption = .all
-            } else if tab == .calendar {
-                tasksSortingOption = .month
             }
         }
     }
