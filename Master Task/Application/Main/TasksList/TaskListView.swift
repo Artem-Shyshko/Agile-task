@@ -96,6 +96,7 @@ struct TaskListView: View {
       .preferredColorScheme(themeManager.theme.colorScheme)
       .onOpenURL { incomingURL in
         if viewModel.handleIncomingURL(incomingURL) {
+          path.removeAll()
           path.append(.createTask)
         }
       }
