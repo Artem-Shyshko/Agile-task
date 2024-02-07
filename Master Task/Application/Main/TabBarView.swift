@@ -43,14 +43,13 @@ struct TabBarView: View {
     @State private var selectedTab: Tab = .taskList
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
-    @State private var tasksSortingOption: TaskDateSorting = .all
     
     // MARK: - Body
     
     var body: some View {
         ZStack {
             TabView(selection: $selectedTab) {
-                TaskListView(path: $taskListNavigationStack, taskSortingOption: $tasksSortingOption)
+                TaskListView(path: $taskListNavigationStack)
                     .tag(Tab.taskList)
                     .toolbar(.hidden, for: .tabBar)
                 ProjectsView(vm: ProjectsViewModel())
@@ -88,8 +87,7 @@ private extension TabBarView {
                     tint: tint,
                     inActiveTint: inActiveTint,
                     tab: $0,
-                    activeTab: $selectedTab, 
-                    tasksSortingOption: $tasksSortingOption
+                    activeTab: $selectedTab
                 )
             }
         }
@@ -102,7 +100,6 @@ struct TabItem: View {
     var inActiveTint: Color
     var tab: Tab
     @Binding var activeTab: Tab
-    @Binding var tasksSortingOption: TaskDateSorting
     
     var body: some View {
         VStack(spacing: 10) {
@@ -117,10 +114,6 @@ struct TabItem: View {
         .contentShape(Rectangle())
         .onTapGesture {
             activeTab = tab
-            
-            if tab == .taskList {
-                tasksSortingOption = .all
-            }
         }
     }
 }

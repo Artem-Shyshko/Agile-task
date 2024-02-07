@@ -22,7 +22,6 @@ struct TaskListView: View {
   @FocusState private var isAddTaskFocused: Bool
   
   @Binding var path: [TaskListNavigationView]
-  @Binding var taskSortingOption: TaskDateSorting
   
   // MARK: - Body
   
@@ -63,7 +62,6 @@ struct TaskListView: View {
       .onAppear {
         viewModel.localNotificationManager = notificationManager
         viewModel.onAppear()
-        viewModel.taskSortingOption = taskSortingOption
       }
       .task {
         try? await notificationManager.requestAuthorization()
@@ -389,7 +387,7 @@ private extension TaskListView {
 
 struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
-    TaskListView(path: .constant([TaskListNavigationView.sorting]), taskSortingOption: .constant(.all))
+    TaskListView(path: .constant([TaskListNavigationView.sorting]))
       .environmentObject(LocalNotificationManager())
       .environmentObject(ThemeManager())
   }

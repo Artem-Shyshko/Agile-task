@@ -18,11 +18,12 @@ struct SettingsTaskView: View {
     VStack {
       navigationBar()
       VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
+        weekStartsOnSection()
         dateSection()
         timeSection()
+        defaultSortingSection()
         newTasksSection()
         completedTaskSection()
-        weekStartsOnSection()
         addPlusButton()
         pushNotificationView()
         deleteAllTasksButton()
@@ -117,6 +118,24 @@ private extension SettingsTaskView {
         Spacer()
         Picker("", selection: $viewModel.settings.addNewTaskIn) {
           ForEach(AddingNewTask.allCases, id: \.self) {
+            Text($0.rawValue)
+              .tag($0.rawValue)
+          }
+        }
+        .pickerStyle(.menu)
+      }
+    }
+    .padding(.vertical, 3)
+    .modifier(SectionStyle())
+  }
+  
+  func defaultSortingSection() -> some View {
+    VStack(alignment: .leading) {
+      HStack {
+        Text("Default screen view")
+        Spacer()
+        Picker("", selection: $viewModel.settings.taskDateSorting) {
+          ForEach(TaskDateSorting.allCases, id: \.self) {
             Text($0.rawValue)
               .tag($0.rawValue)
           }

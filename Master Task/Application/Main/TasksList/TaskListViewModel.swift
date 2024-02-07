@@ -49,6 +49,7 @@ final class TaskListViewModel: ObservableObject {
         pastDate = newDate
         selectedCalendarDate = newDate
         loadTasks()
+        taskSortingOption = settings.taskDateSorting
         search(with: "")
     }
     
