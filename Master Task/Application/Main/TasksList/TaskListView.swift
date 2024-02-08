@@ -13,6 +13,7 @@ struct TaskListView: View {
   // MARK: - Properties
   
   @EnvironmentObject var notificationManager: LocalNotificationManager
+  @EnvironmentObject var purchaseManager: PurchaseManager
   @EnvironmentObject var themeManager: ThemeManager
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.scenePhase) var scenePhase
@@ -57,6 +58,8 @@ struct TaskListView: View {
           SortingView(viewModel: SortingViewModel())
         case .newCheckBox:
           EmptyView()
+        case .subscribtion:
+          SettingsSubscriptionView()
         }
       }
       .onAppear {
@@ -138,7 +141,13 @@ private extension TaskListView {
   }
   
   func navigationBarRightItem() -> some View {
-    NavigationLink(value: TaskListNavigationView.createTask) {
+    Button {
+      guard purchaseManager.canCreateTask() else {
+        path.append(.subscribtion)
+        return
+      }
+      path.append(.createTask)
+    } label: {
       Image(systemName: "plus")
         .resizable()
         .scaledToFit()
@@ -269,6 +278,11 @@ private extension TaskListView {
   func plusButton() -> some View {
     if viewModel.settings.showPlusButton {
       Button {
+        guard purchaseManager.canCreateTask() else {
+          path.append(.subscribtion)
+          return
+        }
+        
         isAddTaskFocused = true
         viewModel.isShowingAddTask = true
       } label: {

@@ -14,17 +14,13 @@ struct SubscriptionView: View {
     
     var body: some View {
         VStack(spacing: 2) {
-            Button {
-                purchaseManager.selectedSubscriptionID = "free"
-            } label: {
-                planView(
-                    title: "Free",
-                    price: nil,
-                    firstLine: "8 tasks",
-                    secondLine: "1 project",
-                    isSelected: purchaseManager.selectedSubscriptionID == "free"
-                )
-            }
+            planView(
+                title: "Free",
+                price: nil,
+                firstLine: "8 tasks",
+                secondLine: "1 project",
+                isSelected: purchaseManager.selectedSubscriptionID == "free"
+            )
             
             ForEach(purchaseManager.products) { product in
                 Button {
@@ -42,7 +38,7 @@ struct SubscriptionView: View {
             
             AppFeaturesView()
                 .foregroundColor(themeManager.theme.textColor(colorScheme))
-            .padding(.top, 40)
+                .padding(.top, 40)
         }
         .padding(.horizontal, 2)
         .onAppear {

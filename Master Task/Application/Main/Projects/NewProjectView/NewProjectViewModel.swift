@@ -25,8 +25,6 @@ final class NewProjectViewModel: ObservableObject {
             
             return true
         } else {
-            guard purchaseManager.hasUnlockedPro else { return false }
-            
             var newProject = ProjectDTO(ProjectObject())
             newProject.name = projectName
             projectRepo.saveProject(newProject)

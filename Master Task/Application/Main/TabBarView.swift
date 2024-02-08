@@ -12,7 +12,7 @@ import MasterAppsUI
 // MARK: - Enum
 
 enum TaskListNavigationView: Hashable {
-    case createTask, completedTasks, sorting, newCheckBox
+    case createTask, completedTasks, sorting, newCheckBox, subscribtion
 }
 
 enum SettingsNavigationView: Hashable {

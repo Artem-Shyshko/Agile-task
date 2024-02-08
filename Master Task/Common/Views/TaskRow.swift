@@ -110,7 +110,6 @@ private extension TaskRow {
                     .font(.helveticaRegular(size: 16))
             }
             Spacer()
-            
             dateView()
             timeView()
             recurringDateView()
@@ -139,7 +138,6 @@ private extension TaskRow {
     @ViewBuilder
     func reminderImage() -> some View {
         if task.reminder != .none {
-            //                Text("Rem: \(reminderDate)")
             Image("Reminders")
                 .renderingMode(.template)
                 .resizable()

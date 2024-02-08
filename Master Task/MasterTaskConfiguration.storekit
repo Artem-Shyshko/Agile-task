@@ -73,7 +73,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "1",
+          "displayPrice" : "0.99",
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "F61B8FD5",
@@ -85,7 +85,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "master_task_monthly",
+          "productID" : "agile_task_monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
           "subscriptionGroupID" : "B6ADF9E8",
@@ -98,7 +98,7 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "9",
+          "displayPrice" : "8.99",
           "familyShareable" : false,
           "groupNumber" : 1,
           "internalID" : "C6B545C7",
@@ -114,7 +114,7 @@
               "locale" : "en_US"
             }
           ],
-          "productID" : "master_task_yearly",
+          "productID" : "agile_task_yearly",
           "recurringSubscriptionPeriod" : "P1Y",
           "referenceName" : "Yearly",
           "subscriptionGroupID" : "B6ADF9E8",

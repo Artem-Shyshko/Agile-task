@@ -10,6 +10,7 @@ import RealmSwift
 
 struct ProjectsView: View {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.colorScheme) var colorScheme
 
     @StateObject var vm: ProjectsViewModel
@@ -28,6 +29,9 @@ struct ProjectsView: View {
             }
             .navigationDestination(isPresented: $vm.showNewProjectView) {
                 NewProjectView(vm: NewProjectViewModel())
+            }
+            .navigationDestination(isPresented: $vm.showSubscriptionView) {
+                SettingsSubscriptionView()
             }
         }
     }
@@ -67,6 +71,7 @@ private extension ProjectsView {
                             .fill(themeManager.theme.sectionColor(colorScheme))
                     )
             }
+            .listRowSeparator(.hidden)
         }
         .listRowSpacing(Constants.shared.listRowSpacing)
         .scrollContentBackground(.hidden)
@@ -81,6 +86,10 @@ private extension ProjectsView {
     
     func rightNavigationButton() -> some View {
         Button {
+            guard purchaseManager.canCreateProject() else {
+                vm.showSubscriptionView = true
+                return
+            }
             vm.showNewProjectView = true
         } label: {
             Image(systemName: "plus")

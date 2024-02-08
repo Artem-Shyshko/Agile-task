@@ -12,6 +12,7 @@ struct SettingsAccountView: View {
     @Environment(\.dismiss) var dismiss
     @State var showPurchasesAlert = false
     @State var isRestored = false
+    @State var selectedProductName = ""
     
     var body: some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
@@ -21,6 +22,11 @@ struct SettingsAccountView: View {
             Spacer()
         }
         .modifier(TabViewChildModifier())
+        .task {
+            if let product = purchaseManager.products.first(where: { $0.id == purchaseManager.selectedSubscriptionID }) {
+                selectedProductName = product.displayName
+            }
+        }
     }
 }
 
@@ -46,7 +52,7 @@ private extension SettingsAccountView {
             HStack {
                 Text("Subscription")
                 Spacer()
-                Text("Select plan")
+                Text(selectedProductName)
                     .padding(.trailing, 10)
             }
         }

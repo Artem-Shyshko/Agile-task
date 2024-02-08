@@ -41,8 +41,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var alertTitle: String = ""
     @Published var calendarDate = Date()
     
-#warning("Change back to 8")
-    private let tasksLimit = 80000000
+    private let tasksLimit = 8
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
@@ -60,14 +59,6 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     // MARK: - Methods
-    
-    func addNotification(for task: TaskDTO) {
-        guard let localNotificationManager else { return }
-        
-        Task {
-            await localNotificationManager.addNotification(to: .init(task))
-        }
-    }
     
     func createTask() -> TaskDTO {
         compareDateAndTime()
@@ -277,7 +268,15 @@ final class NewTaskViewModel: ObservableObject {
         }
     }
     
-    @MainActor func writeEditedTask(_ task: TaskDTO) {
+    func addNotification(for task: TaskDTO) {
+        guard let localNotificationManager else { return }
+        
+        Task {
+            await localNotificationManager.addNotification(to: .init(task))
+        }
+    }
+    
+    func writeEditedTask(_ task: TaskDTO) {
         let edited = self.updateTask(task: task)
         
         for (index, checkbox) in self.checkBoxes.enumerated() {
@@ -332,7 +331,7 @@ final class NewTaskViewModel: ObservableObject {
         }
     }
     
-    @MainActor func deleteTask(parentId: ObjectId) {
+    func deleteTask(parentId: ObjectId) {
         let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == parentId })
         tasksToDelete.forEach {
             deleteNotification(for: $0.id.stringValue)
@@ -344,7 +343,7 @@ final class NewTaskViewModel: ObservableObject {
         isCompleted.toggle()
     }
     
-    @MainActor func saveButtonAction(
+    func saveButtonAction(
         hasUnlockedPro: Bool,
         editTask: TaskDTO?,
         taskList: [TaskDTO]) -> Bool {
@@ -363,13 +362,6 @@ final class NewTaskViewModel: ObservableObject {
                 writeEditedTask(editTask)
                 return true
             } else {
-                guard canCreateTask(
-                    hasSubscription: hasUnlockedPro
-                ) else {
-                    showSubscriptionView = true
-                    return false
-                }
-                
                 var task = createTask()
                 
                 if settings.addNewTaskIn == .bottom {
@@ -381,9 +373,7 @@ final class NewTaskViewModel: ObservableObject {
                 }
                 
                 addNotification(for: task)
-                writeRecurringTaskArray(
-                    for: task
-                )
+                writeRecurringTaskArray(for: task)
                 
                 return true
             }

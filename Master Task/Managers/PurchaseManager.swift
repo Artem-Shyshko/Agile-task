@@ -9,11 +9,15 @@ import SwiftUI
 import StoreKit
 
 @MainActor
-final class PurchaseManager: ObservableObject {
+final class PurchaseManager: NSObject, ObservableObject {
     @AppStorage("SelectedSubscriptionID") var selectedSubscriptionID = ""
-    private let productsID = ["master_task_monthly", "master_task_yearly"]
+    private let productsID = ["agile_task_monthly", "agile_task_yearly"]
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil
+    private let taskRepository: TaskRepository = TaskRepositoryImpl()
+    private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
+    private let maxFreeTasks = 8
+    private let maxFreeProjects = 1
     
     @Published private(set) var products: [Product] = []
     @Published private(set) var purchasedProductIDs = Set<String>()
@@ -23,12 +27,29 @@ final class PurchaseManager: ObservableObject {
         return !purchasedProductIDs.isEmpty
     }
     
-    init() {
+    override init() {
+        super.init()
         updates = observeTransactionUpdates()
     }
     
     deinit {
         updates?.cancel()
+    }
+    
+    func canCreateTask() -> Bool {
+        guard hasUnlockedPro == false else { return  true }
+        
+        let allTasks = taskRepository.getTaskList()
+        
+        return maxFreeTasks <= allTasks.count ? false : true
+    }
+    
+    func canCreateProject() -> Bool {
+        guard hasUnlockedPro == false else { return  true }
+        
+        let allProjects = projectRepository.getProjects()
+        
+        return maxFreeProjects <= allProjects.count ? false : true
     }
     
     func loadProducts() async throws {
@@ -95,5 +116,14 @@ private extension PurchaseManager {
                 break
             }
         }
+    }
+}
+extension PurchaseManager: SKPaymentTransactionObserver {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+
+    }
+
+    func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
+        return true
     }
 }
