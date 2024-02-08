@@ -196,6 +196,11 @@ struct CheckBoxView: View {
             }
         }
         .cornerRadius(4)
+        .task {
+            if viewModel.recurringConfiguration.repeatOnDays.contains(where: { $0 == title }) {
+                isSelected = true
+            }
+        }
         .onChange(of: isSelected) { isSelectDay in
             viewModel.controlSelectedDay(isSelectDay: isSelectDay, dayName: title)
         }
