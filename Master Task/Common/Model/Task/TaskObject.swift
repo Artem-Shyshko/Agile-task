@@ -162,12 +162,12 @@ extension TimePeriod: PersistableEnum {}
 enum TaskStatus: String, CaseIterable, PersistableEnum {
     case none = "None"
     case `do` = "To do"
-    case high = "High priority"
     case hold = "On hold"
-    case urgent = "Urgent"
     case important = "Important"
-    case love = "Love"
+    case urgent = "Urgent"
+    case high = "High priority"
     case like = "Like"
+    case love = "Love"
     
     var iconName: String {
         switch self {
