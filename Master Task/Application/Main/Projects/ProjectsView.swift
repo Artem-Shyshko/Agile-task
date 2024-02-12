@@ -92,10 +92,10 @@ private extension ProjectsView {
             }
             vm.showNewProjectView = true
         } label: {
-            Image(systemName: "plus")
+            Image("Add")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 18, height: 18)
+                .frame(width: 22, height: 22)
         }
     }
 }

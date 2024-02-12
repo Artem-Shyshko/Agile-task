@@ -20,8 +20,10 @@ struct SearchableView: View {
                 .frame(height: 45)
                 .cornerRadius(4)
                 .overlay(alignment: .leading) {
-                    Image(systemName: "magnifyingglass")
-                        .imageScale(.small)
+                    Image("Search")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
                         .padding(.leading, 10.5)
                 }
                 .overlay(alignment: .trailing) {

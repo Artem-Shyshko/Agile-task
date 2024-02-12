@@ -148,10 +148,10 @@ private extension TaskListView {
       }
       path.append(.createTask)
     } label: {
-      Image(systemName: "plus")
+      Image("Add")
         .resizable()
         .scaledToFit()
-        .frame(width: 18, height: 18)
+        .frame(width: 22, height: 22)
     }
   }
   
