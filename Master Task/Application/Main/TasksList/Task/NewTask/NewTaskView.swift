@@ -109,21 +109,13 @@ struct NewTaskView: View {
 private extension NewTaskView {
     
     func statusView() -> some View {
-        HStack(spacing: 5) {
-            setupIcon(with: .status)
-            Text("Status")
-            Spacer()
-            Picker("", selection: $viewModel.taskStatus) {
-                ForEach(TaskStatus.allCases, id: \.self) { status in
-                    Text(status.rawValue)
-                        .tag(status.rawValue)
-                }
-                .pickerStyle(.menu)
-            }
-        }
-        .tint(viewModel.taskStatus == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-        .foregroundStyle(viewModel.taskStatus == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-        .modifier(SectionStyle())
+        CustomPickerView(
+            image: .status,
+            title: "Status",
+            options: TaskStatus.allCases,
+            selection: $viewModel.taskStatus,
+            isSelected: viewModel.taskStatus != .none
+        )
     }
     
     func titleView() -> some View {
@@ -154,14 +146,14 @@ private extension NewTaskView {
     }
     
     func checkList() -> some View {
-        HStack(spacing: 5) {
-            setupIcon(with: .doneCheckbox)
-            Text("Checklist")
-                .padding(.vertical, 8)
-            Spacer()
-            Button {
-                isShowingCheckBoxView = true
-            } label: {
+        Button {
+            isShowingCheckBoxView = true
+        } label: {
+            HStack(spacing: 5) {
+                setupIcon(with: .doneCheckbox)
+                Text("Checklist")
+                    .padding(.vertical, 8)
+                Spacer()
                 Text(viewModel.checkBoxes.isEmpty ? "Add" : "Edit")
             }
             .hAlign(alignment: .trailing)
@@ -173,14 +165,14 @@ private extension NewTaskView {
     }
     
     func bulletListView() -> some View {
-        HStack(spacing: 5) {
-            setupIcon(with: .bullet)
-            Text("Bulletlist")
-                .padding(.vertical, 8)
-            Spacer()
-            Button {
-                isShowingBulletView = true
-            } label: {
+        Button {
+            isShowingBulletView = true
+        } label: {
+            HStack(spacing: 5) {
+                setupIcon(with: .bullet)
+                Text("Bulletlist")
+                    .padding(.vertical, 8)
+                Spacer()
                 Text(viewModel.bullets.isEmpty ? "Add" : "Edit")
             }
             .hAlign(alignment: .trailing)
@@ -193,25 +185,17 @@ private extension NewTaskView {
     
     func dateView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack(spacing: 5) {
-                setupIcon(with: .dateAndTime)
-                Text("Date")
-                Spacer()
-                Picker("", selection: $viewModel.selectedDateOption) {
-                    ForEach(DateType.allCases, id: \.self) {
-                        Text($0.rawValue)
-                            .tag($0.rawValue)
-                    }
-                }
-                .pickerStyle(.menu)
-            }
-            .tint(viewModel.selectedDateOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .foregroundStyle(viewModel.selectedDateOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .modifier(SectionStyle())
+            CustomPickerView(
+                image: .dateAndTime,
+                title: "Date",
+                options: DateType.allCases,
+                selection: $viewModel.selectedDateOption,
+                isSelected: viewModel.selectedDateOption != .none
+            )
             
             if viewModel.selectedDateOption == .custom {
                 CustomCalendarView(
-                    selectedCalendarDay: $viewModel.taskDate, 
+                    selectedCalendarDay: $viewModel.taskDate,
                     calendarDate: $viewModel.calendarDate,
                     currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
                     backgroundColor:themeManager.theme.sectionColor(colorScheme),
@@ -226,21 +210,13 @@ private extension NewTaskView {
     
     func timeView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack(spacing: 5) {
-                setupIcon(with: .dateAndTime)
-                Text("Time")
-                Spacer()
-                Picker("", selection: $viewModel.selectedTimeOption) {
-                    ForEach(TimeOption.allCases, id: \.self) {
-                        Text($0.rawValue)
-                            .tag($0.rawValue)
-                    }
-                }
-                .pickerStyle(.menu)
-            }
-            .tint(viewModel.selectedTimeOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .foregroundStyle(viewModel.selectedTimeOption == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .modifier(SectionStyle())
+            CustomPickerView(
+                image: .dateAndTime,
+                title: "Time",
+                options: TimeOption.allCases,
+                selection: $viewModel.selectedTimeOption,
+                isSelected: viewModel.selectedTimeOption != .none
+            )
             
             if viewModel.selectedTimeOption == .custom {
                 TimeView(
@@ -259,21 +235,13 @@ private extension NewTaskView {
     
     func recurringView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack(spacing: 5) {
-                setupIcon(with: .recurring)
-                Text("Recurring")
-                Spacer()
-                Picker("", selection: $viewModel.recurringConfiguration.option) {
-                    ForEach(RecurringOptions.allCases, id: \.self) { option in
-                        Text(option.rawValue)
-                            .tag(option.rawValue)
-                    }
-                    .pickerStyle(.menu)
-                }
-            }
-            .tint(viewModel.recurringConfiguration.option == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .foregroundStyle(viewModel.recurringConfiguration.option == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .modifier(SectionStyle())
+            CustomPickerView(
+                image: .recurring,
+                title: "Recurring",
+                options: RecurringOptions.allCases,
+                selection: $viewModel.recurringConfiguration.option,
+                isSelected: viewModel.recurringConfiguration.option != .none
+            )
             
             if viewModel.recurringConfiguration.option == .custom {
                 RecurringView(viewModel: viewModel)
@@ -283,21 +251,13 @@ private extension NewTaskView {
     
     func reminderView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            HStack(spacing: 5) {
-                setupIcon(with: .reminders)
-                Text("Reminder")
-                Spacer()
-                Picker("", selection: $viewModel.reminder) {
-                    ForEach(Reminder.allCases, id: \.self) { reminder in
-                        Text(reminder.rawValue)
-                            .tag(reminder.rawValue)
-                    }
-                    .pickerStyle(.menu)
-                }
-            }
-            .tint(viewModel.reminder == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .foregroundStyle(viewModel.reminder == .none ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .modifier(SectionStyle())
+            CustomPickerView(
+                image: .reminders,
+                title: "Reminder",
+                options: Reminder.allCases,
+                selection: $viewModel.reminder,
+                isSelected: viewModel.reminder != .none
+            )
             
             if viewModel.reminder == .custom {
                 CustomCalendarView(
@@ -321,13 +281,13 @@ private extension NewTaskView {
     
     func colorView() -> some View {
         VStack(spacing: 3) {
-            HStack(spacing: 5) {
-                setupIcon(with: .color)
-                Text("Color")
-                Spacer()
                 Button {
                     viewModel.showColorPanel.toggle()
                 } label: {
+                    HStack(spacing: 5) {
+                        setupIcon(with: .color)
+                        Text("Color")
+                        Spacer()
                     viewModel.selectedColor
                         .frame(width: 20, height: 20)
                         .cornerRadius(4)
@@ -349,21 +309,13 @@ private extension NewTaskView {
     }
     
     func projectView() -> some View {
-        HStack(spacing: 5) {
-            setupIcon(with: .projectMini)
-            Text("Project")
-            Spacer()
-            
-            Picker("", selection: $viewModel.selectedProjectName) {
-                ForEach(viewModel.projectsNames, id: \.self) { name in
-                    Text(name)
-                }
-            }
-            .pickerStyle(.menu)
-        }
-        .tint(themeManager.theme.sectionTextColor(colorScheme))
-        .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-        .modifier(SectionStyle())
+        CustomPickerView(
+            image: .projectMini,
+            title: "Project",
+            options: viewModel.projectsNames,
+            selection: $viewModel.selectedProjectName,
+            isSelected: true
+        )
     }
     
     func tabBarCancelButton() -> some View {
@@ -450,5 +402,53 @@ struct NewTaskView_Previews: PreviewProvider {
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
             .environmentObject(ThemeManager())
+    }
+}
+
+// MARK: - CustomPickerView
+
+fileprivate struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
+    var image: ImageResource
+    var title: String
+    var options: [SelectionValue]
+    @Binding var selection: SelectionValue
+    var isSelected: Bool
+    
+    var body: some View {
+        HStack(spacing: 5) {
+            Image(image)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 10, height: 10)
+            Menu {
+                Picker(selection: $selection, label: EmptyView()) {
+                    ForEach(options, id: \.self) { option in
+                        Text(option.description)
+                            .frame(maxWidth: .infinity)
+                            .tag(option)
+                    }
+                }
+            } label: {
+                customPickerLabel(rightName: title, leftName: selection.description)
+            }
+        }
+        .tint(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
+        .foregroundStyle(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
+        .modifier(SectionStyle())
+    }
+    
+    private func customPickerLabel(rightName: String, leftName: String) -> some View {
+        HStack {
+            Text(rightName)
+            Spacer()
+            Text(leftName)
+            Image(systemName: "chevron.up.chevron.down")
+                .imageScale(.small)
+        }
+        .padding(.trailing, 12)
     }
 }

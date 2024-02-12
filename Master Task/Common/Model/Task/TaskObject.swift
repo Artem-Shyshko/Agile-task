@@ -114,18 +114,22 @@ extension TaskObject {
 
 // MARK: - Reminder
 
-enum Reminder: String, PersistableEnum, CaseIterable {
+enum Reminder: String, PersistableEnum, CaseIterable, Hashable, CustomStringConvertible {
     case none = "None"
     case inOneHour = "In 1 hour"
     case tomorrow = "Tomorrow at 12"
     case nextWeek = "Next week at 12"
     case withRecurring = "Recurring"
     case custom = "Custom"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 // MARK: - RecurringOptions
 
-enum RecurringOptions: String, CaseIterable, PersistableEnum {
+enum RecurringOptions: String, CaseIterable, PersistableEnum, Hashable, CustomStringConvertible {
     case none = "None"
     case daily = "Daily"
     case inADay = "In a day"
@@ -134,24 +138,36 @@ enum RecurringOptions: String, CaseIterable, PersistableEnum {
     case monthly = "Monthly"
     case yearly = "Yearly"
     case custom = "Custom"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 // MARK: - DateType
 
-enum DateType: String, CaseIterable, PersistableEnum {
+enum DateType: String, CaseIterable, PersistableEnum, Hashable, CustomStringConvertible {
     case none = "None"
     case today = "Today"
     case tomorrow = "Tomorrow"
     case nextWeek = "Next Week"
     case custom = "Custom"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 // MARK: - TimeOption
 
-enum TimeOption: String, CaseIterable, PersistableEnum {
+enum TimeOption: String, CaseIterable, PersistableEnum, Hashable, CustomStringConvertible {
     case none = "None"
     case inOneHour = "In 1 hour"
     case custom = "Custom"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 extension TimePeriod: PersistableEnum {}
@@ -159,7 +175,7 @@ extension TimePeriod: PersistableEnum {}
 
 // MARK: - TaskStatus
 
-enum TaskStatus: String, CaseIterable, PersistableEnum {
+enum TaskStatus: String, CaseIterable, PersistableEnum, Hashable, CustomStringConvertible {
     case none = "None"
     case `do` = "To do"
     case hold = "On hold"
@@ -188,6 +204,10 @@ enum TaskStatus: String, CaseIterable, PersistableEnum {
         case .like:
             return "Like"
         }
+    }
+    
+    var description: String {
+        self.rawValue
     }
 }
 
