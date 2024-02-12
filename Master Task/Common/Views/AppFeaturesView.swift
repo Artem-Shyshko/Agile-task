@@ -9,21 +9,26 @@ import SwiftUI
 
 struct AppFeaturesView: View {
     var body: some View {
-        HStack(spacing: 35) {
+        HStack(alignment: .top, spacing: 35) {
             VStack(alignment: .leading, spacing: 12) {
-                label(image: "done-checkbox", text: "Advanced tasks")
-                label(image: "Reminders", text: "Reminders")
-                label(image: "Recurring", text: "Reccuring tasks")
+                label(image: "Status", text: "Status")
+                label(image: "Description", text: "Description")
+                label(image: "Checklists", text: "Checklists")
+                label(image: "Bullet", text: "Bullet lists")
                 label(image: "DateAndTime", text: "Date and time")
-                label(image: "empty-checkbox", text: "Color highlights")
+                label(image: "Recurring", text: "Reccuring tasks")
+                label(image: "Reminders", text: "Reminders")
+                label(image: "Color", text: "Color highlights")
             }
             
             VStack(alignment: .leading, spacing: 12) {
                 label(image: "Projects", text: "Unlimited Projects")
-                label(image: "Navigation", text: "Advanced navigation")
                 label(image: "CalendarIcon", text: "Calendar")
-                label(image: "SettingsIcon", text: "Fine tuning settings")
-                label(image: "Widgets", text: "Interactive widgets")
+                label(image: "Navigation", text: "Advanced navigation")
+                label(image: "SettingsIcon", text: "Customization")
+                label(image: "FaceID", text: "Face ID protection")
+                label(image: "Themes", text: "Themes")
+                label(image: "Widgets", text: "Widgets")
             }
         }
     }
@@ -45,4 +50,8 @@ private extension AppFeaturesView {
 
 #Preview {
     AppFeaturesView()
+        .background {
+            Color.aquamarineColor
+                .ignoresSafeArea()
+        }
 }

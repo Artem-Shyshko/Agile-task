@@ -22,7 +22,7 @@ struct WelcomeView: View {
             themeManager.theme.gradient(colorScheme)
                 .ignoresSafeArea()
             
-            VStack(spacing: 80) {
+            VStack(spacing: 60) {
                 VStack(spacing: 20) {
                     title()
                     subTitle()
@@ -31,12 +31,13 @@ struct WelcomeView: View {
                 
                 startButton()
             }
-            .font(.sfProRegular(size: 14))
+            .font(.helveticaRegular(size: 14))
             .foregroundColor(themeManager.theme.textColor(colorScheme))
             .navigationDestination(isPresented: $showTabBar) {
                 TabBarView()
             }
         }
+        .preferredColorScheme(themeManager.theme.colorScheme)
     }
 }
 
@@ -50,10 +51,10 @@ private extension WelcomeView {
     }
     
     func subTitle() -> some View {
-        Text("Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute efficiently. \nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task.")
+        Text("Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently. \nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task.")
             .multilineTextAlignment(.center)
             .font(.helveticaRegular(size: 16))
-            .padding(.horizontal, 45)
+            .padding(.horizontal, 30)
     }
     
     func startButton() -> some View {
