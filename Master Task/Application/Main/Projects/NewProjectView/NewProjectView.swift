@@ -12,6 +12,7 @@ struct NewProjectView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.dismiss) var dismiss
     @StateObject var vm: NewProjectViewModel
+    @FocusState var isFocused: Bool
     
     var body: some View {
         VStack {
@@ -21,6 +22,9 @@ struct NewProjectView: View {
         }
         .textFieldStyle(NewTextFieldStyle())
         .modifier(TabViewChildModifier())
+        .onAppear {
+            isFocused = true
+        }
     }
 }
 
@@ -35,10 +39,8 @@ private extension NewProjectView {
     }
     
     func textFieldView() -> some View {
-        TextField(
-            vm.editedProject == nil ? "Enter new name" : "Enter name for new account",
-            text: $vm.projectName
-        )
+        TextField("Enter project name", text: $vm.projectName)
+            .focused($isFocused)
     }
     
     func saveButton() -> some View {
