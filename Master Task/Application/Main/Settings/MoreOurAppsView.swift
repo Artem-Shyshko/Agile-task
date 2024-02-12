@@ -44,7 +44,7 @@ private extension MoreOurAppsView {
     
     @ViewBuilder
     func visitOurWebsiteButton() -> some View {
-        if let url = URL(string: "https://embrox.com/") {
+        if let url = URL(string: "http://agile-app.com/") {
             Link("Visit our website", destination: url)
                 .modifier(SectionStyle())
         }
