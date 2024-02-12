@@ -22,6 +22,7 @@ struct BulletView: View {
     
     @Environment(\.dismiss) private var dismiss
     @FocusState private var focusedInput: Int?
+    @State var showDeleteAlert = false
     
     // MARK: - Body
     
@@ -39,9 +40,9 @@ struct BulletView: View {
                 focusedInput = 0
             }
         })
-        .alert("Are you sure you want to delete the point?", isPresented: $viewModel.showDeleteAlert) {
+        .alert("Are you sure you want to delete the point?", isPresented: $showDeleteAlert) {
             Button {
-                viewModel.showDeleteAlert = false
+                showDeleteAlert = false
             } label: {
                 Text("Cancel")
             }
@@ -59,68 +60,36 @@ struct BulletView: View {
 
 private extension BulletView {
     
-    func textEditor(index: Int) -> some View {
-        HStack(spacing: 4) {
-            Image(.bullet)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundColor(.gray)
-                .frame(width: 13,height: 13)
-            
-            TextField("add a point", text: $viewModel.bulletArray[index].title)
-                .lineLimit(1...10)
-                .frame(minHeight: 35)
-                .fixedSize(horizontal: false, vertical: true)
-                .submitLabel(.done)
-                .tint(themeManager.theme.sectionTextColor(colorScheme))
-            
-            HStack {
-                ThreeHorizontalLinesView()
-                trashButton(index: index)
-            }
-            .disabled(focusedInput == index)
-        }
-    }
-    
     func bulletsList() -> some View {
         List {
             Group {
                 listOfTextEditor()
+                
                 addPointButton()
             }
             .scrollContentBackground(.hidden)
             .listRowSeparator(.hidden)
             .listRowBackground(
                 RoundedRectangle(cornerRadius: 4)
-                    .fill(themeManager.theme.sectionColor(colorScheme))
+                    .fill(Color(themeManager.theme.sectionColor(colorScheme).name))
             )
         }
         .listStyle(.plain)
         .listRowSpacing(Constants.shared.listRowSpacing)
     }
     
-    func trashButton(index: Int) -> some View {
-        Button(action: {
-            viewModel.deletedIndex = index
-            viewModel.showDeleteAlert = true
-        }, label: {
-            Image("trash")
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .foregroundStyle(focusedInput == index ? .gray.opacity(0.5) : .red)
-        })
-        .buttonStyle(.borderless)
-        .frame(width: 20, height: 20)
-    }
-    
     func listOfTextEditor() -> some View {
-        ForEach($viewModel.bulletArray.indices, id: \.self) { index in
-            textEditor(index: index)
-                .id(viewModel.bulletArray[index].id)
-                .focused($focusedInput, equals: index)
-            
+        ForEach($viewModel.bulletArray, id: \.id) { bullet in
+            TextEditor(
+                viewModel: viewModel,
+                showAlert: $showDeleteAlert,
+                bullet: bullet,
+                isDisabledDeleteButton: focusedInput == viewModel.focusNumber(bullet: bullet.wrappedValue)
+            )
+            .focused(
+                $focusedInput,
+                equals: viewModel.focusNumber(bullet: bullet.wrappedValue)
+            )
         }
         .onMove(perform: viewModel.move)
     }
@@ -177,4 +146,50 @@ private extension BulletView {
 #Preview {
     BulletView(viewModel: BulletViewModel(), taskBulletArray: .constant([]), isShowing: .constant(true))
         .environmentObject(ThemeManager())
+}
+
+fileprivate struct TextEditor: View {
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
+    
+    @StateObject var viewModel: BulletViewModel
+    @Binding var showAlert: Bool
+    @Binding var bullet: BulletDTO
+    var isDisabledDeleteButton: Bool
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(.emptyCheckbox)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .foregroundColor(.gray)
+                .frame(width: 13,height: 13)
+            
+            TextField("add a point", text: $bullet.title)
+                .lineLimit(1...10)
+                .frame(minHeight: 35)
+                .fixedSize(horizontal: false, vertical: true)
+                .submitLabel(.done)
+                .tint(themeManager.theme.sectionTextColor(colorScheme))
+            
+            HStack {
+                ThreeHorizontalLinesView()
+                
+                Button(action: {
+                    viewModel.deletedBullet = bullet
+                    showAlert = true
+                }, label: {
+                    Image("trash")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundStyle(isDisabledDeleteButton ? .gray.opacity(0.5) : .red)
+                })
+                .buttonStyle(.borderless)
+                .frame(width: 20, height: 20)
+            }
+            .disabled(isDisabledDeleteButton)
+        }
+    }
 }
