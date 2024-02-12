@@ -59,6 +59,11 @@ final class TaskListViewModel: ObservableObject {
         self.settings = settingsRepository.get()
     }
     
+    func loadCompletedTasks() {
+        let project = projectRepository.getSelectedProject()
+        self.completedTasks = project.tasks.filter({ $0.isCompleted })
+    }
+    
     func addToCurrentDate(component: Calendar.Component) {
         currentDate = Constants.shared.calendar.date(byAdding: component, value: 1, to: currentDate)!
     }

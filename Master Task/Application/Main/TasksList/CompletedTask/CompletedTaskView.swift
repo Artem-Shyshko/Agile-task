@@ -50,8 +50,8 @@ struct CompletedTaskView: View {
                 Text("Restore")
             }
         }
-        .onAppear {
-            viewModel.completedTasks = viewModel.taskRepository.getTaskList().filter { $0.isCompleted }
+        .task {
+            viewModel.loadCompletedTasks()
         }
     }
 }

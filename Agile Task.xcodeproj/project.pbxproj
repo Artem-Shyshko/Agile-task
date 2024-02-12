@@ -65,7 +65,6 @@
 		7547CD722ADEE6B400143598 /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547CD712ADEE6B400143598 /* NewTaskView.swift */; };
 		75481B2E2AE00947003ABED5 /* TaskList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75481B2D2AE00947003ABED5 /* TaskList.swift */; };
 		75481B312AE01144003ABED5 /* CompletedTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75481B302AE01144003ABED5 /* CompletedTaskView.swift */; };
-		75481B332AE01306003ABED5 /* CompletedTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75481B322AE01306003ABED5 /* CompletedTaskViewModel.swift */; };
 		7561D8462AEBB3930073F1D9 /* AppFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7561D8452AEBB3930073F1D9 /* AppFeaturesView.swift */; };
 		7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562E6C02AD42DBA00E895CD /* SetPasswordViewModel.swift */; };
 		7562E6C32AD4479A00E895CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562E6C22AD4479A00E895CD /* AuthManager.swift */; };
@@ -259,7 +258,6 @@
 		7547CD712ADEE6B400143598 /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
 		75481B2D2AE00947003ABED5 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
 		75481B302AE01144003ABED5 /* CompletedTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskView.swift; sourceTree = "<group>"; };
-		75481B322AE01306003ABED5 /* CompletedTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTaskViewModel.swift; sourceTree = "<group>"; };
 		7561D8452AEBB3930073F1D9 /* AppFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeaturesView.swift; sourceTree = "<group>"; };
 		7562E6C02AD42DBA00E895CD /* SetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasswordViewModel.swift; sourceTree = "<group>"; };
 		7562E6C22AD4479A00E895CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -549,7 +547,6 @@
 			isa = PBXGroup;
 			children = (
 				75481B302AE01144003ABED5 /* CompletedTaskView.swift */,
-				75481B322AE01306003ABED5 /* CompletedTaskViewModel.swift */,
 			);
 			path = CompletedTask;
 			sourceTree = "<group>";
@@ -1107,7 +1104,6 @@
 				75E11C6A2B4BEB2B003B891B /* TabViewChildModifier.swift in Sources */,
 				757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */,
 				7590CF922AEFA81B0015B396 /* CheckboxObject.swift in Sources */,
-				75481B332AE01306003ABED5 /* CompletedTaskViewModel.swift in Sources */,
 				759510C32ACD586B0087004A /* SectionStyle.swift in Sources */,
 				752CEE622B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift in Sources */,
 				75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */,
