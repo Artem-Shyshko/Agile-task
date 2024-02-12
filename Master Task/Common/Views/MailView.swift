@@ -17,8 +17,8 @@ struct MailView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let view = MFMailComposeViewController()
         view.mailComposeDelegate = context.coordinator
-        view.setToRecipients(["SENDTO@gmail.com"])
-        view.setSubject("Master Task")
+        view.setToRecipients(["info@agile-pro.com"])
+        view.setSubject("Agile Task")
         view.setMessageBody("", isHTML: false)
         return view
     }
@@ -36,7 +36,11 @@ struct MailView: UIViewControllerRepresentable {
             self.parent = parent
         }
         
-        func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        func mailComposeController(
+            _ controller: MFMailComposeViewController,
+            didFinishWith result: MFMailComposeResult,
+            error: Error?
+        ) {
             controller.dismiss(animated: true)
         }
     }
