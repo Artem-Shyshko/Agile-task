@@ -33,7 +33,7 @@ extension SettingsDTO {
         timeFormat = object.timeFormat
         taskDateSorting = object.taskDateSorting
         addNewTaskIn = object.addNewTaskIn ?? .top
-        completedTask = object.completedTask ?? .hide
+        completedTask = object.completedTask ?? .moveToBottom
         defaultReminder = object.defaultReminder
         showPlusButton = object.showPlusButton
         isPushNotificationEnabled = object.isPushNotificationEnabled

@@ -35,25 +35,30 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     
     @Persisted(originProperty: "tasks") var assignee: LinkingObjects<ProjectObject>
     
-    convenience init(
-        parentId: ObjectId,
-        title: String,
-        date: Date?,
-        reminder: Reminder,
-        reminderDate: Date?,
-        createdDate: Date,
-        colorName: String,
-        project: ProjectObject
-    ) {
+    convenience init(id: ObjectId = ObjectId(), status: TaskStatus = .none, title: String, description: String? = nil, date: Date? = nil, dateOption: DateType = .none, time: Date? = nil, timeOption: TimeOption = .none, timePeriod: TimePeriod, recurring: RecurringConfiguration? = nil, reminder: Reminder = .none, reminderDate: Date? = nil, createdDate: Date = Date(), modificationDate: Date? = nil, completedDate: Date? = nil, colorName: String, isCompleted: Bool, sortingOrder: Int, showCheckboxes: Bool = true, checkBoxList: [CheckboxObject], bulletList: [BulletObject]) {
         self.init()
-        self.parentId = parentId
+        self.id = id
+        self.parentId = id
+        self.status = status
         self.title = title
+        self.taskDescription = description
         self.date = date
         self.dateOption = dateOption
+        self.time = time
+        self.timeOption = timeOption
+        self.timePeriod = timePeriod
+        self.recurring = recurring
         self.reminder = reminder
         self.reminderDate = reminderDate
         self.createdDate = createdDate
+        self.modificationDate = modificationDate
+        self.completedDate = completedDate
         self.colorName = colorName
+        self.isCompleted = isCompleted
+        self.sortingOrder = sortingOrder
+        self.showCheckboxes = showCheckboxes
+        self.checkBoxList.append(objectsIn: checkBoxList)
+        self.bulletList.append(objectsIn: bulletList)
     }
     
     var isReminder: Bool {
@@ -273,5 +278,20 @@ extension RecurringConfigurationDTO {
         endsAfterOccurrences = object.endsAfterOccurrences
         
         object.repeatOnDays.forEach { repeatOnDays.append($0) }
+    }
+}
+
+extension RecurringConfigurationDTO {
+    static var mock: Self {
+        RecurringConfigurationDTO(
+            date: Date(),
+            option: .custom,
+            repeatCount: "0",
+            repeatEvery: .days,
+            endsOption: .on,
+            endsDate: Date(),
+            endsAfterOccurrences: "1",
+            repeatOnDays: []
+        )
     }
 }

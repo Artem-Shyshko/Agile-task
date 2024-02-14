@@ -15,10 +15,12 @@ class BulletObject: Object, ObjectKeyIdentifiable {
     @Persisted(originProperty: "bulletList") var assignee: LinkingObjects<TaskObject>
     
     convenience init(
-        title: String
+        title: String,
+        sortingOrder: Int = 0
     ) {
         self.init()
         self.title = title
+        self.sortingOrder = sortingOrder
     }
 }
 

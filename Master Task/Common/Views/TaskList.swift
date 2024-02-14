@@ -22,5 +22,5 @@ struct TaskList: View {
 }
 
 #Preview {
-    TaskList(taskArray: .constant([TaskDTO(object: Constants.shared.mockTask)]))
+    TaskList(taskArray: .constant(TaskDTO.mockArray()))
 }

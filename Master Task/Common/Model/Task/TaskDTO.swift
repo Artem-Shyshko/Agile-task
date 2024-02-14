@@ -8,6 +8,7 @@
 import Foundation
 import MasterAppsUI
 import RealmSwift
+import SwiftUI
 
 struct TaskDTO: CalendarItem {
     var id: ObjectId
@@ -32,6 +33,31 @@ struct TaskDTO: CalendarItem {
     var showCheckboxes = true
     var checkBoxArray: [CheckboxDTO]
     var bulletArray: [BulletDTO]
+    
+    init(id: ObjectId = ObjectId(), status: TaskStatus = .none, title: String, description: String? = nil, date: Date? = nil, dateOption: DateType = .none, time: Date? = nil, timeOption: TimeOption = .none, timePeriod: TimePeriod, recurring: RecurringConfigurationDTO? = nil, reminder: Reminder = .none, reminderDate: Date? = nil, createdDate: Date = Date(), modificationDate: Date? = nil, completedDate: Date? = nil, colorName: String, isCompleted: Bool, sortingOrder: Int, showCheckboxes: Bool = true, checkBoxArray: [CheckboxDTO], bulletArray: [BulletDTO]) {
+        self.id = id
+        self.parentId = id
+        self.status = status
+        self.title = title
+        self.description = description
+        self.date = date
+        self.dateOption = dateOption
+        self.time = time
+        self.timeOption = timeOption
+        self.timePeriod = timePeriod
+        self.recurring = recurring
+        self.reminder = reminder
+        self.reminderDate = reminderDate
+        self.createdDate = createdDate
+        self.modificationDate = modificationDate
+        self.completedDate = completedDate
+        self.colorName = colorName
+        self.isCompleted = isCompleted
+        self.sortingOrder = sortingOrder
+        self.showCheckboxes = showCheckboxes
+        self.checkBoxArray = checkBoxArray
+        self.bulletArray = bulletArray
+    }
     
     var isReminder: Bool {
         switch reminder {
@@ -85,17 +111,117 @@ extension TaskDTO {
 
 extension TaskDTO: Equatable {
     static func == (lhs: TaskDTO, rhs: TaskDTO) -> Bool {
-       if lhs.title == rhs.title,
-          lhs.isCompleted == rhs.isCompleted {
-           return true
-       } else {
-           return false
-       }
+        if lhs.title == rhs.title,
+           lhs.isCompleted == rhs.isCompleted {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
 extension TaskDTO: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id.stringValue)
+    }
+}
+
+extension TaskDTO {
+    static func mockArray() -> [TaskDTO] {
+        [
+            TaskDTO(
+                id: ObjectId.generate(),
+                status: .like,
+                title: "Welcome to Agile task!",
+                date: Date(),
+                dateOption: .today,
+                time: Date(),
+                timeOption: .custom,
+                timePeriod: .am,
+                recurring: RecurringConfigurationDTO.mock,
+                reminder: .inOneHour,
+                reminderDate: Date(),
+                colorName: Color.nyanza.name,
+                isCompleted: false,
+                sortingOrder: 5,
+                showCheckboxes: false,
+                checkBoxArray: [],
+                bulletArray: []
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                status: .none,
+                title: "Use broad tasks feature lists, status, description, checklists, bullet lists, date and time, set reminders and make tasks recurring.",
+                description: "Add more details in the task description.",
+                timePeriod: .am,
+                colorName: Color.sectionColor.name,
+                isCompleted: false,
+                sortingOrder: 4,
+                showCheckboxes: true,
+                checkBoxArray:
+                    [
+                        .init(id: ObjectId.generate(), title: "Add checklists to your tasks.", sortingOrder: 0),
+                        .init(id: ObjectId.generate(), title: "Control progress on the go.", isCompleted: true, sortingOrder: 1)
+                    ],
+                bulletArray:
+                    [
+                        .init(id: ObjectId.generate(), title: "Add bullet lists to your tasks", sortingOrder: 0),
+                        .init(id: ObjectId.generate(), title: "Determinate points and easily navigate thrue the task details", sortingOrder: 1)
+                    ]
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                status: .important,
+                title: "Agile Task Gestures",
+                timePeriod: .am,
+                colorName: Color.sectionColor.name,
+                isCompleted: false,
+                sortingOrder: 3,
+                showCheckboxes: true,
+                checkBoxArray: [],
+                bulletArray:
+                    [
+                        .init(id: ObjectId.generate(), title: "Swipe right to complete task", sortingOrder: 0),
+                        .init(id: ObjectId.generate(), title: "Swipe left to edit or delete task", sortingOrder: 1),
+                        .init(id: ObjectId.generate(), title: "Double tap for quick task completion", sortingOrder: 2),
+                        .init(id: ObjectId.generate(), title: "Hold on task to change task order in the list", sortingOrder: 3)
+                    ]
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                status: .like,
+                title: "Highlight tasks with different colors ",
+                timePeriod: .am,
+                colorName: Color.teaRose.name,
+                isCompleted: false,
+                sortingOrder: 2,
+                showCheckboxes: false,
+                checkBoxArray: [],
+                bulletArray: []
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                title: "Easily navigate through the task details.",
+                timePeriod: .am,
+                colorName: Color.aquamarineColor.name,
+                isCompleted: false,
+                sortingOrder: 1,
+                showCheckboxes: false,
+                checkBoxArray: [],
+                bulletArray: []
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                title: "Adjust how you want to manage closed tasks",
+                timeOption: .none,
+                timePeriod: .am,
+                colorName: Color.sectionColor.name,
+                isCompleted: true,
+                sortingOrder: 0,
+                showCheckboxes: false,
+                checkBoxArray: [],
+                bulletArray: []
+            )
+        ]
     }
 }

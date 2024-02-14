@@ -30,8 +30,7 @@ final class ProjectRepositoryImpl: ProjectRepository {
         if let project = data.map(ProjectDTO.init).first(where: { $0.isSelected }) {
             return project
         } else {
-            var project = ProjectDTO(ProjectObject(name: "General"))
-            project.isSelected = true
+            let project = ProjectDTO.mockProject()
             saveProject(project)
             return project
         }

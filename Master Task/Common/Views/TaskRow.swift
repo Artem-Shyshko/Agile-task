@@ -252,7 +252,7 @@ private extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(viewModel: TaskListViewModel(), task: .constant(TaskDTO(object: Constants.shared.mockTask)))
+        TaskRow(viewModel: TaskListViewModel(), task: .constant(TaskDTO.mockArray().first!))
             .environmentObject(ThemeManager())
     }
 }

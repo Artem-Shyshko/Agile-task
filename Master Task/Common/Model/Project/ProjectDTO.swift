@@ -23,3 +23,14 @@ extension ProjectDTO {
         self.tasks = object.tasks.map(TaskDTO.init)
     }
 }
+
+extension ProjectDTO {
+    static func mockProject() -> ProjectDTO {
+        ProjectDTO(
+            id: ObjectId.generate(),
+            name: "General",
+            isSelected: true,
+            tasks: TaskDTO.mockArray()
+        )
+    }
+}

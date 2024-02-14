@@ -16,10 +16,14 @@ class CheckboxObject: Object, ObjectKeyIdentifiable {
     @Persisted(originProperty: "checkBoxList") var assignee: LinkingObjects<TaskObject>
     
     convenience init(
-        title: String
+        title: String,
+        isCompleted: Bool = false,
+        sortingOrder: Int = 0
     ) {
         self.init()
         self.title = title
+        self.isCompleted = isCompleted
+        self.sortingOrder = sortingOrder
     }
 }
 

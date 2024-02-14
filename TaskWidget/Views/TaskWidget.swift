@@ -39,7 +39,7 @@ struct TaskWidget: Widget {
 #Preview(as: .systemSmall) {
     TaskWidget()
 } timeline: {
-    let tasks = [TaskDTO(id: .init(), parentId: .init(), status: .do, title: "Task1", timeOption: .none, timePeriod: .am, recurring: RecurringConfigurationDTO(), reminder: .inOneHour, colorName: "red", checkBoxArray: [], bulletArray: []), TaskDTO(id: .init(), parentId: .init(), status: .do, title: "Task", timeOption: .none, timePeriod: .am, recurring: RecurringConfigurationDTO(), reminder: .inOneHour, colorName: "red", checkBoxArray: [], bulletArray: [])]
+    let tasks = TaskDTO.mockArray()
     TaskEntry(dateString: Date().description, tasks: tasks, configuration: .init())
 }
 

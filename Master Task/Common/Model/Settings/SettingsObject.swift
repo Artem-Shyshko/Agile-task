@@ -16,7 +16,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var timeFormat: TimeFormat = .twentyFour
     @Persisted var taskDateSorting: TaskDateSorting = .all
     @Persisted var addNewTaskIn: AddingNewTask? = .top
-    @Persisted var completedTask: CompletedTask? = .hide
+    @Persisted var completedTask: CompletedTask? = .moveToBottom
     @Persisted var defaultReminder: DefaultReminder = .oneHourBefore
     @Persisted var showPlusButton: Bool = true
     @Persisted var isPushNotificationEnabled: Bool = true
