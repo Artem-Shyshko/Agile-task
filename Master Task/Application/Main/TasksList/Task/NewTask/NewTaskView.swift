@@ -12,6 +12,11 @@ import MasterAppsUI
 
 struct NewTaskView: View {
     
+    enum Field: Hashable {
+        case title
+        case description
+    }
+    
     // MARK: - Properties
     
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
@@ -20,7 +25,7 @@ struct NewTaskView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel: NewTaskViewModel
-    @FocusState private var isFocused: Bool
+    @FocusState private var isFocusedField: Field?
     @State private var isShowingCheckBoxView: Bool = false
     @State private var isShowingBulletView: Bool = false
     @State private var isDescriptionEmpty = true
@@ -56,7 +61,7 @@ struct NewTaskView: View {
         .padding(.bottom, 40)
         .modifier(TabViewChildModifier())
         .onAppear {
-            isFocused = true
+            isFocusedField = .title
             viewModel.localNotificationManager = localNotificationManager
             viewModel.updateFromEditTask(editTask)
         }
@@ -122,10 +127,13 @@ private extension NewTaskView {
         TextFieldWithEnterButton(placeholder: "add a new task", text: $viewModel.title.max(200)) {
             keyboardButtonAction()
         }
-        .focused($isFocused)
+        .focused($isFocusedField, equals: .title)
         .padding(.vertical, 8)
         .tint(themeManager.theme.sectionTextColor(colorScheme))
         .modifier(SectionStyle())
+        .onTapGesture {
+            isFocusedField = .title
+        }
     }
     
     @ViewBuilder
@@ -134,6 +142,10 @@ private extension NewTaskView {
             setupIcon(with: .description)
             TextFieldWithEnterButton(placeholder: "Description", text: $viewModel.description.max(400)) {
                 keyboardButtonAction()
+            }
+            .focused($isFocusedField, equals: .description)
+            .onTapGesture {
+                isFocusedField = .description
             }
         }
         .padding(.vertical, 8)
@@ -398,7 +410,7 @@ private extension NewTaskView {
 
 struct NewTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        NewTaskView(viewModel: NewTaskViewModel(), taskList: [TaskDTO(object: Constants.shared.mockTask)], editTask: TaskDTO(object: TaskObject()))
+        NewTaskView(viewModel: NewTaskViewModel(), taskList: TaskDTO.mockArray(), editTask: TaskDTO(object: TaskObject()))
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
             .environmentObject(ThemeManager())
