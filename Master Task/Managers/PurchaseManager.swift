@@ -10,7 +10,8 @@ import StoreKit
 
 @MainActor
 final class PurchaseManager: NSObject, ObservableObject {
-    @AppStorage("SelectedSubscriptionID") var selectedSubscriptionID = ""
+    @AppStorage(Constants.shared.selectedSubscriptionID) var selectedSubscriptionID = Constants.shared.freeSubscription
+    @Published var showProcessView = false
     private let productsID = ["agile_task_monthly", "agile_task_yearly"]
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil
@@ -60,6 +61,8 @@ final class PurchaseManager: NSObject, ObservableObject {
     }
     
     func userSelectSubscription(product: Product) {
+        showProcessView = true
+        
         Task {
             do {
                 try await purchase(product)
@@ -72,13 +75,15 @@ final class PurchaseManager: NSObject, ObservableObject {
     func updatePurchasedProducts() async {
         for await result in Transaction.currentEntitlements {
             guard case .verified(let transaction) = result else { continue }
-            
             if transaction.revocationDate == nil {
                 self.purchasedProductIDs.insert(transaction.productID)
             } else {
                 self.purchasedProductIDs.remove(transaction.productID)
-                selectedSubscriptionID = ""
             }
+        }
+        
+        if purchasedProductIDs.isEmpty {
+            selectedSubscriptionID = Constants.shared.freeSubscription
         }
     }
     
@@ -104,24 +109,24 @@ private extension PurchaseManager {
             case .success(.verified(let transaction)):
                 await transaction.finish()
                 await updatePurchasedProducts()
-                self.selectedSubscriptionID = product.id 
+                self.selectedSubscriptionID = product.id
+                showProcessView = false
             case .success(.unverified(_, let error)):
                 print(error.localizedDescription)
+                print("success unverified break")
+                showProcessView = false
                 break
-            case .userCancelled:
-                break
-            case .pending:
-                break
-            @unknown default:
+            default:
+                print("Default break")
+                showProcessView = false
                 break
             }
         }
     }
 }
-extension PurchaseManager: SKPaymentTransactionObserver {
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
 
-    }
+extension PurchaseManager: SKPaymentTransactionObserver {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {}
 
     func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
         return true

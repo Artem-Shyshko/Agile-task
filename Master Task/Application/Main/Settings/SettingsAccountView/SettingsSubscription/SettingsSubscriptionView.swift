@@ -12,12 +12,22 @@ struct SettingsSubscriptionView: View {
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        VStack {
-            navigationBar()
-            SubscriptionView()
-            Spacer()
-        }
-        .modifier(TabViewChildModifier())
+            VStack {
+                navigationBar()
+                SubscriptionView()
+                Spacer()
+            }
+            .modifier(TabViewChildModifier())
+            .overlay {
+                if purchaseManager.showProcessView {
+                    ZStack {
+                        Color.black.opacity(0.2)
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                    }
+                    .ignoresSafeArea()
+                }
+            }
     }
 }
 

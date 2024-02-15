@@ -6,11 +6,14 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SubscriptionView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
+    @State var selectedProduct: Product?
+    @State private var isPresentedManageSubscription = false
     
     var body: some View {
         VStack(spacing: 2) {
@@ -19,26 +22,41 @@ struct SubscriptionView: View {
                 price: nil,
                 firstLine: "8 tasks",
                 secondLine: "1 project",
-                isSelected: purchaseManager.selectedSubscriptionID == "free"
+                isSelected: purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription && selectedProduct == nil
             )
             
             ForEach(purchaseManager.products) { product in
                 Button {
-                    purchaseManager.userSelectSubscription(product: product)
+                    selectedProduct = product
                 } label: {
                     planView(
                         title: product.displayName,
                         price: product.displayPrice,
                         firstLine: "Unlimited tasks",
                         secondLine: "Unlimited projects",
-                        isSelected: purchaseManager.selectedSubscriptionID == product.id
+                        isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id
                     )
                 }
+                .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
             }
-            
-            AppFeaturesView()
-                .foregroundColor(themeManager.theme.textColor(colorScheme))
-                .padding(.top, 40)
+            Group {
+                AppFeaturesView()
+                    .foregroundColor(themeManager.theme.textColor(colorScheme))
+                    .padding(.top, 40)
+                    .scaleEffect(0.8)
+                
+                Button {
+                    if let selectedProduct {
+                        purchaseManager.userSelectSubscription(product: selectedProduct)
+                    } else if purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription {
+                        isPresentedManageSubscription = true
+                    }
+                } label: {
+                    Text(purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription ? "Continue" : "Manage subscription")
+                }
+                .buttonStyle(PrimaryButtonStyle())
+            }
+            .offset(y: -30)
         }
         .padding(.horizontal, 2)
         .onAppear {
@@ -46,6 +64,7 @@ struct SubscriptionView: View {
                 try await purchaseManager.loadProducts()
             }
         }
+        .manageSubscriptionsSheet(isPresented: $isPresentedManageSubscription)
     }
 }
 
@@ -81,6 +100,11 @@ private extension SubscriptionView {
         .frame(maxWidth: .infinity)
         .background(themeManager.theme.sectionColor(colorScheme))
         .cornerRadius(4)
+        .overlay {
+            if !isSelected && purchaseManager.selectedSubscriptionID != "free" {
+                Color.black.opacity(0.1)
+            }
+        }
     }
 }
 

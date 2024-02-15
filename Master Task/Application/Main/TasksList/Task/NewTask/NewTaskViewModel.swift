@@ -41,7 +41,6 @@ final class NewTaskViewModel: ObservableObject {
     @Published var alertTitle: String = ""
     @Published var calendarDate = Date()
     
-    private let tasksLimit = 8
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
@@ -317,18 +316,6 @@ final class NewTaskViewModel: ObservableObject {
         
         addNotification(for: edited)
         writeRecurringTaskArray(for: edited)
-    }
-    
-    func canCreateTask(hasSubscription: Bool) -> Bool {
-        guard hasSubscription else { return  true }
-        
-        let allTasks = taskRepository.getTaskList()
-        
-        if tasksLimit <= allTasks.count {
-            return false
-        } else {
-            return true
-        }
     }
     
     func deleteTask(parentId: ObjectId) {

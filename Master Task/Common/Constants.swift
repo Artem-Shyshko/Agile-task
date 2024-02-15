@@ -25,6 +25,8 @@ final class Constants {
     let rubyTheme = "Ruby"
     let aquamarineTheme = "Aquamarine"
     let userTheme = "userTheme"
+    let selectedSubscriptionID = "SelectedSubscriptionID"
+    let freeSubscription = "SelectedSubscriptionID"
     
     lazy var local = Locale(identifier: "us")
     lazy var currentDate = Date()
