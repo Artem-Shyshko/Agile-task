@@ -70,6 +70,16 @@ struct TabBarView: View {
             settingsNavigationStack = []
         }
         .padding(.bottom, 30)
+        .onOpenURL { incomingURL in
+            AppHelper.shared.handleIncomingURL(incomingURL) {
+                selectedTab = .taskList
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    if taskListNavigationStack.isEmpty {
+                        taskListNavigationStack.append(.createTask)
+                    }
+                }
+            }
+        }
     }
 }
 

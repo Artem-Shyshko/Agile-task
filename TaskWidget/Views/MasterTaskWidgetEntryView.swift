@@ -48,7 +48,7 @@ private extension MasterTaskWidgetEntryView {
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 20, height: 20)
+                    .frame(width: 22, height: 22)
             }
         }
         .foregroundStyle(foregroundColor()  )
