@@ -10,7 +10,7 @@ import StoreKit
 
 @MainActor
 final class PurchaseManager: NSObject, ObservableObject {
-    @AppStorage(Constants.shared.selectedSubscriptionID) var selectedSubscriptionID = Constants.shared.freeSubscription
+    @Published var selectedSubscriptionID = Constants.shared.freeSubscription
     @Published var showProcessView = false
     private let productsID = ["agile_task_monthly", "agile_task_yearly"]
     private var productsLoaded = false
@@ -55,9 +55,12 @@ final class PurchaseManager: NSObject, ObservableObject {
     
     func loadProducts() async throws {
         guard !productsLoaded else { return }
+        showProcessView = true
         
         self.products = try await Product.products(for: productsID)
+            .sorted(by: { $0.price < $1.price })
         self.productsLoaded = true
+        showProcessView = false
     }
     
     func userSelectSubscription(product: Product) {
@@ -77,6 +80,7 @@ final class PurchaseManager: NSObject, ObservableObject {
             guard case .verified(let transaction) = result else { continue }
             if transaction.revocationDate == nil {
                 self.purchasedProductIDs.insert(transaction.productID)
+                selectedSubscriptionID = transaction.productID
             } else {
                 self.purchasedProductIDs.remove(transaction.productID)
             }
@@ -113,11 +117,9 @@ private extension PurchaseManager {
                 showProcessView = false
             case .success(.unverified(_, let error)):
                 print(error.localizedDescription)
-                print("success unverified break")
                 showProcessView = false
                 break
             default:
-                print("Default break")
                 showProcessView = false
                 break
             }

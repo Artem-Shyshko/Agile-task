@@ -64,8 +64,10 @@ struct Master_TaskApp: App {
                     showAuthView = true
                 }
             }
-            .task {
-                await purchaseManager.updatePurchasedProducts()
+            .task(id: scenePhase) {
+                if scenePhase == .active {
+                    await purchaseManager.updatePurchasedProducts()
+                }
             }
             .onChange(of: scenePhase) { scene in
                 let settings = settingsRepository.get()
