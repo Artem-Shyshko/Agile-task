@@ -51,25 +51,19 @@ struct TabBarView: View {
             TabView(selection: $selectedTab) {
                 TaskListView(path: $taskListNavigationStack)
                     .tag(Tab.taskList)
-                    .toolbar(.hidden, for: .tabBar)
                 ProjectsView(vm: ProjectsViewModel())
                     .tag(Tab.projects)
-                    .toolbar(.hidden, for: .tabBar)
                 SettingsView(path: $settingsNavigationStack)
                     .tag(Tab.settings)
-                    .toolbar(.hidden, for: .tabBar)
             }
-            
-            VStack {
-                Spacer()
-                customTabItem()
+            .overlay(alignment: .bottom) {
+                    customTabItem()
             }
         }
         .onChange(of: selectedTab) { newValue in
             taskListNavigationStack = []
             settingsNavigationStack = []
         }
-        .padding(.bottom, 30)
         .onOpenURL { incomingURL in
             AppHelper.shared.handleIncomingURL(incomingURL) {
                 selectedTab = .taskList
@@ -86,6 +80,8 @@ struct TabBarView: View {
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
         TabBarView()
+            .background(Color.red)
+            .previewDevice("iPhone 15 pro")
     }
 }
 
@@ -102,10 +98,11 @@ private extension TabBarView {
             }
         }
         .padding(.horizontal, 15)
+        .frame(height: 100)
     }
 }
 
-struct TabItem: View {
+fileprivate struct TabItem: View {
     var tint: Color
     var inActiveTint: Color
     var tab: Tab

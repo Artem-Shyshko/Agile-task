@@ -57,8 +57,8 @@ struct NewTaskView: View {
                     Spacer()
                 }
             }
+            .padding(.bottom, 12)
         }
-        .padding(.bottom, 40)
         .modifier(TabViewChildModifier())
         .onAppear {
             isFocusedField = .title

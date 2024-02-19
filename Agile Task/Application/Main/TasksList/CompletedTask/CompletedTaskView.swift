@@ -21,6 +21,7 @@ struct CompletedTaskView: View {
             completedTasksList()
             Spacer()
         }
+        .padding(.bottom, 5)
         .modifier(TabViewChildModifier())
         .alert("Are you sure you want to delete all tasks?", isPresented: $showDeleteAlert) {
             Button {
@@ -106,8 +107,6 @@ private extension CompletedTaskView {
         .listRowSpacing(Constants.shared.listRowSpacing)
         .scrollContentBackground(.hidden)
         .listStyle(.plain)
-        .padding(.bottom, 40)
-        
     }
 }
 

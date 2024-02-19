@@ -69,7 +69,6 @@ struct TaskListView: View {
       .task {
         try? await notificationManager.requestAuthorization()
       }
-      .padding(.bottom, 40)
       .modifier(TabViewChildModifier())
       .onChange(of: scenePhase) { newValue in
         if newValue == .active {
@@ -283,7 +282,7 @@ private extension TaskListView {
         Image(.quickTask)
       }
       .padding(.trailing, 23)
-      .padding(.bottom, 70)
+      .padding(.bottom, 30)
     }
   }
   
