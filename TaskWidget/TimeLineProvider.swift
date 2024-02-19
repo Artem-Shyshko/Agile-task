@@ -1,6 +1,6 @@
 //
 //  TimeLineProvider.swift
-//  Master Task
+//  Agile Task
 //
 //  Created by Artur Korol on 12.12.2023.
 //

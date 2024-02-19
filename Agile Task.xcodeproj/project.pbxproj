@@ -72,7 +72,6 @@
 		75677A2E2A813F360034C45B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75677A2D2A813F360034C45B /* WelcomeView.swift */; };
 		75677A302A813F380034C45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A2F2A813F380034C45B /* Assets.xcassets */; };
 		75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A322A813F380034C45B /* Preview Assets.xcassets */; };
-		756D70742A8E4BCA00F616DA /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756D70732A8E4BCA00F616DA /* UserState.swift */; };
 		757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */; };
 		757B83672ACF125C00A26D73 /* MasterAppsUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 757B83662ACF125C00A26D73 /* MasterAppsUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		757B836A2ACF125C00A26D73 /* MasterAppsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */; };
@@ -266,7 +265,6 @@
 		75677A2D2A813F360034C45B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		75677A2F2A813F380034C45B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75677A322A813F380034C45B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		756D70732A8E4BCA00F616DA /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		757B83372ACDB4C200A26D73 /* MasterTaskConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MasterTaskConfiguration.storekit; sourceTree = "<group>"; };
 		757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		757B83642ACF125C00A26D73 /* MasterAppsUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MasterAppsUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -284,7 +282,7 @@
 		75A3CFFD2A99047D000F68BA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		75A3CFFF2A990BD4000F68BA /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
 		75A709A92A828B68003894F7 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
-		75A709AB2A828F6E003894F7 /* Master-Task-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Master-Task-Info.plist"; sourceTree = SOURCE_ROOT; };
+		75A709AB2A828F6E003894F7 /* Agile-Task-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Agile-Task-Info.plist"; sourceTree = SOURCE_ROOT; };
 		75A709AE2A82900A003894F7 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		75AE02FB2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTaskViewModel.swift; sourceTree = "<group>"; };
 		75B58D062A8224ED00937923 /* Font+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Ext.swift"; sourceTree = "<group>"; };
@@ -565,7 +563,7 @@
 			children = (
 				75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */,
 				752CEE5C2B3DC0A800CA1612 /* Agile Task.entitlements */,
-				75677A2A2A813F360034C45B /* Master Task */,
+				75677A2A2A813F360034C45B /* Agile Task */,
 				757B83652ACF125C00A26D73 /* MasterAppsUI */,
 				75E11CB82B4C34AF003B891B /* TaskWidget */,
 				75677A292A813F360034C45B /* Products */,
@@ -583,10 +581,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		75677A2A2A813F360034C45B /* Master Task */ = {
+		75677A2A2A813F360034C45B /* Agile Task */ = {
 			isa = PBXGroup;
 			children = (
-				75A709AB2A828F6E003894F7 /* Master-Task-Info.plist */,
+				75A709AB2A828F6E003894F7 /* Agile-Task-Info.plist */,
 				75677A2B2A813F360034C45B /* Master_TaskApp.swift */,
 				75B58D032A82245700937923 /* Application */,
 				7537D01F2AA9DDC500F64175 /* Managers */,
@@ -594,7 +592,7 @@
 				75677A312A813F380034C45B /* Preview Content */,
 				757B83372ACDB4C200A26D73 /* MasterTaskConfiguration.storekit */,
 			);
-			path = "Master Task";
+			path = "Agile Task";
 			sourceTree = "<group>";
 		};
 		75677A312A813F380034C45B /* Preview Content */ = {
@@ -657,7 +655,6 @@
 			children = (
 				75B58D0C2A8237A600937923 /* Onboarding */,
 				75B58D112A826CC000937923 /* Main */,
-				756D70732A8E4BCA00F616DA /* UserState.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1039,7 +1036,6 @@
 				75A709AA2A828B68003894F7 /* Date+Ext.swift in Sources */,
 				75E11C782B4C28D3003B891B /* BulletRepository.swift in Sources */,
 				75D5165A2B59881F002D351C /* NavigationTitle.swift in Sources */,
-				756D70742A8E4BCA00F616DA /* UserState.swift in Sources */,
 				752CEE522B3C87AD00CA1612 /* CheckboxTaskRow.swift in Sources */,
 				75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */,
 				7590CF972AEFAE900015B396 /* NewCheckBoxViewModel.swift in Sources */,
@@ -1312,11 +1308,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Master Task/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Agile Task/Preview Content\"";
 				DEVELOPMENT_TEAM = L42WZN2QX6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Master-Task-Info.plist";
+				INFOPLIST_FILE = "Agile-Task-Info.plist";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app wants to use your Face ID. Plaese Hit OK to activate Face ID.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1347,11 +1343,11 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Master Task/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Agile Task/Preview Content\"";
 				DEVELOPMENT_TEAM = L42WZN2QX6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Master-Task-Info.plist";
+				INFOPLIST_FILE = "Agile-Task-Info.plist";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app wants to use your Face ID. Plaese Hit OK to activate Face ID.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
