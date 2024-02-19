@@ -22,19 +22,20 @@ struct SubscriptionView: View {
                 price: nil,
                 firstLine: "8 tasks",
                 secondLine: "1 project",
-                isSelected: purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription && selectedProduct == nil
+                isSelected: purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription && selectedProduct == nil, duration: ""
             )
             
             ForEach(purchaseManager.products) { product in
                 Button {
                     selectedProduct = product
                 } label: {
+                    let duration = product.id == "agile_task_monthly" ? "month" : "year"
                     planView(
                         title: product.displayName,
                         price: product.displayPrice,
                         firstLine: "Unlimited tasks",
                         secondLine: "Unlimited projects",
-                        isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id
+                        isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id, duration: duration
                     )
                 }
                 .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
@@ -68,21 +69,29 @@ struct SubscriptionView: View {
     }
 }
 
-
 private extension SubscriptionView {
-    func planView(title: String, price: String?, firstLine: String, secondLine: String, isSelected: Bool) -> some View {
+    func planView(title: String, price: String?, firstLine: String, secondLine: String, isSelected: Bool, duration: String) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 Image("Check")
+                    .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 14, height: 14)
+                    .frame(width: 10, height: 10)
                     .opacity(isSelected ? 1 : 0)
+                    .padding(4)
+                    .background {
+                        if isSelected {
+                            Circle()
+                                .fill(.green)
+                        }
+                    }
+                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
                 Text(title)
                     .font(.helveticaBold(size: 16))
                 Spacer()
                 if let price {
-                    Text("\(price)/month")
+                    Text("\(price)/\(duration)")
                         .font(.helveticaBold(size: 16))
                 }
             }

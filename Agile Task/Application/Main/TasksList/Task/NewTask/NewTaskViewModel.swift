@@ -272,7 +272,7 @@ final class NewTaskViewModel: ObservableObject {
         guard let localNotificationManager else { return }
         
         Task {
-            await localNotificationManager.addNotification(to: task)
+            await localNotificationManager.addNotification(to: .init(task))
         }
     }
     

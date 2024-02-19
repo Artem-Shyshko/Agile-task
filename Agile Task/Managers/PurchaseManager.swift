@@ -30,7 +30,7 @@ final class PurchaseManager: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        updates = observeTransactionUpdates()
+        updates = newTransactionListenerTask()
     }
     
     deinit {
@@ -77,59 +77,79 @@ final class PurchaseManager: NSObject, ObservableObject {
     
     func updatePurchasedProducts() async {
         for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else { continue }
+            guard case .verified(let transaction) = result else {
+                selectedSubscriptionID = Constants.shared.freeSubscription
+                continue
+            }
+            
             if transaction.revocationDate == nil {
                 self.purchasedProductIDs.insert(transaction.productID)
-                selectedSubscriptionID = transaction.productID
             } else {
                 self.purchasedProductIDs.remove(transaction.productID)
             }
-        }
-        
-        if purchasedProductIDs.isEmpty {
-            selectedSubscriptionID = Constants.shared.freeSubscription
+            
+            selectedSubscriptionID = purchasedProductIDs.first ?? Constants.shared.freeSubscription
         }
     }
     
     func restore() async -> Bool {
-        return ((try? await AppStore.sync()) != nil)
+        do {
+            try await AppStore.sync()
+            await updatePurchasedProducts()
+            return true
+        } catch {
+            return false
+        }
     }
 }
 
 private extension PurchaseManager {
-    func observeTransactionUpdates() -> Task<Void, Never> {
+    func newTransactionListenerTask() -> Task<Void, Never> {
         Task(priority: .background) { [unowned self] in
             for await verificationResult in Transaction.updates {
-                await self.updatePurchasedProducts()
+                //                await self.updatePurchasedProducts()
+                guard case .verified(let transaction) = verificationResult else {
+                    return
+                }
+                
+                if transaction.revocationDate != nil {
+                    selectedSubscriptionID = Constants.shared.freeSubscription
+                } else if let expirationDate = transaction.expirationDate,
+                          expirationDate < Date() {
+                    selectedSubscriptionID = Constants.shared.freeSubscription
+                    return
+                } else if transaction.isUpgraded {
+                    return
+                } else {
+                    selectedSubscriptionID = transaction.productID
+                }
             }
         }
     }
     
     private func purchase(_ product: Product) async throws {
-        Task {
-            let result = try await product.purchase()
-            
-            switch result {
-            case .success(.verified(let transaction)):
-                await transaction.finish()
-                await updatePurchasedProducts()
-                self.selectedSubscriptionID = product.id
-                showProcessView = false
-            case .success(.unverified(_, let error)):
-                print(error.localizedDescription)
-                showProcessView = false
-                break
-            default:
-                showProcessView = false
-                break
-            }
+        let result = try await product.purchase()
+        
+        switch result {
+        case .success(.verified(let transaction)):
+            self.selectedSubscriptionID = product.id
+            showProcessView = false
+            await updatePurchasedProducts()
+            await transaction.finish()
+        case .success(.unverified(_, let error)):
+            print(error.localizedDescription)
+            showProcessView = false
+            break
+        default:
+            showProcessView = false
+            break
         }
     }
 }
 
 extension PurchaseManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {}
-
+    
     func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
         return true
     }

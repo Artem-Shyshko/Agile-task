@@ -121,7 +121,7 @@ extension TaskListViewModel {
         guard let localNotificationManager else { return }
         
         Task {
-            await localNotificationManager.addNotification(to: quickTaskConfig)
+            await localNotificationManager.addNotification(to: .init(quickTaskConfig))
         }
     }
     
