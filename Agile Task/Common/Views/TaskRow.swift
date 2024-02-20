@@ -174,7 +174,7 @@ private extension TaskRow {
     
     @ViewBuilder
     func dateView() -> some View {
-        if let date = task.date {
+        if let date = task.date, !task.isRecurring{
             Text(date.format(viewModel.dateFormat()))
                 .font(.helveticaRegular(size: 14))
                 .foregroundStyle(
