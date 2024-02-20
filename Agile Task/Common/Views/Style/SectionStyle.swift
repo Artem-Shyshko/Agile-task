@@ -21,6 +21,5 @@ struct SectionStyle: ViewModifier {
             .padding(.leading, 10)
             .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(4)
-            .preferredColorScheme(themeManager.theme.colorScheme)
     }
 }

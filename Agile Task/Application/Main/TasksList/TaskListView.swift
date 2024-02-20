@@ -95,7 +95,6 @@ struct TaskListView: View {
       .onChange(of: viewModel.searchText) { newValue in
         viewModel.search(with: newValue)
       }
-      .preferredColorScheme(themeManager.theme.colorScheme)
     }
   }
 }

@@ -54,6 +54,7 @@ struct Master_TaskApp: App {
             .environmentObject(purchaseManager)
             .environmentObject(authManager)
             .environmentObject(appThemeManager)
+            .preferredColorScheme(appThemeManager.theme.colorScheme)
             .onAppear {
                 UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
                 let settings = settingsRepository.get()

@@ -37,7 +37,6 @@ struct WelcomeView: View {
                 TabBarView()
             }
         }
-        .preferredColorScheme(themeManager.theme.colorScheme)
     }
 }
 
