@@ -419,23 +419,25 @@ struct NewTaskView_Previews: PreviewProvider {
 
 // MARK: - CustomPickerView
 
-fileprivate struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: View {
+struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
     
-    var image: ImageResource
+    var image: ImageResource?
     var title: String
     var options: [SelectionValue]
     @Binding var selection: SelectionValue
-    var isSelected: Bool
+    var isSelected: Bool = true
     
     var body: some View {
         HStack(spacing: 5) {
-            Image(image)
-                .renderingMode(.template)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 10, height: 10)
+            if let image {
+                Image(image)
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 10)
+            }
             Menu {
                 Picker(selection: $selection, label: EmptyView()) {
                     ForEach(options, id: \.self) { option in

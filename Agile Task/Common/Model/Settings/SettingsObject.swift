@@ -52,7 +52,7 @@ enum TaskSorting: String, PersistableEnum, CaseIterable {
     case recurring = "Recurring tasks on top"
 }
 
-enum WeekStarts: String, PersistableEnum, CaseIterable {
+enum WeekStarts: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case sunday = "Sunday"
     case monday = "Monday"
     
@@ -64,9 +64,13 @@ enum WeekStarts: String, PersistableEnum, CaseIterable {
             return 2
         }
     }
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
-enum TaskDateFormmat: String, PersistableEnum, CaseIterable {
+enum TaskDateFormmat: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case dayMonthYear = "dd/mm/yy"
     case weekDayDayMonthYear = "Wed, dd/mm/yy"
     case monthDayYear = "mm/dd/yy"
@@ -74,29 +78,57 @@ enum TaskDateFormmat: String, PersistableEnum, CaseIterable {
     case weekDayDayNumberShortMoth = "Wed, 22 Nov"
     case dayNumberShortMonthFullYear = "22 Nov 2024"
     case dayNumberShortMonth = "22 Nov"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
-enum AddingNewTask: String, PersistableEnum, CaseIterable {
+enum AddingNewTask: String, PersistableEnum, CaseIterable, Hashable, CustomStringConvertible  {
     case bottom = "At the bottom of the list"
     case top = "On top of the list"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
-enum CompletedTask: String, PersistableEnum, CaseIterable {
+enum CompletedTask: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case hide = "Hide from the list"
     case moveToBottom = "Move to the bottom of the list"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
-enum DefaultReminder: String, PersistableEnum, CaseIterable {
+enum DefaultReminder: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case same = "Same time as date"
     case oneHourBefore = "One hour before the date"
     case none = "None"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
-enum SecurityOption: String, PersistableEnum, CaseIterable {
+enum SecurityOption: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case password = "Password"
     case faceID = "Face ID"
     case none = "None"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
-extension TimeFormat: PersistableEnum {}
-extension TaskDateSorting: PersistableEnum {}
+extension TimeFormat: PersistableEnum, CustomStringConvertible {
+    public var description: String {
+        self.rawValue
+    }
+}
+extension TaskDateSorting: PersistableEnum, CustomStringConvertible {
+    public var description: String {
+        self.rawValue
+    }
+}

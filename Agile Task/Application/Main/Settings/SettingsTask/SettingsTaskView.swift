@@ -76,111 +76,51 @@ private extension SettingsTaskView {
   }
   
   func dateSection() -> some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("Date")
-        Spacer()
-        Picker("", selection: $viewModel.settings.taskDateFormat) {
-          ForEach(TaskDateFormmat.allCases, id: \.self) {
-            Text($0.rawValue)
-              .tag($0.rawValue)
-          }
-        }
-        .padding(.vertical, 3)
-        .pickerStyle(.menu)
-      }
-    }
-    .modifier(SectionStyle())
+    CustomPickerView(
+      title: "Date",
+      options: TaskDateFormmat.allCases,
+      selection: $viewModel.settings.taskDateFormat
+    )
   }
   
   func timeSection() -> some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("Time")
-        Spacer()
-        Picker("", selection: $viewModel.settings.timeFormat) {
-          ForEach(TimeFormat.allCases, id: \.self) {
-            Text($0.rawValue)
-              .tag($0.rawValue)
-          }
-        }
-        .pickerStyle(.menu)
-      }
-    }
-    .padding(.vertical, 3)
-    .modifier(SectionStyle())
+    CustomPickerView(
+      title: "Time",
+      options: TimeFormat.allCases,
+      selection: $viewModel.settings.timeFormat
+    )
   }
   
   func newTasksSection() -> some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("New tasks")
-        Spacer()
-        Picker("", selection: $viewModel.settings.addNewTaskIn) {
-          ForEach(AddingNewTask.allCases, id: \.self) {
-            Text($0.rawValue)
-              .tag($0.rawValue)
-          }
-        }
-        .pickerStyle(.menu)
-      }
-    }
-    .padding(.vertical, 3)
-    .modifier(SectionStyle())
+    CustomPickerView(
+      title: "New tasks",
+      options: AddingNewTask.allCases,
+      selection: $viewModel.settings.addNewTaskIn
+    )
   }
   
   func defaultSortingSection() -> some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("Default screen view")
-        Spacer()
-        Picker("", selection: $viewModel.settings.taskDateSorting) {
-          ForEach(TaskDateSorting.allCases, id: \.self) {
-            Text($0.rawValue)
-              .tag($0.rawValue)
-          }
-        }
-        .pickerStyle(.menu)
-      }
-    }
-    .padding(.vertical, 3)
-    .modifier(SectionStyle())
+    CustomPickerView(
+      title: "Default screen view",
+      options: TaskDateSorting.allCases,
+      selection: $viewModel.settings.taskDateSorting
+    )
   }
   
   func completedTaskSection() -> some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("Completed tasks")
-        Spacer()
-        Picker("", selection: $viewModel.settings.completedTask) {
-          ForEach(CompletedTask.allCases, id: \.self) {
-            Text($0.rawValue)
-              .tag($0.rawValue)
-          }
-        }
-        .pickerStyle(.menu)
-      }
-    }
-    .padding(.vertical, 3)
-    .modifier(SectionStyle())
+    CustomPickerView(
+      title: "Completed tasks",
+      options: CompletedTask.allCases,
+      selection: $viewModel.settings.completedTask
+    )
   }
   
   func weekStartsOnSection() -> some View {
-    VStack(alignment: .leading) {
-      HStack {
-        Text("Week starts on")
-        Spacer()
-        Picker("", selection: $viewModel.settings.startWeekFrom) {
-          ForEach(WeekStarts.allCases, id: \.self) {
-            Text($0.rawValue)
-              .tag($0.rawValue)
-          }
-        }
-        .pickerStyle(.menu)
-      }
-    }
-    .padding(.vertical, 3)
-    .modifier(SectionStyle())
+    CustomPickerView(
+    title: "Week starts on",
+    options: WeekStarts.allCases,
+    selection: $viewModel.settings.startWeekFrom
+  )
     .onChange(of: viewModel.settings.startWeekFrom) { newValue in
       UserDefaults.standard.set(newValue.value, forKey: "WeekStart")
     }
@@ -223,6 +163,7 @@ private extension SettingsTaskView {
       viewModel.isShowingAlert = true
     } label: {
       Text("Delete all tasks")
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
     .padding(.vertical, 10)
     .modifier(SectionStyle())
