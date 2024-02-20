@@ -274,11 +274,12 @@ extension TaskListViewModel {
     
     func saveSortingOrder() {
         for (parentIndex, task) in filteredTasks.reversed().enumerated() {
-            var tasks = taskRepository.getAll(where: task.id)
-            for (index, _) in tasks.enumerated() {
-                tasks[index].sortingOrder = parentIndex
+            let tasks = loadedTasks.filter { $0.parentId == task.parentId }
+            for task in tasks {
+                var task = task
+                task.sortingOrder = parentIndex
+                taskRepository.saveTask(task)
             }
-            taskRepository.saveTasks(tasks)
         }
     }
     
@@ -299,7 +300,6 @@ extension TaskListViewModel {
             let gropedRecurringTasks = groupedTasks(with: loadedTasks)
             let sortedCompletedTasks = sortedCompletedTasks(gropedRecurringTasks, settings: settings)
             filteredTasks = sortedCompletedTasks
-            saveSortingOrder()
         case .today:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
             
@@ -314,7 +314,6 @@ extension TaskListViewModel {
                     
                     return false
                 }
-            saveSortingOrder()
         case .week:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
             
@@ -329,7 +328,6 @@ extension TaskListViewModel {
                     
                     return false
                 }
-            saveSortingOrder()
         case .month:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
             
@@ -346,8 +344,9 @@ extension TaskListViewModel {
                     
                     return false
                 }
-            saveSortingOrder()
         }
+        
+        saveSortingOrder()
     }
     
     func udateCalendarInfo() {
