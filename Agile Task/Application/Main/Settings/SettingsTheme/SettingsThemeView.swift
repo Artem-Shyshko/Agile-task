@@ -47,6 +47,7 @@ private extension SettingsThemeView {
                     .frame(width: 25, height: 25)
                     .cornerRadius(3)
                     .padding(.trailing, 15)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
         }
     }
 }
