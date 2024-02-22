@@ -51,6 +51,9 @@ final class TaskListViewModel: ObservableObject {
         loadTasks()
         taskSortingOption = settings.taskDateSorting
         search(with: "")
+        Task {
+            await checkTaskForNotifications()
+        }
     }
     
     func loadTasks() {
@@ -117,11 +120,11 @@ final class TaskListViewModel: ObservableObject {
 // MARK: - Quick Task
 
 extension TaskListViewModel {
-    func addNotification() {
+    func addNotification(for task: TaskDTO) {
         guard let localNotificationManager else { return }
         
         Task {
-            await localNotificationManager.addNotification(to: .init(quickTaskConfig))
+            await localNotificationManager.addNotification(to: .init(task))
         }
     }
     
@@ -139,7 +142,7 @@ extension TaskListViewModel {
             loadedTasks.insert(quickTaskConfig, at: 0)
         }
         
-        addNotification()
+        addNotification(for: quickTaskConfig)
         var selectedProject = projectRepository.getSelectedProject()
         selectedProject.tasks.append(quickTaskConfig)
         projectRepository.saveProject(selectedProject)
@@ -167,6 +170,31 @@ extension TaskListViewModel {
             else { return }
             
             quickTaskConfig.date = nextWeekDate.startOfWeek(using: Constants.shared.calendar)
+        }
+    }
+    
+    @MainActor
+    func checkTaskForNotifications() {
+        let unCompletedTasks = groupedTasks(with: loadedTasks)
+            .filter { !$0.isCompleted }
+            .filter { $0.reminder != .none }
+            .sorted(by: {
+                if let lhsDate = $0.reminderDate, let rhsDate = $1.reminderDate {
+                    return lhsDate < rhsDate
+                }
+                
+                return false
+            })
+            .prefix(20)
+        
+        for task in unCompletedTasks {
+            guard let localNotificationManager, !localNotificationManager.pendingNotifications
+                .contains(where: { $0.identifier == task.id.stringValue })
+            else { return }
+            
+            if let reminderDate = task.reminderDate, reminderDate.isSameDay(with: currentDate) {
+                addNotification(for: task)
+            }
         }
     }
 }
@@ -273,14 +301,20 @@ extension TaskListViewModel {
 extension TaskListViewModel {
     
     func saveSortingOrder() {
+        var orderedTasks = [TaskDTO]()
+        
         for (parentIndex, task) in filteredTasks.reversed().enumerated() {
-            let tasks = loadedTasks.filter { $0.parentId == task.parentId }
+            let tasks = loadedTasks
+                .filter { $0.parentId == task.parentId }
+            
             for task in tasks {
                 var task = task
                 task.sortingOrder = parentIndex
-                taskRepository.saveTask(task)
+                orderedTasks.append(task)
             }
         }
+        
+        taskRepository.saveTasks(orderedTasks)
     }
     
     func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {

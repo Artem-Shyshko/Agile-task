@@ -11,10 +11,17 @@ import NotificationCenter
 final class LocalNotificationManager: NSObject, ObservableObject {
     
     let notificationCenter = UNUserNotificationCenter.current()
+    var pendingNotifications = [UNNotificationRequest]()
     
     override init() {
         super.init()
         notificationCenter.delegate = self
+        
+        Task(priority: .background) {
+            await getPendingNotifications()
+        }
+        
+        removeAllDeliveredNotifications()
     }
     
     func requestAuthorization() async throws {
@@ -23,29 +30,34 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     }
     
     func addNotification(to task: TaskObject) async  {
-        deleteNotification(with: task.id.stringValue)
-        guard let reminder = task.reminder else { return }
+        guard let reminder = task.reminder, reminder != .none, let reminderDate = task.reminderDate else { return }
+        
+        guard !isActiveNotifications(for: task.id.stringValue) else { return }
         
         var reminderTime: Date
-        switch reminder {
-        case .none: return
-        case .inOneHour:
-            guard let reminderDate = task.reminderDate else { return }
-            reminderTime = Constants.shared.calendar.date(byAdding: .hour, value: 1, to: reminderDate)!
-        case .tomorrow:
-            guard let reminderDate = task.reminderDate else { return }
-            reminderTime = reminderDate.byAdding(component: .day, value: 1)!
-        case .nextWeek:
-            guard let reminderDate = task.reminderDate else { return }
-            reminderTime = reminderDate.byAdding(component: .weekOfYear, value: 1)!.startOfWeek()
-        case .custom, .withRecurring:
-            guard let reminderDate = task.reminderDate else { return }
+        if task.isRecurring == false {
+            switch reminder {
+            case .none: return
+            case .inOneHour:
+                reminderTime = Constants.shared.calendar.date(byAdding: .hour, value: 1, to: reminderDate)!
+            case .tomorrow:
+                reminderTime = reminderDate.byAdding(component: .day, value: 1)!
+            case .nextWeek:
+                reminderTime = reminderDate.byAdding(component: .weekOfYear, value: 1)!.startOfWeek()
+            case .custom, .withRecurring:
+                reminderTime = reminderDate
+            }
+        } else {
             reminderTime = reminderDate
         }
         
         var dateComponents = Constants.shared.calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminderTime)
         
-        if task.reminder == .tomorrow || task.reminder == .nextWeek || task.reminder == .withRecurring {
+        if task.reminder == .tomorrow
+            || task.reminder == .nextWeek
+            || task.reminder == .withRecurring
+            || task.isRecurring && task.reminder != .custom
+        {
             dateComponents.hour = 12
             dateComponents.minute = 0
         }
@@ -55,14 +67,14 @@ final class LocalNotificationManager: NSObject, ObservableObject {
             title: "Agile Task",
             body: task.title,
             dateComponents: dateComponents,
-            repeats: true
+            repeats: false
         )
         await schedule(localNotification: notification)
     }
     
     func deleteNotification(with identifier: String) {
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
-        notificationCenter.removeAllDeliveredNotifications()
+        removeAllDeliveredNotifications()
     }
 }
 
@@ -80,6 +92,19 @@ extension LocalNotificationManager: UNUserNotificationCenterDelegate {
 // MARK: - Private Methods
 
 private extension LocalNotificationManager {
+    func removeAllDeliveredNotifications() {
+        notificationCenter.removeAllDeliveredNotifications()
+    }
+    
+    func isActiveNotifications(for id: String) -> Bool {
+        let activeNotifications = pendingNotifications.filter { $0.identifier == id }
+        let isActiveNotifications = !activeNotifications.isEmpty
+        return isActiveNotifications
+    }
+    
+    func getPendingNotifications() async {
+        pendingNotifications = await notificationCenter.pendingNotificationRequests()
+    }
     
     func schedule(localNotification: LocalNotification) async {
         let content = UNMutableNotificationContent()
@@ -94,5 +119,6 @@ private extension LocalNotificationManager {
         let request = UNNotificationRequest(identifier: localNotification.id, content: content, trigger: trigger)
         
         try? await notificationCenter.add(request)
+        await getPendingNotifications()
     }
 }

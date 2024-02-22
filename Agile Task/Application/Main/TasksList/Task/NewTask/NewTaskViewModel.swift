@@ -246,12 +246,12 @@ final class NewTaskViewModel: ObservableObject {
         if var project = projectRepository.getProjects().first(where: { $0.name == selectedProjectName }) {
             if recurringConfiguration.option == .custom {
                 let taskArray = createCustomTaskRecurringArray(for: task)
-                taskArray.forEach { addNotification(for: $0) }
+//                taskArray.forEach { addNotification(for: $0) }
                 project.tasks += taskArray
                 projectRepository.saveProject(project)
             } else if recurringConfiguration.option != .none {
                 let taskArray = createTaskRecurringArray(for: task)
-                taskArray.forEach { addNotification(for: $0) }
+//                taskArray.forEach { addNotification(for: $0) }
                 project.tasks += taskArray
                 projectRepository.saveProject(project)
             } else {
