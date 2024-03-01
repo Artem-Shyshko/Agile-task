@@ -33,7 +33,6 @@
 		752CEE3F2B3C638600CA1612 /* SectionStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE362B3C638600CA1612 /* SectionStyle.swift */; };
 		752CEE442B3C63C100CA1612 /* Helvetica-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 752CEE402B3C63C000CA1612 /* Helvetica-Bold.ttf */; };
 		752CEE452B3C63C100CA1612 /* Helvetica.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 752CEE412B3C63C000CA1612 /* Helvetica.ttf */; };
-		752CEE462B3C63C100CA1612 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 752CEE432B3C63C100CA1612 /* SF-Pro.ttf */; };
 		752CEE482B3C64F700CA1612 /* TextFieldWithEnterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE472B3C64F700CA1612 /* TextFieldWithEnterButton.swift */; };
 		752CEE4C2B3C723200CA1612 /* SettingDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE4A2B3C71FD00CA1612 /* SettingDTO.swift */; };
 		752CEE4F2B3C764A00CA1612 /* SettingsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE4D2B3C763000CA1612 /* SettingsRepositoryImpl.swift */; };
@@ -41,7 +40,6 @@
 		752CEE552B3C888300CA1612 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE532B3C886A00CA1612 /* AuthViewModel.swift */; };
 		752CEE592B3DBFD300CA1612 /* Helvetica-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 752CEE562B3DBFD300CA1612 /* Helvetica-Bold.ttf */; };
 		752CEE5A2B3DBFD300CA1612 /* Helvetica.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 752CEE572B3DBFD300CA1612 /* Helvetica.ttf */; };
-		752CEE5B2B3DBFD300CA1612 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 752CEE582B3DBFD300CA1612 /* SF-Pro.ttf */; };
 		752CEE602B3DC45600CA1612 /* ProjectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */; };
 		752CEE622B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE612B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift */; };
 		752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE632B3DCB1900CA1612 /* ProjectsViewModel.swift */; };
@@ -145,6 +143,7 @@
 		75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */; };
 		75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */; };
 		75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD612ABCA72900660A99 /* LocalNotification.swift */; };
+		75F6A85A2B91CC86006A7067 /* Helvetica-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75F6A8592B91CC86006A7067 /* Helvetica-Light.ttf */; };
 		75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B722A8648440062D2BA /* NewTaskViewModel.swift */; };
 		75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */; };
 /* End PBXBuildFile section */
@@ -225,7 +224,6 @@
 		752CEE362B3C638600CA1612 /* SectionStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionStyle.swift; sourceTree = "<group>"; };
 		752CEE402B3C63C000CA1612 /* Helvetica-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Bold.ttf"; sourceTree = "<group>"; };
 		752CEE412B3C63C000CA1612 /* Helvetica.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Helvetica.ttf; sourceTree = "<group>"; };
-		752CEE432B3C63C100CA1612 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		752CEE472B3C64F700CA1612 /* TextFieldWithEnterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithEnterButton.swift; sourceTree = "<group>"; };
 		752CEE4A2B3C71FD00CA1612 /* SettingDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDTO.swift; sourceTree = "<group>"; };
 		752CEE4D2B3C763000CA1612 /* SettingsRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -233,7 +231,6 @@
 		752CEE532B3C886A00CA1612 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		752CEE562B3DBFD300CA1612 /* Helvetica-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Helvetica-Bold.ttf"; path = "MasterAppsUI/Common/Fonts/Helvetica-Bold.ttf"; sourceTree = SOURCE_ROOT; };
 		752CEE572B3DBFD300CA1612 /* Helvetica.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Helvetica.ttf; path = MasterAppsUI/Common/Fonts/Helvetica.ttf; sourceTree = SOURCE_ROOT; };
-		752CEE582B3DBFD300CA1612 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SF-Pro.ttf"; path = "MasterAppsUI/Common/Fonts/SF-Pro.ttf"; sourceTree = SOURCE_ROOT; };
 		752CEE5C2B3DC0A800CA1612 /* Agile Task.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Agile Task.entitlements"; sourceTree = "<group>"; };
 		752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDTO.swift; sourceTree = "<group>"; };
 		752CEE612B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -321,6 +318,7 @@
 		75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TaskWidgetExtension.entitlements; sourceTree = "<group>"; };
 		75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		75F3AD612ABCA72900660A99 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
+		75F6A8592B91CC86006A7067 /* Helvetica-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Light.ttf"; sourceTree = "<group>"; };
 		75F96B722A8648440062D2BA /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextFieldStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -430,7 +428,6 @@
 			children = (
 				752CEE402B3C63C000CA1612 /* Helvetica-Bold.ttf */,
 				752CEE412B3C63C000CA1612 /* Helvetica.ttf */,
-				752CEE432B3C63C100CA1612 /* SF-Pro.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -634,9 +631,9 @@
 		75B58CFD2A82204700937923 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				75F6A8592B91CC86006A7067 /* Helvetica-Light.ttf */,
 				752CEE562B3DBFD300CA1612 /* Helvetica-Bold.ttf */,
 				752CEE572B3DBFD300CA1612 /* Helvetica.ttf */,
-				752CEE582B3DBFD300CA1612 /* SF-Pro.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -994,10 +991,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				752CEE592B3DBFD300CA1612 /* Helvetica-Bold.ttf in Resources */,
+				75F6A85A2B91CC86006A7067 /* Helvetica-Light.ttf in Resources */,
 				75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */,
 				752CEE5A2B3DBFD300CA1612 /* Helvetica.ttf in Resources */,
 				75677A302A813F380034C45B /* Assets.xcassets in Resources */,
-				752CEE5B2B3DBFD300CA1612 /* SF-Pro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1009,7 +1006,6 @@
 				752CEE3C2B3C638600CA1612 /* Assets.xcassets in Resources */,
 				752CEE452B3C63C100CA1612 /* Helvetica.ttf in Resources */,
 				752CEE3D2B3C638600CA1612 /* plist.plist in Resources */,
-				752CEE462B3C63C100CA1612 /* SF-Pro.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

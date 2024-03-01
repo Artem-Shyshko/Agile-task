@@ -20,8 +20,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Helvetica.ttf</string>
-		<string>SF-Pro.ttf</string>
 		<string>Helvetica-Bold.ttf</string>
+		<string>Helvetica-Light.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

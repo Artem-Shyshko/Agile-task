@@ -8,13 +8,15 @@
 import SwiftUI
 
 extension Font {
-    static func sfProRegular(size: CGFloat) -> Font {
-        .custom("SF-Pro", fixedSize: size)
-    }
     static func helveticaRegular(size: CGFloat) -> Font {
         .custom("Helvetica", fixedSize: size)
     }
+    
     static func helveticaBold(size: CGFloat) -> Font {
         .custom("Helvetica-Bold", fixedSize: size)
+    }
+    
+    static func helveticaLight(size: CGFloat) -> Font {
+        .custom("Helvetica-Light", fixedSize: size)
     }
 }
