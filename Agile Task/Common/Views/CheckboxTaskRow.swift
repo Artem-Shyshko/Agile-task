@@ -45,7 +45,11 @@ private extension CheckboxTaskRow {
            colorName != themeManager.theme.sectionColor(colorScheme).name {
             return .black
         } else {
-            return  themeManager.theme.sectionTextColor(colorScheme)
+            if checkbox.isCompleted {
+                return .completedTaskLineColor
+            } else {
+                return themeManager.theme.sectionTextColor(colorScheme)
+            }
         }
     }
 }
