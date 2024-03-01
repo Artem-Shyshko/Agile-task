@@ -18,6 +18,8 @@ struct MoreOurAppsView: View {
             visitOurWebsiteButton()
             reviewOurAppsButton()
             leaveReviewButton()
+            privacyPolicyButton()
+            termsOfServiceButton()
             Spacer()
         }
         .modifier(TabViewChildModifier())
@@ -55,6 +57,22 @@ private extension MoreOurAppsView {
             
         }
         .modifier(SectionStyle())
+    }
+    
+    @ViewBuilder
+    func termsOfServiceButton() -> some View {
+        if let url = URL(string: Constants.shared.termsOfServiceURL) {
+            Link("Agile Task Terms of Service (EULA)", destination: url)
+                .modifier(SectionStyle())
+        }
+    }
+    
+    @ViewBuilder
+    func privacyPolicyButton() -> some View {
+        if let url = URL(string: Constants.shared.privacyPolicyURL) {
+            Link("Agile Task Privacy Policy", destination: url)
+                .modifier(SectionStyle())
+        }
     }
     
     @MainActor func leaveReviewButton() -> some View {

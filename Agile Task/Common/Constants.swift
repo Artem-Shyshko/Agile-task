@@ -27,6 +27,8 @@ final class Constants {
     let userTheme = "userTheme"
     let selectedSubscriptionID = "SelectedSubscriptionID"
     let freeSubscription = "SelectedSubscriptionID"
+    let termsOfServiceURL = "https://docs.google.com/document/d/1Eb2RkiJiwWAUaWRS4O59mpAzK-FzTw89fo5q9uFaI1A/edit"
+    let privacyPolicyURL = "https://docs.google.com/document/d/1LtxhtssvsK1OaGEFm4-OcygzHYFoGPDHwc-Ftnh-1A4/edit#heading=h.zcwtda8csu9t"
     
     lazy var local = Locale(identifier: "us")
     lazy var currentDate = Date()
