@@ -109,12 +109,12 @@ fileprivate struct TabItem: View {
     @Binding var activeTab: Tab
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 5) {
             Image(tab.imageName)
-                .frame(width: 26, height: 26)
+                .frame(width: 32, height: 32)
             
             Text(tab.rawValue)
-                .font(.helveticaRegular(size: 14))
+                .font(.helveticaRegular(size: 16))
                 .foregroundColor(.white)
         }
         .frame(maxWidth: .infinity)
