@@ -44,7 +44,7 @@ public struct TimeView: View {
                 .keyboardType(.numberPad)
                 .frame(width: 60)
                 .onAppear {
-                    time = date.format(timeFormat == .twelve ? "h:mm" : "HH:mm")
+                    time = "1200"
                 }
                 .onChange(of: time) { newValue in
                     time = viewModel.formatTimeInput(newValue, format: timeFormat)

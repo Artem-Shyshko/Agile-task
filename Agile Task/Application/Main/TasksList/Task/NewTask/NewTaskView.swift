@@ -284,7 +284,16 @@ private extension NewTaskView {
                 TimeView(
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
-                    timeFormat: viewModel.settings.timeFormat, isTypedTime: $viewModel.isTypedReminderTime
+                    timeFormat: viewModel.settings.timeFormat, 
+                    isTypedTime: $viewModel.isTypedReminderTime
+                )
+                .modifier(SectionStyle())
+            } else if viewModel.reminder == .tomorrow || viewModel.reminder == .nextWeek {
+                TimeView(
+                    date: $viewModel.reminderTime,
+                    timePeriod: $viewModel.selectedReminderTimePeriod,
+                    timeFormat: viewModel.settings.timeFormat, 
+                    isTypedTime: $viewModel.isTypedReminderTime
                 )
                 .modifier(SectionStyle())
             }

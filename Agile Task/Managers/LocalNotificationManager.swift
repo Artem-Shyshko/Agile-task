@@ -53,11 +53,7 @@ final class LocalNotificationManager: NSObject, ObservableObject {
         
         var dateComponents = Constants.shared.calendar.dateComponents([.year, .month, .day, .hour, .minute], from: reminderTime)
         
-        if task.reminder == .tomorrow
-            || task.reminder == .nextWeek
-            || task.reminder == .withRecurring
-            || task.isRecurring && task.reminder != .custom
-        {
+        if task.reminder == .withRecurring || task.isRecurring && task.reminder != .custom {
             dateComponents.hour = 12
             dateComponents.minute = 0
         }

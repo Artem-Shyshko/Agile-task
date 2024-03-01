@@ -122,8 +122,8 @@ extension TaskObject {
 enum Reminder: String, PersistableEnum, CaseIterable, Hashable, CustomStringConvertible {
     case none = "None"
     case inOneHour = "In 1 hour"
-    case tomorrow = "Tomorrow at 12"
-    case nextWeek = "Next week at 12"
+    case tomorrow = "Tomorrow"
+    case nextWeek = "Next week"
     case withRecurring = "Recurring"
     case custom = "Custom"
     
