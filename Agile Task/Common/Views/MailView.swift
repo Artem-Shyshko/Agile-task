@@ -17,7 +17,7 @@ struct MailView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> MFMailComposeViewController {
         let view = MFMailComposeViewController()
         view.mailComposeDelegate = context.coordinator
-        view.setToRecipients(["info@agile-pro.com"])
+        view.setToRecipients([Constants.shared.supportURL])
         view.setSubject("Agile Task")
         view.setMessageBody("", isHTML: false)
         return view

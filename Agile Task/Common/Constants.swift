@@ -28,7 +28,9 @@ final class Constants {
     let selectedSubscriptionID = "SelectedSubscriptionID"
     let freeSubscription = "SelectedSubscriptionID"
     let termsOfServiceURL = "http://agile-app.com/agile-task/terms-of-service"
-    let privacyPolicyURL = "http://agile-app.com/agile-task/privacy"
+    let privacyPolicyURL = "http://agile-app.com/agile-task/privacy-policy"
+    let supportURL = "support@agile-app.com"
+    let appURL = "http://agile-app.com/agile-task"
     
     lazy var local = Locale(identifier: "us")
     lazy var currentDate = Date()
