@@ -111,6 +111,8 @@ fileprivate struct TabItem: View {
     var body: some View {
         VStack(spacing: 5) {
             Image(tab.imageName)
+                .resizable()
+                .scaledToFit()
                 .frame(width: 32, height: 32)
             
             Text(tab.rawValue)
