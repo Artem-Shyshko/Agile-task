@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SettingsAccountView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.dismiss) var dismiss
-    @State var showPurchasesAlert = false
-    @State var isRestored = false
+    @State var isShowingAlert = false
     @State var selectedProductName = ""
-    
+    @State var alertTitle = ""
     var body: some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
             navigationBar()
@@ -25,6 +25,19 @@ struct SettingsAccountView: View {
         .task {
             if let product = purchaseManager.products.first(where: { $0.id == purchaseManager.selectedSubscriptionID }) {
                 selectedProductName = product.displayName
+            }
+        }
+        .alert(alertTitle, isPresented: $isShowingAlert) {
+            Button("OK", role: .cancel, action: {})
+        }
+        .overlay {
+            if purchaseManager.showProcessView {
+                ZStack {
+                    Color.black.opacity(0.2)
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                }
+                .ignoresSafeArea()
             }
         }
     }
@@ -62,8 +75,14 @@ private extension SettingsAccountView {
     func restoreSubscription() -> some View {
         Button {
             Task {
-                self.isRestored = await purchaseManager.restore()
-                showPurchasesAlert = true
+                let isRestored = await purchaseManager.restore()
+                if isRestored {
+                    alertTitle = "Your purchase is restored"
+                } else {
+                    alertTitle = "You don't have any active purchases"
+                }
+                
+                isShowingAlert = !isRestored
             }
         } label: {
                 Text("Restore subscription")
