@@ -28,7 +28,7 @@ extension ProjectDTO {
     static func mockProject() -> ProjectDTO {
         ProjectDTO(
             id: ObjectId.generate(),
-            name: "General",
+            name: "Default project",
             isSelected: true,
             tasks: TaskDTO.mockArray()
         )
