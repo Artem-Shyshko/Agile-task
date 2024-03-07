@@ -40,10 +40,11 @@ struct SubscriptionView: View {
                 }
                 .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
             }
-            Group {
+            
+            VStack {
                 AppFeaturesView()
                     .foregroundColor(themeManager.theme.textColor(colorScheme))
-                    .padding(.top, 40)
+                    .padding(.top, 30)
                     .scaleEffect(0.8)
                 
                 Button {
@@ -58,6 +59,14 @@ struct SubscriptionView: View {
                     Text(purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription ? "Continue" : "Manage subscription")
                 }
                 .buttonStyle(PrimaryButtonStyle())
+                
+                HStack(spacing: 20) {
+                    PrivacyPolicyButton()
+                        .font(.helveticaRegular(size: 14))
+                    TermsOfUseButton()
+                        .font(.helveticaRegular(size: 14))
+                }
+                .padding(.top, 10)
             }
             .offset(y: -30)
         }

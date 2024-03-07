@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7511B3C62B99FF130090DB4E /* TermsOfUseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */; };
+		7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */; };
 		751BFB402A9E01AB00D3E0B8 /* RecurringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */; };
 		751BFB4A2A9E4DC600D3E0B8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB492A9E4DC600D3E0B8 /* String+Ext.swift */; };
 		7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */; };
@@ -198,6 +200,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseButton.swift; sourceTree = "<group>"; };
+		7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyButton.swift; sourceTree = "<group>"; };
 		751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringView.swift; sourceTree = "<group>"; };
 		751BFB492A9E4DC600D3E0B8 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
@@ -757,11 +761,13 @@
 				75D516552B59676B002D351C /* MagnifyingGlassButton.swift */,
 				752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */,
 				75E11C752B4C2679003B891B /* BulletTaskRow.swift */,
+				7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */,
 				75A3CFFF2A990BD4000F68BA /* TaskRow.swift */,
 				752CEE6A2B3EF2A000CA1612 /* MailView.swift */,
 				752CEE682B3EE25700CA1612 /* ProjectRow.swift */,
 				751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */,
 				75481B2D2AE00947003ABED5 /* TaskList.swift */,
+				7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */,
 				75474BB52AEA9615001119A9 /* SubscriptionView.swift */,
 				7561D8452AEBB3930073F1D9 /* AppFeaturesView.swift */,
 				7590CF982AF3A01F0015B396 /* SearchableView.swift */,
@@ -1070,6 +1076,7 @@
 				7590CF992AF3A01F0015B396 /* SearchableView.swift in Sources */,
 				7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */,
 				7537D0222AAA101300F64175 /* ProjectsView.swift in Sources */,
+				7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */,
 				7547CD722ADEE6B400143598 /* NewTaskView.swift in Sources */,
 				752CEE1C2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift in Sources */,
 				752CEE602B3DC45600CA1612 /* ProjectDTO.swift in Sources */,
@@ -1097,6 +1104,7 @@
 				757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */,
 				7590CF922AEFA81B0015B396 /* CheckboxObject.swift in Sources */,
 				759510C32ACD586B0087004A /* SectionStyle.swift in Sources */,
+				7511B3C62B99FF130090DB4E /* TermsOfUseButton.swift in Sources */,
 				752CEE622B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift in Sources */,
 				75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */,
 				753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */,
