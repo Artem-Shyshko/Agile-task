@@ -65,7 +65,7 @@ struct Master_TaskApp: App {
             }
             .task(id: scenePhase) {
                 if scenePhase == .active {
-                    await purchaseManager.updatePurchasedProducts()
+                    await purchaseManager.fetchActiveTransactions()
                 }
             }
             .onChange(of: scenePhase) { scene in

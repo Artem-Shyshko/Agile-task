@@ -21,16 +21,29 @@ final class PurchaseManager: NSObject, ObservableObject {
     private let maxFreeProjects = 1
     
     @Published private(set) var products: [Product] = []
-    @Published private(set) var purchasedProductIDs = Set<String>()
+    @Published private(set) var activeTransactions = Set<StoreKit.Transaction>()
     
     
     var hasUnlockedPro: Bool {
-        return !purchasedProductIDs.isEmpty
+        if !activeTransactions.isEmpty, let active = activeTransactions.first {
+            selectedSubscriptionID = active.productID
+        } else {
+            selectedSubscriptionID = Constants.shared.freeSubscription
+        }
+        
+        return !activeTransactions.isEmpty
     }
     
     override init() {
         super.init()
-        updates = newTransactionListenerTask()
+        updates = Task {
+            for await update in StoreKit.Transaction.updates {
+                if let transaction = try? update.payloadValue {
+                    await fetchActiveTransactions()
+                    await transaction.finish()
+                }
+            }
+        }
     }
     
     deinit {
@@ -63,87 +76,51 @@ final class PurchaseManager: NSObject, ObservableObject {
         showProcessView = false
     }
     
-    func userSelectSubscription(product: Product) {
+    func purchase(_ product: Product) async throws {
         showProcessView = true
-        
-        Task {
-            do {
-                try await purchase(product)
-            } catch {
-                print(error)
+        let result = try await product.purchase()
+        switch result {
+        case .success(let verificationResult):
+            if let transaction = try? verificationResult.payloadValue {
+                activeTransactions.insert(transaction)
+                await transaction.finish()
+                _ = hasUnlockedPro
+                showProcessView = false
             }
-        }
-    }
-    
-    func updatePurchasedProducts() async {
-        for await result in Transaction.currentEntitlements {
-            guard case .verified(let transaction) = result else {
-                selectedSubscriptionID = Constants.shared.freeSubscription
-                continue
-            }
-            
-            if transaction.revocationDate == nil {
-                self.purchasedProductIDs.insert(transaction.productID)
-            } else {
-                self.purchasedProductIDs.remove(transaction.productID)
-            }
-            
-            selectedSubscriptionID = purchasedProductIDs.first ?? Constants.shared.freeSubscription
+        case .userCancelled, .pending:
+            showProcessView = false
+            break
+        @unknown default:
+            showProcessView = false
+            break
         }
     }
     
     func restore() async -> Bool {
+        showProcessView = true
         do {
             try await AppStore.sync()
-            await updatePurchasedProducts()
-            return true
+            await fetchActiveTransactions()
+            showProcessView = false
+            return activeTransactions.isEmpty ? false : true
         } catch {
+            print("Can't restore")
+            showProcessView = false
             return false
         }
     }
-}
-
-private extension PurchaseManager {
-    func newTransactionListenerTask() -> Task<Void, Never> {
-        Task(priority: .background) { [unowned self] in
-            for await verificationResult in Transaction.updates {
-                //                await self.updatePurchasedProducts()
-                guard case .verified(let transaction) = verificationResult else {
-                    return
-                }
-                
-                if transaction.revocationDate != nil {
-                    selectedSubscriptionID = Constants.shared.freeSubscription
-                } else if let expirationDate = transaction.expirationDate,
-                          expirationDate < Date() {
-                    selectedSubscriptionID = Constants.shared.freeSubscription
-                    return
-                } else if transaction.isUpgraded {
-                    return
-                } else {
-                    selectedSubscriptionID = transaction.productID
-                }
+    
+    func fetchActiveTransactions() async {
+        var activeTransactions: Set<StoreKit.Transaction> = []
+        
+        for await entitlement in StoreKit.Transaction.currentEntitlements {
+            if let transaction = try? entitlement.payloadValue {
+                activeTransactions.insert(transaction)
             }
         }
-    }
-    
-    private func purchase(_ product: Product) async throws {
-        let result = try await product.purchase()
         
-        switch result {
-        case .success(.verified(let transaction)):
-            self.selectedSubscriptionID = product.id
-            showProcessView = false
-            await updatePurchasedProducts()
-            await transaction.finish()
-        case .success(.unverified(_, let error)):
-            print(error.localizedDescription)
-            showProcessView = false
-            break
-        default:
-            showProcessView = false
-            break
-        }
+        self.activeTransactions = activeTransactions
+        _ = hasUnlockedPro
     }
 }
 

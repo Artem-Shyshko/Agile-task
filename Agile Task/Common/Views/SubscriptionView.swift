@@ -48,7 +48,9 @@ struct SubscriptionView: View {
                 
                 Button {
                     if let selectedProduct {
-                        purchaseManager.userSelectSubscription(product: selectedProduct)
+                        Task {
+                            try await purchaseManager.purchase(selectedProduct)
+                        }
                     } else if purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription {
                         isPresentedManageSubscription = true
                     }
