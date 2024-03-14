@@ -68,6 +68,7 @@ struct TaskListView: View {
       }
       .task {
         try? await notificationManager.requestAuthorization()
+        await notificationManager.addDailyNotification()
       }
       .modifier(TabViewChildModifier())
       .onChange(of: scenePhase) { newValue in

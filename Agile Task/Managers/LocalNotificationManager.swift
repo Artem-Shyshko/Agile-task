@@ -68,6 +68,23 @@ final class LocalNotificationManager: NSObject, ObservableObject {
         await schedule(localNotification: notification)
     }
     
+    func addDailyNotification() async {
+        var dateComponents = DateComponents()
+        dateComponents.hour = 9
+        dateComponents.minute = 0
+        
+        let notification = LocalNotification(
+            id: "DailyNotificationID",
+            title: "Agile Task",
+            body: "Amount of task for today",
+            dateComponents: dateComponents,
+            repeats: true
+        )
+        
+        await schedule(localNotification: notification)
+    }
+    
+    
     func deleteNotification(with identifier: String) {
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         removeAllDeliveredNotifications()
