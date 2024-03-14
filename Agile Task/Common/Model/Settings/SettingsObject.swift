@@ -11,6 +11,7 @@ import MasterAppsUI
 
 final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
+    @Persisted var appLanguage: AppLanguage? = .english
     @Persisted var startWeekFrom: WeekStarts = .monday
     @Persisted var taskDateFormat: TaskDateFormmat = .dayMonthYear
     @Persisted var timeFormat: TimeFormat = .twentyFour
@@ -30,6 +31,7 @@ extension SettingsObject {
         self.init()
         
         id = dto.id
+        appLanguage = dto.appLanguage
         startWeekFrom = dto.startWeekFrom
         taskDateFormat = dto.taskDateFormat
         timeFormat = dto.timeFormat
@@ -50,6 +52,10 @@ enum TaskSorting: String, PersistableEnum, CaseIterable {
     case schedule = "Tasks with schedule on top"
     case reminders = "Tasks with reminders on top"
     case recurring = "Recurring tasks on top"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 enum WeekStarts: String, PersistableEnum, CaseIterable, CustomStringConvertible {
@@ -93,6 +99,24 @@ enum AddingNewTask: String, PersistableEnum, CaseIterable, Hashable, CustomStrin
     }
 }
 
+enum AppLanguage: String, PersistableEnum, CaseIterable, Hashable, CustomStringConvertible  {
+    case english = "English"
+    case ukrainian = "Ukrainian"
+    
+    var description: String {
+        self.rawValue
+    }
+    
+    var identifier: String {
+        switch self {
+        case .english:
+            return "en"
+        case .ukrainian:
+            return "uk"
+        }
+    }
+}
+
 enum CompletedTask: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case hide = "Hide from the list"
     case moveToBottom = "Move to the bottom of the list"
@@ -127,8 +151,4 @@ extension TimeFormat: PersistableEnum, CustomStringConvertible {
         self.rawValue
     }
 }
-extension TaskDateSorting: PersistableEnum, CustomStringConvertible {
-    public var description: String {
-        self.rawValue
-    }
-}
+extension TaskDateSorting: PersistableEnum {}

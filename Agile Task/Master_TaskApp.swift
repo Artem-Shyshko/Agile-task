@@ -16,6 +16,7 @@ struct Master_TaskApp: App {
     @StateObject var purchaseManager = PurchaseManager()
     @StateObject var authManager = AuthManager()
     @StateObject var appThemeManager = ThemeManager()
+    @StateObject var appState = AppState()
     
     @State private var isDarkModeOn = false
     @State private var showAuthView = false
@@ -54,6 +55,7 @@ struct Master_TaskApp: App {
             .environmentObject(purchaseManager)
             .environmentObject(authManager)
             .environmentObject(appThemeManager)
+            .environmentObject(appState)
             .preferredColorScheme(appThemeManager.theme.colorScheme)
             .onAppear {
                 UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
@@ -62,6 +64,7 @@ struct Master_TaskApp: App {
                 if settings.securityOption != .none {
                     showAuthView = true
                 }
+                appState.language = settings.appLanguage
             }
             .task(id: scenePhase) {
                 if scenePhase == .active {
@@ -76,6 +79,7 @@ struct Master_TaskApp: App {
                     }
                 }
             }
+            .environment(\.locale, Locale(identifier: settingsRepository.get().appLanguage.identifier))
         }
     }
 }

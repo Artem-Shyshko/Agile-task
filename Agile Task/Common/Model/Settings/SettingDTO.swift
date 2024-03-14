@@ -11,6 +11,7 @@ import MasterAppsUI
 
 struct SettingsDTO {
     var id: ObjectId
+    var appLanguage: AppLanguage = .english
     var startWeekFrom: WeekStarts = .monday
     var taskDateFormat: TaskDateFormmat = .dayMonthYear
     var timeFormat: TimeFormat = .twentyFour
@@ -28,6 +29,7 @@ struct SettingsDTO {
 extension SettingsDTO {
     init(object: SettingsObject) {
         id = object.id
+        appLanguage = object.appLanguage ?? language
         startWeekFrom = object.startWeekFrom
         taskDateFormat = object.taskDateFormat
         timeFormat = object.timeFormat
@@ -40,6 +42,15 @@ extension SettingsDTO {
         rememberLastPickedOptionView = object.rememberLastPickedOptionView
         taskSorting = object.taskSorting ?? .manual
         securityOption = object.securityOption
+    }
+    
+    private var language: AppLanguage {
+        switch Locale.current.identifier {
+        case "uk":
+            return .ukrainian
+        default:
+            return .english
+        }
     }
 }
 

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct NavigationTitle: View {
-    var title: String
+    var title: LocalizedStringKey
     
-    init(_ title: String) {
+    init(_ title: LocalizedStringKey) {
         self.title = title
     }
     

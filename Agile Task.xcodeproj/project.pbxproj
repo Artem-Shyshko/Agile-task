@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		7511B3C62B99FF130090DB4E /* TermsOfUseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */; };
 		7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */; };
+		751712BB2BA2F96200F2B758 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 751712BA2BA2F96200F2B758 /* Localizable.xcstrings */; };
+		751712BC2BA2F96200F2B758 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 751712BA2BA2F96200F2B758 /* Localizable.xcstrings */; };
+		751712BD2BA2F96200F2B758 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 751712BA2BA2F96200F2B758 /* Localizable.xcstrings */; };
+		751712BF2BA347FD00F2B758 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751712BE2BA347FD00F2B758 /* AppState.swift */; };
 		751BFB402A9E01AB00D3E0B8 /* RecurringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */; };
 		751BFB4A2A9E4DC600D3E0B8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751BFB492A9E4DC600D3E0B8 /* String+Ext.swift */; };
 		7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */; };
@@ -202,6 +206,8 @@
 /* Begin PBXFileReference section */
 		7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseButton.swift; sourceTree = "<group>"; };
 		7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyButton.swift; sourceTree = "<group>"; };
+		751712BA2BA2F96200F2B758 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		751712BE2BA347FD00F2B758 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringView.swift; sourceTree = "<group>"; };
 		751BFB492A9E4DC600D3E0B8 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		7520047D2ABB4DFF00EDAF3E /* SettingsObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsObject.swift; sourceTree = "<group>"; };
@@ -497,6 +503,7 @@
 			isa = PBXGroup;
 			children = (
 				7537D01D2AA9DDC000F64175 /* ThemeManager.swift */,
+				751712BE2BA347FD00F2B758 /* AppState.swift */,
 				7562E6C22AD4479A00E895CD /* AuthManager.swift */,
 				7583617B2AB1D4DB0021FFDE /* AppHelper.swift */,
 				75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */,
@@ -562,6 +569,7 @@
 		75677A1F2A813F360034C45B = {
 			isa = PBXGroup;
 			children = (
+				751712BA2BA2F96200F2B758 /* Localizable.xcstrings */,
 				75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */,
 				752CEE5C2B3DC0A800CA1612 /* Agile Task.entitlements */,
 				75677A2A2A813F360034C45B /* Agile Task */,
@@ -975,6 +983,8 @@
 			knownRegions = (
 				en,
 				Base,
+				uk,
+				fr,
 			);
 			mainGroup = 75677A1F2A813F360034C45B;
 			packageReferences = (
@@ -998,6 +1008,7 @@
 			files = (
 				752CEE592B3DBFD300CA1612 /* Helvetica-Bold.ttf in Resources */,
 				75F6A85A2B91CC86006A7067 /* Helvetica-Light.ttf in Resources */,
+				751712BB2BA2F96200F2B758 /* Localizable.xcstrings in Resources */,
 				75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */,
 				752CEE5A2B3DBFD300CA1612 /* Helvetica.ttf in Resources */,
 				75677A302A813F380034C45B /* Assets.xcassets in Resources */,
@@ -1009,6 +1020,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				752CEE442B3C63C100CA1612 /* Helvetica-Bold.ttf in Resources */,
+				751712BC2BA2F96200F2B758 /* Localizable.xcstrings in Resources */,
 				752CEE3C2B3C638600CA1612 /* Assets.xcassets in Resources */,
 				752CEE452B3C63C100CA1612 /* Helvetica.ttf in Resources */,
 				752CEE3D2B3C638600CA1612 /* plist.plist in Resources */,
@@ -1019,6 +1031,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				751712BD2BA2F96200F2B758 /* Localizable.xcstrings in Resources */,
 				75E11CC02B4C34B0003B891B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1081,6 +1094,7 @@
 				752CEE1C2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift in Sources */,
 				752CEE602B3DC45600CA1612 /* ProjectDTO.swift in Sources */,
 				7537D0242AAA316200F64175 /* NewProjectView.swift in Sources */,
+				751712BF2BA347FD00F2B758 /* AppState.swift in Sources */,
 				752CEE4F2B3C764A00CA1612 /* SettingsRepositoryImpl.swift in Sources */,
 				75B58D102A8250CF00937923 /* TaskListView.swift in Sources */,
 				75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */,
@@ -1323,6 +1337,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1358,6 +1373,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1388,6 +1404,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1424,6 +1441,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

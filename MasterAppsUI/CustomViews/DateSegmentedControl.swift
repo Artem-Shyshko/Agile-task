@@ -7,11 +7,15 @@
 
 import SwiftUI
 
-public enum TaskDateSorting: String, CaseIterable {
+public enum TaskDateSorting: String, CaseIterable, CustomStringConvertible {
   case all = "All"
   case today = "Today"
   case week = "Week"
   case month = "Month"
+    
+    public var description: String {
+        self.rawValue
+    }
 }
 
 public struct DateSegmentedControl: View {
@@ -26,8 +30,8 @@ public struct DateSegmentedControl: View {
         HStack(spacing: 0) {
             ForEach(TaskDateSorting.allCases, id: \.rawValue) { dateSorting in
                 HStack(alignment: .center, spacing: 0) {
-                    Text(dateSorting.rawValue)
-                        .font(.helveticaRegular(size: 16))
+                    Text(LocalizedStringKey(dateSorting.description))
+                        .font(.helveticaRegular(size: 14))
                         .foregroundStyle(selectedDateSorting == dateSorting ? .black : .white)
                         .padding(.vertical, 3)
                         .frame(maxWidth: .infinity)

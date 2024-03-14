@@ -220,6 +220,10 @@ enum RecurringEnds: String, CaseIterable, PersistableEnum {
     case never = "Never"
     case on = "On"
     case after = "After"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 enum RepeatRecurring: String, CaseIterable, PersistableEnum {
@@ -227,6 +231,10 @@ enum RepeatRecurring: String, CaseIterable, PersistableEnum {
     case weeks = "weeks"
     case month = "month"
     case years = "years"
+    
+    var description: String {
+        self.rawValue
+    }
 }
 
 class RecurringConfiguration: EmbeddedObject {

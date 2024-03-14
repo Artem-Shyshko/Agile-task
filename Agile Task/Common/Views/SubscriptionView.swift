@@ -29,9 +29,9 @@ struct SubscriptionView: View {
                 Button {
                     selectedProduct = product
                 } label: {
-                    let duration = product.id == "agile_task_monthly" ? "month" : "year"
+                    let duration: LocalizedStringKey = product.id == "agile_task_monthly" ? "month" : "year"
                     planView(
-                        title: product.displayName,
+                        title: LocalizedStringKey(product.displayName),
                         price: product.displayPrice,
                         firstLine: "Unlimited tasks",
                         secondLine: "Unlimited projects",
@@ -81,7 +81,7 @@ struct SubscriptionView: View {
 }
 
 private extension SubscriptionView {
-    func planView(title: String, price: String?, firstLine: String, secondLine: String, isSelected: Bool, duration: String) -> some View {
+    func planView(title: LocalizedStringKey, price: String?, firstLine: LocalizedStringKey, secondLine: LocalizedStringKey, isSelected: Bool, duration: LocalizedStringKey) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 Image("Check")
@@ -102,7 +102,10 @@ private extension SubscriptionView {
                     .font(.helveticaBold(size: 16))
                 Spacer()
                 if let price {
-                    Text("\(price)/\(duration)")
+                    HStack(spacing: 0) {
+                        Text("\(price)/")
+                        Text(duration)
+                    }
                         .font(.helveticaBold(size: 16))
                 }
             }

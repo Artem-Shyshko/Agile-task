@@ -19,10 +19,10 @@ enum SettingsNavigationView: Hashable {
     case account, taskSettings, security, more, contactUs
 }
 
-enum Tab: String, CaseIterable {
+enum Tab: LocalizedStringResource, Identifiable, CaseIterable {
     case taskList = "Tasks"
     case projects = "Projects"
-    case settings = "Settings"
+    case settings = "SettingsTab"
     
     var imageName: String {
         switch self {
@@ -34,6 +34,9 @@ enum Tab: String, CaseIterable {
     
     var index: Int {
         return Tab.allCases.firstIndex(of: self) ?? 0
+    }
+    var id: Self {
+        self
     }
 }
 
@@ -88,7 +91,7 @@ struct TabBarView_Previews: PreviewProvider {
 private extension TabBarView {
     func customTabItem(_ tint: Color = .blue, inActiveTint: Color = .white) -> some View {
         HStack(spacing: 0) {
-            ForEach(Tab.allCases, id: \.rawValue) {
+            ForEach(Tab.allCases, id: \.id) {
                 TabItem(
                     tint: tint,
                     inActiveTint: inActiveTint,

@@ -95,6 +95,7 @@ struct TaskListView: View {
       .onChange(of: viewModel.searchText) { newValue in
         viewModel.search(with: newValue)
       }
+      .environment(\.locale, Locale(identifier: viewModel.settings.appLanguage.identifier))
     }
   }
 }

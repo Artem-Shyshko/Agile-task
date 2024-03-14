@@ -415,17 +415,6 @@ private extension NewTaskView {
     }
 }
 
-// MARK: - NewItemView_Previews
-
-struct NewTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewTaskView(viewModel: NewTaskViewModel(), taskList: TaskDTO.mockArray(), editTask: TaskDTO(object: TaskObject()))
-            .environmentObject(LocalNotificationManager())
-            .environmentObject(PurchaseManager())
-            .environmentObject(ThemeManager())
-    }
-}
-
 // MARK: - CustomPickerView
 
 struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: View {
@@ -433,7 +422,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
     @Environment(\.colorScheme) var colorScheme
     
     var image: ImageResource?
-    var title: String
+    var title: LocalizedStringKey
     var options: [SelectionValue]
     @Binding var selection: SelectionValue
     var isSelected: Bool = true
@@ -450,13 +439,13 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
             Menu {
                 Picker(selection: $selection, label: EmptyView()) {
                     ForEach(options, id: \.self) { option in
-                        Text(option.description)
+                        Text(LocalizedStringKey(option.description))
                             .frame(maxWidth: .infinity)
                             .tag(option)
                     }
                 }
             } label: {
-                customPickerLabel(rightName: title, leftName: selection.description)
+                customPickerLabel(rightName: title, leftName: LocalizedStringKey(selection.description))
             }
         }
         .tint(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
@@ -464,7 +453,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
         .modifier(SectionStyle())
     }
     
-    private func customPickerLabel(rightName: String, leftName: String) -> some View {
+    private func customPickerLabel(rightName: LocalizedStringKey, leftName: LocalizedStringKey) -> some View {
         HStack {
             Text(rightName)
             Spacer()
@@ -473,5 +462,17 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
                 .imageScale(.small)
         }
         .padding(.trailing, 12)
+    }
+}
+
+
+// MARK: - NewItemView_Previews
+
+struct NewTaskView_Previews: PreviewProvider {
+    static var previews: some View {
+        NewTaskView(viewModel: NewTaskViewModel(), taskList: TaskDTO.mockArray(), editTask: TaskDTO(object: TaskObject()))
+            .environmentObject(LocalNotificationManager())
+            .environmentObject(PurchaseManager())
+            .environmentObject(ThemeManager())
     }
 }

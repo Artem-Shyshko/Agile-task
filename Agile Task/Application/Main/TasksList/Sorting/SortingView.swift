@@ -47,7 +47,7 @@ private extension SortingView {
                             checkMark
                         }
                         
-                        Text(option.rawValue)
+                        Text(LocalizedStringKey(option.description))
                     }
                 }
                 .modifier(SectionStyle())

@@ -8,12 +8,12 @@
 import SwiftUI
 
 public struct TextFieldWithEnterButton: View {
-    let placeholder: String
+    let placeholder: LocalizedStringKey
     @Binding var text: String
     @State private var isButtonPress: Bool = false
     let action: (()->Void)
     
-    public init(placeholder: String, text: Binding<String>, action: @escaping (()->Void)) {
+    public init(placeholder: LocalizedStringKey, text: Binding<String>, action: @escaping (()->Void)) {
         self.placeholder = placeholder
         self._text = text
         self.action = action

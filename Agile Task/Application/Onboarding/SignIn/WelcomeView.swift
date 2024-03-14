@@ -79,9 +79,8 @@ private extension WelcomeView {
 
 // MARK: - Preview
 
-struct WelcomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        WelcomeView()
-            .environmentObject(ThemeManager())
-    }
+#Preview("Ukrainian") {
+    WelcomeView()
+        .environmentObject(ThemeManager())
+        .environment(\.locale, Locale(identifier: "UK"))
 }

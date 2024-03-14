@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SectionStyle: ViewModifier {
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) var colorScheme
     
     func body(content: Content) -> some View {
@@ -21,5 +22,6 @@ struct SectionStyle: ViewModifier {
             .padding(.leading, 10)
             .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(4)
+            .environment(\.locale, Locale(identifier: appState.language.identifier))
     }
 }

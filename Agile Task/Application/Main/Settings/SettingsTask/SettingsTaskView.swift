@@ -11,6 +11,7 @@ import MasterAppsUI
 
 struct SettingsTaskView: View {
   @StateObject var viewModel: SettingsTaskViewModel
+  @EnvironmentObject var appState: AppState
   @Environment(\.dismiss) var dismiss
   @Environment(\.scenePhase) var scenePhase
   
@@ -18,6 +19,7 @@ struct SettingsTaskView: View {
     VStack {
       navigationBar()
       VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
+        languageSection()
         weekStartsOnSection()
         dateSection()
         timeSection()
@@ -54,6 +56,9 @@ struct SettingsTaskView: View {
         }
       }
     }
+    .onChange(of: viewModel.settings.appLanguage) { newValue in
+      appState.language = newValue
+    }
   }
 }
 
@@ -80,6 +85,14 @@ private extension SettingsTaskView {
       title: "Date",
       options: TaskDateFormmat.allCases,
       selection: $viewModel.settings.taskDateFormat
+    )
+  }
+  
+  func languageSection() -> some View {
+    CustomPickerView(
+      title: "Language",
+      options: AppLanguage.allCases,
+      selection: $viewModel.settings.appLanguage
     )
   }
   
