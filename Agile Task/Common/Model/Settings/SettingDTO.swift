@@ -20,6 +20,7 @@ struct SettingsDTO {
     var completedTask: CompletedTask = .hide
     var defaultReminder: DefaultReminder = .oneHourBefore
     var showPlusButton: Bool = true
+    var isShowingInfoTips: Bool = true
     var isPushNotificationEnabled: Bool = true
     var rememberLastPickedOptionView: Bool = true
     var taskSorting: TaskSorting = .manual
@@ -39,6 +40,7 @@ extension SettingsDTO {
         defaultReminder = object.defaultReminder
         showPlusButton = object.showPlusButton
         isPushNotificationEnabled = object.isPushNotificationEnabled
+        isShowingInfoTips = object.isShowingInfoTips ?? true
         rememberLastPickedOptionView = object.rememberLastPickedOptionView
         taskSorting = object.taskSorting ?? .manual
         securityOption = object.securityOption

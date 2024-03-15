@@ -20,6 +20,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var completedTask: CompletedTask? = .moveToBottom
     @Persisted var defaultReminder: DefaultReminder = .oneHourBefore
     @Persisted var showPlusButton: Bool = true
+    @Persisted var isShowingInfoTips: Bool?
     @Persisted var isPushNotificationEnabled: Bool = true
     @Persisted var rememberLastPickedOptionView: Bool = true
     @Persisted var taskSorting: TaskSorting? = .manual
@@ -41,6 +42,7 @@ extension SettingsObject {
         defaultReminder = dto.defaultReminder
         showPlusButton = dto.showPlusButton
         isPushNotificationEnabled = dto.isPushNotificationEnabled
+        isShowingInfoTips = dto.isShowingInfoTips
         rememberLastPickedOptionView = dto.rememberLastPickedOptionView
         taskSorting = dto.taskSorting
         securityOption = dto.securityOption

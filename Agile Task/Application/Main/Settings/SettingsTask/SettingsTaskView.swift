@@ -28,6 +28,7 @@ struct SettingsTaskView: View {
         completedTaskSection()
         addPlusButton()
         pushNotificationView()
+        addInfoTipsButton()
         deleteAllTasksButton()
         versionView()
         Spacer()
@@ -147,6 +148,22 @@ private extension SettingsTaskView {
         }
         
         Text("Quick input button")
+      }
+    }
+    .padding(.vertical, 10)
+    .modifier(SectionStyle())
+  }
+  
+  func addInfoTipsButton() -> some View {
+    Button {
+      viewModel.settings.isShowingInfoTips.toggle()
+    } label: {
+      HStack {
+        if viewModel.settings.isShowingInfoTips {
+          checkMark
+        }
+        
+        Text("settings_info_tips")
       }
     }
     .padding(.vertical, 10)

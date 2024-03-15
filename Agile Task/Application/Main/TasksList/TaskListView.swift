@@ -18,6 +18,7 @@ struct TaskListView: View {
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.scenePhase) var scenePhase
   @StateObject private var viewModel = TaskListViewModel()
+  @EnvironmentObject var appState: AppState
   
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
@@ -91,7 +92,9 @@ struct TaskListView: View {
         newTaskView()
       })
       .overlay(alignment: .bottomLeading, content: {
-        infoButton()
+        if appState.settings.isShowingInfoTips {
+          infoButton()
+        }
       })
       .onChange(of: viewModel.calendarDate) { _ in
         viewModel.udateCalendarInfo()
@@ -417,7 +420,7 @@ private extension TaskListView {
         }
       }
     }
-    .padding(.bottom, 20)
+    .padding(.bottom, 30)
   }
   
   @ViewBuilder
