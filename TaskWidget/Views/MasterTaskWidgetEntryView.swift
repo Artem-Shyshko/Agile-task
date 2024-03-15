@@ -41,7 +41,7 @@ private extension MasterTaskWidgetEntryView {
     func headerView() -> some View {
         HStack {
             Text(entry.dateString)
-                .font(.helveticaRegular(size: 15))
+                .font(.helveticaRegular(size: 12))
             Spacer()
             Link(destination: URL(string: "agiletask://addnewtask")!) {
                 Image("Plus")
@@ -53,8 +53,7 @@ private extension MasterTaskWidgetEntryView {
         }
         .foregroundStyle(foregroundColor()  )
         .padding(.horizontal, 10)
-        .padding(.top, 15)
-        .padding(.bottom, 5)
+        .padding(.top, 3)
     }
     
     func divider() -> some View{
@@ -75,15 +74,16 @@ private extension MasterTaskWidgetEntryView {
                         ? .compleatedTaskLine
                         : foregroundColor()
                     )
-            
-            divider()
-                .padding(.horizontal, Constants.horizontalPadding)
+            if entry.tasks.last != task {
+                divider()
+                    .padding(.horizontal, Constants.horizontalPadding)
+            }
         }
     }
     
     func taskTitle(_ title: String) -> some View {
-        Text(title)
-            .font(.helveticaRegular(size: 14))
+        Text(LocalizedStringKey(title))
+            .font(.helveticaRegular(size: 12))
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, Constants.horizontalPadding)

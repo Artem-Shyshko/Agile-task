@@ -43,9 +43,9 @@ private extension Provider {
         
         switch context.family {
         case .systemSmall, .systemMedium:
-            tasks = Array(tasks.prefix(3))
+            tasks = Array(tasks.prefix(4))
         default:
-            tasks = Array(tasks.prefix(9))
+            tasks = Array(tasks.prefix(11))
         }
         
         return [TaskEntry(dateString: dateString, tasks: tasks, configuration: configuration)]

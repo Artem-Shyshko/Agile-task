@@ -1587,6 +1587,22 @@
         }
       }
     },
+    "settings_info_tips" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info tips"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Інформаційні поради"
+          }
+        }
+      }
+    },
     "SettingsTab" : {
       "extractionState" : "manual",
       "localizations" : {
