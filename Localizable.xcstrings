@@ -691,6 +691,22 @@
         }
       }
     },
+    "double_tap_task_list" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double tap for quick task completion"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Двічі торкніться, щоб швидко виконати завдання"
+          }
+        }
+      }
+    },
     "Edit" : {
       "localizations" : {
         "fr" : {
@@ -833,6 +849,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Виділіть завдання статусом і кольором"
+          }
+        }
+      }
+    },
+    "hold_on_task_task_list" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold on task to change task order in the list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Утримуйте завдання, щоб змінити порядок завдань у списку"
           }
         }
       }
@@ -1632,6 +1664,49 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Субота"
+          }
+        }
+      }
+    },
+    "Swipe right to complete task" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe right to complete task"
+          }
+        }
+      }
+    },
+    "swipe_left_task_list" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe left to edit or delete task"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проведіть пальцем ліворуч, щоб редагувати або видалити задачу"
+          }
+        }
+      }
+    },
+    "swipe_right_task_list" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe right to complete task"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проведіть пальцем праворуч, щоб виконати задачу"
           }
         }
       }

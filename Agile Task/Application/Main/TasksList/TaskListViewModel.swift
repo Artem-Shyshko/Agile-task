@@ -20,6 +20,7 @@ final class TaskListViewModel: ObservableObject {
     @Published var isShowingAddTask: Bool = false
     @Published var taskSortingOption: TaskDateSorting = .all
     @Published var calendarDate = Date()
+    @Published var isShowingInfoView = false
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []

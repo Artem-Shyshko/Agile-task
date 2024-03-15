@@ -36,6 +36,7 @@ struct SettingsTaskView: View {
     .modifier(TabViewChildModifier())
     .onChange(of: viewModel.settings) { _ in
       viewModel.settingsRepository.save(viewModel.settings)
+      appState.settings = viewModel.settings
     }
     .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.isShowingAlert) {
       Button("Cancel", role: .cancel) {}
@@ -55,9 +56,6 @@ struct SettingsTaskView: View {
           try? await viewModel.getPermissionState()
         }
       }
-    }
-    .onChange(of: viewModel.settings.appLanguage) { newValue in
-      appState.language = newValue
     }
   }
 }

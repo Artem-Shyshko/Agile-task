@@ -90,6 +90,9 @@ struct TaskListView: View {
       .overlay(alignment: .bottom, content: {
         newTaskView()
       })
+      .overlay(alignment: .bottomLeading, content: {
+        infoButton()
+      })
       .onChange(of: viewModel.calendarDate) { _ in
         viewModel.udateCalendarInfo()
       }
@@ -389,6 +392,61 @@ private extension TaskListView {
         .background(themeManager.theme.sectionColor(colorScheme))
       }
     }
+  }
+  
+  @ViewBuilder
+  func infoButton() -> some View {
+    HStack(alignment: .bottom, spacing: 0) {
+      Button {
+        viewModel.isShowingInfoView.toggle()
+      } label: {
+        Image("Info")
+          .resizable()
+          .scaledToFit()
+          .frame(width: 24, height: 23)
+      }
+      .buttonStyle(.borderless)
+      .padding(.leading, 5)
+      
+      if viewModel.isShowingInfoView {
+        VStack(spacing: Constants.shared.listRowSpacing) {
+          swipeView(title: "swipe_right_task_list")
+          swipeView(title: "swipe_left_task_list")
+          swipeView(title: "double_tap_task_list")
+          swipeView(title: "hold_on_task_task_list")
+        }
+      }
+    }
+    .padding(.bottom, 20)
+  }
+  
+  @ViewBuilder
+  func swipeView(title: LocalizedStringKey) -> some View {
+    let arrowScale: CGFloat = 20
+    
+    HStack {
+      Image("Arrow Left")
+        .renderingMode(.template)
+        .resizable()
+        .scaledToFit()
+        .frame(width: arrowScale)
+      Spacer()
+      Text(title)
+        .font(.helveticaRegular(size: 14))
+        .multilineTextAlignment(.center)
+      Spacer()
+      Image("Arrow Right")
+        .renderingMode(.template)
+        .resizable()
+        .scaledToFit()
+        .frame(width: arrowScale)
+    }
+    .padding(.vertical, 10)
+    .padding(.horizontal, 5)
+    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
+    .background(themeManager.theme.sectionColor(colorScheme))
+    .cornerRadius(5)
+    .padding(.horizontal, 5)
   }
 }
 

@@ -64,7 +64,7 @@ struct Master_TaskApp: App {
                 if settings.securityOption != .none {
                     showAuthView = true
                 }
-                appState.language = settings.appLanguage
+                appState.settings = settings
             }
             .task(id: scenePhase) {
                 if scenePhase == .active {
@@ -72,8 +72,7 @@ struct Master_TaskApp: App {
                 }
             }
             .onChange(of: scenePhase) { scene in
-                let settings = settingsRepository.get()
-                if settings.securityOption != .none {
+                if appState.settings.securityOption != .none {
                     if scene == .background {
                         authManager.state = .noneAuth
                     }

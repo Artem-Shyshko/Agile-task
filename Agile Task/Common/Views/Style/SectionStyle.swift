@@ -22,6 +22,6 @@ struct SectionStyle: ViewModifier {
             .padding(.leading, 10)
             .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(4)
-            .environment(\.locale, Locale(identifier: appState.language.identifier))
+            .environment(\.locale, Locale(identifier: appState.settings.appLanguage.identifier))
     }
 }

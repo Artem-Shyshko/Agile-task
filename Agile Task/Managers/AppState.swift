@@ -8,5 +8,5 @@
 import Foundation
 
 final class AppState: ObservableObject {
-    @Published var language: AppLanguage = .english
+    @Published var settings: SettingsDTO = SettingsDTO(object: SettingsObject())
 }
