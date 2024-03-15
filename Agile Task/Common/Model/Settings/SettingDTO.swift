@@ -45,8 +45,10 @@ extension SettingsDTO {
     }
     
     private var language: AppLanguage {
-        switch Locale.current.identifier {
-        case "uk":
+        guard let region = Locale.current.region?.identifier else { return .english }
+        
+        switch region {
+        case "UA":
             return .ukrainian
         default:
             return .english

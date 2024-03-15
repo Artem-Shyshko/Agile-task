@@ -22,7 +22,7 @@ struct BulletTaskRow: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 12, height: 12)
-            Text(bullet.title)
+            Text(LocalizedStringKey(bullet.title))
         }
         .foregroundColor(foregroundColor())
         .listRowBackground(

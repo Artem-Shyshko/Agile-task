@@ -11,7 +11,7 @@ import MasterAppsUI
 
 final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
-    @Persisted var appLanguage: AppLanguage? = .english
+    @Persisted var appLanguage: AppLanguage?
     @Persisted var startWeekFrom: WeekStarts = .monday
     @Persisted var taskDateFormat: TaskDateFormmat = .dayMonthYear
     @Persisted var timeFormat: TimeFormat = .twentyFour

@@ -23,7 +23,7 @@ struct CheckboxTaskRow: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 12, height: 12)
-            Text(checkbox.title)
+            Text(LocalizedStringKey(checkbox.title))
         }
         .foregroundColor(foregroundColor())
         .strikethrough(checkbox.isCompleted , color: .completedTaskLineColor)

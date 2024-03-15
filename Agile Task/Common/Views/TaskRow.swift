@@ -106,7 +106,7 @@ private extension TaskRow {
                         .frame(width: 16, height: 16)
                 }
                 
-                Text(task.title)
+                Text(LocalizedStringKey(task.title))
                     .font(.helveticaRegular(size: 16))
             }
             Spacer()
@@ -217,7 +217,7 @@ private extension TaskRow {
     @ViewBuilder
     func descriptionView() -> some View {
         if let description = task.description, task.showCheckboxes {
-            Text(description)
+            Text(LocalizedStringKey(description))
                 .font(.helveticaRegular(size: 16))
                 .foregroundColor(foregroundColor())
                 .padding(.horizontal, -10)

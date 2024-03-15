@@ -132,7 +132,7 @@ extension TaskDTO {
             TaskDTO(
                 id: ObjectId.generate(),
                 status: .like,
-                title: "Welcome to Agile task!",
+                title: "welcome_task_mock",
                 date: Date(),
                 dateOption: .today,
                 time: Date(),
@@ -151,8 +151,8 @@ extension TaskDTO {
             TaskDTO(
                 id: ObjectId.generate(),
                 status: .none,
-                title: "Use broad tasks feature lists, status, description, checklists, bullet lists, date and time, set reminders and make tasks recurring.",
-                description: "Add more details in the task description.",
+                title: "use_broad_task_mock",
+                description: "add_more_detail_task_mock",
                 timePeriod: .am,
                 colorName: Color.sectionColor.name,
                 isCompleted: false,
@@ -160,37 +160,19 @@ extension TaskDTO {
                 showCheckboxes: true,
                 checkBoxArray:
                     [
-                        .init(id: ObjectId.generate(), title: "Add checklists to your tasks.", sortingOrder: 0),
-                        .init(id: ObjectId.generate(), title: "Control progress on the go.", isCompleted: true, sortingOrder: 1)
+                        .init(id: ObjectId.generate(), title: "add_checklists_task_mock", sortingOrder: 0),
+                        .init(id: ObjectId.generate(), title: "control_progress_task_mock", isCompleted: true, sortingOrder: 1)
                     ],
                 bulletArray:
                     [
-                        .init(id: ObjectId.generate(), title: "Add bullet lists to your tasks", sortingOrder: 0),
-                        .init(id: ObjectId.generate(), title: "Determinate points and easily navigate thrue the task details", sortingOrder: 1)
+                        .init(id: ObjectId.generate(), title: "add_bullet_task_mock", sortingOrder: 0),
+                        .init(id: ObjectId.generate(), title: "determinate_points_task_mock", sortingOrder: 1)
                     ]
             ),
             TaskDTO(
                 id: ObjectId.generate(),
-                status: .important,
-                title: "Agile Task Gestures",
-                timePeriod: .am,
-                colorName: Color.sectionColor.name,
-                isCompleted: false,
-                sortingOrder: 3,
-                showCheckboxes: true,
-                checkBoxArray: [],
-                bulletArray:
-                    [
-                        .init(id: ObjectId.generate(), title: "Swipe right to complete task", sortingOrder: 0),
-                        .init(id: ObjectId.generate(), title: "Swipe left to edit or delete task", sortingOrder: 1),
-                        .init(id: ObjectId.generate(), title: "Double tap for quick task completion", sortingOrder: 2),
-                        .init(id: ObjectId.generate(), title: "Hold on task to change task order in the list", sortingOrder: 3)
-                    ]
-            ),
-            TaskDTO(
-                id: ObjectId.generate(),
-                status: .like,
-                title: "Highlight tasks with different colors ",
+                status: .love,
+                title: "highlight_tasks_mock",
                 timePeriod: .am,
                 colorName: Color.teaRose.name,
                 isCompleted: false,
@@ -201,18 +183,7 @@ extension TaskDTO {
             ),
             TaskDTO(
                 id: ObjectId.generate(),
-                title: "Easily navigate through the task details.",
-                timePeriod: .am,
-                colorName: Color.aquamarineColor.name,
-                isCompleted: false,
-                sortingOrder: 1,
-                showCheckboxes: false,
-                checkBoxArray: [],
-                bulletArray: []
-            ),
-            TaskDTO(
-                id: ObjectId.generate(),
-                title: "Adjust how you want to manage closed tasks",
+                title: "manage_closed_tasks_mock",
                 timeOption: .none,
                 timePeriod: .am,
                 colorName: Color.sectionColor.name,
