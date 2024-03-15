@@ -54,11 +54,12 @@ private extension MoreOurAppsView {
         }
     }
     
+    @ViewBuilder
     func reviewOurAppsButton() -> some View {
-        Button("Review our apps in the Apps store") {
-            
+        if let url = URL(string: Constants.shared.appStoreLink) {
+            Link("Review our apps in the Apps store", destination: url)
+                .modifier(SectionStyle())
         }
-        .modifier(SectionStyle())
     }
     
     @MainActor func leaveReviewButton() -> some View {

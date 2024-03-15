@@ -31,6 +31,7 @@ final class Constants {
     let privacyPolicyURL = "http://agile-app.com/agile-task/privacy-policy"
     let supportURL = "support@agile-app.com"
     let appURL = "http://agile-app.com/agile-task"
+    let appStoreLink = "https://apps.apple.com/ua/app/agile-task-daily-to-do-list/id6471654166"
     
     lazy var local = Locale(identifier: "us")
     lazy var currentDate = Date()
