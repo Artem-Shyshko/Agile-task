@@ -31,7 +31,7 @@ public struct DateSegmentedControl: View {
             ForEach(TaskDateSorting.allCases, id: \.rawValue) { dateSorting in
                 HStack(alignment: .center, spacing: 0) {
                     Text(LocalizedStringKey(dateSorting.description))
-                        .font(.helveticaRegular(size: 14))
+                        .font(.helveticaRegular(size: 16))
                         .foregroundStyle(selectedDateSorting == dateSorting ? .black : .white)
                         .padding(.vertical, 3)
                         .frame(maxWidth: .infinity)

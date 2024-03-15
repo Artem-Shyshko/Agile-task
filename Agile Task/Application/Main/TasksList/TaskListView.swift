@@ -220,15 +220,13 @@ private extension TaskListView {
         VStack {
           switch viewModel.taskSortingOption {
           case .today:
-            TimeControlView(
-              title: viewModel.currentDate.format(viewModel.dateFormat())
-            ) {
+            timeControl(title: viewModel.currentDate.format(viewModel.dateFormat())) {
               viewModel.minusFromCurrentDate(component: .day)
             } rightButtonAction: {
               viewModel.addToCurrentDate(component: .day)
             }
           case .week:
-            TimeControlView(title: "Week " + viewModel.currentDate.weekString) {
+            timeControl(title: "Week ") {
               if viewModel.isValidWeek() {
                 viewModel.minusFromCurrentDate(component: .weekOfYear)
               }
@@ -259,14 +257,55 @@ private extension TaskListView {
     }
   }
   
+  func timeControl(title: String, leftButtonAction: @escaping ()->Void, rightButtonAction: @escaping ()->Void) -> some View {
+    HStack {
+      Button {
+        leftButtonAction()
+      } label: {
+        Image("Arrow Left")
+          .renderingMode(.template)
+          .resizable()
+          .scaledToFit()
+          .frame(width: 23, height: 45)
+      }
+      
+      HStack {
+        Text(LocalizedStringKey(title))
+        if viewModel.taskSortingOption == .week {
+          Text(viewModel.currentDate.weekString)
+        }
+      }
+      .font(.helveticaRegular(size: 16))
+      .frame(width: 110)
+      
+      Button {
+        rightButtonAction()
+      } label: {
+        Image("Arrow Right")
+          .renderingMode(.template)
+          .resizable()
+          .scaledToFit()
+          .frame(width: 23, height: 45)
+      }
+    }
+  }
+  
   func weekSectionHeader(key: String) -> some View {
     HStack {
       let title = viewModel.sectionHeader(key).components(separatedBy: " ").first ?? ""
       Spacer()
       if key == Date().fullDayShortDateFormat {
-        Text("+++ \(title) +++")
+        HStack(spacing: 2) {
+          Text("+++")
+          Text(LocalizedStringKey(title))
+          Text("+++")
+        }
       } else {
-        Text("--- \(title) ---")
+        HStack(spacing: 2) {
+          Text("---")
+          Text(LocalizedStringKey(title))
+          Text("---")
+        }
       }
       Spacer()
     }
@@ -399,7 +438,7 @@ private extension TaskListView {
   
   @ViewBuilder
   func infoButton() -> some View {
-    HStack(alignment: .bottom, spacing: 0) {
+    HStack(alignment: .center, spacing: 0) {
       Button {
         viewModel.isShowingInfoView.toggle()
       } label: {
@@ -412,37 +451,50 @@ private extension TaskListView {
       .padding(.leading, 5)
       
       if viewModel.isShowingInfoView {
-        VStack(spacing: Constants.shared.listRowSpacing) {
-          swipeView(title: "swipe_right_task_list")
-          swipeView(title: "swipe_left_task_list")
-          swipeView(title: "double_tap_task_list")
-          swipeView(title: "hold_on_task_task_list")
-        }
+        swipeView()
       }
     }
-    .padding(.bottom, 30)
+    .frame(height: 80)
+    .padding(.bottom, 10)
   }
   
   @ViewBuilder
-  func swipeView(title: LocalizedStringKey) -> some View {
+  func swipeView() -> some View {
     let arrowScale: CGFloat = 20
     
     HStack {
-      Image("Arrow Left")
-        .renderingMode(.template)
-        .resizable()
-        .scaledToFit()
-        .frame(width: arrowScale)
+      Button {
+        if viewModel.tipIndex == 0 {
+          viewModel.tipIndex = viewModel.tipsArray.count - 1
+        } else {
+          viewModel.tipIndex -= 1
+        }
+      } label: {
+        Image("Arrow Left")
+          .renderingMode(.template)
+          .resizable()
+          .scaledToFit()
+          .frame(width: arrowScale)
+      }
+      
       Spacer()
-      Text(title)
+      Text(viewModel.tipsArray[viewModel.tipIndex])
         .font(.helveticaRegular(size: 14))
         .multilineTextAlignment(.center)
       Spacer()
-      Image("Arrow Right")
-        .renderingMode(.template)
-        .resizable()
-        .scaledToFit()
-        .frame(width: arrowScale)
+      Button {
+        if viewModel.tipIndex == viewModel.tipsArray.count - 1 {
+          viewModel.tipIndex = 0
+        } else {
+          viewModel.tipIndex += 1
+        }
+      } label: {
+        Image("Arrow Right")
+          .renderingMode(.template)
+          .resizable()
+          .scaledToFit()
+          .frame(width: arrowScale)
+      }
     }
     .padding(.vertical, 10)
     .padding(.horizontal, 5)

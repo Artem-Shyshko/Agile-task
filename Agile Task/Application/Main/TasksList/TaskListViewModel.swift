@@ -21,6 +21,7 @@ final class TaskListViewModel: ObservableObject {
     @Published var taskSortingOption: TaskDateSorting = .all
     @Published var calendarDate = Date()
     @Published var isShowingInfoView = false
+    @Published var tipIndex = 0
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
@@ -34,6 +35,9 @@ final class TaskListViewModel: ObservableObject {
     private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
     var pastDate = Date()
+    let tipsArray: [LocalizedStringKey] = [
+        "swipe_right_task_list", "swipe_left_task_list", "double_tap_task_list", "hold_on_task_task_list"
+    ]
     
     init(loadedTasks: [TaskDTO] = []) {
         self.loadedTasks = loadedTasks

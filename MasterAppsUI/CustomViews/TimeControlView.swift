@@ -30,7 +30,7 @@ public struct TimeControlView: View {
                     .frame(width: 23, height: 45)
             }
             
-            Text(title)
+            Text(LocalizedStringKey(title))
                 .font(.helveticaRegular(size: 16))
                 .frame(width: 110)
             

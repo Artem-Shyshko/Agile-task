@@ -14,7 +14,7 @@ struct MasterTaskWidgetEntryView: View {
     
     enum Constants {
         static let horizontalPadding: CGFloat = 10
-        static let verticalPadding: CGFloat = 1
+        static let verticalPadding: CGFloat = 0.3
     }
     
     // MARK: - Entry
@@ -48,12 +48,12 @@ private extension MasterTaskWidgetEntryView {
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 22, height: 22)
+                    .frame(width: 22, height: 20)
             }
         }
         .foregroundStyle(foregroundColor()  )
         .padding(.horizontal, 10)
-        .padding(.top, 3)
+        .padding(.top, 7)
     }
     
     func divider() -> some View{

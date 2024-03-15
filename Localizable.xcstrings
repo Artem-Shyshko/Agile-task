@@ -17,7 +17,11 @@
         }
       }
     },
+    "---" : {
+
+    },
     "--- %@ ---" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -82,7 +86,11 @@
         }
       }
     },
+    "+++" : {
+
+    },
     "+++ %@ +++" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2009,6 +2017,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Тиждень"
+          }
+        }
+      }
+    },
+    "Week " : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тиждень "
           }
         }
       }
