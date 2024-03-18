@@ -53,6 +53,9 @@
         }
       }
     },
+    "%@" : {
+
+    },
     "%@/" : {
       "localizations" : {
         "uk" : {
@@ -85,6 +88,9 @@
           }
         }
       }
+    },
+    "%lld" : {
+
     },
     "+++" : {
 
@@ -833,6 +839,17 @@
         }
       }
     },
+    "Friday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "П'ятниця"
+          }
+        }
+      }
+    },
     "Hide from the list" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1531,6 +1548,17 @@
         }
       }
     },
+    "Saturday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Субота"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "fr" : {
@@ -1687,7 +1715,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Субота"
+            "value" : "Неділя"
           }
         }
       }
@@ -1874,6 +1902,17 @@
         }
       }
     },
+    "Thursday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Четвер"
+          }
+        }
+      }
+    },
     "Time" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1924,6 +1963,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завтра"
+          }
+        }
+      }
+    },
+    "Tuesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вівторок"
           }
         }
       }
@@ -2006,6 +2056,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відвідайте наш сайт"
+          }
+        }
+      }
+    },
+    "Wednesday" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Середа"
           }
         }
       }

@@ -33,12 +33,11 @@ final class Constants {
     let appURL = "http://agile-app.com/agile-task"
     let appStoreLink = "https://apps.apple.com/ua/app/agile-task-daily-to-do-list/id6471654166"
     
-    lazy var local = Locale(identifier: "us")
     lazy var currentDate = Date()
     
     lazy var dateFormatter = DateFormatter()
     
-    var calendar: Calendar  {
+    var calendar: Calendar {
         let weekStart = UserDefaults.standard.integer(forKey: "WeekStart")
         
         if weekStart == 0 {
@@ -47,6 +46,9 @@ final class Constants {
         
         var calendar = Calendar.current
         calendar.firstWeekday = UserDefaults.standard.integer(forKey: "WeekStart")
+        if let language = UserDefaults.standard.value(forKey: "AppLanguage") as? String {
+            calendar.locale = NSLocale(localeIdentifier: "\(language)_\(SettingsDTO.region)") as Locale
+        }
         
         return calendar
     }

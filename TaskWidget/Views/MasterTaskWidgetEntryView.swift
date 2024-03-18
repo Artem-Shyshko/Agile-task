@@ -53,7 +53,7 @@ private extension MasterTaskWidgetEntryView {
         }
         .foregroundStyle(foregroundColor()  )
         .padding(.horizontal, 10)
-        .padding(.top, 7)
+        .padding(.top, 10)
     }
     
     func divider() -> some View{

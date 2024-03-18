@@ -20,7 +20,6 @@ final class CalendarViewModel: ObservableObject {
         byAdding: .year,
         value: 10,
         to: Date())?.dateComponents([.year]).year ?? 0
-    let months = Calendar.current.standaloneMonthSymbols
     let calendarGridLayout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
     private lazy var pastDate = Date()

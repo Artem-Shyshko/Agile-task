@@ -93,6 +93,9 @@ private extension SettingsTaskView {
       options: AppLanguage.allCases,
       selection: $viewModel.settings.appLanguage
     )
+    .onChange(of: viewModel.settings.appLanguage) { newValue in
+      UserDefaults.standard.set(newValue.identifier, forKey: "AppLanguage")
+    }
   }
   
   func timeSection() -> some View {

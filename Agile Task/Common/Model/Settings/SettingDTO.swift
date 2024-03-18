@@ -47,14 +47,22 @@ extension SettingsDTO {
     }
     
     private var language: AppLanguage {
-        guard let region = Locale.current.region?.identifier else { return .english }
+        guard let language = Locale.current.language.languageCode?.identifier else { return .english }
         
-        switch region {
-        case "UA":
+        switch language {
+        case "uk":
+            UserDefaults.standard.set(language, forKey: "AppLanguage")
             return .ukrainian
         default:
+            UserDefaults.standard.set("en", forKey: "AppLanguage")
             return .english
         }
+    }
+    
+    static var region: String {
+        guard let region = Locale.current.region?.identifier else { return "US"}
+        
+        return region
     }
 }
 

@@ -14,6 +14,7 @@ public struct CustomCalendarView: View {
     var currentMonthDatesColor: Color
     var backgroundColor: Color
     var items: [CalendarItem]?
+    var months: [String]
     
     public init(
         selectedCalendarDay: Binding<Date>,
@@ -28,6 +29,7 @@ public struct CustomCalendarView: View {
         self.currentMonthDatesColor = currentMonthDatesColor
         self.backgroundColor = backgroundColor
         self.items = items
+        self.months = calendar.standaloneMonthSymbols
         viewModel.calendar = calendar
     }
     
@@ -119,11 +121,11 @@ private extension CustomCalendarView {
     
     func monthButton() -> some View {
         Menu {
-            ForEach(0..<viewModel.months.count, id: \.self) { index in
+            ForEach(0..<months.count, id: \.self) { index in
                 Button(action: {
                     viewModel.changeMoth(index: index, current: &calendarDate)
                 }, label: {
-                    Text(viewModel.months[index])
+                    Text(months[index])
                         .font(.helveticaRegular(size: 14))
                 })
             }
@@ -133,7 +135,7 @@ private extension CustomCalendarView {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 10, height: 10)
-                Text(calendarDate.monthString)
+                Text("\(months[(calendarDate.dateComponents([.month]).month ?? 1) - 1])")
             }
             .font(.helveticaBold(size: 14))
             .foregroundStyle(currentMonthDatesColor)
