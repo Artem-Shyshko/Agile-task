@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		750703942BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */; };
+		750703952BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */; };
+		750703962BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */; };
 		7511B3C62B99FF130090DB4E /* TermsOfUseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */; };
 		7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */; };
 		751712BB2BA2F96200F2B758 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 751712BA2BA2F96200F2B758 /* Localizable.xcstrings */; };
@@ -204,6 +207,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseButton.swift; sourceTree = "<group>"; };
 		7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyButton.swift; sourceTree = "<group>"; };
 		751712BA2BA2F96200F2B758 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -655,6 +659,7 @@
 			children = (
 				75677A2F2A813F380034C45B /* Assets.xcassets */,
 				75B58CFD2A82204700937923 /* Fonts */,
+				750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1007,6 +1012,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				752CEE592B3DBFD300CA1612 /* Helvetica-Bold.ttf in Resources */,
+				750703942BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */,
 				75F6A85A2B91CC86006A7067 /* Helvetica-Light.ttf in Resources */,
 				751712BB2BA2F96200F2B758 /* Localizable.xcstrings in Resources */,
 				75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */,
@@ -1019,6 +1025,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				750703952BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */,
 				752CEE442B3C63C100CA1612 /* Helvetica-Bold.ttf in Resources */,
 				751712BC2BA2F96200F2B758 /* Localizable.xcstrings in Resources */,
 				752CEE3C2B3C638600CA1612 /* Assets.xcassets in Resources */,
@@ -1031,6 +1038,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				750703962BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */,
 				751712BD2BA2F96200F2B758 /* Localizable.xcstrings in Resources */,
 				75E11CC02B4C34B0003B891B /* Assets.xcassets in Resources */,
 			);
