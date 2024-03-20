@@ -36,7 +36,6 @@ public struct TimeView: View {
     
     public var body: some View {
         HStack {
-            Spacer()
             TextField("", text: $time)
                 .cornerRadius(5)
                 .textFieldStyle(.roundedBorder)
@@ -94,8 +93,13 @@ public struct TimeView: View {
             })
         }
         .padding(.trailing, 15)
-        .onAppear {
-            isFocused = true
+        .toolbar {
+            ToolbarItem(placement: .keyboard) {
+                Button("Done") {
+                    isFocused = false
+                }
+                .frame(maxWidth: .infinity, alignment: .trailing)
+            }
         }
     }
 }
@@ -120,7 +124,7 @@ class TimeViewModel: ObservableObject {
             var minute = limitedString[index...]
             
             if let hourInt = Int(hour) {
-                hour = hourInt > maxHourTime ? "00" : hour
+                hour = hourInt > maxHourTime ? "12" : hour
             }
             
             if let minuteInt = Int(minute) {

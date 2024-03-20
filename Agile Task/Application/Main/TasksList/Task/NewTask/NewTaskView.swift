@@ -237,6 +237,7 @@ private extension NewTaskView {
                     timeFormat: viewModel.settings.timeFormat,
                     isTypedTime: .constant(false)
                 )
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
             }
         }
@@ -287,6 +288,7 @@ private extension NewTaskView {
                     timeFormat: viewModel.settings.timeFormat, 
                     isTypedTime: $viewModel.isTypedReminderTime
                 )
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
             } else if viewModel.reminder == .tomorrow || viewModel.reminder == .nextWeek {
                 TimeView(
@@ -295,6 +297,7 @@ private extension NewTaskView {
                     timeFormat: viewModel.settings.timeFormat, 
                     isTypedTime: $viewModel.isTypedReminderTime
                 )
+                .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
             }
         }

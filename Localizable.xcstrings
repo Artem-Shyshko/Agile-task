@@ -18,7 +18,14 @@
       }
     },
     "---" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "---"
+          }
+        }
+      }
     },
     "--- %@ ---" : {
       "extractionState" : "stale",
@@ -54,7 +61,14 @@
       }
     },
     "%@" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@/" : {
       "localizations" : {
@@ -90,10 +104,24 @@
       }
     },
     "%lld" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
     },
     "+++" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+++"
+          }
+        }
+      }
     },
     "+++ %@ +++" : {
       "extractionState" : "stale",
@@ -711,6 +739,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Визначайте точки та легко орієнтуйтеся в деталях задач."
+          }
+        }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Готово"
           }
         }
       }
