@@ -10,6 +10,8 @@
 		750703942BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */; };
 		750703952BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */; };
 		750703962BA86D9D0023D5FF /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */; };
+		7507039B2BA9F65C0023D5FF /* RecurringTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7507039A2BA9F65C0023D5FF /* RecurringTimeView.swift */; };
+		7507039C2BA9FB940023D5FF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A3CFFD2A99047D000F68BA /* Constants.swift */; };
 		7511B3C62B99FF130090DB4E /* TermsOfUseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */; };
 		7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */; };
 		751712BB2BA2F96200F2B758 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 751712BA2BA2F96200F2B758 /* Localizable.xcstrings */; };
@@ -208,6 +210,7 @@
 
 /* Begin PBXFileReference section */
 		750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		7507039A2BA9F65C0023D5FF /* RecurringTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTimeView.swift; sourceTree = "<group>"; };
 		7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfUseButton.swift; sourceTree = "<group>"; };
 		7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyButton.swift; sourceTree = "<group>"; };
 		751712BA2BA2F96200F2B758 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -785,6 +788,7 @@
 				7561D8452AEBB3930073F1D9 /* AppFeaturesView.swift */,
 				7590CF982AF3A01F0015B396 /* SearchableView.swift */,
 				752CEE1B2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift */,
+				7507039A2BA9F65C0023D5FF /* RecurringTimeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1088,6 +1092,7 @@
 				752CEDE32B3C573800CA1612 /* CheckboxRepository.swift in Sources */,
 				75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */,
 				75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */,
+				7507039B2BA9F65C0023D5FF /* RecurringTimeView.swift in Sources */,
 				75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */,
 				75677A2C2A813F360034C45B /* Master_TaskApp.swift in Sources */,
 				75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */,
@@ -1162,6 +1167,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7507039C2BA9FB940023D5FF /* Constants.swift in Sources */,
 				75E11CDD2B4C3736003B891B /* TaskDTO.swift in Sources */,
 				75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */,
 				75E11CEA2B4C37D2003B891B /* SettingDTO.swift in Sources */,

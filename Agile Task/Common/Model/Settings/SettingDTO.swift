@@ -19,6 +19,9 @@ struct SettingsDTO {
     var addNewTaskIn: AddingNewTask = .top
     var completedTask: CompletedTask = .hide
     var defaultReminder: DefaultReminder = .oneHourBefore
+    var dailyReminderOption: DailyReminderOption = .custom
+    var reminderTime: Date = Date()
+    var reminderTimePeriod: TimePeriod = .am
     var showPlusButton: Bool = true
     var isShowingInfoTips: Bool = true
     var isPushNotificationEnabled: Bool = true
@@ -37,6 +40,9 @@ extension SettingsDTO {
         taskDateSorting = object.taskDateSorting
         addNewTaskIn = object.addNewTaskIn ?? .top
         completedTask = object.completedTask ?? .moveToBottom
+        dailyReminderOption = object.dailyReminderOption ?? .custom
+        reminderTime = object.reminderTime ?? _reminderTime
+        reminderTimePeriod = object.reminderTimePeriod ?? .am
         defaultReminder = object.defaultReminder
         showPlusButton = object.showPlusButton
         isPushNotificationEnabled = object.isPushNotificationEnabled
@@ -66,4 +72,19 @@ extension SettingsDTO {
     }
 }
 
+private extension SettingsDTO {
+    var _reminderTime: Date {
+        Constants.shared.calendar.date(
+            bySettingHour: 9,
+            minute: 00,
+            second: 0, of: Date()
+        )!
+    }
+}
+
 extension SettingsDTO: Hashable {}
+
+enum DailyReminderOption: String, PersistableEnum, CaseIterable {
+    case none = "None"
+    case custom = "Custom"
+}

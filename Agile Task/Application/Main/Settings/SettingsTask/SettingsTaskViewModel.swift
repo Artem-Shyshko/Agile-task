@@ -13,6 +13,7 @@ final class SettingsTaskViewModel: ObservableObject {
     @Published var settings: SettingsDTO
     @Published var isShowingAlert = false
     @Published var isNotificationAccess = false
+    @Published var isTypedTime = false
     
     let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
     private let tasksRepository: TaskRepository = TaskRepositoryImpl()

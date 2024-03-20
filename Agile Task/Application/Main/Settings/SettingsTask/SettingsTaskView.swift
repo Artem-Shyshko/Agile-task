@@ -11,6 +11,7 @@ import MasterAppsUI
 
 struct SettingsTaskView: View {
   @StateObject var viewModel: SettingsTaskViewModel
+  @EnvironmentObject var lnManager: LocalNotificationManager
   @EnvironmentObject var appState: AppState
   @Environment(\.dismiss) var dismiss
   @Environment(\.scenePhase) var scenePhase
@@ -26,6 +27,7 @@ struct SettingsTaskView: View {
         defaultSortingSection()
         newTasksSection()
         completedTaskSection()
+        dailyReminder()
         addPlusButton()
         pushNotificationView()
         addInfoTipsButton()
@@ -57,6 +59,12 @@ struct SettingsTaskView: View {
           try? await viewModel.getPermissionState()
         }
       }
+    }
+    .onChange(of: viewModel.settings.dailyReminderOption) { newValue in
+        setupReminder(with: newValue)
+    }
+    .onChange(of: viewModel.isTypedTime) { _ in
+        setupReminder(with: viewModel.settings.dailyReminderOption)
     }
   }
 }
@@ -128,6 +136,33 @@ private extension SettingsTaskView {
       options: CompletedTask.allCases,
       selection: $viewModel.settings.completedTask
     )
+  }
+  
+  func dailyReminder() -> some View {
+      VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
+          HStack {
+              Text("Daily reminder")
+              Spacer()
+              Picker("", selection: $viewModel.settings.dailyReminderOption) {
+                  ForEach(DailyReminderOption.allCases, id: \.self) {
+                      Text($0.rawValue)
+                          .tag($0.rawValue)
+                  }
+              }
+              .pickerStyle(.menu)
+          }
+          .padding(.vertical, 3)
+          .modifier(SectionStyle())
+          
+          if viewModel.settings.dailyReminderOption == .custom {
+              RecurringTimeView(
+                  reminderTime: $viewModel.settings.reminderTime,
+                  timePeriod: $viewModel.settings.reminderTimePeriod,
+                  isTypedTime: $viewModel.isTypedTime,
+                  timeFormat: viewModel.settings.timeFormat
+              )
+          }
+      }
   }
   
   func weekStartsOnSection() -> some View {
@@ -212,6 +247,23 @@ private extension SettingsTaskView {
       .hAlign(alignment: .trailing)
       .padding(.vertical)
   }
+}
+
+private extension SettingsTaskView {
+    func setupReminder(with option: DailyReminderOption) {
+        switch option {
+        case .custom:
+            Task {
+                await lnManager.addDailyNotification(
+                    for: viewModel.settings.reminderTime,
+                    format: viewModel.settings.timeFormat,
+                    period: viewModel.settings.reminderTimePeriod
+                )
+            }
+        case .none:
+            lnManager.deleteNotification(with: Constants.shared.dailyNotificationID)
+        }
+    }
 }
 
 // MARK: - SettingsTaskView_Previews

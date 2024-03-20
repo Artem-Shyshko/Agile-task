@@ -69,7 +69,11 @@ struct TaskListView: View {
       }
       .task {
         try? await notificationManager.requestAuthorization()
-        await notificationManager.addDailyNotification()
+        await notificationManager.addDailyNotification(
+          for: viewModel.settings.reminderTime,
+          format: viewModel.settings.timeFormat,
+          period: viewModel.settings.reminderTimePeriod
+        )
       }
       .modifier(TabViewChildModifier())
       .onChange(of: scenePhase) { newValue in

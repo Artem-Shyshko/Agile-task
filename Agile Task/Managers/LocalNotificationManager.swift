@@ -6,12 +6,14 @@
 //
 
 import NotificationCenter
+import MasterAppsUI
 
 @MainActor
 final class LocalNotificationManager: NSObject, ObservableObject {
     
     let notificationCenter = UNUserNotificationCenter.current()
     var pendingNotifications = [UNNotificationRequest]()
+    let taskRepository: TaskRepository = TaskRepositoryImpl()
     
     override init() {
         super.init()
@@ -68,15 +70,40 @@ final class LocalNotificationManager: NSObject, ObservableObject {
         await schedule(localNotification: notification)
     }
     
-    func addDailyNotification() async {
-        var dateComponents = DateComponents()
-        dateComponents.hour = 9
-        dateComponents.minute = 0
+    func addDailyNotification(for date: Date, format: TimeFormat, period: TimePeriod) async {
+        deleteNotification(with: Constants.shared.dailyNotificationID)
+        var dateComponents = Constants.shared.calendar.dateComponents([.hour, .minute], from: date)
+        let tomorrow = Date().startDay.byAdding(component: .day, value: 1)!
+        var tasks = taskRepository.getTaskList()
+        
+        if format == .twelve {
+            if period == .pm, dateComponents.hour! < 12 {
+                dateComponents.hour! += 12
+            } else if period == .am, dateComponents.hour! >= 12 {
+                dateComponents.hour! -= 12
+            }
+            
+            if dateComponents.hour! > Constants.shared.calendar.dateComponents([.hour, .minute], from: Date()).hour! {
+                tasks = groupedTasks(with: tasks, date: Date())
+                    .filter { $0.isCompleted == false }
+            } else {
+                tasks = groupedTasks(with: tasks, date: tomorrow)
+                    .filter { $0.isCompleted == false }
+            }
+        }
+        
+        var body = ""
+        
+        if tasks.count == 0 {
+            body = "Today activity: no scheduled tasks."
+        } else {
+            body = "Today activity: \(tasks.count) scheduled tasks."
+        }
         
         let notification = LocalNotification(
-            id: "DailyNotificationID",
+            id: Constants.shared.dailyNotificationID,
             title: "Agile Task",
-            body: "Amount of task for today",
+            body: body,
             dateComponents: dateComponents,
             repeats: true
         )
@@ -88,6 +115,30 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     func deleteNotification(with identifier: String) {
         notificationCenter.removePendingNotificationRequests(withIdentifiers: [identifier])
         removeAllDeliveredNotifications()
+    }
+    
+    func groupedTasks(with tasks: [TaskDTO], date: Date) -> [TaskDTO] {
+        let gropedTasks = Dictionary(grouping: tasks, by: \.parentId)
+        
+        var tasks: [TaskDTO] = []
+        gropedTasks.keys.forEach { id in
+            
+            guard let group = gropedTasks[id] else { return }
+            
+            if group.count > 1 {
+                if let task = group.first(where: {
+                    $0.createdDate.isSameDay(with: date)
+                }) {
+                    tasks.append(task)
+                }
+            } else if group.count == 1 {
+                if let task = group.first {
+                    tasks.append(task)
+                }
+            }
+        }
+        
+        return tasks
     }
 }
 

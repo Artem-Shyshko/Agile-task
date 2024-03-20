@@ -44,7 +44,7 @@ public struct TimeView: View {
                 .keyboardType(.numberPad)
                 .frame(width: 60)
                 .onAppear {
-                    time = "1200"
+                    time = date.getTimeString(with: timeFormat)
                 }
                 .onChange(of: time) { newValue in
                     time = viewModel.formatTimeInput(newValue, format: timeFormat)
@@ -133,5 +133,16 @@ class TimeViewModel: ObservableObject {
         }
         
         return formattedString
+    }
+}
+
+extension Date {
+    func getTimeString(with timeFormat: TimeFormat) -> String {
+        switch timeFormat {
+        case .twentyFour:
+            return self.format("HH:mm")
+        case .twelve:
+            return self.format("h:mm")
+        }
     }
 }

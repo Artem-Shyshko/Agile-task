@@ -19,6 +19,9 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var addNewTaskIn: AddingNewTask? = .top
     @Persisted var completedTask: CompletedTask? = .moveToBottom
     @Persisted var defaultReminder: DefaultReminder = .oneHourBefore
+    @Persisted var dailyReminderOption: DailyReminderOption?
+    @Persisted var reminderTime: Date?
+    @Persisted var reminderTimePeriod: TimePeriod?
     @Persisted var showPlusButton: Bool = true
     @Persisted var isShowingInfoTips: Bool?
     @Persisted var isPushNotificationEnabled: Bool = true
@@ -38,6 +41,9 @@ extension SettingsObject {
         timeFormat = dto.timeFormat
         taskDateSorting = dto.taskDateSorting
         addNewTaskIn = dto.addNewTaskIn
+        dailyReminderOption = dto.dailyReminderOption
+        reminderTime = dto.reminderTime
+        reminderTimePeriod = dto.reminderTimePeriod
         completedTask = dto.completedTask
         defaultReminder = dto.defaultReminder
         showPlusButton = dto.showPlusButton
