@@ -577,6 +577,7 @@
 			isa = PBXGroup;
 			children = (
 				751712BA2BA2F96200F2B758 /* Localizable.xcstrings */,
+				750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */,
 				75E11D082B4C3E06003B891B /* TaskWidgetExtension.entitlements */,
 				752CEE5C2B3DC0A800CA1612 /* Agile Task.entitlements */,
 				75677A2A2A813F360034C45B /* Agile Task */,
@@ -662,7 +663,6 @@
 			children = (
 				75677A2F2A813F380034C45B /* Assets.xcassets */,
 				75B58CFD2A82204700937923 /* Fonts */,
-				750703932BA86D9D0023D5FF /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
