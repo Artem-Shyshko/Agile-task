@@ -51,7 +51,7 @@ private extension MasterTaskWidgetEntryView {
                     .frame(width: 22, height: 20)
             }
         }
-        .foregroundStyle(foregroundColor()  )
+        .foregroundStyle(foregroundColor())
         .padding(.horizontal, 10)
         .padding(.top, 10)
     }

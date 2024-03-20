@@ -16,61 +16,63 @@ struct SubscriptionView: View {
     @State private var isPresentedManageSubscription = false
     
     var body: some View {
-        VStack(spacing: 2) {
-            planView(
-                title: "Free",
-                price: nil,
-                firstLine: "8 tasks",
-                secondLine: "1 project",
-                isSelected: purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription && selectedProduct == nil, duration: ""
-            )
-            
-            ForEach(purchaseManager.products) { product in
-                Button {
-                    selectedProduct = product
-                } label: {
-                    let duration: LocalizedStringKey = product.id == "agile_task_monthly" ? "month" : "year"
-                    planView(
-                        title: LocalizedStringKey(product.displayName),
-                        price: product.displayPrice,
-                        firstLine: "Unlimited tasks",
-                        secondLine: "Unlimited projects",
-                        isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id, duration: duration
-                    )
-                }
-                .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
-            }
-            
-            VStack {
-                AppFeaturesView()
-                    .foregroundColor(themeManager.theme.textColor(colorScheme))
-                    .padding(.top, 30)
-                    .scaleEffect(0.8)
+        ScrollView {
+            VStack(spacing: 2) {
+                planView(
+                    title: "Free",
+                    price: nil,
+                    firstLine: "8 tasks",
+                    secondLine: "1 project",
+                    isSelected: purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription && selectedProduct == nil, duration: ""
+                )
                 
-                Button {
-                    if let selectedProduct {
-                        Task {
-                            try await purchaseManager.purchase(selectedProduct)
-                        }
-                    } else if purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription {
-                        isPresentedManageSubscription = true
+                ForEach(purchaseManager.products) { product in
+                    Button {
+                        selectedProduct = product
+                    } label: {
+                        let duration: LocalizedStringKey = product.id == "agile_task_monthly" ? "month" : "year"
+                        planView(
+                            title: product.displayName.trimmingCharacters(in: .whitespacesAndNewlines),
+                            price: product.displayPrice,
+                            firstLine: "Unlimited tasks",
+                            secondLine: "Unlimited projects",
+                            isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id, duration: duration
+                        )
                     }
-                } label: {
-                    Text(purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription ? "Continue" : "Manage subscription")
+                    .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
                 }
-                .buttonStyle(PrimaryButtonStyle())
                 
-                HStack(spacing: 20) {
-                    PrivacyPolicyButton()
-                        .font(.helveticaRegular(size: 14))
-                    TermsOfUseButton()
-                        .font(.helveticaRegular(size: 14))
+                VStack {
+                    AppFeaturesView()
+                        .foregroundColor(themeManager.theme.textColor(colorScheme))
+                        .padding(.top, 30)
+                        .scaleEffect(0.8)
+                    
+                    Button {
+                        if let selectedProduct {
+                            Task {
+                                try await purchaseManager.purchase(selectedProduct)
+                            }
+                        } else if purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription {
+                            isPresentedManageSubscription = true
+                        }
+                    } label: {
+                        Text(purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription ? "Continue" : "Manage subscription")
+                    }
+                    .buttonStyle(PrimaryButtonStyle())
+                    
+                    HStack(spacing: 20) {
+                        PrivacyPolicyButton()
+                            .font(.helveticaRegular(size: 14))
+                        TermsOfUseButton()
+                            .font(.helveticaRegular(size: 14))
+                    }
+                    .padding(.top, 10)
                 }
-                .padding(.top, 10)
+                .offset(y: -30)
             }
-            .offset(y: -30)
+            .padding(.horizontal, 2)
         }
-        .padding(.horizontal, 2)
         .onAppear {
             Task {
                 try await purchaseManager.loadProducts()
@@ -81,7 +83,7 @@ struct SubscriptionView: View {
 }
 
 private extension SubscriptionView {
-    func planView(title: LocalizedStringKey, price: String?, firstLine: LocalizedStringKey, secondLine: LocalizedStringKey, isSelected: Bool, duration: LocalizedStringKey) -> some View {
+    func planView(title: String, price: String?, firstLine: LocalizedStringKey, secondLine: LocalizedStringKey, isSelected: Bool, duration: LocalizedStringKey) -> some View {
         VStack(alignment: .leading) {
             HStack {
                 Image("Check")
@@ -98,7 +100,7 @@ private extension SubscriptionView {
                         }
                     }
                     .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-                Text(title)
+                Text(LocalizedStringKey(title))
                     .font(.helveticaBold(size: 16))
                 Spacer()
                 if let price {
