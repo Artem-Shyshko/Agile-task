@@ -4,6 +4,13 @@
 <dict>
 	<key>LSMinimumSystemVersion</key>
 	<string>13</string>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIImageName</key>
+		<string>Load</string>
+		<key>UIColorName</key>
+		<string>LaunchScreenBackgroundColor</string>
+	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
