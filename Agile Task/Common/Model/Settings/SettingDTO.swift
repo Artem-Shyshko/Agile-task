@@ -57,10 +57,10 @@ extension SettingsDTO {
         
         switch language {
         case "uk":
-            UserDefaults.standard.set(language, forKey: "AppLanguage")
+            UserDefaults.standard.set(language, forKey: Constants.shared.appLanguage)
             return .ukrainian
         default:
-            UserDefaults.standard.set("en", forKey: "AppLanguage")
+            UserDefaults.standard.set("en", forKey: Constants.shared.appLanguage)
             return .english
         }
     }

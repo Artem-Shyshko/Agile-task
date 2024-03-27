@@ -78,7 +78,7 @@ struct Master_TaskApp: App {
                     }
                 }
             }
-            .environment(\.locale, Locale(identifier: settingsRepository.get().appLanguage.identifier))
+            .environment(\.locale, Locale(identifier: appState.settings.appLanguage.identifier))
         }
     }
 }

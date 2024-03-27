@@ -13,7 +13,7 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     
     let notificationCenter = UNUserNotificationCenter.current()
     var pendingNotifications = [UNNotificationRequest]()
-    let taskRepository: TaskRepository = TaskRepositoryImpl()
+    let projectRepository: ProjectRepository = ProjectRepositoryImpl()
     
     override init() {
         super.init()
@@ -73,8 +73,8 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     func addDailyNotification(for date: Date, format: TimeFormat, period: TimePeriod) async {
         deleteNotification(with: Constants.shared.dailyNotificationID)
         var dateComponents = Constants.shared.calendar.dateComponents([.hour, .minute], from: date)
-        let tomorrow = Date().startDay.byAdding(component: .day, value: 1)!
-        var tasks = taskRepository.getTaskList()
+        let project = projectRepository.getSelectedProject()
+        var tasks = project.tasks
         
         if format == .twelve {
             if period == .pm, dateComponents.hour! < 12 {
@@ -82,15 +82,10 @@ final class LocalNotificationManager: NSObject, ObservableObject {
             } else if period == .am, dateComponents.hour! >= 12 {
                 dateComponents.hour! -= 12
             }
-            
-            if dateComponents.hour! > Constants.shared.calendar.dateComponents([.hour, .minute], from: Date()).hour! {
-                tasks = groupedTasks(with: tasks, date: Date())
-                    .filter { $0.isCompleted == false }
-            } else {
-                tasks = groupedTasks(with: tasks, date: tomorrow)
-                    .filter { $0.isCompleted == false }
-            }
         }
+        
+        tasks = groupedTasks(with: tasks, date: Date())
+            .filter { $0.isCompleted == false }
         
         var body = ""
         

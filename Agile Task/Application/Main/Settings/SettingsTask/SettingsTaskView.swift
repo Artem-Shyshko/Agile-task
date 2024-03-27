@@ -102,7 +102,7 @@ private extension SettingsTaskView {
       selection: $viewModel.settings.appLanguage
     )
     .onChange(of: viewModel.settings.appLanguage) { newValue in
-      UserDefaults.standard.set(newValue.identifier, forKey: "AppLanguage")
+      UserDefaults.standard.set(newValue.identifier, forKey: Constants.shared.appLanguage)
     }
   }
   
