@@ -70,11 +70,12 @@ final class LocalNotificationManager: NSObject, ObservableObject {
         await schedule(localNotification: notification)
     }
     
-    func addDailyNotification(for date: Date, format: TimeFormat, period: TimePeriod) async {
+    func addDailyNotification(for reminderTime: Date, format: TimeFormat, period: TimePeriod) async {
         deleteNotification(with: Constants.shared.dailyNotificationID)
-        var dateComponents = Constants.shared.calendar.dateComponents([.hour, .minute], from: date)
+        var dateComponents = Constants.shared.calendar.dateComponents([.hour, .minute], from: reminderTime)
         let project = projectRepository.getSelectedProject()
         var tasks = project.tasks
+        let currentDate = Date()
         
         if format == .twelve {
             if period == .pm, dateComponents.hour! < 12 {
@@ -84,8 +85,18 @@ final class LocalNotificationManager: NSObject, ObservableObject {
             }
         }
         
-        tasks = groupedTasks(with: tasks, date: Date())
+        tasks = tasks
+            .lazy
             .filter { $0.isCompleted == false }
+            .filter {
+                if let taskDate = $0.date {
+                    return taskDate.isSameDay(with: currentDate)
+                } else if $0.isRecurring {
+                    return $0.createdDate.isSameDay(with: currentDate)
+                }
+                
+                return false
+            }
         
         var body = ""
         
