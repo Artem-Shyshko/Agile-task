@@ -38,6 +38,8 @@ final class NewTaskViewModel: ObservableObject {
     @Published var showReminderAlert = false
     @Published var showTitleAlert = false
     @Published var showColorPanel = false
+    @Published var isShowingStartDateCalendarPicker = false
+    @Published var isShowingReminderCalendarPicker = false
     @Published var alertTitle: String = ""
     @Published var calendarDate = Date()
     

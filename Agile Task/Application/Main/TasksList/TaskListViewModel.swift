@@ -22,6 +22,8 @@ final class TaskListViewModel: ObservableObject {
     @Published var calendarDate = Date()
     @Published var isShowingInfoView = false
     @Published var tipIndex = 0
+    @Published var isShowingCalendar = false
+    @Published var isShowingCalendarPicker: Bool = false
     
     @Published var loadedTasks: [TaskDTO] = []
     @Published var filteredTasks: [TaskDTO] = []
@@ -89,6 +91,17 @@ final class TaskListViewModel: ObservableObject {
         }
         
         return true
+    }
+    
+    func calendarPickerOptions() -> [CalendarPickerOptions] {
+        switch taskSortingOption {
+        case .today, .month:
+            return [.day, .month]
+        case .week:
+            return [.week, .year]
+        case .all:
+            return []
+        }
     }
     
     func handleIncomingURL(_ url: URL) -> Bool {

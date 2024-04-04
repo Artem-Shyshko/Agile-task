@@ -37,7 +37,7 @@ struct TaskListView: View {
           if viewModel.taskSortingOption == .month {
             CustomCalendarView(
               selectedCalendarDay: $viewModel.selectedCalendarDate,
-              calendarDate: $viewModel.calendarDate,
+              isShowingCalendarPicker: $viewModel.isShowingCalendar,
               currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
               backgroundColor: themeManager.theme.sectionColor(colorScheme),
               items: viewModel.calendarTasks,
@@ -99,6 +99,16 @@ struct TaskListView: View {
         if appState.settings.isShowingInfoTips {
           infoButton()
         }
+      })
+      .overlay(alignment: .top, content: {
+          if viewModel.isShowingCalendarPicker {
+              ZStack(alignment: .top) {
+                  Color.black
+                      .opacity(0.2)
+                      .ignoresSafeArea(.all)
+                  calendarPicker()
+              }
+          }
       })
       .onChange(of: viewModel.calendarDate) { _ in
         viewModel.udateCalendarInfo()
@@ -243,7 +253,7 @@ private extension TaskListView {
         }
         .frame(height: 30)
         .onTapGesture {
-          viewModel.currentDate = Constants.shared.currentDate
+            viewModel.isShowingCalendarPicker.toggle()
         }
         
         Spacer()
@@ -259,6 +269,18 @@ private extension TaskListView {
       .padding(.horizontal, 17)
       .frame(maxWidth: .infinity)
     }
+  }
+  
+  func calendarPicker() -> some View {
+      CalendarPickerView(
+          selectedCalendarDay: $viewModel.currentDate,
+          isShowing: $viewModel.isShowingCalendarPicker,
+          currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+          backgroundColor: themeManager.theme.sectionColor(colorScheme),
+          calendar: Constants.shared.calendar,
+          availableOptions: viewModel.calendarPickerOptions()
+      )
+      .padding(.top, 70)
   }
   
   func timeControl(title: String, leftButtonAction: @escaping ()->Void, rightButtonAction: @escaping ()->Void) -> some View {

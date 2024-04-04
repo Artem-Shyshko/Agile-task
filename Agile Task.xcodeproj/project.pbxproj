@@ -64,6 +64,9 @@
 		7537D0222AAA101300F64175 /* ProjectsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0212AAA101300F64175 /* ProjectsView.swift */; };
 		7537D0242AAA316200F64175 /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0232AAA316200F64175 /* NewProjectView.swift */; };
 		7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0262AAA391300F64175 /* ProjectObject.swift */; };
+		753DA8512BBDA76900A60849 /* CalendarDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DA8502BBDA76900A60849 /* CalendarDayView.swift */; };
+		753DA8532BBDA77C00A60849 /* CalendarPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DA8522BBDA77C00A60849 /* CalendarPickerView.swift */; };
+		753DA8552BBDA7B500A60849 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DA8542BBDA7B500A60849 /* String+Ext.swift */; };
 		753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DFB692B62A7FE00D4FD11 /* Theme.swift */; };
 		753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F581A2AC70293007FC650 /* SortingViewModel.swift */; };
 		75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB02AE97065001119A9 /* SettingsAccountView.swift */; };
@@ -262,6 +265,9 @@
 		7537D0212AAA101300F64175 /* ProjectsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectsView.swift; sourceTree = "<group>"; };
 		7537D0232AAA316200F64175 /* NewProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewProjectView.swift; sourceTree = "<group>"; };
 		7537D0262AAA391300F64175 /* ProjectObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectObject.swift; sourceTree = "<group>"; };
+		753DA8502BBDA76900A60849 /* CalendarDayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarDayView.swift; sourceTree = "<group>"; };
+		753DA8522BBDA77C00A60849 /* CalendarPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarPickerView.swift; sourceTree = "<group>"; };
+		753DA8542BBDA7B500A60849 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		753DFB692B62A7FE00D4FD11 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		753F581A2AC70293007FC650 /* SortingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewModel.swift; sourceTree = "<group>"; };
 		75474BB02AE97065001119A9 /* SettingsAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountView.swift; sourceTree = "<group>"; };
@@ -400,7 +406,9 @@
 				752CEE1F2B3C636300CA1612 /* DateSegmentedControl.swift */,
 				752CEE202B3C636300CA1612 /* TimeControlView.swift */,
 				752CEE212B3C636300CA1612 /* CalendarViewModel.swift */,
+				753DA8502BBDA76900A60849 /* CalendarDayView.swift */,
 				752CEE222B3C636300CA1612 /* CalendarView.swift */,
+				753DA8522BBDA77C00A60849 /* CalendarPickerView.swift */,
 				752CEE232B3C636300CA1612 /* RecurringView.swift */,
 				752CEE242B3C636300CA1612 /* TimeView.swift */,
 				752CEE472B3C64F700CA1612 /* TextFieldWithEnterButton.swift */,
@@ -427,6 +435,7 @@
 				752CEE2F2B3C638600CA1612 /* Font+Ext.swift */,
 				752CEE302B3C638600CA1612 /* Color+Ext.swift */,
 				752CEE312B3C638600CA1612 /* View+Ext.swift */,
+				753DA8542BBDA7B500A60849 /* String+Ext.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1149,12 +1158,15 @@
 				752CEE482B3C64F700CA1612 /* TextFieldWithEnterButton.swift in Sources */,
 				752CEE262B3C636300CA1612 /* DateSegmentedControl.swift in Sources */,
 				752CEE282B3C636300CA1612 /* CalendarViewModel.swift in Sources */,
+				753DA8552BBDA7B500A60849 /* String+Ext.swift in Sources */,
 				752CEE3E2B3C638600CA1612 /* SettingsButtonStyle.swift in Sources */,
 				752CEE292B3C636300CA1612 /* CalendarView.swift in Sources */,
 				752CEE3F2B3C638600CA1612 /* SectionStyle.swift in Sources */,
+				753DA8532BBDA77C00A60849 /* CalendarPickerView.swift in Sources */,
 				752CEE382B3C638600CA1612 /* Date+Ext.swift in Sources */,
 				752CEE252B3C636300CA1612 /* ColorPanel.swift in Sources */,
 				752CEE2A2B3C636300CA1612 /* RecurringView.swift in Sources */,
+				753DA8512BBDA76900A60849 /* CalendarDayView.swift in Sources */,
 				752CEE272B3C636300CA1612 /* TimeControlView.swift in Sources */,
 				752CEE3B2B3C638600CA1612 /* View+Ext.swift in Sources */,
 				752CEE2B2B3C636300CA1612 /* TimeView.swift in Sources */,
@@ -1348,7 +1360,6 @@
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app wants to use your Face ID. Plaese Hit OK to activate Face ID.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -1384,7 +1395,6 @@
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "This app wants to use your Face ID. Plaese Hit OK to activate Face ID.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;

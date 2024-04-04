@@ -22,6 +22,22 @@ final class CalendarViewModel: ObservableObject {
         to: Date())?.dateComponents([.year]).year ?? 0
     let calendarGridLayout = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
     
+    var fourteenYersAgo: Int {
+        calendar.date(
+            byAdding: .year,
+            value: -14,
+            to: Date()
+        )?.dateComponents([.year]).year ?? 0
+    }
+    
+    var sixteenYersInFuture: Int {
+        calendar.date(
+            byAdding: .year,
+            value: 16,
+            to: Date()
+        )?.dateComponents([.year]).year ?? 0
+    }
+    
     private lazy var pastDate = Date()
     
     // MARK: - Method
@@ -75,6 +91,29 @@ final class CalendarViewModel: ObservableObject {
     
     func isDisabledDate(_ date: Date) -> Bool {
         date < Date().byAdding(component: .day, value: -1)!.startDay
+    }
+    
+    func numberOfWeeksInYear(_ year: Int) -> Int {
+        let dateComponents = DateComponents(year: year, month: 1, day: 1)
+        let date = calendar.date(from: dateComponents)!
+        if let range = calendar.range(of: .weekOfYear, in: .yearForWeekOfYear, for: date) {
+            return range.count
+        }
+        
+        return 1
+    }
+    
+    func changeWeek(_ week: Int, current: inout Date) {
+        var dateComponents = calendar.dateComponents([.yearForWeekOfYear], from: current)
+        dateComponents.weekOfYear = week
+        current = calendar.date(from: dateComponents)!
+    }
+    
+    func canGetPreviousYear(from date: Date) -> Bool {
+        let currentYearComponent = Date().dateComponents([.year]).year ?? 2010
+        let dateYearComponent = date.dateComponents([.day, .month, .year]).year ?? 2010
+        let pastDate = currentYearComponent - 14
+        return dateYearComponent > pastDate
     }
 }
 

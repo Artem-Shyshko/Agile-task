@@ -81,6 +81,21 @@ import Foundation
     var fullDayShortDateFormat: String {
         self.format("EEEE d/M/yy")
     }
+     
+     /// Return full date string.
+     ///
+     /// - Returns: dd.MM.yyyy format
+     var fullDateTextField: String {
+         self.format("dd.MM.yyyy")
+     }
+     
+     var weekInt: Int {
+         Int(self.format("w")) ?? 1
+     }
+     
+     var yearInt: Int {
+         Int(self.yearString) ?? 2021
+     }
     
     /// Return full date string.
     ///
