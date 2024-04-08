@@ -1835,6 +1835,7 @@
       }
     },
     "Task should have title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2295,6 +2296,7 @@
       }
     },
     "You can't create task reminder without date/time" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

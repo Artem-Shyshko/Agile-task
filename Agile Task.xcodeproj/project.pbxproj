@@ -85,6 +85,7 @@
 		75677A2E2A813F360034C45B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75677A2D2A813F360034C45B /* WelcomeView.swift */; };
 		75677A302A813F380034C45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A2F2A813F380034C45B /* Assets.xcassets */; };
 		75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A322A813F380034C45B /* Preview Assets.xcassets */; };
+		7567E5AA2BC3D306007C1C97 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7567E5A92BC3D306007C1C97 /* Localizable.swift */; };
 		757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */; };
 		757B83672ACF125C00A26D73 /* MasterAppsUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 757B83662ACF125C00A26D73 /* MasterAppsUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		757B836A2ACF125C00A26D73 /* MasterAppsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */; };
@@ -287,6 +288,7 @@
 		75677A2D2A813F360034C45B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		75677A2F2A813F380034C45B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75677A322A813F380034C45B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		7567E5A92BC3D306007C1C97 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
 		757B83372ACDB4C200A26D73 /* MasterTaskConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MasterTaskConfiguration.storekit; sourceTree = "<group>"; };
 		757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
 		757B83642ACF125C00A26D73 /* MasterAppsUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MasterAppsUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -763,6 +765,7 @@
 				752CEE492B3C714100CA1612 /* Settings */,
 				75F3AD612ABCA72900660A99 /* LocalNotification.swift */,
 				753DFB692B62A7FE00D4FD11 /* Theme.swift */,
+				7567E5A92BC3D306007C1C97 /* Localizable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1089,6 +1092,7 @@
 				7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */,
 				75474BB62AEA9615001119A9 /* SubscriptionView.swift in Sources */,
 				752CEE4C2B3C723200CA1612 /* SettingDTO.swift in Sources */,
+				7567E5AA2BC3D306007C1C97 /* Localizable.swift in Sources */,
 				75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */,
 				75B58D092A82255300937923 /* View+Ext.swift in Sources */,
 				75C710382A8CE4BC008E8A62 /* SettingsView.swift in Sources */,

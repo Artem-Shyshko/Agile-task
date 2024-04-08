@@ -321,14 +321,19 @@ extension TaskListViewModel {
     func saveSortingOrder() {
         var orderedTasks = [TaskDTO]()
         
-        for (parentIndex, task) in filteredTasks.reversed().enumerated() {
+        for parentIndex in filteredTasks.indices {
+            /// Change order for all same tasks
             let tasks = loadedTasks
-                .filter { $0.parentId == task.parentId }
+                .filter { $0.parentId == filteredTasks[parentIndex].parentId }
             
             for task in tasks {
                 var task = task
                 task.sortingOrder = parentIndex
                 orderedTasks.append(task)
+                
+                if let currentTask = filteredTasks.firstIndex(where: { $0.id == task.id }) {
+                    filteredTasks[currentTask].sortingOrder = parentIndex
+                }
             }
         }
         
@@ -451,7 +456,7 @@ extension TaskListViewModel {
         return taskArray.sorted(by: {
             switch settings.taskSorting {
             case .manual:
-                return $0.sortingOrder > $1.sortingOrder
+                return $0.sortingOrder < $1.sortingOrder
             case .schedule:
                 if let lhsDueDate = $0.date, let rhsDueDate = $1.date {
                     return lhsDueDate < rhsDueDate

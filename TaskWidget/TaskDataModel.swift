@@ -57,7 +57,7 @@ class TaskDataModel {
             .sorted(by: {
                 switch settings.taskSorting {
                 case .manual:
-                    return $0.sortingOrder > $1.sortingOrder
+                    return $0.sortingOrder < $1.sortingOrder
                 case .schedule:
                     if let lhsDueDate = $0.date, let rhsDueDate = $1.date {
                         return lhsDueDate < rhsDueDate

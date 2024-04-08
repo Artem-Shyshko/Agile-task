@@ -370,11 +370,11 @@ final class NewTaskViewModel: ObservableObject {
                 var task = createTask()
                 
                 if settings.addNewTaskIn == .bottom {
+                    task.sortingOrder = taskList.count + 1
+                } else {
                     if let taskWithMinSortingOrder = taskList.min(by: { $0.sortingOrder < $1.sortingOrder }) {
                         task.sortingOrder = taskWithMinSortingOrder.sortingOrder - 1
                     }
-                } else {
-                    task.sortingOrder = taskList.count + 1
                 }
                 
                 addNotification(for: task)
