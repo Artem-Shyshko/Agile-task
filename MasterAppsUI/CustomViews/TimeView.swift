@@ -25,7 +25,7 @@ public struct TimeView: View {
     @Binding var isTypedTime: Bool
     var timeFormat: TimeFormat
     
-    @FocusState private var isFocused: Bool
+    @FocusState var isFocused: Bool
     
     public init(date: Binding<Date>, timePeriod: Binding<TimePeriod>, timeFormat: TimeFormat, isTypedTime: Binding<Bool>) {
         self._date = date
@@ -44,6 +44,7 @@ public struct TimeView: View {
                 .frame(width: 60)
                 .onAppear {
                     time = date.getTimeString(with: timeFormat)
+                    isFocused = true
                 }
                 .onChange(of: time) { newValue in
                     time = viewModel.formatTimeInput(newValue, format: timeFormat)
