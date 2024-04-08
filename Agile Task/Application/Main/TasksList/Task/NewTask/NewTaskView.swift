@@ -100,10 +100,7 @@ struct NewTaskView: View {
                 Text("Delete")
             }
         }
-        .alert("You can't create task reminder without date/time", isPresented: $viewModel.showReminderAlert) {
-            Button("OK") {}
-        }
-        .alert("Task should have title", isPresented: $viewModel.showTitleAlert) {
+        .alert(viewModel.error?.localized ?? "", isPresented: $viewModel.isShowingAlert) {
             Button("OK") {}
         }
     }
@@ -284,7 +281,7 @@ private extension NewTaskView {
                 TimeView(
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
-                    timeFormat: viewModel.settings.timeFormat, 
+                    timeFormat: viewModel.settings.timeFormat,
                     isTypedTime: $viewModel.isTypedReminderTime
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -293,7 +290,7 @@ private extension NewTaskView {
                 TimeView(
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
-                    timeFormat: viewModel.settings.timeFormat, 
+                    timeFormat: viewModel.settings.timeFormat,
                     isTypedTime: $viewModel.isTypedReminderTime
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
@@ -304,13 +301,13 @@ private extension NewTaskView {
     
     func colorView() -> some View {
         VStack(spacing: 3) {
-                Button {
-                    viewModel.showColorPanel.toggle()
-                } label: {
-                    HStack(spacing: 5) {
-                        setupIcon(with: .color)
-                        Text("Color")
-                        Spacer()
+            Button {
+                viewModel.showColorPanel.toggle()
+            } label: {
+                HStack(spacing: 5) {
+                    setupIcon(with: .color)
+                    Text("Color")
+                    Spacer()
                     viewModel.selectedColor
                         .frame(width: 20, height: 20)
                         .cornerRadius(4)
@@ -352,12 +349,14 @@ private extension NewTaskView {
     
     func tabBarSaveButton() -> some View {
         Button {
-            let isSaved = viewModel.saveButtonAction(
-                hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                editTask: editTask,
-                taskList: taskList
-            )
-            if isSaved { dismiss.callAsFunction() }
+            if viewModel.isValidForm() {
+                viewModel.saveButtonAction(
+                    hasUnlockedPro: purchaseManager.hasUnlockedPro,
+                    editTask: editTask,
+                    taskList: taskList
+                )
+                dismiss.callAsFunction()
+            }
         } label: {
             Text("Save")
         }
@@ -395,13 +394,14 @@ private extension NewTaskView {
     }
     
     func keyboardButtonAction() {
-        let isSaved = viewModel.saveButtonAction(
-            hasUnlockedPro: purchaseManager.hasUnlockedPro,
-            editTask: editTask,
-            taskList: taskList
-        )
-        
-        if isSaved { dismiss.callAsFunction() }
+        if viewModel.isValidForm() {
+            viewModel.saveButtonAction(
+                hasUnlockedPro: purchaseManager.hasUnlockedPro,
+                editTask: editTask,
+                taskList: taskList
+            )
+            dismiss.callAsFunction()
+        }
     }
     
     func colorsPanel() -> some View {

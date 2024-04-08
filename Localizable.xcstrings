@@ -17,6 +17,9 @@
         }
       }
     },
+    "-" : {
+
+    },
     "---" : {
       "localizations" : {
         "uk" : {
@@ -264,6 +267,23 @@
         }
       }
     },
+    "alert_task_weeks_recurring" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please select any day"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь ласка виберіть день"
+          }
+        }
+      }
+    },
     "All" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -290,6 +310,9 @@
           }
         }
       }
+    },
+    "Apply" : {
+
     },
     "Aquamarine" : {
       "localizations" : {

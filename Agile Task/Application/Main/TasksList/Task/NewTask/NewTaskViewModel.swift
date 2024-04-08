@@ -9,6 +9,12 @@ import SwiftUI
 import MasterAppsUI
 import RealmSwift
 
+enum NewTaskError: String, Error, Localizable {
+    case emptyTitle = "alert_task_title"
+    case reminder = "alert_task_reminder"
+    case weeksRecurring = "alert_task_weeks_recurring"
+}
+
 final class NewTaskViewModel: ObservableObject {
     private lazy var currentDate = Date()
     @Published var taskStatus: TaskStatus = .none
@@ -35,13 +41,12 @@ final class NewTaskViewModel: ObservableObject {
     @Published var showSubscriptionView = false
     @Published var isButtonPress = false
     @Published var showDeleteAlert = false
-    @Published var showReminderAlert = false
-    @Published var showTitleAlert = false
+    @Published var isShowingAlert = false
     @Published var showColorPanel = false
     @Published var isShowingStartDateCalendarPicker = false
     @Published var isShowingReminderCalendarPicker = false
-    @Published var alertTitle: String = ""
     @Published var calendarDate = Date()
+    @Published var error: NewTaskError?
     
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
@@ -331,24 +336,36 @@ final class NewTaskViewModel: ObservableObject {
         isCompleted.toggle()
     }
     
+    
+    func isValidForm() -> Bool {
+        error = nil
+        
+        if title.isEmpty {
+            error = NewTaskError.emptyTitle
+            isShowingAlert = true
+        }
+        
+        if reminder == .custom, !isTypedReminderTime {
+            error = NewTaskError.reminder
+            isShowingAlert = true
+        }
+        
+        if recurringConfiguration.option == .custom, 
+            recurringConfiguration.repeatEvery == .weeks,
+            recurringConfiguration.repeatOnDays.isEmpty {
+                error = NewTaskError.weeksRecurring
+                isShowingAlert = true
+        }
+        
+        return error == nil
+    }
+    
     func saveButtonAction(
         hasUnlockedPro: Bool,
         editTask: TaskDTO?,
-        taskList: [TaskDTO]) -> Bool {
-            guard !title.isEmpty else {
-                showTitleAlert = true
-                return false
-            }
-            
-            if reminder == .custom, !isTypedReminderTime {
-                alertTitle = "You can't create task reminder without date/time"
-                showReminderAlert = true
-                return false
-            }
-            
+        taskList: [TaskDTO]) {
             if let editTask {
                 writeEditedTask(editTask)
-                return true
             } else {
                 var task = createTask()
                 
@@ -362,8 +379,6 @@ final class NewTaskViewModel: ObservableObject {
                 
                 addNotification(for: task)
                 writeRecurringTaskArray(for: task)
-                
-                return true
             }
         }
     
