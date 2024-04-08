@@ -7,9 +7,17 @@
 
 import SwiftUI
 
-struct LoaderView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+public struct LoaderView: View {
+    
+    public init() {}
+    
+    public var body: some View {
+        ZStack {
+            Color.black.opacity(0.2)
+            ProgressView()
+                .progressViewStyle(.circular)
+        }
+        .ignoresSafeArea()
     }
 }
 

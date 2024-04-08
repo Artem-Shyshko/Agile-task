@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import MasterAppsUI
 
 extension View {
     func hAlign(alignment: Alignment) -> some View {
@@ -23,6 +24,13 @@ extension View {
             action()
         } label: {
             Image("Arrow Left")
+        }
+    }
+    
+    @ViewBuilder
+    func loaderView(show: Bool) -> some View {
+        if show {
+            LoaderView()
         }
     }
 }

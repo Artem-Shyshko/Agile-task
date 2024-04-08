@@ -31,14 +31,7 @@ struct SettingsAccountView: View {
             Button("OK", role: .cancel, action: {})
         }
         .overlay {
-            if purchaseManager.showProcessView {
-                ZStack {
-                    Color.black.opacity(0.2)
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                }
-                .ignoresSafeArea()
-            }
+            loaderView(show: purchaseManager.showProcessView)
         }
     }
 }
