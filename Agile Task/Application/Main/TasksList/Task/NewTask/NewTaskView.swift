@@ -61,7 +61,7 @@ struct NewTaskView: View {
         }
         .modifier(TabViewChildModifier())
         .onAppear {
-            isFocusedField = .title
+            isFocusedField = editTask == nil ? .title : nil
             viewModel.localNotificationManager = localNotificationManager
             viewModel.updateFromEditTask(editTask)
         }
@@ -231,7 +231,8 @@ private extension NewTaskView {
                     date: $viewModel.taskTime,
                     timePeriod: $viewModel.selectedDateTimePeriod,
                     timeFormat: viewModel.settings.timeFormat,
-                    isTypedTime: .constant(false)
+                    isTypedTime: .constant(false),
+                    isFocus: editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
@@ -282,7 +283,8 @@ private extension NewTaskView {
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
                     timeFormat: viewModel.settings.timeFormat,
-                    isTypedTime: $viewModel.isTypedReminderTime
+                    isTypedTime: $viewModel.isTypedReminderTime,
+                    isFocus: editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
@@ -291,7 +293,8 @@ private extension NewTaskView {
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
                     timeFormat: viewModel.settings.timeFormat,
-                    isTypedTime: $viewModel.isTypedReminderTime
+                    isTypedTime: $viewModel.isTypedReminderTime,
+                    isFocus: editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())

@@ -159,7 +159,8 @@ private extension SettingsTaskView {
                   reminderTime: $viewModel.settings.reminderTime,
                   timePeriod: $viewModel.settings.reminderTimePeriod,
                   isTypedTime: $viewModel.isTypedTime,
-                  timeFormat: viewModel.settings.timeFormat
+                  timeFormat: viewModel.settings.timeFormat,
+                  isFocus: false
               )
           }
       }

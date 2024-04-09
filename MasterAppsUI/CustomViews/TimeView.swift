@@ -24,14 +24,16 @@ public struct TimeView: View {
     @Binding var timePeriod: TimePeriod
     @Binding var isTypedTime: Bool
     var timeFormat: TimeFormat
+    var isFocus: Bool
     
     @FocusState var isFocused: Bool
     
-    public init(date: Binding<Date>, timePeriod: Binding<TimePeriod>, timeFormat: TimeFormat, isTypedTime: Binding<Bool>) {
+    public init(date: Binding<Date>, timePeriod: Binding<TimePeriod>, timeFormat: TimeFormat, isTypedTime: Binding<Bool>, isFocus: Bool) {
         self._date = date
         self._timePeriod = timePeriod
         self.timeFormat = timeFormat
         self._isTypedTime = isTypedTime
+        self.isFocus = isFocus
     }
     
     public var body: some View {
@@ -44,7 +46,9 @@ public struct TimeView: View {
                 .frame(width: 60)
                 .onAppear {
                     time = date.getTimeString(with: timeFormat)
-                    isFocused = true
+                    if isFocus {
+                        isFocused = true
+                    }
                 }
                 .onChange(of: time) { newValue in
                     time = viewModel.formatTimeInput(newValue, format: timeFormat)
@@ -106,7 +110,7 @@ public struct TimeView: View {
 }
 
 #Preview {
-    TimeView(date: .constant(Date()), timePeriod: .constant(.pm), timeFormat: .twentyFour, isTypedTime: .constant(false))
+    TimeView(date: .constant(Date()), timePeriod: .constant(.pm), timeFormat: .twentyFour, isTypedTime: .constant(false), isFocus: false)
 }
 
 class TimeViewModel: ObservableObject {

@@ -13,6 +13,7 @@ struct RecurringTimeView: View {
     @Binding var timePeriod: TimePeriod
     @Binding var isTypedTime: Bool
     var timeFormat: TimeFormat
+    var isFocus: Bool
     
     var body: some View {
         HStack {
@@ -33,7 +34,8 @@ struct RecurringTimeView: View {
                     date: $reminderTime,
                     timePeriod: $timePeriod,
                     timeFormat: timeFormat,
-                    isTypedTime: $isTypedTime
+                    isTypedTime: $isTypedTime,
+                    isFocus: isFocus
                 )
             }
         }
@@ -46,6 +48,7 @@ struct RecurringTimeView: View {
         reminderTime: .constant(Date()),
         timePeriod: .constant(.am),
         isTypedTime: .constant(false),
-        timeFormat: .twelve
+        timeFormat: .twelve,
+        isFocus: false
     )
 }
