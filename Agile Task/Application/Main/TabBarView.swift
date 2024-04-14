@@ -92,26 +92,14 @@ private extension TabBarView {
     func customTabItem(_ tint: Color = .blue, inActiveTint: Color = .white) -> some View {
         HStack(spacing: 0) {
             ForEach(Tab.allCases, id: \.id) {
-                TabItem(
-                    tint: tint,
-                    inActiveTint: inActiveTint,
-                    tab: $0,
-                    activeTab: $selectedTab
-                )
+                tabItem(tab: $0)
             }
         }
         .padding(.horizontal, 15)
         .frame(height: 100)
     }
-}
-
-fileprivate struct TabItem: View {
-    var tint: Color
-    var inActiveTint: Color
-    var tab: Tab
-    @Binding var activeTab: Tab
     
-    var body: some View {
+    func tabItem(tab: Tab) -> some View {
         VStack(spacing: 5) {
             Image(tab.imageName)
                 .resizable()
@@ -125,7 +113,18 @@ fileprivate struct TabItem: View {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .onTapGesture {
-            activeTab = tab
+            selectedTab = tab
+            
+            if selectedTab == tab {
+                switch selectedTab {
+                case .taskList:
+                    taskListNavigationStack = []
+                case .projects:
+                    return
+                case .settings:
+                    settingsNavigationStack = []
+                }
+            }
         }
     }
 }
