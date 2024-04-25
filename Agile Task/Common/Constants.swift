@@ -34,6 +34,8 @@ final class Constants {
     let appStoreLink = "https://apps.apple.com/ua/app/agile-task-daily-to-do-list/id6471654166"
     let dailyNotificationID = "DailyNotificationID"
     let appLanguage = "AppLanguage"
+    let yearlySubscriptionID = "agile_task_yearly"
+    let monthlySubscriptionID = "agile_task_monthly"
     
     lazy var currentDate = Date()
     

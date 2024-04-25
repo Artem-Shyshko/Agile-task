@@ -34,3 +34,13 @@ extension ProjectDTO {
         )
     }
 }
+
+extension ProjectDTO: Equatable, Hashable {
+    static func == (lhs: ProjectDTO, rhs: ProjectDTO) -> Bool {
+        if lhs.id == rhs.id {
+           return true
+       } else {
+           return false
+       }
+    }
+}

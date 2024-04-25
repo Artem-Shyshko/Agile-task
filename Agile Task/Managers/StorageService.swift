@@ -45,6 +45,25 @@ final class StorageService {
         }
     }
     
+    func fetchAsync<T: Object>(by type: T.Type) async -> [T] {
+        await withCheckedContinuation { continuation in
+            // Perform Realm operations on a background thread
+            DispatchQueue.global(qos: .background).async {
+                autoreleasepool {
+                    do {
+                        let realm = try Realm()
+                        let results = realm.objects(T.self)
+                        let models = Array(results) // Convert results to Array
+                        continuation.resume(returning: models)
+                    } catch {
+                        print("Error fetching data from Realm: \(error)")
+                        continuation.resume(returning: [])
+                    }
+                }
+            }
+        }
+    }
+    
     func saveOrUpdateAllObjects(objects: [Object]) throws {
         try objects.forEach {
             try saveOrUpdateObject(object: $0)

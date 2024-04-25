@@ -11,6 +11,7 @@ import RealmSwift
 protocol SettingsRepository {
     func get() -> SettingsDTO
     func save(_ data: SettingsDTO)
+    func getAsync() async -> SettingsObject?
 }
 
 final class SettingsRepositoryImpl: SettingsRepository {
@@ -33,5 +34,10 @@ final class SettingsRepositoryImpl: SettingsRepository {
     
     func save(_ dto: SettingsDTO) {
         try? storage.saveOrUpdateObject(object: SettingsObject(dto: dto))
+    }
+    
+    func getAsync() async -> SettingsObject? {
+        let data = await storage.fetchAsync(by: SettingsObject.self)
+        return data.first
     }
 }

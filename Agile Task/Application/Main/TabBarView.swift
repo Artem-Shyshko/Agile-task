@@ -12,11 +12,15 @@ import MasterAppsUI
 // MARK: - Enum
 
 enum TaskListNavigationView: Hashable {
-    case createTask, completedTasks, sorting, newCheckBox, subscribtion
+    case createTask, completedTasks, sorting, newCheckBox, subscription
 }
 
 enum SettingsNavigationView: Hashable {
-    case account, taskSettings, security, more, contactUs
+    case subscription, taskSettings, security, more, contactUs
+}
+
+enum ProjectNavigationView: Hashable {
+    case subscription, newProject(editHabit: ProjectDTO? = nil)
 }
 
 enum Tab: LocalizedStringResource, Identifiable, CaseIterable {
@@ -45,7 +49,13 @@ struct TabBarView: View {
     // MARK: - Properties
     @State private var selectedTab: Tab = .taskList
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
+    @State private var projectsNavigationStack: [ProjectNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
+    private var isTabBarHidden: Bool {
+        taskListNavigationStack.contains(.subscription)
+        || settingsNavigationStack.contains(.subscription)
+        || projectsNavigationStack.contains(.subscription)
+    }
     
     // MARK: - Body
     
@@ -54,18 +64,21 @@ struct TabBarView: View {
             TabView(selection: $selectedTab) {
                 TaskListView(path: $taskListNavigationStack)
                     .tag(Tab.taskList)
-                ProjectsView(vm: ProjectsViewModel())
+                ProjectsView(vm: ProjectsViewModel(), path: $projectsNavigationStack)
                     .tag(Tab.projects)
                 SettingsView(path: $settingsNavigationStack)
                     .tag(Tab.settings)
             }
             .overlay(alignment: .bottom) {
+                if !isTabBarHidden {
                     customTabItem()
+                }
             }
         }
         .onChange(of: selectedTab) { newValue in
             taskListNavigationStack = []
             settingsNavigationStack = []
+            projectsNavigationStack = []
         }
         .onOpenURL { incomingURL in
             AppHelper.shared.handleIncomingURL(incomingURL) {
@@ -120,7 +133,7 @@ private extension TabBarView {
                 case .taskList:
                     taskListNavigationStack = []
                 case .projects:
-                    return
+                    projectsNavigationStack = []
                 case .settings:
                     settingsNavigationStack = []
                 }

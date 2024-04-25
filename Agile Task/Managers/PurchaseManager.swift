@@ -12,7 +12,7 @@ import StoreKit
 final class PurchaseManager: NSObject, ObservableObject {
     @Published var selectedSubscriptionID = Constants.shared.freeSubscription
     @Published var showProcessView = false
-    private let productsID = ["agile_task_monthly", "agile_task_yearly"]
+    private let productsID = [Constants.shared.monthlySubscriptionID, Constants.shared.yearlySubscriptionID]
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil
     private let taskRepository: TaskRepository = TaskRepositoryImpl()

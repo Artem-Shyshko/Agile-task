@@ -70,9 +70,9 @@
 		753DA8622BBEF63300A60849 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DA8612BBEF63300A60849 /* LoaderView.swift */; };
 		753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DFB692B62A7FE00D4FD11 /* Theme.swift */; };
 		753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F581A2AC70293007FC650 /* SortingViewModel.swift */; };
-		75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB02AE97065001119A9 /* SettingsAccountView.swift */; };
-		75474BB42AE97132001119A9 /* SettingsSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB32AE97132001119A9 /* SettingsSubscriptionView.swift */; };
-		75474BB62AEA9615001119A9 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB52AEA9615001119A9 /* SubscriptionView.swift */; };
+		75473EAA2BCD58FE000840F2 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75473EA82BCD58FE000840F2 /* PasswordView.swift */; };
+		75473EAB2BCD58FE000840F2 /* CheckingPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75473EA92BCD58FE000840F2 /* CheckingPasswordView.swift */; };
+		75474BB42AE97132001119A9 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB32AE97132001119A9 /* SubscriptionView.swift */; };
 		75474BB82AEBAE89001119A9 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75474BB72AEBAE89001119A9 /* PrimaryButton.swift */; };
 		7547CD6E2ADEAFF700143598 /* MasterAppsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */; };
 		7547CD722ADEE6B400143598 /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7547CD712ADEE6B400143598 /* NewTaskView.swift */; };
@@ -273,9 +273,9 @@
 		753DA8612BBEF63300A60849 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		753DFB692B62A7FE00D4FD11 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		753F581A2AC70293007FC650 /* SortingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewModel.swift; sourceTree = "<group>"; };
-		75474BB02AE97065001119A9 /* SettingsAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsAccountView.swift; sourceTree = "<group>"; };
-		75474BB32AE97132001119A9 /* SettingsSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSubscriptionView.swift; sourceTree = "<group>"; };
-		75474BB52AEA9615001119A9 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
+		75473EA82BCD58FE000840F2 /* PasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
+		75473EA92BCD58FE000840F2 /* CheckingPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckingPasswordView.swift; sourceTree = "<group>"; };
+		75474BB32AE97132001119A9 /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		75474BB72AEBAE89001119A9 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		7547CD712ADEE6B400143598 /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
 		75481B2D2AE00947003ABED5 /* TaskList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskList.swift; sourceTree = "<group>"; };
@@ -516,6 +516,8 @@
 			children = (
 				753649132AD4202100C98975 /* SetPasswordView.swift */,
 				7562E6C02AD42DBA00E895CD /* SetPasswordViewModel.swift */,
+				75473EA92BCD58FE000840F2 /* CheckingPasswordView.swift */,
+				75473EA82BCD58FE000840F2 /* PasswordView.swift */,
 			);
 			path = SetPassword;
 			sourceTree = "<group>";
@@ -544,21 +546,12 @@
 			path = Projects;
 			sourceTree = "<group>";
 		};
-		75474BAF2AE97054001119A9 /* SettingsAccountView */ = {
+		75474BB22AE97121001119A9 /* Subscription */ = {
 			isa = PBXGroup;
 			children = (
-				75474BB02AE97065001119A9 /* SettingsAccountView.swift */,
-				75474BB22AE97121001119A9 /* SettingsSubscription */,
+				75474BB32AE97132001119A9 /* SubscriptionView.swift */,
 			);
-			path = SettingsAccountView;
-			sourceTree = "<group>";
-		};
-		75474BB22AE97121001119A9 /* SettingsSubscription */ = {
-			isa = PBXGroup;
-			children = (
-				75474BB32AE97132001119A9 /* SettingsSubscriptionView.swift */,
-			);
-			path = SettingsSubscription;
+			path = Subscription;
 			sourceTree = "<group>";
 		};
 		7547CD6D2ADEAFF700143598 /* Frameworks */ = {
@@ -775,7 +768,7 @@
 			children = (
 				75C710372A8CE4BC008E8A62 /* SettingsView.swift */,
 				752CEE6C2B3EF2DA00CA1612 /* MoreOurAppsView.swift */,
-				75474BAF2AE97054001119A9 /* SettingsAccountView */,
+				75474BB22AE97121001119A9 /* Subscription */,
 				75C710442A8D1630008E8A62 /* SettingsTheme */,
 				75C710472A8D1AC0008E8A62 /* SettingsTask */,
 				75D0D8812ACC60B2003FC01F /* Security */,
@@ -799,7 +792,6 @@
 				751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */,
 				75481B2D2AE00947003ABED5 /* TaskList.swift */,
 				7511B3C72B99FF350090DB4E /* PrivacyPolicyButton.swift */,
-				75474BB52AEA9615001119A9 /* SubscriptionView.swift */,
 				7561D8452AEBB3930073F1D9 /* AppFeaturesView.swift */,
 				7590CF982AF3A01F0015B396 /* SearchableView.swift */,
 				752CEE1B2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift */,
@@ -1072,8 +1064,8 @@
 			files = (
 				752CEDDE2B3C569C00CA1612 /* TaskRepository.swift in Sources */,
 				75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */,
+				75473EAB2BCD58FE000840F2 /* CheckingPasswordView.swift in Sources */,
 				753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */,
-				75474BB12AE97065001119A9 /* SettingsAccountView.swift in Sources */,
 				75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */,
 				75A709AA2A828B68003894F7 /* Date+Ext.swift in Sources */,
 				75E11C782B4C28D3003B891B /* BulletRepository.swift in Sources */,
@@ -1090,7 +1082,6 @@
 				752CEDDB2B3C565C00CA1612 /* TaskDTO.swift in Sources */,
 				75A3D0002A990BD4000F68BA /* TaskRow.swift in Sources */,
 				7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */,
-				75474BB62AEA9615001119A9 /* SubscriptionView.swift in Sources */,
 				752CEE4C2B3C723200CA1612 /* SettingDTO.swift in Sources */,
 				7567E5AA2BC3D306007C1C97 /* Localizable.swift in Sources */,
 				75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */,
@@ -1129,12 +1120,13 @@
 				75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */,
 				75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */,
 				752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */,
-				75474BB42AE97132001119A9 /* SettingsSubscriptionView.swift in Sources */,
+				75474BB42AE97132001119A9 /* SubscriptionView.swift in Sources */,
 				7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */,
 				75E11C732B4C1400003B891B /* BulletDTO.swift in Sources */,
 				75C7103D2A8CEE4F008E8A62 /* SettingsButtonStyle.swift in Sources */,
 				75B58D0B2A8234B900937923 /* TabBarView.swift in Sources */,
 				75B58D072A8224ED00937923 /* Font+Ext.swift in Sources */,
+				75473EAA2BCD58FE000840F2 /* PasswordView.swift in Sources */,
 				7562E6C32AD4479A00E895CD /* AuthManager.swift in Sources */,
 				753649142AD4202100C98975 /* SetPasswordView.swift in Sources */,
 				75E11C6F2B4C1259003B891B /* BulletViewModel.swift in Sources */,
@@ -1375,7 +1367,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1410,7 +1402,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.1;
+				MARKETING_VERSION = 1.1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

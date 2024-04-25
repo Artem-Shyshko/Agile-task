@@ -84,7 +84,11 @@ private extension SettingsDTO {
 
 extension SettingsDTO: Hashable {}
 
-enum DailyReminderOption: String, PersistableEnum, CaseIterable {
+enum DailyReminderOption: String, PersistableEnum, CaseIterable, CustomStringConvertible {
     case none = "None"
     case custom = "Custom"
+    
+    var description: String {
+        self.rawValue
+    }
 }

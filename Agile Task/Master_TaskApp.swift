@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import BackgroundTasks
 
 @main
 struct Master_TaskApp: App {
@@ -71,14 +72,50 @@ struct Master_TaskApp: App {
                     await purchaseManager.fetchActiveTransactions()
                 }
             }
-            .onChange(of: scenePhase) { scene in
-                if appState.settings.securityOption != .none {
-                    if scene == .background {
-                        authManager.state = .noneAuth
-                    }
+            .environment(\.locale, Locale(identifier: appState.settings.appLanguage.identifier))
+        }
+        .onChange(of: scenePhase) { scene in
+            if appState.settings.securityOption != .none {
+                if scene == .background {
+                    authManager.state = .noneAuth
                 }
             }
-            .environment(\.locale, Locale(identifier: appState.settings.appLanguage.identifier))
+            
+            if scene == .background {
+                scheduleAppRefresh()
+            }
+        }
+        .backgroundTask(.appRefresh("com.masterapps.agile-task.refresh")) {
+//                let settings = await settingsRepository.getAsync()
+//                if let settings {
+//                    await localNotificationManager.addDailyNotification(
+//                        for: settings.reminderTime,
+//                        format: settings.timeFormat,
+//                        period: settings.reminderTimePeriod
+//                    )
+//                }
+        }
+    }
+}
+
+private extension Master_TaskApp {
+    func scheduleAppRefresh() {
+        let request = BGAppRefreshTaskRequest(identifier: "com.masterapps.agile-task.refresh")
+        
+        let preferredHour: TimeInterval = 3 * 60 * 60 // 3 hours from midnight in seconds
+        
+        // Schedule from now assuming the next possible 3 AM window
+        if let nextPreferredTime = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 3), matchingPolicy: .nextTime) {
+            request.earliestBeginDate = nextPreferredTime
+        } else {
+            request.earliestBeginDate = Date(timeIntervalSinceNow: preferredHour)
+        }
+        
+        do {
+            try BGTaskScheduler.shared.submit(request)
+            print("Ready")
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

@@ -97,7 +97,6 @@ public struct TimeView: View {
                     .bold()
             })
         }
-        .padding(.trailing, 15)
         .toolbar {
             ToolbarItem(placement: .keyboard) {
                 Button("Done") {

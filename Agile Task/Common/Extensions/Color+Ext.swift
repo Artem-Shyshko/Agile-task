@@ -85,6 +85,12 @@ extension Color {
         endPoint: .bottomTrailing
     )
     
+    static let orangeGradient = LinearGradient(
+        colors: [Color(hex: "#FAD961"), Color(hex: "#F76B1C")],
+        startPoint: .top,
+        endPoint: .bottom
+    )
+    
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0

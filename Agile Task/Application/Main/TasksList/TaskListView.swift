@@ -59,8 +59,8 @@ struct TaskListView: View {
           SortingView(viewModel: SortingViewModel())
         case .newCheckBox:
           EmptyView()
-        case .subscribtion:
-          SettingsSubscriptionView()
+        case .subscription:
+          SubscriptionView()
         }
       }
       .onAppear {
@@ -157,7 +157,7 @@ private extension TaskListView {
   func navigationBarRightItem() -> some View {
     Button {
       guard purchaseManager.canCreateTask() else {
-        path.append(.subscribtion)
+        path.append(.subscription)
         return
       }
       path.append(.createTask)
@@ -344,7 +344,7 @@ private extension TaskListView {
     if viewModel.settings.showPlusButton {
       Button {
         guard purchaseManager.canCreateTask() else {
-          path.append(.subscribtion)
+          path.append(.subscription)
           return
         }
         

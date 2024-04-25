@@ -66,7 +66,7 @@ struct NewTaskView: View {
             viewModel.updateFromEditTask(editTask)
         }
         .navigationDestination(isPresented: $viewModel.showSubscriptionView) {
-            SettingsSubscriptionView()
+            SubscriptionView()
         }
         .fullScreenCover(isPresented: $isShowingCheckBoxView, content: {
             NewCheckBoxView(
@@ -84,7 +84,7 @@ struct NewTaskView: View {
                 task: editTask
             )
         })
-        .alert("Are you sure you want to delete task?", isPresented: $viewModel.showDeleteAlert) {
+        .alert("Are you sure you want to delete transaction?", isPresented: $viewModel.showDeleteAlert) {
             Button {
                 viewModel.showDeleteAlert = false
             } label: {
@@ -166,7 +166,6 @@ private extension NewTaskView {
                 Text(viewModel.checkBoxes.isEmpty ? "Add" : "Edit")
             }
             .hAlign(alignment: .trailing)
-            .padding(.trailing, 10)
         }
         .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
         .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
@@ -185,7 +184,6 @@ private extension NewTaskView {
                 Text(viewModel.bullets.isEmpty ? "Add" : "Edit")
             }
             .hAlign(alignment: .trailing)
-            .padding(.trailing, 10)
         }
         .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
         .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
@@ -320,7 +318,6 @@ private extension NewTaskView {
                                 .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
                         }
                 }
-                .padding(.trailing, 10)
             }
             .modifier(SectionStyle())
             
@@ -466,7 +463,6 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
             Image(systemName: "chevron.up.chevron.down")
                 .imageScale(.small)
         }
-        .padding(.trailing, 12)
     }
 }
 

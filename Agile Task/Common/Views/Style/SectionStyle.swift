@@ -19,7 +19,7 @@ struct SectionStyle: ViewModifier {
             .tint(.gray)
             .frame(minHeight: 44)
             .hAlign(alignment: .leading)
-            .padding(.leading, 10)
+            .padding(.horizontal, 10)
             .background(themeManager.theme.sectionColor(colorScheme))
             .cornerRadius(4)
             .environment(\.locale, Locale(identifier: appState.settings.appLanguage.identifier))

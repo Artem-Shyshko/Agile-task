@@ -106,6 +106,8 @@ final class LocalNotificationManager: NSObject, ObservableObject {
             body = "Today activity: \(tasks.count) scheduled tasks."
         }
         
+        print("Send daily reminder")
+        
         let notification = LocalNotification(
             id: Constants.shared.dailyNotificationID,
             title: "Agile Task",

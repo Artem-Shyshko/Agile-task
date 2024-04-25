@@ -74,6 +74,7 @@
       }
     },
     "%@/" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -144,6 +145,7 @@
       }
     },
     "1 project" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -154,6 +156,7 @@
       }
     },
     "8 tasks" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -164,6 +167,7 @@
       }
     },
     "Account" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -267,6 +271,9 @@
         }
       }
     },
+    "alert_ok" : {
+
+    },
     "alert_task_weeks_recurring" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -283,6 +290,9 @@
           }
         }
       }
+    },
+    "alert_wrong_password" : {
+
     },
     "All" : {
       "extractionState" : "manual",
@@ -363,6 +373,7 @@
       }
     },
     "Are you sure you want to delete task?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -393,6 +404,9 @@
           }
         }
       }
+    },
+    "Are you sure you want to delete transaction?" : {
+
     },
     "Are you sure you want to restore all tasks?" : {
       "localizations" : {
@@ -453,6 +467,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Annuler"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скасувати"
+          }
+        }
+      }
+    },
+    "cancel_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
           }
         },
         "uk" : {
@@ -571,6 +601,7 @@
       }
     },
     "Continue" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -868,6 +899,7 @@
       }
     },
     "Enter old password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -899,6 +931,22 @@
         }
       }
     },
+    "enter_old_password_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter old password"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Введіть старий пароль"
+          }
+        }
+      }
+    },
     "Free" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -906,6 +954,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Безкоштовно"
+          }
+        }
+      }
+    },
+    "free_plane_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Free"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Безкоштовна"
           }
         }
       }
@@ -992,6 +1056,9 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Language" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1053,6 +1120,7 @@
       }
     },
     "Manage subscription" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -1092,6 +1160,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ручне сортування"
+          }
+        }
+      }
+    },
+    "min_max_password_char" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "min of 4 characters max of 20 characters"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "мінімум 4 символи, максимум 20 символів"
           }
         }
       }
@@ -1139,6 +1224,9 @@
           }
         }
       }
+    },
+    "monthly_title" : {
+
     },
     "Move to the bottom of the list" : {
       "extractionState" : "manual",
@@ -1334,6 +1422,88 @@
         }
       }
     },
+    "password_navigation_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль"
+          }
+        }
+      }
+    },
+    "password_numbers" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "number(s)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "цифри"
+          }
+        }
+      }
+    },
+    "password_requirements" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password requirements:"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вимоги до пароля:"
+          }
+        }
+      }
+    },
+    "password_special_char" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Special Character(s) @#$^&*+=)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Спеціальний(і) символ(и) @#$^&*+=)"
+          }
+        }
+      }
+    },
+    "password_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль"
+          }
+        }
+      }
+    },
     "Plan everything - from business meetings, trips and doctor appointments to groceries lists." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1347,6 +1517,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Плануйте все - від ділових зустрічей, подорожей і візитів до лікаря до списків покупок."
+          }
+        }
+      }
+    },
+    "plane_continue_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продовжити"
+          }
+        }
+      }
+    },
+    "plane_manage_subscription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manage subscription"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Керування підпискою"
           }
         }
       }
@@ -1512,18 +1714,18 @@
         }
       }
     },
-    "Repeat password" : {
+    "repeat_password_title" : {
       "localizations" : {
-        "fr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Répéter le mot de passe"
+            "value" : "Repeat password"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Повторіть пароль"
+            "value" : "Повторити пароль"
           }
         }
       }
@@ -1561,6 +1763,7 @@
       }
     },
     "Restore subscription" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -1588,6 +1791,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відновити завдання"
+          }
+        }
+      }
+    },
+    "restore_subscription_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore subscription"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відновити  підписку"
           }
         }
       }
@@ -1642,6 +1861,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зберегти"
+          }
+        }
+      }
+    },
+    "save_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зберегти"
+          }
+        }
+      }
+    },
+    "secure_app_with" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secure app with"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Захистити додаток з"
           }
         }
       }
@@ -1710,6 +1961,22 @@
         }
       }
     },
+    "settings_subscription_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Subscription"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підписка"
+          }
+        }
+      }
+    },
     "SettingsTab" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1765,6 +2032,7 @@
       }
     },
     "Subscription" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -1776,6 +2044,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Підписка"
+          }
+        }
+      }
+    },
+    "subscription_subtitle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "with Agile Task"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "разом з Agile Task"
+          }
+        }
+      }
+    },
+    "subscription_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Improve your life"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Покращуйте своє життя"
           }
         }
       }
@@ -2071,9 +2371,14 @@
         }
       }
     },
-    "Unlimited projects" : {
-      "extractionState" : "manual",
+    "unlimited_projects_title" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited projects"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2082,13 +2387,35 @@
         }
       }
     },
-    "Unlimited tasks" : {
-      "extractionState" : "manual",
+    "unlimited_tasks_title" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited tasks"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Необмежена кількість задач"
+          }
+        }
+      }
+    },
+    "upper_case" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "upper case letter(s)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "велика(і) літера(и)"
           }
         }
       }
@@ -2258,6 +2585,7 @@
       }
     },
     "Wrong password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2294,6 +2622,9 @@
           }
         }
       }
+    },
+    "yearly_title" : {
+
     },
     "You can't create task reminder without date/time" : {
       "extractionState" : "stale",

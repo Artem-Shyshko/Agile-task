@@ -53,7 +53,6 @@ public struct TextFieldWithEnterButton: View {
                     .scaledToFit()
                     .foregroundColor(.gray)
                     .frame(width: 10,height: 10)
-                    .padding(.trailing, 16)
             }
             .hAlign(alignment: .bottomTrailing)
         }

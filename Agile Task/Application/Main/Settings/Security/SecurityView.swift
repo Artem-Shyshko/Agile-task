@@ -29,7 +29,7 @@ struct SecurityView: View {
         }
         .modifier(TabViewChildModifier())
         .navigationDestination(isPresented: $viewModel.showPasswordView) {
-            SetPasswordView(viewModel: SetPasswordViewModel())
+            SetPasswordView(viewModel: SetPasswordViewModel(), isFirstSetup: false)
         }
         .onChange(of: viewModel.settings.securityOption) { newValue in
             if newValue == .password, !isUserPassword {

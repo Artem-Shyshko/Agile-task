@@ -13,6 +13,7 @@ struct SettingsView: View {
     
     @Binding var path: [SettingsNavigationView]
     @State var showMailView = false
+    @EnvironmentObject var purchaseManager: PurchaseManager
     
     // MARK: - Body
     
@@ -33,8 +34,8 @@ struct SettingsView: View {
             .modifier(TabViewChildModifier())
             .navigationDestination(for: SettingsNavigationView.self) { views in
                 switch views {
-                case .account:
-                    SettingsAccountView()
+                case .subscription:
+                    SubscriptionView()
                 case .taskSettings:
                     SettingsTaskView(viewModel: SettingsTaskViewModel())
                 case .security:
@@ -64,9 +65,23 @@ private extension SettingsView {
     }
     
     func accountView () -> some View {
-        NavigationLink(value: SettingsNavigationView.account) {
-            Text("Subscription")
-                .modifier(SectionStyle())
+        NavigationLink(value: SettingsNavigationView.subscription) {
+            HStack {
+                Text("settings_subscription_title")
+                Spacer()
+                Text(selectedSubscriptionTitle())
+            }
+            .modifier(SectionStyle())
+        }
+    }
+    
+    func selectedSubscriptionTitle() -> LocalizedStringKey {
+        if purchaseManager.selectedSubscriptionID == Constants.shared.monthlySubscriptionID {
+            return "monthly_title"
+        } else if purchaseManager.selectedSubscriptionID == Constants.shared.yearlySubscriptionID {
+            return "yearly_title"
+        } else {
+            return "free_plane_title"
         }
     }
     
@@ -104,6 +119,6 @@ private extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(path: .constant([SettingsNavigationView.account]))
+        SettingsView(path: .constant([SettingsNavigationView.subscription]))
     }
 }

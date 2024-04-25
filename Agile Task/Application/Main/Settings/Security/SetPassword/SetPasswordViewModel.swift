@@ -8,8 +8,16 @@
 import Foundation
 
 final class SetPasswordViewModel: ObservableObject {
-    let characterLimit = 6
+    let characterLimit = 20
+    @Published var settings: SettingsDTO
     @Published var oldPassword = ""
     @Published var newPassword = ""
     @Published var confirmPassword = ""
+    @Published var allRequirementsMet = false
+    
+    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    
+    init() {
+        self.settings = settingsRepository.get()
+    }
 }

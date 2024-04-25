@@ -14,9 +14,10 @@ struct ProjectsView: View {
     @Environment(\.colorScheme) var colorScheme
 
     @StateObject var vm: ProjectsViewModel
+    @Binding var path: [ProjectNavigationView]
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $path) {
             VStack {
                 navigationBar()
                 searchView()
@@ -27,11 +28,13 @@ struct ProjectsView: View {
             .onAppear {
                 vm.savedProjects = vm.projectsRepo.getProjects()
             }
-            .navigationDestination(isPresented: $vm.showNewProjectView) {
-                NewProjectView(vm: NewProjectViewModel())
-            }
-            .navigationDestination(isPresented: $vm.showSubscriptionView) {
-                SettingsSubscriptionView()
+            .navigationDestination(for: ProjectNavigationView.self) { view in
+                switch view {
+                    case .newProject(let project):
+                    NewProjectView(vm: NewProjectViewModel(editedProject: project))
+                case .subscription:
+                    SubscriptionView()
+                }
             }
         }
     }
@@ -39,7 +42,7 @@ struct ProjectsView: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectsView(vm: ProjectsViewModel())
+        ProjectsView(vm: ProjectsViewModel(), path: .constant([]))
             .environmentObject(ThemeManager())
     }
 }
@@ -87,10 +90,10 @@ private extension ProjectsView {
     func rightNavigationButton() -> some View {
         Button {
             guard purchaseManager.canCreateProject() else {
-                vm.showSubscriptionView = true
+                path.append(.subscription)
                 return
             }
-            vm.showNewProjectView = true
+            path.append(.newProject())
         } label: {
             Image("Add")
                 .resizable()

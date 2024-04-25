@@ -11,8 +11,6 @@ final class ProjectsViewModel: ObservableObject {
     @Published var savedProjects: [ProjectDTO] = []
     @Published var isSearchBarHidden: Bool = true
     @Published var searchText: String = ""
-    @Published var showNewProjectView = false
-    @Published var showSubscriptionView = false
     let projectsRepo: ProjectRepository = ProjectRepositoryImpl()
     let taskRepo: TaskRepository = TaskRepositoryImpl()
     
