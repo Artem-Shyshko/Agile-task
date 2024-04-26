@@ -20,7 +20,7 @@ final class TaskListViewModel: ObservableObject {
     @Published var isShowingAddTask: Bool = false
     @Published var taskSortingOption: TaskDateSorting = .all
     @Published var calendarDate = Date()
-    @Published var isShowingInfoView = false
+    @Published var isShowingInfoView = true
     @Published var tipIndex = 0
     @Published var isShowingCalendar = false
     @Published var isShowingCalendarPicker: Bool = false
