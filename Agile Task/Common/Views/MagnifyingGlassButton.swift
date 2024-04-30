@@ -14,10 +14,10 @@ struct MagnifyingGlassButton: View {
           Button {
               action()
           } label: {
-            Image("Search")
+              Image(.search)
               .resizable()
               .scaledToFit()
-              .frame(width: 22, height: 22)
+              .frame(size: Constants.shared.imagesSize)
           }
           .foregroundColor(.white)
     }

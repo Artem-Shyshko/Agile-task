@@ -29,7 +29,7 @@ struct TaskListView: View {
   
   var body: some View {
     NavigationStack(path: $path) {
-      VStack(spacing: 20) {
+      VStack(spacing: Constants.shared.viewSectionSpacing) {
         navigationBar()
         dateBarView()
         
@@ -162,10 +162,10 @@ private extension TaskListView {
       }
       path.append(.createTask)
     } label: {
-      Image("Add")
+      Image(.add)
         .resizable()
         .scaledToFit()
-        .frame(width: 22, height: 22)
+        .frame(size: Constants.shared.imagesSize)
     }
   }
   
@@ -224,10 +224,10 @@ private extension TaskListView {
     } else {
       HStack {
         NavigationLink(value: TaskListNavigationView.sorting) {
-          Image("Sorting")
+          Image(.sorting)
             .resizable()
             .scaledToFit()
-            .frame(width: 30)
+            .frame(size: Constants.shared.imagesSize)
         }
         
         Spacer()
@@ -259,10 +259,10 @@ private extension TaskListView {
         Spacer()
         
         NavigationLink(value: TaskListNavigationView.completedTasks) {
-          Image("CompletedTasks")
+          Image(.completedTasks)
             .resizable()
             .scaledToFit()
-            .frame(width: 30)
+            .frame(size: Constants.shared.imagesSize)
         }
       }
       .foregroundColor(.white)

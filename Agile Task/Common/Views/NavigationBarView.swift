@@ -16,15 +16,20 @@ struct NavigationBarView<LeftItem: View, Header: View, RightItem: View>: View {
     var body: some View {
         ZStack {
             header
-                .padding(.horizontal, 30)
-            HStack(spacing: 5) {
+                .hAlign(alignment: .center)
+                .padding(.horizontal, 50)
+                .layoutPriority(1)
+            
+            HStack(spacing: 15) {
                 leftItem
+                    .hAlign(alignment: .leading)
                 Spacer()
                 rightItem
+                    .hAlign(alignment: .trailing)
             }
+            .padding(.horizontal, 15)
         }
         .frame(height: 30)
         .padding(.vertical, 10)
-        .padding(.horizontal, 20)
     }
 }

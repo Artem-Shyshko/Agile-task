@@ -27,7 +27,7 @@ struct NewCheckBoxView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
             checkBoxesList()
         }

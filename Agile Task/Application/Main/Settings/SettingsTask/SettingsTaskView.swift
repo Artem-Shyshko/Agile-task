@@ -17,8 +17,9 @@ struct SettingsTaskView: View {
   @Environment(\.scenePhase) var scenePhase
   
   var body: some View {
-    VStack {
+    VStack(spacing: Constants.shared.viewSectionSpacing) {
       navigationBar()
+      
       VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
         languageSection()
         weekStartsOnSection()

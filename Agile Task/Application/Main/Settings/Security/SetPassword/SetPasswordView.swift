@@ -23,8 +23,9 @@ struct SetPasswordView: View {
     
     // MARK: - Body
     var body: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
+            
             VStack(alignment: .leading, spacing: 3) {
                 oldPasswordFieldView()
                 passwordFieldView()

@@ -15,7 +15,7 @@ struct NewProjectView: View {
     @FocusState var isFocused: Bool
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
             textFieldView()
             Spacer()

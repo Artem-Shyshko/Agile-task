@@ -20,6 +20,9 @@ final class Constants {
     let showOnboarding = "ShowOnboarding"
     let userPassword = "User_Password"
     let listRowSpacing: CGFloat = 3
+    let viewSectionSpacing: CGFloat = 20
+    let navigationImagesSize: CGFloat = 26
+    let imagesSize: CGFloat = 20
     let nightTheme = "Night"
     let oceanTheme = "Ocean"
     let rubyTheme = "Ruby"

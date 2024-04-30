@@ -25,7 +25,7 @@ struct SubscriptionView: View {
     @State var isRestored = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
                 VStack(spacing: 40) {
                     VStack(spacing: 20) {

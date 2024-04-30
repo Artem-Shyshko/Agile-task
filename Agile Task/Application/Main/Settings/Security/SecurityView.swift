@@ -19,8 +19,9 @@ struct SecurityView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
+            
             VStack(spacing: Constants.shared.listRowSpacing) {
                 securitySection()
                 changePasswordView()

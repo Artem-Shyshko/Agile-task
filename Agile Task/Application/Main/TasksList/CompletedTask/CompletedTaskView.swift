@@ -15,7 +15,7 @@ struct CompletedTaskView: View {
     @State private var showRestoreAlert = false
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
             underTopBar()
             completedTasksList()

@@ -48,7 +48,7 @@ public struct DateSegmentedControl: View {
                         .contentShape(.rect)
                         .onTapGesture {
                             selectedDateSorting = dateSorting
-                    }
+                        }
                     
                     if dateSorting.rawValue != TaskDateSorting.allCases.last?.rawValue {
                         Rectangle()
@@ -69,7 +69,7 @@ public struct DateSegmentedControl: View {
 
 struct DateSegmentedControl_Previews: PreviewProvider {
     static var previews: some View {
-        DateSegmentedControl(selectedDateSorting: .constant(.all))
+        DateSegmentedControl(selectedDateSorting: .constant(.today))
             .previewLayout(.sizeThatFits)
             .padding(20)
     }

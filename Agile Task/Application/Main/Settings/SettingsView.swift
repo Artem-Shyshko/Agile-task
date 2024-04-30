@@ -19,7 +19,7 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack(path: $path) {
-            VStack {
+            VStack(spacing: Constants.shared.viewSectionSpacing) {
                 navigationBar()
                 VStack(spacing: Constants.shared.listRowSpacing) {
                     accountView()

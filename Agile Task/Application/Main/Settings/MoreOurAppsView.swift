@@ -13,16 +13,19 @@ struct MoreOurAppsView: View {
     @Environment(\.requestReview) var requestReview
     
     var body: some View {
-        VStack(spacing: Constants.shared.listRowSpacing) {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
-            visitOurWebsiteButton()
-            reviewOurAppsButton()
-            leaveReviewButton()
-            PrivacyPolicyButton()
-                .modifier(SectionStyle())
-            TermsOfUseButton()
-                .modifier(SectionStyle())
-            Spacer()
+            
+            VStack(spacing: Constants.shared.listRowSpacing) {
+                visitOurWebsiteButton()
+                reviewOurAppsButton()
+                leaveReviewButton()
+                PrivacyPolicyButton()
+                    .modifier(SectionStyle())
+                TermsOfUseButton()
+                    .modifier(SectionStyle())
+                Spacer()
+            }
         }
         .modifier(TabViewChildModifier())
     }

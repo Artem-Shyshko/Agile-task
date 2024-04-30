@@ -13,7 +13,7 @@ struct SortingView: View {
     @StateObject var viewModel: SortingViewModel
     
     var body: some View {
-        VStack {
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
             sortingOptions()
         }
