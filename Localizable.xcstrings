@@ -271,8 +271,55 @@
         }
       }
     },
+    "alert_delete_task" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete task?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви впевнені, що хочете видалити завдання?"
+          }
+        }
+      }
+    },
     "alert_ok" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        }
+      }
+    },
+    "alert_task_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Task title should consist at least 1 symbol"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назва завдання повинна складатися щонайменше з 1 символу"
+          }
+        }
+      }
     },
     "alert_task_weeks_recurring" : {
       "extractionState" : "manual",
@@ -404,9 +451,6 @@
           }
         }
       }
-    },
-    "Are you sure you want to delete transaction?" : {
-
     },
     "Are you sure you want to restore all tasks?" : {
       "localizations" : {

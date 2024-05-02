@@ -84,7 +84,7 @@ struct NewTaskView: View {
                 task: editTask
             )
         })
-        .alert("Are you sure you want to delete transaction?", isPresented: $viewModel.showDeleteAlert) {
+        .alert("alert_delete_task", isPresented: $viewModel.showDeleteAlert) {
             Button {
                 viewModel.showDeleteAlert = false
             } label: {

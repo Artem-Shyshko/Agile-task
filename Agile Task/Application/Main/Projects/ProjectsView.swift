@@ -69,6 +69,7 @@ private extension ProjectsView {
         List {
             ForEach(vm.savedProjects, id: \.id) { project in
                 ProjectRow(vm: vm, project: project)
+                    .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 4)
                             .fill(themeManager.theme.sectionColor(colorScheme))

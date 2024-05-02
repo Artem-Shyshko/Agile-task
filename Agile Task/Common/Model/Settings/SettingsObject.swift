@@ -159,4 +159,14 @@ extension TimeFormat: PersistableEnum, CustomStringConvertible {
         self.rawValue
     }
 }
-extension TaskDateSorting: PersistableEnum {}
+
+enum TaskDateSorting: String, PersistableEnum, CaseIterable, CustomStringConvertible {
+  case all = "All"
+  case today = "Today"
+  case week = "Week"
+  case month = "Month"
+    
+    public var description: String {
+        self.rawValue
+    }
+}

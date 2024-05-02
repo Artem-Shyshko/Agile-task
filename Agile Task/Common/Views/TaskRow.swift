@@ -117,7 +117,7 @@ private extension TaskRow {
             recurringImage()
         }
         .foregroundColor(foregroundColor())
-        .padding(.horizontal, -10)
+        .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
             viewModel.updateTaskCompletion(task)
@@ -220,7 +220,7 @@ private extension TaskRow {
             Text(LocalizedStringKey(description))
                 .font(.helveticaRegular(size: 16))
                 .foregroundColor(foregroundColor())
-                .padding(.horizontal, -10)
+                .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
                 .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         }
     }

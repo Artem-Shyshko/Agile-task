@@ -28,7 +28,7 @@
 		752CEDE52B3C57DB00CA1612 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDE42B3C57DB00CA1612 /* StorageService.swift */; };
 		752CEE1C2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE1B2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift */; };
 		752CEE252B3C636300CA1612 /* ColorPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE1E2B3C636300CA1612 /* ColorPanel.swift */; };
-		752CEE262B3C636300CA1612 /* DateSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE1F2B3C636300CA1612 /* DateSegmentedControl.swift */; };
+		752CEE262B3C636300CA1612 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE1F2B3C636300CA1612 /* CustomSegmentedControl.swift */; };
 		752CEE272B3C636300CA1612 /* TimeControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE202B3C636300CA1612 /* TimeControlView.swift */; };
 		752CEE282B3C636300CA1612 /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE212B3C636300CA1612 /* CalendarViewModel.swift */; };
 		752CEE292B3C636300CA1612 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE222B3C636300CA1612 /* CalendarView.swift */; };
@@ -230,7 +230,7 @@
 		752CEDE42B3C57DB00CA1612 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		752CEE1B2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreeHorizontalLinesView.swift; sourceTree = "<group>"; };
 		752CEE1E2B3C636300CA1612 /* ColorPanel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPanel.swift; sourceTree = "<group>"; };
-		752CEE1F2B3C636300CA1612 /* DateSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateSegmentedControl.swift; sourceTree = "<group>"; };
+		752CEE1F2B3C636300CA1612 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		752CEE202B3C636300CA1612 /* TimeControlView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeControlView.swift; sourceTree = "<group>"; };
 		752CEE212B3C636300CA1612 /* CalendarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		752CEE222B3C636300CA1612 /* CalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -407,7 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				752CEE1E2B3C636300CA1612 /* ColorPanel.swift */,
-				752CEE1F2B3C636300CA1612 /* DateSegmentedControl.swift */,
+				752CEE1F2B3C636300CA1612 /* CustomSegmentedControl.swift */,
 				752CEE202B3C636300CA1612 /* TimeControlView.swift */,
 				752CEE212B3C636300CA1612 /* CalendarViewModel.swift */,
 				753DA8502BBDA76900A60849 /* CalendarDayView.swift */,
@@ -1155,7 +1155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				752CEE482B3C64F700CA1612 /* TextFieldWithEnterButton.swift in Sources */,
-				752CEE262B3C636300CA1612 /* DateSegmentedControl.swift in Sources */,
+				752CEE262B3C636300CA1612 /* CustomSegmentedControl.swift in Sources */,
 				752CEE282B3C636300CA1612 /* CalendarViewModel.swift in Sources */,
 				753DA8552BBDA7B500A60849 /* String+Ext.swift in Sources */,
 				752CEE3E2B3C638600CA1612 /* SettingsButtonStyle.swift in Sources */,

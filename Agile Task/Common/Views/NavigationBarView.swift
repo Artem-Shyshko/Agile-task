@@ -17,7 +17,7 @@ struct NavigationBarView<LeftItem: View, Header: View, RightItem: View>: View {
         ZStack {
             header
                 .hAlign(alignment: .center)
-                .padding(.horizontal, 50)
+                .padding(.horizontal, 60)
                 .layoutPriority(1)
             
             HStack(spacing: 15) {

@@ -103,7 +103,7 @@ private extension BulletView {
                 focusedInput! += 1
             }
         }, label: {
-            Image("Add")
+            Image(.add)
                 .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
@@ -179,7 +179,7 @@ fileprivate struct TextEditor: View {
                     viewModel.deletedBullet = bullet
                     showAlert = true
                 }, label: {
-                    Image("trash")
+                    Image(.trash)
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()

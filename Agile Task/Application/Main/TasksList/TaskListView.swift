@@ -130,9 +130,14 @@ private extension TaskListView {
   func navigationBar() -> some View {
     NavigationBarView(
       leftItem: navigationBarLeftItem(),
-      header: DateSegmentedControl(selectedDateSorting: $viewModel.taskSortingOption),
+      header: CustomSegmentedControl(
+        options: TaskDateSorting.allCases,
+        selection: $viewModel.taskSortingOption,
+        textColor: themeManager.theme.sectionTextColor(colorScheme)
+      ),
       rightItem: navigationBarRightItem()
     )
+    
     .onChange(of: viewModel.taskSortingOption) { _ in
       viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
@@ -266,7 +271,7 @@ private extension TaskListView {
         }
       }
       .foregroundColor(.white)
-      .padding(.horizontal, 17)
+      .padding(.horizontal, 15)
       .frame(maxWidth: .infinity)
     }
   }
@@ -288,7 +293,7 @@ private extension TaskListView {
       Button {
         leftButtonAction()
       } label: {
-        Image("Arrow Left")
+        Image(.arrowLeft)
           .renderingMode(.template)
           .resizable()
           .scaledToFit()
@@ -307,7 +312,7 @@ private extension TaskListView {
       Button {
         rightButtonAction()
       } label: {
-        Image("Arrow Right")
+        Image(.arrowRight)
           .renderingMode(.template)
           .resizable()
           .scaledToFit()
@@ -468,7 +473,7 @@ private extension TaskListView {
       Button {
         viewModel.isShowingInfoView.toggle()
       } label: {
-        Image("Info")
+        Image(.info)
           .resizable()
           .scaledToFit()
           .frame(width: 24, height: 23)
@@ -496,7 +501,7 @@ private extension TaskListView {
           viewModel.tipIndex -= 1
         }
       } label: {
-        Image("Arrow Left")
+        Image(.arrowLeft)
           .renderingMode(.template)
           .resizable()
           .scaledToFit()
@@ -515,7 +520,7 @@ private extension TaskListView {
           viewModel.tipIndex += 1
         }
       } label: {
-        Image("Arrow Right")
+        Image(.arrowRight)
           .renderingMode(.template)
           .resizable()
           .scaledToFit()

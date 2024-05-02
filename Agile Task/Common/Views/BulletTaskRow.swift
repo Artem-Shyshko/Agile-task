@@ -30,7 +30,7 @@ struct BulletTaskRow: View {
                 .fill(Color(colorName))
         )
         .listRowSeparator(.hidden)
-        .padding(.horizontal, -10)
+        .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
     }
 }
 

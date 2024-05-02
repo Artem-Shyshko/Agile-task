@@ -32,7 +32,7 @@ struct CheckboxTaskRow: View {
                 .fill(Color(colorName))
         )
         .listRowSeparator(.hidden)
-        .padding(.horizontal, -10)
+        .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
         .onTapGesture(count: 1, perform: {
             viewModel.completeCheckbox(checkbox, with: taskId)
         })
