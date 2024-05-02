@@ -96,19 +96,17 @@ struct TaskListView: View {
         newTaskView()
       })
       .overlay(alignment: .bottomLeading, content: {
-        if appState.settings.isShowingInfoTips {
-          infoButton()
-        }
+        infoButton()
       })
       .overlay(alignment: .top, content: {
-          if viewModel.isShowingCalendarPicker {
-              ZStack(alignment: .top) {
-                  Color.black
-                      .opacity(0.2)
-                      .ignoresSafeArea(.all)
-                  calendarPicker()
-              }
+        if viewModel.isShowingCalendarPicker {
+          ZStack(alignment: .top) {
+            Color.black
+              .opacity(0.2)
+              .ignoresSafeArea(.all)
+            calendarPicker()
           }
+        }
       })
       .onChange(of: viewModel.calendarDate) { _ in
         viewModel.udateCalendarInfo()
@@ -258,7 +256,7 @@ private extension TaskListView {
         }
         .frame(height: 30)
         .onTapGesture {
-            viewModel.isShowingCalendarPicker.toggle()
+          viewModel.isShowingCalendarPicker.toggle()
         }
         
         Spacer()
@@ -277,15 +275,15 @@ private extension TaskListView {
   }
   
   func calendarPicker() -> some View {
-      CalendarPickerView(
-          selectedCalendarDay: $viewModel.currentDate,
-          isShowing: $viewModel.isShowingCalendarPicker,
-          currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
-          backgroundColor: themeManager.theme.sectionColor(colorScheme),
-          calendar: Constants.shared.calendar,
-          availableOptions: viewModel.calendarPickerOptions()
-      )
-      .padding(.top, 70)
+    CalendarPickerView(
+      selectedCalendarDay: $viewModel.currentDate,
+      isShowing: $viewModel.isShowingCalendarPicker,
+      currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+      backgroundColor: themeManager.theme.sectionColor(colorScheme),
+      calendar: Constants.shared.calendar,
+      availableOptions: viewModel.calendarPickerOptions()
+    )
+    .padding(.top, 70)
   }
   
   func timeControl(title: String, leftButtonAction: @escaping ()->Void, rightButtonAction: @escaping ()->Void) -> some View {
@@ -469,24 +467,26 @@ private extension TaskListView {
   
   @ViewBuilder
   func infoButton() -> some View {
-    HStack(alignment: .center, spacing: 0) {
-      Button {
-        viewModel.isShowingInfoView.toggle()
-      } label: {
-        Image(.info)
-          .resizable()
-          .scaledToFit()
-          .frame(width: 24, height: 23)
+    if appState.settings.isShowingInfoTips {
+      HStack(alignment: .center, spacing: 0) {
+        Button {
+          viewModel.isShowingInfoView.toggle()
+        } label: {
+          Image(.info)
+            .resizable()
+            .scaledToFit()
+            .frame(size: Constants.shared.imagesSize)
+        }
+        .buttonStyle(.borderless)
+        .padding(.leading, 5)
+        
+        if viewModel.isShowingInfoView {
+          swipeView()
+        }
       }
-      .buttonStyle(.borderless)
-      .padding(.leading, 5)
-      
-      if viewModel.isShowingInfoView {
-        swipeView()
-      }
+      .padding(.leading, 23)
+      .padding(.bottom, 30)
     }
-    .frame(height: 80)
-    .padding(.bottom, 10)
   }
   
   @ViewBuilder
