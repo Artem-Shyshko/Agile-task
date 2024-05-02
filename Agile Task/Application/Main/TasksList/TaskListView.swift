@@ -467,7 +467,7 @@ private extension TaskListView {
   
   @ViewBuilder
   func infoButton() -> some View {
-    if appState.settings.isShowingInfoTips {
+    if appState.settings.isShowingInfoTips, !viewModel.isShowingAddTask {
       HStack(alignment: .center, spacing: 0) {
         Button {
           viewModel.isShowingInfoView.toggle()

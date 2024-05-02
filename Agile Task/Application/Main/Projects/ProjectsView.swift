@@ -96,10 +96,10 @@ private extension ProjectsView {
             }
             path.append(.newProject())
         } label: {
-            Image("Add")
+            Image(.add)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 22, height: 22)
+                .frame(size: Constants.shared.imagesSize)
         }
     }
 }
