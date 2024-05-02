@@ -47,7 +47,9 @@ enum Tab: LocalizedStringResource, Identifiable, CaseIterable {
 struct TabBarView: View {
     
     // MARK: - Properties
-    @State private var selectedTab: Tab = .taskList
+    
+    @EnvironmentObject var appState: AppState
+    
     @State private var taskListNavigationStack: [TaskListNavigationView] = []
     @State private var projectsNavigationStack: [ProjectNavigationView] = []
     @State private var settingsNavigationStack: [SettingsNavigationView] = []
@@ -61,7 +63,7 @@ struct TabBarView: View {
     
     var body: some View {
         ZStack {
-            TabView(selection: $selectedTab) {
+            TabView(selection: $appState.selectedTab) {
                 TaskListView(path: $taskListNavigationStack)
                     .tag(Tab.taskList)
                 ProjectsView(vm: ProjectsViewModel(), path: $projectsNavigationStack)
@@ -75,14 +77,14 @@ struct TabBarView: View {
                 }
             }
         }
-        .onChange(of: selectedTab) { newValue in
+        .onChange(of: appState.selectedTab) { newValue in
             taskListNavigationStack = []
             settingsNavigationStack = []
             projectsNavigationStack = []
         }
         .onOpenURL { incomingURL in
             AppHelper.shared.handleIncomingURL(incomingURL) {
-                selectedTab = .taskList
+                appState.selectedTab = .taskList
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if taskListNavigationStack.isEmpty {
                         taskListNavigationStack.append(.createTask)
@@ -98,6 +100,7 @@ struct TabBarView_Previews: PreviewProvider {
         TabBarView()
             .background(Color.red)
             .previewDevice("iPhone 15 pro")
+            .environmentObject(AppState())
     }
 }
 
@@ -126,10 +129,10 @@ private extension TabBarView {
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
         .onTapGesture {
-            selectedTab = tab
+            appState.selectedTab = tab
             
-            if selectedTab == tab {
-                switch selectedTab {
+            if appState.selectedTab == tab {
+                switch appState.selectedTab {
                 case .taskList:
                     taskListNavigationStack = []
                 case .projects:

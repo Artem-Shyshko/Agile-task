@@ -17,6 +17,7 @@ struct SubscriptionView: View {
     
     @EnvironmentObject var purchaseManager: PurchaseManager
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) var dismiss
     @Environment(\.colorScheme) var colorScheme
     @State var selectedProduct: Product?
@@ -57,6 +58,12 @@ struct SubscriptionView: View {
             loaderView(show: purchaseManager.showProcessView)
         }
         .foregroundColor(themeManager.theme.textColor(colorScheme))
+        .onChange(of: purchaseManager.selectedSubscriptionID) { newValue in
+            if newValue == Constants.shared.yearlySubscriptionID
+                || newValue == Constants.shared.monthlySubscriptionID {
+                appState.selectedTab = .taskList
+            }
+        }
     }
 }
 

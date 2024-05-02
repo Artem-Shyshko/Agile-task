@@ -9,4 +9,5 @@ import Foundation
 
 final class AppState: ObservableObject {
     @Published var settings: SettingsDTO = SettingsDTO(object: SettingsObject())
+    @Published var selectedTab: Tab = .taskList
 }
