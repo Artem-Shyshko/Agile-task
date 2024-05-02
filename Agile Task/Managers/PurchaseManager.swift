@@ -17,7 +17,7 @@ final class PurchaseManager: NSObject, ObservableObject {
     private var updates: Task<Void, Never>? = nil
     private let taskRepository: TaskRepository = TaskRepositoryImpl()
     private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
-    private let maxFreeTasks = 8
+    private let maxFreeTasks = 4
     private let maxFreeProjects = 1
     
     @Published private(set) var products: [Product] = []
