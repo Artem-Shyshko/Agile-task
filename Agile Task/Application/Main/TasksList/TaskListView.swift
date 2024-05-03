@@ -295,7 +295,7 @@ private extension TaskListView {
           .renderingMode(.template)
           .resizable()
           .scaledToFit()
-          .frame(width: 23, height: 45)
+          .frame(size: Constants.shared.imagesSize)
       }
       
       HStack {
@@ -314,7 +314,7 @@ private extension TaskListView {
           .renderingMode(.template)
           .resizable()
           .scaledToFit()
-          .frame(width: 23, height: 45)
+          .frame(size: Constants.shared.imagesSize)
       }
     }
   }
@@ -485,7 +485,8 @@ private extension TaskListView {
         }
       }
       .padding(.leading, 23)
-      .padding(.bottom, 30)
+      .frame(height: 60)
+      .padding(.bottom, 17)
     }
   }
   
