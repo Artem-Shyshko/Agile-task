@@ -41,7 +41,8 @@ public struct CustomCalendarView: View {
             CalendarDayView(
                 viewModel: viewModel,
                 calendarDate: $selectedCalendarDay,
-                currentMonthDatesColor: currentMonthDatesColor
+                currentMonthDatesColor: currentMonthDatesColor,
+                items: items
             )
             .padding(.horizontal, 20)
             .padding(.top, 50)
