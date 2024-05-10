@@ -231,6 +231,7 @@ private extension SettingsTaskView {
   
   var checkMark: some View {
     Image("Check")
+      .renderingMode(.template)
       .resizable()
       .scaledToFit()
       .frame(width: 13, height: 13)
