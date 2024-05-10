@@ -38,6 +38,8 @@ struct NewCheckBoxView: View {
             if $viewModel.checkboxes.isEmpty {
                 viewModel.checkboxes.append(CheckboxDTO(object: CheckboxObject(title: "")))
                 focusedInput = 0
+            } else {
+                focusedInput = viewModel.checkboxes.count - 1
             }
         })
         .alert("Are you sure you want to delete the point?", isPresented: $showDeleteAlert) {

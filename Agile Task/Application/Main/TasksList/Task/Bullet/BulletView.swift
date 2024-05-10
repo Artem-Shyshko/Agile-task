@@ -38,6 +38,8 @@ struct BulletView: View {
             if $viewModel.bulletArray.isEmpty {
                 viewModel.bulletArray.append(BulletDTO(object: BulletObject(title: "")))
                 focusedInput = 0
+            } else {
+                focusedInput = viewModel.bulletArray.count - 1
             }
         })
         .alert("Are you sure you want to delete the point?", isPresented: $showDeleteAlert) {
