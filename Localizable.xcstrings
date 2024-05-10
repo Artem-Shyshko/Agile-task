@@ -1712,6 +1712,23 @@
         }
       }
     },
+    "recurring_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reccuring"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring"
+          }
+        }
+      }
+    },
     "Refresh Interval" : {
       "localizations" : {
         "fr" : {
@@ -2345,6 +2362,23 @@
     "Time" : {
       "extractionState" : "manual",
       "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Час"
+          }
+        }
+      }
+    },
+    "time_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Time"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",

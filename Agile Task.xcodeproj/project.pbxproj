@@ -89,6 +89,7 @@
 		757B836B2ACF125C00A26D73 /* MasterAppsUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 757B83642ACF125C00A26D73 /* MasterAppsUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7583617C2AB1D4DB0021FFDE /* AppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7583617B2AB1D4DB0021FFDE /* AppHelper.swift */; };
 		75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75896DD62A83DCC900B0C6F2 /* TaskObject.swift */; };
+		758B02022BEE464700E7865B /* RecurringTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758B02012BEE464700E7865B /* RecurringTimeView.swift */; };
 		758B02042BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
 		758B02052BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
 		758B02062BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
@@ -294,6 +295,7 @@
 		757B83662ACF125C00A26D73 /* MasterAppsUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterAppsUI.h; sourceTree = "<group>"; };
 		7583617B2AB1D4DB0021FFDE /* AppHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHelper.swift; sourceTree = "<group>"; };
 		75896DD62A83DCC900B0C6F2 /* TaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskObject.swift; sourceTree = "<group>"; };
+		758B02012BEE464700E7865B /* RecurringTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecurringTimeView.swift; sourceTree = "<group>"; };
 		758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		758B22852AD59C1A00D4654D /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		7590CF912AEFA81B0015B396 /* CheckboxObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxObject.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				752CEE1E2B3C636300CA1612 /* ColorPanel.swift */,
+				758B02012BEE464700E7865B /* RecurringTimeView.swift */,
 				752CEE1F2B3C636300CA1612 /* CustomSegmentedControl.swift */,
 				752CEE202B3C636300CA1612 /* TimeControlView.swift */,
 				752CEE212B3C636300CA1612 /* CalendarViewModel.swift */,
@@ -1172,6 +1175,7 @@
 				752CEE392B3C638600CA1612 /* Font+Ext.swift in Sources */,
 				752CEE3A2B3C638600CA1612 /* Color+Ext.swift in Sources */,
 				753DA8622BBEF63300A60849 /* LoaderView.swift in Sources */,
+				758B02022BEE464700E7865B /* RecurringTimeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

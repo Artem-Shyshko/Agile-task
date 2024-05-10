@@ -267,7 +267,8 @@ private extension NewTaskView {
                 isSelected: viewModel.reminder != .none
             )
             
-            if viewModel.reminder == .custom {
+            switch viewModel.reminder {
+            case .custom:
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.reminderDate,
                     isShowingCalendarPicker: $viewModel.isShowingReminderCalendarPicker,
@@ -286,7 +287,7 @@ private extension NewTaskView {
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
-            } else if viewModel.reminder == .tomorrow || viewModel.reminder == .nextWeek {
+            case .tomorrow, .nextWeek:
                 TimeView(
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
@@ -296,6 +297,16 @@ private extension NewTaskView {
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
+            case .withRecurring:
+                RecurringTimeView(
+                    reminderTime: $viewModel.reminderTime,
+                    timePeriod: $viewModel.selectedReminderTimePeriod,
+                    isTypedTime: $viewModel.isTypedReminderTime,
+                    timeFormat: viewModel.settings.timeFormat,
+                    isFocus: editTask == nil ? true : false
+                )
+            case .inOneHour, .none:
+                EmptyView()
             }
         }
     }
