@@ -1673,6 +1673,12 @@
             "state" : "translated",
             "value" : "Checklists & Bullet lists "
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checklists & Bullet lists"
+          }
         }
       }
     },
@@ -1680,6 +1686,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data backup-ups"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Data backup-ups"
@@ -1695,6 +1707,12 @@
             "state" : "translated",
             "value" : "Face ID protection"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face ID protection"
+          }
         }
       }
     },
@@ -1702,6 +1720,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications & Reminders"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notifications & Reminders"
@@ -1717,6 +1741,12 @@
             "state" : "translated",
             "value" : "Recurring tasks"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring tasks"
+          }
         }
       }
     },
@@ -1724,6 +1754,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statuses"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Statuses"
@@ -1739,6 +1775,12 @@
             "state" : "translated",
             "value" : "Unlimited projects"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited projects"
+          }
         }
       }
     },
@@ -1746,6 +1788,12 @@
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited tasks"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unlimited tasks"

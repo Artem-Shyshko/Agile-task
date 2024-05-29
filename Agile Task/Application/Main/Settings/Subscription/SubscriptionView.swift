@@ -46,8 +46,8 @@ struct SubscriptionView: View {
     
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
-            ScrollView {
                 navigationBar()
+            ScrollView {
                 VStack(spacing: 40) {
                     VStack(spacing: 20) {
                         title()
