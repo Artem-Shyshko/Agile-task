@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-
-import SwiftUI
 import StoreKit
 
 struct SubscriptionView: View {
     enum Layout {
         static let cornerRadius: CGFloat = 4
     }
+    
+    // MARK: - Properties
     
     @EnvironmentObject var purchaseManager: PurchaseManager
     @EnvironmentObject var themeManager: ThemeManager
@@ -25,19 +25,42 @@ struct SubscriptionView: View {
     @State var showPurchasesAlert = false
     @State var isRestored = false
     
+    private var isPurchaseCompleted: Bool {
+        purchaseManager.selectedSubscriptionID == Constants.shared.yearlySubscriptionID
+        && !purchaseManager.showProcessView
+        || purchaseManager.selectedSubscriptionID == Constants.shared.monthlySubscriptionID
+        && !purchaseManager.showProcessView
+    }
+    private let checkmarkItems = [
+            "purchase_unlimited_tasks",
+            "purchase_unlimited_projects",
+            "purchase_statuses",
+            "purchase_checklists_bullets",
+            "purchase_notification_reminders",
+            "purchase_recurring",
+            "purchase_faceid",
+            "purchase_data_backup"
+        ]
+    
+    // MARK: - Body
+    
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
-            navigationBar()
+            ScrollView {
+                navigationBar()
                 VStack(spacing: 40) {
                     VStack(spacing: 20) {
                         title()
+                        descriptionView()
                         Spacer()
-                        features()
+                        checkmarksView()
+                        Spacer()
                         products()
                     }
                     bottomButtons()
                 }
                 .padding(.horizontal, 2)
+            }
         }
         .onAppear {
             Task {
@@ -67,6 +90,8 @@ struct SubscriptionView: View {
     }
 }
 
+// MARK: - Private views
+
 private extension SubscriptionView {
     func navigationBar() -> some View {
         NavigationBarView(
@@ -82,8 +107,11 @@ private extension SubscriptionView {
         }
     }
     
-    func features() -> some View {
-        AppFeaturesView()
+    func descriptionView() -> some View {
+        Text("subscription_description")
+            .font(.helveticaRegular(size: 16))
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 20)
     }
     
     func bottomButtons() -> some View {
@@ -106,6 +134,20 @@ private extension SubscriptionView {
                     .font(.helveticaRegular(size: 13))
                 TermsOfUseButton()
                     .font(.helveticaRegular(size: 13))
+            }
+        }
+    }
+    
+    func checkmarksView() -> some View {
+        VStack(alignment: .leading) {
+            ForEach(checkmarkItems, id: \.self) { item in
+                HStack {
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .frame(width: 25, height: 25)
+                        .foregroundColor(.white)
+                    Text(LocalizedStringKey(item))
+                }
             }
         }
     }
@@ -178,17 +220,10 @@ private extension SubscriptionView {
                 }
             }
             .hAlign(alignment: .leading)
-            
-            VStack(alignment: .leading, spacing: 3) {
-                Text("unlimited_tasks_title")
-                Text("unlimited_projects_title")
-            }
-            .font(.helveticaRegular(size: 14))
-            .padding(.horizontal, 30)
         }
         .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
         .padding(15)
-        .frame(height: 110)
+        .frame(height: 56)
         .frame(maxWidth: .infinity)
         .background(themeManager.theme.sectionColor(colorScheme))
         .cornerRadius(Layout.cornerRadius)
@@ -201,6 +236,8 @@ private extension SubscriptionView {
         }
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     SubscriptionView()

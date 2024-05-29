@@ -1283,7 +1283,14 @@
       }
     },
     "monthly_title" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monthly"
+          }
+        }
+      }
     },
     "Move to the bottom of the list" : {
       "extractionState" : "manual",
@@ -1654,6 +1661,94 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проекти"
+          }
+        }
+      }
+    },
+    "purchase_checklists_bullets" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Checklists & Bullet lists "
+          }
+        }
+      }
+    },
+    "purchase_data_backup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data backup-ups"
+          }
+        }
+      }
+    },
+    "purchase_faceid" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face ID protection"
+          }
+        }
+      }
+    },
+    "purchase_notification_reminders" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications & Reminders"
+          }
+        }
+      }
+    },
+    "purchase_recurring" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recurring tasks"
+          }
+        }
+      }
+    },
+    "purchase_statuses" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Statuses"
+          }
+        }
+      }
+    },
+    "purchase_unlimited_projects" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited projects"
+          }
+        }
+      }
+    },
+    "purchase_unlimited_tasks" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited tasks"
           }
         }
       }
@@ -2122,6 +2217,22 @@
         }
       }
     },
+    "subscription_description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Join Agile Task to unlock your full potential and boost productivity!"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Приєднуйтесь до Agile Task, щоб розкрити свій потенціал і підвищити продуктивність!"
+          }
+        }
+      }
+    },
     "subscription_subtitle" : {
       "localizations" : {
         "en" : {
@@ -2463,6 +2574,7 @@
       }
     },
     "unlimited_projects_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2479,6 +2591,7 @@
       }
     },
     "unlimited_tasks_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
