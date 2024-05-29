@@ -51,6 +51,7 @@ struct BulletView: View {
             
             Button {
                 viewModel.trashButtonAction(task: task)
+                focusedInput = viewModel.bulletArray.count - 1
             } label: {
                 Text("Delete")
             }
@@ -86,7 +87,7 @@ private extension BulletView {
                 viewModel: viewModel,
                 showAlert: $showDeleteAlert,
                 bullet: bullet,
-                isDisabledDeleteButton: focusedInput == viewModel.focusNumber(bullet: bullet.wrappedValue)
+                isFieldOnFocus: focusedInput == viewModel.focusNumber(bullet: bullet.wrappedValue)
             )
             .focused(
                 $focusedInput,
@@ -121,6 +122,7 @@ private extension BulletView {
             Text("Cancel")
         }
         .font(.helveticaRegular(size: 16))
+        .foregroundColor(.white)
     }
     
     func tabBarSaveButton() -> some View {
@@ -131,6 +133,7 @@ private extension BulletView {
             Text("Save")
         }
         .font(.helveticaRegular(size: 16))
+        .foregroundColor(.white)
     }
     
     func navigationBar() -> some View {
@@ -142,12 +145,7 @@ private extension BulletView {
     }
 }
 
-// MARK: - Preview
-
-#Preview {
-    BulletView(viewModel: BulletViewModel(), taskBulletArray: .constant([]), isShowing: .constant(true))
-        .environmentObject(ThemeManager())
-}
+// MARK: - TextEditor
 
 fileprivate struct TextEditor: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -156,7 +154,8 @@ fileprivate struct TextEditor: View {
     @StateObject var viewModel: BulletViewModel
     @Binding var showAlert: Bool
     @Binding var bullet: BulletDTO
-    var isDisabledDeleteButton: Bool
+    var isFieldOnFocus: Bool
+    @FocusState var isFocus: Bool
     
     var body: some View {
         HStack(spacing: 4) {
@@ -173,11 +172,13 @@ fileprivate struct TextEditor: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .submitLabel(.done)
                 .tint(themeManager.theme.sectionTextColor(colorScheme))
+                .focused($isFocus)
             
             HStack {
                 ThreeHorizontalLinesView()
                 
                 Button(action: {
+                    isFocus = false
                     viewModel.deletedBullet = bullet
                     showAlert = true
                 }, label: {
@@ -185,12 +186,14 @@ fileprivate struct TextEditor: View {
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
-                        .foregroundStyle(isDisabledDeleteButton ? .gray.opacity(0.5) : .red)
+                        .foregroundStyle(.red)
                 })
                 .buttonStyle(.borderless)
                 .frame(width: 20, height: 20)
             }
-            .disabled(isDisabledDeleteButton)
+        }
+        .onAppear {
+            isFocus = isFieldOnFocus
         }
     }
 }

@@ -51,6 +51,7 @@ struct NewCheckBoxView: View {
             
             Button {
                 viewModel.trashButtonAction(task: task)
+                focusedInput = viewModel.checkboxes.count - 1
             } label: {
                 Text("Delete")
             }
@@ -86,7 +87,7 @@ private extension NewCheckBoxView {
                 viewModel: viewModel,
                 showAlert: $showDeleteAlert,
                 checkbox: checkbox,
-                isDisabledDeleteButton: focusedInput == viewModel.focusNumber(checkbox: checkbox.wrappedValue)
+                isFieldOnFocus: focusedInput == viewModel.focusNumber(checkbox: checkbox.wrappedValue)
             )
             .focused(
                 $focusedInput,
@@ -121,6 +122,7 @@ private extension NewCheckBoxView {
             Text("Cancel")
         }
         .font(.helveticaRegular(size: 16))
+        .foregroundColor(.white)
     }
     
     func tabBarSaveButton() -> some View {
@@ -131,24 +133,19 @@ private extension NewCheckBoxView {
             Text("Save")
         }
         .font(.helveticaRegular(size: 16))
+        .foregroundColor(.white)
     }
     
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: tabBarCancelButton(),
-            header: NavigationTitle("Checklist"),
+            header: NavigationTitle("Bullet list"),
             rightItem: tabBarSaveButton()
         )
     }
 }
 
-// MARK: - Preview
-
-#Preview {
-    NewCheckBoxView(viewModel: NewCheckBoxViewModel(), taskCheckboxes: .constant([]), isShowing: .constant(true))
-        .environmentObject(ThemeManager())
-}
-
+// MARK: - TextEditor
 
 fileprivate struct TextEditor: View {
     @EnvironmentObject var themeManager: ThemeManager
@@ -157,7 +154,8 @@ fileprivate struct TextEditor: View {
     @StateObject var viewModel: NewCheckBoxViewModel
     @Binding var showAlert: Bool
     @Binding var checkbox: CheckboxDTO
-    var isDisabledDeleteButton: Bool
+    var isFieldOnFocus: Bool
+    @FocusState var isFocus: Bool
     
     var body: some View {
         HStack(spacing: 4) {
@@ -174,11 +172,13 @@ fileprivate struct TextEditor: View {
                 .fixedSize(horizontal: false, vertical: true)
                 .submitLabel(.done)
                 .tint(themeManager.theme.sectionTextColor(colorScheme))
+                .focused($isFocus)
             
             HStack {
                 ThreeHorizontalLinesView()
                 
                 Button(action: {
+                    isFocus = false
                     viewModel.deletedCheckbox = checkbox
                     showAlert = true
                 }, label: {
@@ -186,12 +186,14 @@ fileprivate struct TextEditor: View {
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()
-                        .foregroundStyle(isDisabledDeleteButton ? .gray.opacity(0.5) : .red)
+                        .foregroundStyle(.red)
                 })
                 .buttonStyle(.borderless)
                 .frame(width: 20, height: 20)
             }
-            .disabled(isDisabledDeleteButton)
+        }
+        .onAppear {
+            isFocus = isFieldOnFocus
         }
     }
 }

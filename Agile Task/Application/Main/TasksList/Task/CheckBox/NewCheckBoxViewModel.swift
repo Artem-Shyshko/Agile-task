@@ -44,6 +44,12 @@ final class NewCheckBoxViewModel: ObservableObject {
     
     func saveButtonAction(task: TaskDTO?, taskCheckboxes: inout [CheckboxDTO]) {
         if let task {
+            checkboxes.forEach {
+                if $0.title.isEmpty {
+                    deletedCheckboxes.append($0)
+                }
+            }
+            
             deletedCheckboxes.forEach { deletedCheckbox in
                 taskRepository.deleteCheckbox(task.id, checkboxId: deletedCheckbox.id)
             }

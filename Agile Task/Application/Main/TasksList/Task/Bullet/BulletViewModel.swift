@@ -45,6 +45,12 @@ final class BulletViewModel: ObservableObject {
     
     func saveButtonAction(task: TaskDTO?, taskBullets: inout [BulletDTO]) {
         if let task {
+            bulletArray.forEach {
+                if $0.title.isEmpty {
+                    deletedBullets.append($0)
+                }
+            }
+            
             deletedBullets.forEach { deletedBullet in
                 taskRepository.deleteBullet(task.id, bulletId: deletedBullet.id)
             }
