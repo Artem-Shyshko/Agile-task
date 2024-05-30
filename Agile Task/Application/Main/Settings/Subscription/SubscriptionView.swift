@@ -84,6 +84,7 @@ struct SubscriptionView: View {
         .onChange(of: purchaseManager.selectedSubscriptionID) { newValue in
             if newValue == Constants.shared.yearlySubscriptionID
                 || newValue == Constants.shared.monthlySubscriptionID {
+                dismiss()
                 appState.selectedTab = .taskList
             }
         }
