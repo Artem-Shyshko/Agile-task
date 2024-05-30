@@ -22,7 +22,7 @@ struct AppFeaturesView: View {
             }
             
             VStack(alignment: .leading, spacing: 12) {
-                label(image: "Projects", text: "Unlimited Projects")
+                label(image: "Projects", text: "Projects")
                 label(image: "CalendarIcon", text: "Calendar")
                 label(image: "Navigation", text: "Advanced navigation")
                 label(image: "SettingsIcon", text: "Customization")

@@ -1160,17 +1160,21 @@
         }
       }
     },
+    "Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently.\n\nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task." : {
+
+    },
     "Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently. \nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task." : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Faites vos plans rapidement, facilement et sans tracas. Agile Task est un outil de suivi des tâches efficace pour les projets professionnels ou personnels afin de suivre les tâches et de les exécuter efficacement. \nPlanifiez tout - des réunions d'affaires, des voyages et des rendez-vous chez le médecin aux listes de courses. \nDésencombrez vos notes et organisez votre emploi du temps avec Agile Task."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Плануйте швидко, легко та без зайвого клопоту. Agile Task - це ефективний трекер завдань для професійних або особистих проектів, який дозволяє відстежувати завдання та ефективно їх виконувати. \nПлануйте все - від ділових зустрічей, поїздок і візитів до лікаря до списків продуктів. \nНаведіть лад у своїх нотатках та організуйте свій графік за допомогою Agile Task."
           }
         }
@@ -2222,6 +2226,7 @@
       }
     },
     "Start" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2236,6 +2241,9 @@
           }
         }
       }
+    },
+    "START" : {
+
     },
     "Status" : {
       "extractionState" : "manual",

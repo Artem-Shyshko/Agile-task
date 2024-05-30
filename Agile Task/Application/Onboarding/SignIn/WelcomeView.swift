@@ -22,14 +22,18 @@ struct WelcomeView: View {
             themeManager.theme.gradient(colorScheme)
                 .ignoresSafeArea()
             
-            VStack(spacing: 60) {
-                VStack(spacing: 20) {
+            VStack {
+                VStack() {
+                    Spacer()
                     title()
+                    Spacer()
                     subTitle()
+                    Spacer()
+                    AppFeaturesView()
+                    Spacer()
+                    startButton()
+                    Spacer()
                 }
-                AppFeaturesView()
-                
-                startButton()
             }
             .font(.helveticaRegular(size: 14))
             .foregroundColor(themeManager.theme.textColor(colorScheme))
@@ -50,7 +54,7 @@ private extension WelcomeView {
     }
     
     func subTitle() -> some View {
-        Text("Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently. \nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task.")
+        Text("Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently.\n\nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task.")
             .multilineTextAlignment(.center)
             .font(.helveticaRegular(size: 16))
             .padding(.horizontal, 30)
@@ -61,7 +65,7 @@ private extension WelcomeView {
             AppHelper.shared.isOnboarding = true
             showTabBar = true
         } label: {
-            Text("Start")
+            Text("START")
         }
         .buttonStyle(PrimaryButtonStyle())
     }
