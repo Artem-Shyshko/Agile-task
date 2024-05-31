@@ -87,6 +87,10 @@ extension Date {
         self.description
     }
     
+    var backupDateString: String {
+        self.format("dd MM yy hh:mm")
+    }
+    
     func byAdding(component: Calendar.Component, value: Int, wrappingComponents: Bool = false, using calendar: Calendar = Constants.shared.calendar) -> Date? {
         calendar.date(byAdding: component, value: value, to: self, wrappingComponents: wrappingComponents)
     }

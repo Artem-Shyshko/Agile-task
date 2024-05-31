@@ -16,7 +16,7 @@ enum TaskListNavigationView: Hashable {
 }
 
 enum SettingsNavigationView: Hashable {
-    case subscription, taskSettings, security, more, contactUs
+    case subscription, taskSettings, security, more, contactUs, backup, backupDetail(storage: BackupStorage), backupList(storage: BackupStorage)
 }
 
 enum ProjectNavigationView: Hashable {
@@ -83,13 +83,18 @@ struct TabBarView: View {
             projectsNavigationStack = []
         }
         .onOpenURL { incomingURL in
-            AppHelper.shared.handleIncomingURL(incomingURL) {
+            guard let incomeState = AppHelper.shared.handleIncomingURL(incomingURL) else { return }
+            
+            switch incomeState {
+            case .widgetNewTask:
                 appState.selectedTab = .taskList
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if taskListNavigationStack.isEmpty {
                         taskListNavigationStack.append(.createTask)
                     }
                 }
+            case .dropbox:
+                break
             }
         }
     }

@@ -15,15 +15,26 @@ extension Results {
     }
 }
 
+protocol BackupProtocol {
+    func getRealmData() -> Data?
+    func saveBackup(data: Data, fileName: String, toICloud: Bool) -> Result<String, BackupError>
+    func listAllBackups(fromICloud: Bool) -> [String]
+    func restoreBackup(named name: String, fromICloud: Bool) -> Result<String, BackupError>
+    func restoreBackup(data: Data) -> Result<String, BackupError>
+}
+
 final class StorageService {
-    private let storage: Realm?
+    private var storage: Realm?
+    private let realmURL = URL.storeURL(databaseName: "default.realm")
     
     init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 13)) {
-        let realmURL = URL.storeURL(for: "group.agiletask.app", databaseName: "default.realm")
-        
         print(realmURL.path())
+        initializeRealm(with: configuration)
+        createBackupDirectory()
+    }
+    
+    private func initializeRealm(with configuration: Realm.Configuration) {
         let config = Realm.Configuration(fileURL: realmURL, schemaVersion: configuration.schemaVersion)
-        
         Realm.Configuration.defaultConfiguration = config
         
         do {
@@ -114,12 +125,189 @@ final class StorageService {
     }
 }
 
+extension StorageService: BackupProtocol {
+    func saveBackup(data: Data, fileName: String, toICloud: Bool = false) -> Result<String, BackupError> {
+        let fileManager = FileManager.default
+        let backupDirectory = toICloud ? getICloudBackupDirectory() : getLocalBackupDirectory()
+        
+        guard let directory = backupDirectory else {
+            return .failure(.urlIsNotAvailable)
+        }
+        
+        let name = "Backup_\(fileName)"
+        let backupURL = directory.appendingPathComponent(name)
+        
+        do {
+            if fileManager.fileExists(atPath: backupURL.path) {
+                try fileManager.removeItem(at: backupURL)
+            }
+            
+            let isSaved = fileManager.createFile(atPath: backupURL.path, contents: data)
+            if isSaved {
+                return .success("Backup \(name) successfully saved")
+            }
+            return .failure(.cantSaveBackup)
+        } catch {
+            print("Error saving backup: \(error.localizedDescription)")
+            return .failure(.creatingBackupError)
+        }
+    }
+    
+    func listAllBackups(fromICloud: Bool = false) -> [String] {
+        let fileManager = FileManager.default
+        let backupDirectory = fromICloud ? getICloudBackupDirectory() : getLocalBackupDirectory()
+        
+        guard let directory = backupDirectory else {
+            print("Backup directory is not available")
+            return []
+        }
+        
+        if !fileManager.fileExists(atPath: directory.path) {
+            print("Backup directory does not exist at path: \(directory.path)")
+            return []
+        }
+        
+        if !fileManager.isReadableFile(atPath: directory.path) {
+            print("Backup directory is not readable at path: \(directory.path)")
+            return []
+        }
+        
+        do {
+            let files = try fileManager.contentsOfDirectory(atPath: directory.path)
+            return files
+        } catch {
+            print("Error listing backups in directory \(directory.path): \(error.localizedDescription)")
+            return []
+        }
+    }
+    
+    func restoreBackup(named name: String, fromICloud: Bool = false) -> Result<String, BackupError> {
+        let fileManager = FileManager.default
+        let backupDirectory = fromICloud ? getICloudBackupDirectory() : getLocalBackupDirectory()
+        
+        guard let directory = backupDirectory else {
+            return .failure(.urlIsNotAvailable)
+        }
+        
+        let backupURL = directory.appendingPathComponent(name)
+        
+        do {
+            guard fileManager.fileExists(atPath: backupURL.path) else {
+                return .failure(.fileDoesNotExist)
+            }
+            
+            if fileManager.fileExists(atPath: realmURL.path) {
+                try fileManager.removeItem(at: realmURL)
+            }
+            
+            try fileManager.copyItem(at: backupURL, to: realmURL)
+            return .success("Backup \(name) successfully restored")
+        } catch {
+            print("Error restoring backup: \(error.localizedDescription)")
+            return .failure(.restoringBackupError)
+        }
+    }
+    
+    func restoreBackup(data: Data) -> Result<String, BackupError> {
+        do {
+            let fileManager = FileManager.default
+            
+            if fileManager.fileExists(atPath: realmURL.path) {
+                try fileManager.removeItem(at: realmURL)
+            }
+            
+            let isSaved = fileManager.createFile(atPath: realmURL.path, contents: data)
+            if isSaved {
+                reinitializeRealm()
+                return .success("Backup successfully restored, please reload app")
+            }
+            return .failure(BackupError.restoringBackupError)
+        } catch {
+            print("Error saving backup: \(error.localizedDescription)")
+            return .failure(BackupError.creatingBackupError)
+        }
+    }
+    
+    func getRealmData() -> Data? {
+        let fileManager = FileManager.default
+        return fileManager.contents(atPath: realmURL.path)
+    }
+}
+
+private extension StorageService {
+    func reinitializeRealm() {
+        let config = Realm.Configuration(fileURL: realmURL, schemaVersion: 1)
+        Realm.Configuration.defaultConfiguration = config
+        do {
+            self.storage = try Realm()
+            reloadWidget()
+        } catch {
+            print("Error reinitializing Realm: \(error)")
+        }
+    }
+    
+    private func getLocalBackupDirectory() -> URL {
+        let fileManager = FileManager.default
+        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        guard let documentDirectory = urls.first else {
+            fatalError("Unable to access document directory")
+        }
+        let backupDirectory = documentDirectory.appendingPathComponent("Backups")
+        print("Local Backup Directory: \(backupDirectory.path)")
+        createBackupDirectoryIfNeeded(directory: backupDirectory)
+        return backupDirectory
+    }
+
+    func getICloudBackupDirectory() -> URL? {
+        let fileManager = FileManager.default
+        guard let iCloudURL = fileManager.url(forUbiquityContainerIdentifier: nil) else {
+            print("iCloud is not available")
+            return nil
+        }
+        let backupDirectory = iCloudURL.appendingPathComponent("Documents").appendingPathComponent("Backups")
+        print("iCloud Backup Directory: \(backupDirectory.path)")
+        createBackupDirectoryIfNeeded(directory: backupDirectory)
+        return backupDirectory
+    }
+    
+    private func createBackupDirectoryIfNeeded(directory: URL) {
+        let fileManager = FileManager.default
+        if !fileManager.fileExists(atPath: directory.path) {
+            do {
+                try fileManager.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
+                print("Backup directory created at path: \(directory.path)")
+            } catch {
+                fatalError("Unable to create backup directory: \(error.localizedDescription)")
+            }
+        } else {
+            print("Backup directory already exists at path: \(directory.path)")
+        }
+    }
+    
+    func createBackupDirectory() {
+        createBackupDirectoryIfNeeded(directory: getLocalBackupDirectory())
+        if let iCloudBackupDirectory = getICloudBackupDirectory() {
+            createBackupDirectoryIfNeeded(directory: iCloudBackupDirectory)
+        }
+    }
+}
+
 public extension URL {
-    static func storeURL(for appGroup: String, databaseName: String) -> URL {
+    static func storeURL(databaseName: String) -> URL {
+        let appGroup = "group.agiletask.app"
+        
         guard let fileContainer = FileManager.default
             .containerURL(forSecurityApplicationGroupIdentifier: appGroup)
         else { fatalError("Unable to create URL for \(appGroup)") }
         
         return fileContainer.appending(path: databaseName)
     }
+}
+
+enum BackupError: String, Error {
+    case urlIsNotAvailable = "Backup URL is not available"
+    case fileDoesNotExist = "Backup file does not exist"
+    case restoringBackupError = "Restoring backup error"
+    case creatingBackupError = "Creating backup error"
+    case cantSaveBackup = "Cant save backup"
 }

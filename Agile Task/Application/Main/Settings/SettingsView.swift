@@ -26,6 +26,7 @@ struct SettingsView: View {
                     SettingsThemeView()
                     settingsView()
                     securityView()
+                    backupView()
                     moreAppsView()
                     emailView()
                     Spacer()
@@ -44,6 +45,12 @@ struct SettingsView: View {
                     MoreOurAppsView()
                 case .contactUs:
                     Text("Contact Us")
+                case .backup:
+                    BackupView()
+                case .backupDetail(storage: let storage):
+                    BackupDetailView(backupStorage: storage)
+                case .backupList(storage: let storage):
+                    BackupListView(backupStorage: storage)
                 }
             }
             .sheet(isPresented: $showMailView, content: {
@@ -115,6 +122,12 @@ private extension SettingsView {
         }
     }
     
+    func backupView() -> some View {
+        NavigationLink(value: SettingsNavigationView.backup) {
+            Text("backup_title")
+                .modifier(SectionStyle())
+        }
+    }
 }
 
 struct SettingsView_Previews: PreviewProvider {

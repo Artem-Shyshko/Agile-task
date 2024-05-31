@@ -492,6 +492,22 @@
         }
       }
     },
+    "backup_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервна копія"
+          }
+        }
+      }
+    },
     "Bullet list" : {
       "localizations" : {
         "uk" : {
@@ -641,6 +657,9 @@
         }
       }
     },
+    "Connect to Dropbox" : {
+
+    },
     "Contact Us" : {
       "localizations" : {
         "fr" : {
@@ -687,6 +706,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Контролюйте прогрес на ходу."
+          }
+        }
+      }
+    },
+    "create_backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create backup"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Створити резервну копію"
           }
         }
       }
@@ -854,6 +889,9 @@
         }
       }
     },
+    "Disconnect Dropbox" : {
+
+    },
     "Done" : {
       "localizations" : {
         "uk" : {
@@ -876,6 +914,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Двічі торкніться, щоб швидко виконати завдання"
+          }
+        }
+      }
+    },
+    "dropbox_backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup - Dropbox"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервна копія в Dropbox"
           }
         }
       }
@@ -1004,6 +1058,22 @@
         }
       }
     },
+    "files_backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup - Files"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервна копія на телефоні"
+          }
+        }
+      }
+    },
     "Free" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1086,6 +1156,22 @@
         }
       }
     },
+    "iCloud_backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Backup - iCloud"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Резервна копія в iCloud"
+          }
+        }
+      }
+    },
     "In 1 hour" : {
       "localizations" : {
         "fr" : {
@@ -1142,6 +1228,9 @@
           }
         }
       }
+    },
+    "like_the_app_title" : {
+
     },
     "Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently." : {
       "extractionState" : "stale",
@@ -2012,6 +2101,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відновити завдання"
+          }
+        }
+      }
+    },
+    "restore_backup" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore backup"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відтворити резервну копію"
           }
         }
       }

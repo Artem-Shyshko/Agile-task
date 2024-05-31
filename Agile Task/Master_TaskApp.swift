@@ -8,8 +8,21 @@
 import SwiftUI
 import BackgroundTasks
 
+import SwiftyDropbox
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        DropboxClientsManager.setupWithAppKey(Constants.shared.dropboxKey)
+        return true
+    }
+}
+
 @main
 struct Master_TaskApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.scenePhase) var scenePhase
     

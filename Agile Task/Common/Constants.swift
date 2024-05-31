@@ -39,6 +39,8 @@ final class Constants {
     let appLanguage = "AppLanguage"
     let yearlySubscriptionID = "agile_task_yearly"
     let monthlySubscriptionID = "agile_task_monthly"
+    let dropboxKey = "2uhkb4ofg0in4ie"
+    let dropboxAccessToken = "dropboxAccessToken"
     
     lazy var currentDate = Date()
     
@@ -63,4 +65,9 @@ final class Constants {
     enum Constrains {
         static let viewsSpacing = 2
     }
+}
+
+extension Notification.Name {
+    static let dropboxAuthSuccess = Notification.Name("dropboxAuthSuccess")
+    static let dropboxAuthFailed = Notification.Name("dropboxAuthFailed")
 }

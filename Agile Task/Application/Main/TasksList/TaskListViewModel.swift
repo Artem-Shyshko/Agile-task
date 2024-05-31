@@ -104,23 +104,6 @@ final class TaskListViewModel: ObservableObject {
         }
     }
     
-    func handleIncomingURL(_ url: URL) -> Bool {
-        guard url.scheme == "agiletask" else {
-            return false
-        }
-        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            print("Invalid URL")
-            return false
-        }
-        
-        guard let action = components.host, action == "addnewtask" else {
-            print("Unknown URL, we can't handle this one!")
-            return false
-        }
-        
-        return true
-    }
-    
     func getWeekSymbols() -> [String] {
         let firstWeekday = Constants.shared.calendar.firstWeekday
         let symbols = Constants.shared.calendar.weekdaySymbols

@@ -17,6 +17,15 @@
         "branch" : "master",
         "revision" : "ecee9c56d1ce79a56aab3e8ad24cacaa0f14fcce"
       }
+    },
+    {
+      "identity" : "swiftydropbox",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dropbox/SwiftyDropbox.git",
+      "state" : {
+        "revision" : "2e2d6257d24ea57735bff25f6a19563728e574da",
+        "version" : "10.0.7"
+      }
     }
   ],
   "version" : 2

@@ -118,6 +118,13 @@
 		75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */; };
 		75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */; };
 		75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */; };
+		75C97AAB2C08D4F7002CF4BA /* BackupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AA72C08D4F7002CF4BA /* BackupViewModel.swift */; };
+		75C97AAC2C08D4F7002CF4BA /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AA82C08D4F7002CF4BA /* BackupView.swift */; };
+		75C97AAD2C08D4F7002CF4BA /* BackupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AA92C08D4F7002CF4BA /* BackupListView.swift */; };
+		75C97AAE2C08D4F7002CF4BA /* BackupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AAA2C08D4F7002CF4BA /* BackupDetailView.swift */; };
+		75C97AB12C08D52A002CF4BA /* SwiftyDropbox in Frameworks */ = {isa = PBXBuildFile; productRef = 75C97AB02C08D52A002CF4BA /* SwiftyDropbox */; };
+		75C97AB32C08D7FD002CF4BA /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AB22C08D7FD002CF4BA /* KeychainManager.swift */; };
+		75C97AB42C08DFE0002CF4BA /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDE42B3C57DB00CA1612 /* StorageService.swift */; };
 		75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D0D8822ACC60E7003FC01F /* SecurityView.swift */; };
 		75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D516552B59676B002D351C /* MagnifyingGlassButton.swift */; };
 		75D5165A2B59881F002D351C /* NavigationTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75D516592B59881F002D351C /* NavigationTitle.swift */; };
@@ -145,7 +152,6 @@
 		75E11CDE2B4C3738003B891B /* TaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75896DD62A83DCC900B0C6F2 /* TaskObject.swift */; };
 		75E11CE02B4C374C003B891B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75E11CDF2B4C374C003B891B /* RealmSwift */; };
 		75E11CE22B4C376F003B891B /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 75E11CE12B4C376F003B891B /* Realm */; };
-		75E11CE32B4C378D003B891B /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDE42B3C57DB00CA1612 /* StorageService.swift */; };
 		75E11CE42B4C379B003B891B /* CheckboxDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDF2B3C571000CA1612 /* CheckboxDTO.swift */; };
 		75E11CE52B4C37A1003B891B /* BulletDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E11C722B4C1400003B891B /* BulletDTO.swift */; };
 		75E11CE62B4C37AB003B891B /* ProjectRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE612B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift */; };
@@ -321,6 +327,11 @@
 		75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsThemeView.swift; sourceTree = "<group>"; };
 		75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SettingsTaskView.swift; sourceTree = "<group>"; };
+		75C97AA72C08D4F7002CF4BA /* BackupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewModel.swift; sourceTree = "<group>"; };
+		75C97AA82C08D4F7002CF4BA /* BackupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
+		75C97AA92C08D4F7002CF4BA /* BackupListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupListView.swift; sourceTree = "<group>"; };
+		75C97AAA2C08D4F7002CF4BA /* BackupDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupDetailView.swift; sourceTree = "<group>"; };
+		75C97AB22C08D7FD002CF4BA /* KeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		75D0D8822ACC60E7003FC01F /* SecurityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityView.swift; sourceTree = "<group>"; };
 		75D516552B59676B002D351C /* MagnifyingGlassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifyingGlassButton.swift; sourceTree = "<group>"; };
 		75D516592B59881F002D351C /* NavigationTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTitle.swift; sourceTree = "<group>"; };
@@ -361,6 +372,7 @@
 				75B1C8152AB85DFE00DAE207 /* RealmSwift in Frameworks */,
 				757B836A2ACF125C00A26D73 /* MasterAppsUI.framework in Frameworks */,
 				75B1C8132AB85DFE00DAE207 /* Realm in Frameworks */,
+				75C97AB12C08D52A002CF4BA /* SwiftyDropbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -528,6 +540,7 @@
 		7537D01F2AA9DDC500F64175 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				75C97AB22C08D7FD002CF4BA /* KeychainManager.swift */,
 				7537D01D2AA9DDC000F64175 /* ThemeManager.swift */,
 				751712BE2BA347FD00F2B758 /* AppState.swift */,
 				7562E6C22AD4479A00E895CD /* AuthManager.swift */,
@@ -771,6 +784,7 @@
 			children = (
 				75C710372A8CE4BC008E8A62 /* SettingsView.swift */,
 				752CEE6C2B3EF2DA00CA1612 /* MoreOurAppsView.swift */,
+				75C97AA62C08D4F7002CF4BA /* Backup */,
 				75474BB22AE97121001119A9 /* Subscription */,
 				75C710442A8D1630008E8A62 /* SettingsTheme */,
 				75C710472A8D1AC0008E8A62 /* SettingsTask */,
@@ -818,6 +832,17 @@
 				75AE02FB2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift */,
 			);
 			path = SettingsTask;
+			sourceTree = "<group>";
+		};
+		75C97AA62C08D4F7002CF4BA /* Backup */ = {
+			isa = PBXGroup;
+			children = (
+				75C97AA72C08D4F7002CF4BA /* BackupViewModel.swift */,
+				75C97AA82C08D4F7002CF4BA /* BackupView.swift */,
+				75C97AA92C08D4F7002CF4BA /* BackupListView.swift */,
+				75C97AAA2C08D4F7002CF4BA /* BackupDetailView.swift */,
+			);
+			path = Backup;
 			sourceTree = "<group>";
 		};
 		75D0D8812ACC60B2003FC01F /* Security */ = {
@@ -929,6 +954,7 @@
 			packageProductDependencies = (
 				75B1C8122AB85DFE00DAE207 /* Realm */,
 				75B1C8142AB85DFE00DAE207 /* RealmSwift */,
+				75C97AB02C08D52A002CF4BA /* SwiftyDropbox */,
 			);
 			productName = "Master Task";
 			productReference = 75677A282A813F360034C45B /* Agile Task.app */;
@@ -1008,6 +1034,7 @@
 			mainGroup = 75677A1F2A813F360034C45B;
 			packageReferences = (
 				75B1C8112AB85DFE00DAE207 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				75C97AAF2C08D52A002CF4BA /* XCRemoteSwiftPackageReference "SwiftyDropbox" */,
 			);
 			productRefGroup = 75677A292A813F360034C45B /* Products */;
 			projectDirPath = "";
@@ -1093,6 +1120,7 @@
 				752CEE6D2B3EF2DA00CA1612 /* MoreOurAppsView.swift in Sources */,
 				752CEDE52B3C57DB00CA1612 /* StorageService.swift in Sources */,
 				752CEE552B3C888300CA1612 /* AuthViewModel.swift in Sources */,
+				75C97AAD2C08D4F7002CF4BA /* BackupListView.swift in Sources */,
 				752CEE672B3ED09000CA1612 /* NewProjectViewModel.swift in Sources */,
 				7590CF952AEFADE80015B396 /* NewCheckBoxView.swift in Sources */,
 				75481B2E2AE00947003ABED5 /* TaskList.swift in Sources */,
@@ -1108,11 +1136,14 @@
 				75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */,
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
 				75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */,
+				75C97AAC2C08D4F7002CF4BA /* BackupView.swift in Sources */,
 				75481B312AE01144003ABED5 /* CompletedTaskView.swift in Sources */,
 				7590CF992AF3A01F0015B396 /* SearchableView.swift in Sources */,
 				7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */,
 				7537D0222AAA101300F64175 /* ProjectsView.swift in Sources */,
+				75C97AB32C08D7FD002CF4BA /* KeychainManager.swift in Sources */,
 				7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */,
+				75C97AAB2C08D4F7002CF4BA /* BackupViewModel.swift in Sources */,
 				7547CD722ADEE6B400143598 /* NewTaskView.swift in Sources */,
 				752CEE1C2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift in Sources */,
 				752CEE602B3DC45600CA1612 /* ProjectDTO.swift in Sources */,
@@ -1122,6 +1153,7 @@
 				75B58D102A8250CF00937923 /* TaskListView.swift in Sources */,
 				75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */,
 				75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */,
+				75C97AAE2C08D4F7002CF4BA /* BackupDetailView.swift in Sources */,
 				752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */,
 				75474BB42AE97132001119A9 /* SubscriptionView.swift in Sources */,
 				7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */,
@@ -1187,13 +1219,13 @@
 				75E11CDD2B4C3736003B891B /* TaskDTO.swift in Sources */,
 				75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */,
 				75E11CEA2B4C37D2003B891B /* SettingDTO.swift in Sources */,
-				75E11CE32B4C378D003B891B /* StorageService.swift in Sources */,
 				75E11CBA2B4C34AF003B891B /* TaskWidgetBundle.swift in Sources */,
 				75E11CEE2B4C384F003B891B /* Font+Ext.swift in Sources */,
 				75E11CD52B4C350A003B891B /* CompletedTaskIntent.swift in Sources */,
 				75E11CD22B4C350A003B891B /* TaskEntry.swift in Sources */,
 				75E11CD82B4C350A003B891B /* TimeLineProvider.swift in Sources */,
 				75E11CD42B4C350A003B891B /* MasterTaskWidgetEntryView.swift in Sources */,
+				75C97AB42C08DFE0002CF4BA /* StorageService.swift in Sources */,
 				75E11CEF2B4C38B1003B891B /* ProjectObject.swift in Sources */,
 				75E11CED2B4C380A003B891B /* Color+Ext.swift in Sources */,
 				75E11CE42B4C379B003B891B /* CheckboxDTO.swift in Sources */,
@@ -1371,7 +1403,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1406,7 +1438,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.2;
+				MARKETING_VERSION = 1.1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1608,6 +1640,14 @@
 				kind = branch;
 			};
 		};
+		75C97AAF2C08D52A002CF4BA /* XCRemoteSwiftPackageReference "SwiftyDropbox" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dropbox/SwiftyDropbox.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1620,6 +1660,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 75B1C8112AB85DFE00DAE207 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		75C97AB02C08D52A002CF4BA /* SwiftyDropbox */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 75C97AAF2C08D52A002CF4BA /* XCRemoteSwiftPackageReference "SwiftyDropbox" */;
+			productName = SwiftyDropbox;
 		};
 		75E11CDF2B4C374C003B891B /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
