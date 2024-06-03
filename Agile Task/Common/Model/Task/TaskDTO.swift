@@ -168,30 +168,6 @@ extension TaskDTO {
                         .init(id: ObjectId.generate(), title: "add_bullet_task_mock", sortingOrder: 0),
                         .init(id: ObjectId.generate(), title: "determinate_points_task_mock", sortingOrder: 1)
                     ]
-            ),
-            TaskDTO(
-                id: ObjectId.generate(),
-                status: .love,
-                title: "highlight_tasks_mock",
-                timePeriod: .am,
-                colorName: Color.teaRose.name,
-                isCompleted: false,
-                sortingOrder: 2,
-                showCheckboxes: false,
-                checkBoxArray: [],
-                bulletArray: []
-            ),
-            TaskDTO(
-                id: ObjectId.generate(),
-                title: "manage_closed_tasks_mock",
-                timeOption: .none,
-                timePeriod: .am,
-                colorName: Color.sectionColor.name,
-                isCompleted: true,
-                sortingOrder: 0,
-                showCheckboxes: false,
-                checkBoxArray: [],
-                bulletArray: []
             )
         ]
     }
