@@ -128,17 +128,17 @@ extension TaskListViewModel {
     func createTask() {
         guard !quickTaskConfig.title.isEmpty else { return }
         setupTaskDate(with: quickTaskConfig.dateOption)
+        quickTaskConfig.reminderDate = Date()
         
         if settings.addNewTaskIn == .bottom {
+            quickTaskConfig.sortingOrder = filteredTasks.count + 1
+            loadedTasks.append(quickTaskConfig)
+        } else {
             if let taskWithMinSortingOrder = filteredTasks.min(by: { $0.sortingOrder < $1.sortingOrder }) {
                 quickTaskConfig.sortingOrder = taskWithMinSortingOrder.sortingOrder - 1
-                loadedTasks.append(quickTaskConfig)
+                loadedTasks.insert(quickTaskConfig, at: 0)
             }
-        } else {
-            quickTaskConfig.sortingOrder = filteredTasks.count + 1
-            loadedTasks.insert(quickTaskConfig, at: 0)
         }
-        
         addNotification(for: quickTaskConfig)
         var selectedProject = appState.projectRepository!.getSelectedProject()
         selectedProject.tasks.append(quickTaskConfig)
