@@ -271,6 +271,22 @@
         }
       }
     },
+    "alert_cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скасувати"
+          }
+        }
+      }
+    },
     "alert_delete_task" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -300,6 +316,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        }
+      }
+    },
+    "alert_restore" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restored backup will change all you current data, are you sure you want to restore backup?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відновлена ​​резервна копія змінить усі ваші поточні дані. Ви впевнені, що бажаєте відновити резервну копію?"
           }
         }
       }
@@ -350,6 +382,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не вірний пароль"
+          }
+        }
+      }
+    },
+    "alert_yes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yes"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Так"
           }
         }
       }
