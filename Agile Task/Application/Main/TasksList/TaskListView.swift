@@ -68,8 +68,11 @@ struct TaskListView: View {
         viewModel.onAppear()
       }
       .task {
-        guard viewModel.settings.dailyReminderOption == .custom else { return }
         try? await notificationManager.requestAuthorization()
+        guard viewModel.settings.dailyReminderOption == .custom else {
+          notificationManager.deleteNotification(with: Constants.shared.dailyNotificationID)
+          return
+        }
         await notificationManager.addDailyNotification(
           for: viewModel.settings.reminderTime,
           format: viewModel.settings.timeFormat,

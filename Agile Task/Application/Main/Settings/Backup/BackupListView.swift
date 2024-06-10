@@ -33,6 +33,16 @@ struct BackupListView: View {
                 Text("OK")
             }
         }
+        .alert("alert_restore", isPresented: $viewModel.isShowingRestoreAlert) {
+            Button(role: .cancel, action: {}) {
+                Text("alert_cancel")
+            }
+            Button {
+                viewModel.restoreBackup(backupStorage: backupStorage)
+            } label: {
+                Text("alert_yes")
+            }
+        }
         .onAppear {
             if backupStorage != .dropbox {
                 viewModel.getBackups(fromICloud: backupStorage == .locally ? false : true)
@@ -65,14 +75,8 @@ private extension BackupListView {
             List {
                 ForEach(viewModel.savedBackups, id: \.self) { backup in
                     Button {
-                        switch backupStorage {
-                        case .locally:
-                            viewModel.restoreBackup(named: backup, fromICloud: false)
-                        case .iCloud:
-                            viewModel.restoreBackup(named: backup, fromICloud: true)
-                        case .dropbox:
-                            viewModel.restoreDropboxBackup(name: backup)
-                        }
+                        viewModel.selectedBackup = backup
+                        viewModel.isShowingRestoreAlert = true
                     } label: {
                         Text(backup)
                     }
