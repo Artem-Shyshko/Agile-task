@@ -15,6 +15,9 @@ final class BackupViewModel: ObservableObject {
     @Published var isShowingAlert = false
     @Published var isAuthorized = false
     @Published var savedBackups: [String] = []
+    @Published var isShowingRestoreAlert = false
+    
+    var selectedBackup: String = ""
     var appState: AppState
     
     init(appState: AppState) {
@@ -33,6 +36,17 @@ final class BackupViewModel: ObservableObject {
             }
             
             self.isShowingAlert = true
+        }
+    }
+    
+    func restoreBackup(backupStorage: BackupStorage) {
+        switch backupStorage {
+        case .locally:
+            restoreBackup(named: selectedBackup, fromICloud: false)
+        case .iCloud:
+            restoreBackup(named: selectedBackup, fromICloud: true)
+        case .dropbox:
+            restoreDropboxBackup(name: selectedBackup)
         }
     }
     
