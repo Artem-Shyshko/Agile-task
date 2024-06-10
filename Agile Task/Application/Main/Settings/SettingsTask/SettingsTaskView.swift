@@ -39,7 +39,7 @@ struct SettingsTaskView: View {
     }
     .modifier(TabViewChildModifier())
     .onChange(of: viewModel.settings) { _ in
-      viewModel.settingsRepository.save(viewModel.settings)
+      viewModel.appState.settingsRepository!.save(viewModel.settings)
       appState.settings = viewModel.settings
     }
     .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.isShowingAlert) {
@@ -252,7 +252,8 @@ private extension SettingsTaskView {
         await lnManager.addDailyNotification(
           for: viewModel.settings.reminderTime,
           format: viewModel.settings.timeFormat,
-          period: viewModel.settings.reminderTimePeriod
+          period: viewModel.settings.reminderTimePeriod, 
+          tasks: viewModel.appState.projectRepository!.getSelectedProject().tasks
         )
       }
     case .none:
@@ -265,6 +266,6 @@ private extension SettingsTaskView {
 
 struct SettingsTaskView_Previews: PreviewProvider {
   static var previews: some View {
-    SettingsTaskView(viewModel: SettingsTaskViewModel())
+    SettingsTaskView(viewModel: SettingsTaskViewModel(appState: AppState()))
   }
 }

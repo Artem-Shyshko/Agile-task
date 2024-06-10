@@ -9,13 +9,17 @@ import Foundation
 
 class TaskDataModel {
     static let shared = TaskDataModel()
-    let taskRepo: TaskRepository = TaskRepositoryImpl()
-    let settingsRepo: SettingsRepository = SettingsRepositoryImpl()
-    let projectRepo: ProjectRepository = ProjectRepositoryImpl()
+    let taskRepo: TaskRepository
+    let settingsRepo: SettingsRepository
+    let projectRepo: ProjectRepository
     var tasks = [TaskDTO]()
     var settings: SettingsDTO
     
     private init() {
+        let storage = StorageService()
+        self.taskRepo = TaskRepositoryImpl(storage: storage)
+        self.settingsRepo = SettingsRepositoryImpl(storage: storage)
+        self.projectRepo = ProjectRepositoryImpl(storage: storage)
         settings = settingsRepo.get()
         getTasks()
     }

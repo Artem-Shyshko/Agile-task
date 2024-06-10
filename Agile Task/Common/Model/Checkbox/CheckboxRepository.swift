@@ -16,7 +16,7 @@ protocol CheckboxRepository {
 final class CheckboxRepositoryImpl: CheckboxRepository {
     private let storage: StorageService
     
-    init(storage: StorageService = StorageService()) {
+    init(storage: StorageService) {
         self.storage = storage
     }
     

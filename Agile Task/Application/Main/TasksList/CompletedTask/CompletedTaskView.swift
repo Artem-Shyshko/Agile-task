@@ -113,5 +113,5 @@ private extension CompletedTaskView {
 // MARK: - Preview
 
 #Preview {
-    CompletedTaskView(viewModel: TaskListViewModel())
+    CompletedTaskView(viewModel: TaskListViewModel(appState: AppState()))
 }

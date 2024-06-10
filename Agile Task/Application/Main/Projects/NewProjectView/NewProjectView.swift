@@ -67,7 +67,7 @@ private extension NewProjectView {
 
 struct NewAccountView_Previews: PreviewProvider {
     static var previews: some View {
-        NewProjectView(vm: NewProjectViewModel(editedProject: ProjectDTO(ProjectObject())))
+        NewProjectView(vm: NewProjectViewModel(appState: AppState(), editedProject: ProjectDTO(ProjectObject())))
             .environmentObject(PurchaseManager())
     }
 }

@@ -22,7 +22,7 @@ struct CompletedTaskIntent: AppIntent {
     }
     
     func perform() async throws -> some IntentResult {
-        let taskRepository: TaskRepository = TaskRepositoryImpl()
+        let taskRepository: TaskRepository = TaskRepositoryImpl(storage: StorageService())
         let tasks = taskRepository.getTaskList()
         if let index = tasks.firstIndex(where: {$0.id.stringValue == id }) {
             var task = tasks[index]

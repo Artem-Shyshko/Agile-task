@@ -26,12 +26,12 @@ struct ProjectsView: View {
             }
             .modifier(TabViewChildModifier())
             .onAppear {
-                vm.savedProjects = vm.projectsRepo.getProjects()
+                vm.savedProjects = vm.appState.projectRepository!.getProjects()
             }
             .navigationDestination(for: ProjectNavigationView.self) { view in
                 switch view {
                     case .newProject(let project):
-                    NewProjectView(vm: NewProjectViewModel(editedProject: project))
+                    NewProjectView(vm: NewProjectViewModel(appState: vm.appState, editedProject: project))
                 case .subscription:
                     SubscriptionView()
                 }
@@ -42,7 +42,7 @@ struct ProjectsView: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectsView(vm: ProjectsViewModel(), path: .constant([]))
+        ProjectsView(vm: ProjectsViewModel(appState: AppState()), path: .constant([]))
             .environmentObject(ThemeManager())
     }
 }
@@ -90,7 +90,7 @@ private extension ProjectsView {
     
     func rightNavigationButton() -> some View {
         Button {
-            guard purchaseManager.canCreateProject() else {
+            guard purchaseManager.canCreateProject(projectCount: vm.appState.projectRepository!.getProjects().count) else {
                 path.append(.subscription)
                 return
             }

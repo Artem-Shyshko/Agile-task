@@ -22,7 +22,7 @@ final class AppHelper {
         }
     }
     
-    func handleIncomingURL(_ url: URL) -> IncomeUrlState?  {
+    func handleIncomingURL(_ url: URL) -> IncomeUrlState? {
         guard url.scheme == "agiletask"  || url.scheme == "db-\(Constants.shared.dropboxKey)"  else {
             print("Unknown url: \(url)")
             return nil

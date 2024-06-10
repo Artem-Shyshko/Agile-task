@@ -26,7 +26,7 @@ struct AuthView: View {
             securityView()
         }
         .onAppear(perform: {
-            vm.settings = vm.settingsRepository.get()
+            vm.settings = vm.appState.settingsRepository!.get()
             authWithFaceId()
         })
         .onChange(of: scene) { scene in

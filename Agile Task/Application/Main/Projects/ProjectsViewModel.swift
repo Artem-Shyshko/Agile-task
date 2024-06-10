@@ -11,11 +11,11 @@ final class ProjectsViewModel: ObservableObject {
     @Published var savedProjects: [ProjectDTO] = []
     @Published var isSearchBarHidden: Bool = true
     @Published var searchText: String = ""
-    let projectsRepo: ProjectRepository = ProjectRepositoryImpl()
-    let taskRepo: TaskRepository = TaskRepositoryImpl()
+    var appState: AppState
     
-    init() {
-        savedProjects = projectsRepo.getProjects()
+    init(appState: AppState) {
+        self.appState = appState
+        savedProjects = appState.projectRepository!.getProjects()
     }
     
     func selectProject(_ project: ProjectDTO) {
@@ -26,7 +26,7 @@ final class ProjectsViewModel: ObservableObject {
             }
             
             savedProjects[index].isSelected = true
-            projectsRepo.saveAll(savedProjects)
+            appState.projectRepository!.saveAll(savedProjects)
         }
     }
     
@@ -34,8 +34,8 @@ final class ProjectsViewModel: ObservableObject {
         guard project.isSelected == false else { return }
         savedProjects.removeAll(where: { $0.id == project.id })
         project.tasks.forEach { task in
-            taskRepo.deleteAll(where: task.id)
+            appState.taskRepository!.deleteAll(where: task.id)
         }
-        projectsRepo.deleteProject(project)
+        appState.projectRepository!.deleteProject(project)
     }
 }

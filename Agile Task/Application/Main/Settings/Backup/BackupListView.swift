@@ -11,7 +11,7 @@ struct BackupListView: View {
     
     // MARK: - Properties
     
-    @StateObject var viewModel = BackupViewModel()
+    @StateObject var viewModel: BackupViewModel
     @EnvironmentObject var themeManager: ThemeManager
     
     @Environment(\.dismiss) private var dismiss
@@ -95,5 +95,5 @@ private extension BackupListView {
 // MARK: - Preview
 
 #Preview {
-    BackupListView(backupStorage: .dropbox)
+    BackupListView(viewModel: BackupViewModel(appState: AppState()), backupStorage: .dropbox)
 }

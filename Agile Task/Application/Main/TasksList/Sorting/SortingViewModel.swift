@@ -10,10 +10,11 @@ import RealmSwift
 
 final class SortingViewModel: ObservableObject {
     @Published var settings: SettingsDTO
-    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    var appState: AppState
     
-    init() {
-        settings = settingsRepository.get()
+    init(appState: AppState) {
+        self.appState = appState
+        settings = appState.settingsRepository!.get()
     }
     
     func editValue(with option: TaskSorting) {

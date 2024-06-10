@@ -13,11 +13,11 @@ final class AuthViewModel: ObservableObject {
     @Published var showAlert: Bool = false
     @Published var settings: SettingsDTO
     @Published var isRightPassword: Bool = false
+    var appState: AppState
     
-    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
-    
-    init() {
-        settings = settingsRepository.get()
+    init(appState: AppState) {
+        self.appState = appState
+        settings = appState.settingsRepository!.get()
         getPasswordCount()
     }
     

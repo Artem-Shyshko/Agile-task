@@ -9,11 +9,15 @@ import Foundation
 import RealmSwift
 
 final class BulletViewModel: ObservableObject {
-    let taskRepository = TaskRepositoryImpl()
     @Published var deletedBullets: [BulletDTO] = []
     @Published var bulletArray: [BulletDTO] = []
     @Published var showDeleteAlert = false
     @Published var deletedBullet: BulletDTO?
+    var appState: AppState
+    
+    init(appState: AppState) {
+        self.appState = appState
+    }
     
     func onSubmit(checkBoxesCount: Int, textFieldIndex: Int, focusedInput: inout Int?) {
         if textFieldIndex < checkBoxesCount {
@@ -52,7 +56,7 @@ final class BulletViewModel: ObservableObject {
             }
             
             deletedBullets.forEach { deletedBullet in
-                taskRepository.deleteBullet(task.id, bulletId: deletedBullet.id)
+                appState.taskRepository!.deleteBullet(task.id, bulletId: deletedBullet.id)
             }
         }
         

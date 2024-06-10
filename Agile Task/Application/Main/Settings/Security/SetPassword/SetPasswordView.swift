@@ -36,11 +36,11 @@ struct SetPasswordView: View {
             }
         }
         .navigationDestination(isPresented: $showPasswordView) {
-            PasswordView(vm: AuthViewModel())
+            PasswordView(vm: AuthViewModel(appState: viewModel.appState))
         }
         .modifier(TabViewChildModifier())
         .onChange(of: viewModel.settings) { _ in
-            viewModel.settingsRepository.save(viewModel.settings)
+            viewModel.appState.settingsRepository!.save(viewModel.settings)
         }
     }
 }
@@ -130,7 +130,7 @@ private extension SetPasswordView {
 
 struct SetPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        SetPasswordView(viewModel: SetPasswordViewModel(), isFirstSetup: true)
+        SetPasswordView(viewModel: SetPasswordViewModel(appState: AppState()), isFirstSetup: true)
     }
 }
 

@@ -9,17 +9,21 @@ import SwiftUI
 import SwiftyDropbox
 
 final class BackupViewModel: ObservableObject {
-    private let storage: BackupProtocol = StorageService()
     private var dropboxClient = DropboxClientsManager.authorizedClient
     
     @Published var alertTitle = ""
     @Published var isShowingAlert = false
     @Published var isAuthorized = false
     @Published var savedBackups: [String] = []
+    var appState: AppState
+    
+    init(appState: AppState) {
+        self.appState = appState
+    }
     
     func saveBackup(toICloud: Bool) {
-        guard let data = storage.getRealmData() else { return }
-        let result = storage.saveBackup(data: data, fileName: Date().backupDateString, toICloud: toICloud)
+        guard let data = appState.storage?.getRealmData() else { return }
+        let result = appState.storage!.saveBackup(data: data, fileName: Date().backupDateString, toICloud: toICloud)
         DispatchQueue.main.async {
             switch result {
             case .success(let success):
@@ -33,12 +37,13 @@ final class BackupViewModel: ObservableObject {
     }
     
     func restoreBackup(named: String, fromICloud: Bool) {
-        let result = storage.restoreBackup(named: named, fromICloud: fromICloud)
+        let result = appState.storage!.restoreBackup(named: named, fromICloud: fromICloud)
         
         DispatchQueue.main.async {
             switch result {
             case .success(let success):
                 self.alertTitle = success
+                self.appState.restore()
             case .failure(let failure):
                 self.alertTitle = failure.rawValue
             }
@@ -85,7 +90,7 @@ final class BackupViewModel: ObservableObject {
     }
     
     func getBackups(fromICloud: Bool) {
-        savedBackups = storage.listAllBackups(fromICloud: fromICloud)
+        savedBackups = appState.storage!.listAllBackups(fromICloud: fromICloud)
     }
     
     func saveToDropbox() {
@@ -94,13 +99,13 @@ final class BackupViewModel: ObservableObject {
             return
         }
         
-        guard let fileData = storage.getRealmData() else {
+        guard let fileData = appState.storage!.getRealmData() else {
             print("No data found")
             return
         }
         
         let newFileName = Date().backupDateString
-        client.files.upload(path: "/AgileMoney/\(newFileName)", input: fileData)
+        client.files.upload(path: "/AgileTask/\(newFileName)", input: fileData)
             .response { [weak self] response, error in
                 if let response = response {
                     self?.alertTitle = "Backup successfully saved"
@@ -120,14 +125,15 @@ final class BackupViewModel: ObservableObject {
             return
         }
         
-        client.files.download(path: "/AgileMoney/\(name)")
+        client.files.download(path: "/AgileTask/\(name)")
             .response { [weak self] response, error in
                 if let response = response {
                     let data = response.1
-                    let result = self?.storage.restoreBackup(data: data)
+                    let result = self?.appState.storage!.restoreBackup(data: data)
                     switch result {
                     case .success(let success):
                         self?.alertTitle = success
+                        self?.appState.restore()
                     case .failure(let failure):
                         self?.alertTitle = failure.rawValue
                     case .none:
@@ -149,7 +155,7 @@ final class BackupViewModel: ObservableObject {
                 return
             }
             
-            client.files.listFolder(path: "/AgileMoney").response { [weak self] response, error in
+            client.files.listFolder(path: "/AgileTask").response { [weak self] response, error in
                 if let result = response {
                     let fileNames = result.entries.map { $0.name }
                     self?.savedBackups = fileNames

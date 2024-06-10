@@ -12,7 +12,7 @@ enum BackupStorage {
 }
 
 struct BackupDetailView: View {
-    @StateObject var viewModel = BackupViewModel()
+    @StateObject var viewModel: BackupViewModel
     
     @Environment(\.dismiss) private var dismiss
     @Environment(\.requestReview) private var requestReview
@@ -96,5 +96,5 @@ private extension BackupDetailView {
 }
 
 #Preview {
-    BackupDetailView(backupStorage: .dropbox)
+    BackupDetailView(viewModel: BackupViewModel(appState: AppState()), backupStorage: .dropbox)
 }

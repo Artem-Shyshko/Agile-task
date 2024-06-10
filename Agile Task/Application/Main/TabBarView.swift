@@ -64,9 +64,9 @@ struct TabBarView: View {
     var body: some View {
         ZStack {
             TabView(selection: $appState.selectedTab) {
-                TaskListView(path: $taskListNavigationStack)
+                TaskListView(viewModel: TaskListViewModel(appState: appState), path: $taskListNavigationStack)
                     .tag(Tab.taskList)
-                ProjectsView(vm: ProjectsViewModel(), path: $projectsNavigationStack)
+                ProjectsView(vm: ProjectsViewModel(appState: appState), path: $projectsNavigationStack)
                     .tag(Tab.projects)
                 SettingsView(path: $settingsNavigationStack)
                     .tag(Tab.settings)

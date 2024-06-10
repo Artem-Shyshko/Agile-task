@@ -17,7 +17,7 @@ protocol SettingsRepository {
 final class SettingsRepositoryImpl: SettingsRepository {
     private let storage: StorageService
     
-    init(storage: StorageService = StorageService()) {
+    init(storage: StorageService) {
         self.storage = storage
     }
     

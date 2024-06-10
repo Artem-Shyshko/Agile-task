@@ -11,9 +11,10 @@ final class NewProjectViewModel: ObservableObject {
     @Published var projectName: String = ""
     @Published var searchIsActive: Bool = false
     @Published var editedProject: ProjectDTO?
-    let projectRepo: ProjectRepository = ProjectRepositoryImpl()
+    var appState: AppState
     
-    init(editedProject: ProjectDTO? = nil) {
+    init(appState: AppState, editedProject: ProjectDTO? = nil) {
+        self.appState = appState
         self.editedProject = editedProject
         self.projectName = editedProject?.name ?? ""
     }
@@ -21,13 +22,13 @@ final class NewProjectViewModel: ObservableObject {
     func saveButtonAction(purchaseManager: PurchaseManager) -> Bool {
         if var editedProject {
             editedProject.name = projectName
-            projectRepo.saveProject(editedProject)
+            appState.projectRepository!.saveProject(editedProject)
             
             return true
         } else {
             var newProject = ProjectDTO(ProjectObject())
             newProject.name = projectName
-            projectRepo.saveProject(newProject)
+            appState.projectRepository!.saveProject(newProject)
             
             return true
         }

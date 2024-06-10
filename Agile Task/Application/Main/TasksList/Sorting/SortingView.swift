@@ -19,7 +19,7 @@ struct SortingView: View {
         }
         .modifier(TabViewChildModifier())
         .onChange(of: viewModel.settings) { _ in
-            viewModel.settingsRepository.save(viewModel.settings)
+            viewModel.appState.settingsRepository!.save(viewModel.settings)
         }
     }
 }
@@ -72,6 +72,6 @@ private extension SortingView {
 
 struct SortingView_Previews: PreviewProvider {
     static var previews: some View {
-        SortingView(viewModel: SortingViewModel())
+        SortingView(viewModel: SortingViewModel(appState: AppState()))
     }
 }

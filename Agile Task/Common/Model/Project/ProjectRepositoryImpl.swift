@@ -21,7 +21,7 @@ final class ProjectRepositoryImpl: ProjectRepository {
     
     private let storage: StorageService
     
-    init(storage: StorageService = StorageService()) {
+    init(storage: StorageService) {
         self.storage = storage
     }
     

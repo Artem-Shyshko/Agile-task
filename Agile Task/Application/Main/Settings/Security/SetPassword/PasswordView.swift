@@ -101,5 +101,5 @@ struct PasswordCircleView: View {
 
 
 #Preview {
-    PasswordView(vm: AuthViewModel())
+    PasswordView(vm: AuthViewModel(appState: AppState()))
 }

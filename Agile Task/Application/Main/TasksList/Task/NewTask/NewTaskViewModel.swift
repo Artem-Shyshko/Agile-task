@@ -47,10 +47,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isShowingReminderCalendarPicker = false
     @Published var calendarDate = Date()
     @Published var error: NewTaskError?
-    
-    private let taskRepository: TaskRepository = TaskRepositoryImpl()
-    private let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
-    private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
+    var appState: AppState
     
     var localNotificationManager: LocalNotificationManager?
     var settings: SettingsDTO
@@ -58,10 +55,11 @@ final class NewTaskViewModel: ObservableObject {
     
     // MARK: - init
     
-    init() {
-        settings = settingsRepository.get()
-        selectedProjectName = projectRepository.getSelectedProject().name
-        projectsNames = projectRepository.getProjects().map {$0.name}
+    init(appState: AppState) {
+        self.appState = appState
+        settings = appState.settingsRepository!.get()
+        selectedProjectName = appState.projectRepository!.getSelectedProject().name
+        projectsNames = appState.projectRepository!.getProjects().map {$0.name}
     }
     
     // MARK: - Methods
@@ -90,15 +88,15 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func writeTask(_ task: TaskDTO) {
-        if var project = projectRepository.getProjects().first(where: { $0.name == selectedProjectName }) {
+        if var project = appState.projectRepository!.getProjects().first(where: { $0.name == selectedProjectName }) {
             var tasks = project.tasks
             if let index = tasks.firstIndex(where: { $0.id == task.id }) {
                 tasks[index] = task
                 project.tasks = tasks
-                projectRepository.saveProject(project)
+                appState.projectRepository!.saveProject(project)
             } else {
                 project.tasks.append(task)
-                projectRepository.saveProject(project)
+                appState.projectRepository!.saveProject(project)
             }
         }
     }
@@ -250,15 +248,15 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func writeRecurringTaskArray(for task: TaskDTO) {
-        if var project = projectRepository.getProjects().first(where: { $0.name == selectedProjectName }) {
+        if var project = appState.projectRepository!.getProjects().first(where: { $0.name == selectedProjectName }) {
             if recurringConfiguration.option == .custom {
                 let taskArray = createCustomTaskRecurringArray(for: task)
                 project.tasks += taskArray
-                projectRepository.saveProject(project)
+                appState.projectRepository!.saveProject(project)
             } else if recurringConfiguration.option != .none {
                 let taskArray = createTaskRecurringArray(for: task)
                 project.tasks += taskArray
-                projectRepository.saveProject(project)
+                appState.projectRepository!.saveProject(project)
             } else {
                 writeTask(task)
             }
@@ -289,13 +287,13 @@ final class NewTaskViewModel: ObservableObject {
                 guard var check = task.checkBoxArray.first(where: {$0.id == checkbox.id}) else { return }
                 check.sortingOrder = index
                 check.title = checkbox.title
-                taskRepository.saveCheckbox(check)
+                appState.taskRepository!.saveCheckbox(check)
             } else {
                 var task = task
                 var checkbox = checkbox
                 checkbox.sortingOrder = index
                 task.checkBoxArray.append(checkbox)
-                taskRepository.saveCheckbox(checkbox)
+                appState.taskRepository!.saveCheckbox(checkbox)
             }
         }
         
@@ -304,20 +302,20 @@ final class NewTaskViewModel: ObservableObject {
                 guard var bullet = task.bulletArray.first(where: {$0.id == item.id}) else { return }
                 bullet.sortingOrder = index
                 bullet.title = item.title
-                taskRepository.saveBullet(bullet)
+                appState.taskRepository!.saveBullet(bullet)
             } else {
                 var task = task
                 var item = item
                 item.sortingOrder = index
                 task.bulletArray.append(item)
-                taskRepository.saveBullet(item)
+                appState.taskRepository!.saveBullet(item)
             }
         }
         
-        let project = projectRepository.getSelectedProject()
+        let project = appState.projectRepository!.getSelectedProject()
         let tasksArray = project.tasks
             .filter { $0.parentId == task.parentId }
-        taskRepository.deleteAll(where: task.parentId)
+        appState.taskRepository!.deleteAll(where: task.parentId)
         tasksArray.forEach { deleteNotification(for: $0.id.stringValue) }
         
         addNotification(for: edited)
@@ -325,11 +323,11 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func deleteTask(parentId: ObjectId) {
-        let tasksToDelete = taskRepository.getTaskList().filter({ $0.parentId == parentId })
+        let tasksToDelete = appState.taskRepository!.getTaskList().filter({ $0.parentId == parentId })
         tasksToDelete.forEach {
             deleteNotification(for: $0.id.stringValue)
         }
-        taskRepository.deleteAll(where: parentId)
+        appState.taskRepository!.deleteAll(where: parentId)
     }
     
     func toggleCompletionAction(_ editTask: TaskDTO) {

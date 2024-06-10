@@ -15,8 +15,6 @@ final class PurchaseManager: NSObject, ObservableObject {
     private let productsID = [Constants.shared.monthlySubscriptionID, Constants.shared.yearlySubscriptionID]
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil
-    private let taskRepository: TaskRepository = TaskRepositoryImpl()
-    private let projectRepository: ProjectRepository = ProjectRepositoryImpl()
     private let maxFreeTasks = 4
     private let maxFreeProjects = 2
     
@@ -50,20 +48,16 @@ final class PurchaseManager: NSObject, ObservableObject {
         updates?.cancel()
     }
     
-    func canCreateTask() -> Bool {
+    func canCreateTask(taskCount: Int) -> Bool {
         guard hasUnlockedPro == false else { return  true }
         
-        let allTasks = taskRepository.getTaskList()
-        
-        return maxFreeTasks <= allTasks.count ? false : true
+        return maxFreeTasks <= taskCount ? false : true
     }
     
-    func canCreateProject() -> Bool {
+    func canCreateProject(projectCount: Int) -> Bool {
         guard hasUnlockedPro == false else { return  true }
         
-        let allProjects = projectRepository.getProjects()
-        
-        return maxFreeProjects <= allProjects.count ? false : true
+        return maxFreeProjects <= projectCount ? false : true
     }
     
     func loadProducts() async throws {

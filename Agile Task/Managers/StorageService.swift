@@ -26,7 +26,7 @@ protocol BackupProtocol {
 final class StorageService {
     private var storage: Realm?
     private let realmURL = URL.storeURL(databaseName: "default.realm")
-    
+        
     init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 13)) {
         print(realmURL.path())
         initializeRealm(with: configuration)
@@ -218,8 +218,7 @@ extension StorageService: BackupProtocol {
             
             let isSaved = fileManager.createFile(atPath: realmURL.path, contents: data)
             if isSaved {
-                reinitializeRealm()
-                return .success("Backup successfully restored, please reload app")
+                return .success("Backup successfully restored")
             }
             return .failure(BackupError.restoringBackupError)
         } catch {
@@ -235,16 +234,6 @@ extension StorageService: BackupProtocol {
 }
 
 private extension StorageService {
-    func reinitializeRealm() {
-        let config = Realm.Configuration(fileURL: realmURL, schemaVersion: 1)
-        Realm.Configuration.defaultConfiguration = config
-        do {
-            self.storage = try Realm()
-            reloadWidget()
-        } catch {
-            print("Error reinitializing Realm: \(error)")
-        }
-    }
     
     private func getLocalBackupDirectory() -> URL {
         let fileManager = FileManager.default

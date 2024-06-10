@@ -14,7 +14,7 @@ protocol BulletRepository {
 final class BulletRepositoryImpl: BulletRepository {
     private let storage: StorageService
     
-    init(storage: StorageService = StorageService()) {
+    init(storage: StorageService) {
         self.storage = storage
     }
     

@@ -10,9 +10,10 @@ import Foundation
 final class SecurityViewModel: ObservableObject {
     @Published var settings: SettingsDTO
     @Published var showPasswordView = false
-    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
+    var appState: AppState
     
-    init() {
-        self.settings = settingsRepository.get()
+    init(appState: AppState) {
+        self.appState = appState
+        self.settings = appState.settingsRepository!.get()
     }
 }

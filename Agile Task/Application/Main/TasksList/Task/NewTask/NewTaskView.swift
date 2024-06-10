@@ -22,6 +22,7 @@ struct NewTaskView: View {
     @EnvironmentObject var localNotificationManager: LocalNotificationManager
     @EnvironmentObject var purchaseManager: PurchaseManager
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel: NewTaskViewModel
@@ -70,7 +71,7 @@ struct NewTaskView: View {
         }
         .fullScreenCover(isPresented: $isShowingCheckBoxView, content: {
             NewCheckBoxView(
-                viewModel: NewCheckBoxViewModel(),
+                viewModel: NewCheckBoxViewModel(appState: appState),
                 taskCheckboxes: $viewModel.checkBoxes,
                 isShowing: $isShowingCheckBoxView,
                 task: editTask
@@ -78,7 +79,7 @@ struct NewTaskView: View {
         })
         .fullScreenCover(isPresented: $isShowingBulletView, content: {
             BulletView(
-                viewModel: BulletViewModel(),
+                viewModel: BulletViewModel(appState: appState),
                 taskBulletArray: $viewModel.bullets,
                 isShowing: $isShowingBulletView,
                 task: editTask
@@ -482,7 +483,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
 
 struct NewTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        NewTaskView(viewModel: NewTaskViewModel(), taskList: TaskDTO.mockArray(), editTask: TaskDTO(object: TaskObject()))
+        NewTaskView(viewModel: NewTaskViewModel(appState: AppState()), taskList: TaskDTO.mockArray(), editTask: TaskDTO(object: TaskObject()))
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
             .environmentObject(ThemeManager())

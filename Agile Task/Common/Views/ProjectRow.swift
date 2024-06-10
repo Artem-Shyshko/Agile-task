@@ -38,7 +38,7 @@ struct ProjectRow: View {
             }
             
             NavigationLink {
-                NewProjectView(vm: NewProjectViewModel(editedProject: project))
+                NewProjectView(vm: NewProjectViewModel(appState: vm.appState, editedProject: project))
             } label: {
                 Image(.edit)
             }

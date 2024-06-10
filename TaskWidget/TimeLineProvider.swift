@@ -8,7 +8,6 @@
 import WidgetKit
 
 struct Provider: AppIntentTimelineProvider {
-    let taskRepo: TaskRepository = TaskRepositoryImpl()
     func placeholder(in context: Context) -> TaskEntry {
         let tasks = TaskDataModel.shared.tasks
         let dateFormat = TaskDataModel.shared.dateFormat()

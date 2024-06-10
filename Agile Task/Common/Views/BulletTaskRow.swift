@@ -47,7 +47,7 @@ private extension BulletTaskRow {
 
 #Preview {
     BulletTaskRow(
-        viewModel: TaskListViewModel(),
+        viewModel: TaskListViewModel(appState: AppState()),
         bullet: .constant(BulletDTO(object: BulletObject())),
         colorName: "red"
     )

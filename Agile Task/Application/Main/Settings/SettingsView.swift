@@ -14,6 +14,7 @@ struct SettingsView: View {
     @Binding var path: [SettingsNavigationView]
     @State var showMailView = false
     @EnvironmentObject var purchaseManager: PurchaseManager
+    @EnvironmentObject var appState: AppState
     
     // MARK: - Body
     
@@ -38,19 +39,19 @@ struct SettingsView: View {
                 case .subscription:
                     SubscriptionView()
                 case .taskSettings:
-                    SettingsTaskView(viewModel: SettingsTaskViewModel())
+                    SettingsTaskView(viewModel: SettingsTaskViewModel(appState: appState))
                 case .security:
-                    SecurityView(viewModel: SecurityViewModel())
+                    SecurityView(viewModel: SecurityViewModel(appState: appState))
                 case .more:
                     MoreOurAppsView()
                 case .contactUs:
                     Text("Contact Us")
                 case .backup:
-                    BackupView()
+                    BackupView(viewModel: BackupViewModel(appState: appState))
                 case .backupDetail(storage: let storage):
-                    BackupDetailView(backupStorage: storage)
+                    BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
                 case .backupList(storage: let storage):
-                    BackupListView(backupStorage: storage)
+                    BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
                 }
             }
             .sheet(isPresented: $showMailView, content: {

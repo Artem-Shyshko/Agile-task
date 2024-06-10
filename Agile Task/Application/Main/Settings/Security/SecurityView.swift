@@ -30,7 +30,7 @@ struct SecurityView: View {
         }
         .modifier(TabViewChildModifier())
         .navigationDestination(isPresented: $viewModel.showPasswordView) {
-            SetPasswordView(viewModel: SetPasswordViewModel(), isFirstSetup: false)
+            SetPasswordView(viewModel: SetPasswordViewModel(appState: viewModel.appState), isFirstSetup: false)
         }
         .onChange(of: viewModel.settings.securityOption) { newValue in
             if newValue == .password, !isUserPassword {
@@ -38,7 +38,7 @@ struct SecurityView: View {
             }
         }
         .onChange(of: viewModel.settings) { _ in
-            viewModel.settingsRepository.save(viewModel.settings)
+            viewModel.appState.settingsRepository!.save(viewModel.settings)
         }
     }
 }
@@ -97,6 +97,6 @@ private extension SecurityView {
 
 struct SecurityView_Previews: PreviewProvider {
     static var previews: some View {
-        SecurityView(viewModel: SecurityViewModel())
+        SecurityView(viewModel: SecurityViewModel(appState: AppState()))
     }
 }

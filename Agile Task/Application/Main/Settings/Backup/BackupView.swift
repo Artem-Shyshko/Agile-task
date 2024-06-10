@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BackupView: View {
-    @StateObject var viewModel = BackupViewModel()
+    @StateObject var viewModel: BackupViewModel
     
     @Environment(\.dismiss) var dismiss
     @Environment(\.requestReview) var requestReview
@@ -20,7 +20,7 @@ struct BackupView: View {
             VStack(spacing: Constants.shared.listRowSpacing) {
                 filesBackup()
 //                iCloudBackup()
-                dropboxBackup()
+//                dropboxBackup()
                 Spacer()
             }
         }
@@ -63,20 +63,12 @@ private extension BackupView {
     func dropboxBackup() -> some View {
         SectionLinkButton(title: "dropbox_backup", value: SettingsNavigationView.backupDetail(storage: .dropbox))
     }
-    
-    @MainActor
-    func leaveReviewButton() -> some View {
-        Button("like_the_app_title") {
-            requestReview()
-        }
-        .modifier(SectionStyle())
-    }
 }
 
 // MARK: - Preview
 
 #Preview {
-    BackupView()
+    BackupView(viewModel: BackupViewModel(appState: AppState()))
 }
 
 struct SectionButton: View {

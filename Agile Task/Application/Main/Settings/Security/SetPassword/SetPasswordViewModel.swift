@@ -14,10 +14,10 @@ final class SetPasswordViewModel: ObservableObject {
     @Published var newPassword = ""
     @Published var confirmPassword = ""
     @Published var allRequirementsMet = false
+    var appState: AppState
     
-    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
-    
-    init() {
-        self.settings = settingsRepository.get()
+    init(appState: AppState) {
+        self.appState = appState
+        self.settings = appState.settingsRepository!.get()
     }
 }

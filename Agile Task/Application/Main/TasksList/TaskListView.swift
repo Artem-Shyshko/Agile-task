@@ -17,7 +17,7 @@ struct TaskListView: View {
   @EnvironmentObject var themeManager: ThemeManager
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.scenePhase) var scenePhase
-  @StateObject private var viewModel = TaskListViewModel()
+  @StateObject var viewModel: TaskListViewModel
   @EnvironmentObject var appState: AppState
   
   @FocusState private var isFocused: Bool
@@ -52,11 +52,11 @@ struct TaskListView: View {
       .navigationDestination(for: TaskListNavigationView.self) { views in
         switch views {
         case .createTask:
-          NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.filteredTasks)
+          NewTaskView(viewModel: NewTaskViewModel(appState: appState), taskList: viewModel.filteredTasks)
         case .completedTasks:
           CompletedTaskView(viewModel: viewModel)
         case .sorting:
-          SortingView(viewModel: SortingViewModel())
+          SortingView(viewModel: SortingViewModel(appState: appState))
         case .newCheckBox:
           EmptyView()
         case .subscription:
@@ -73,7 +73,8 @@ struct TaskListView: View {
         await notificationManager.addDailyNotification(
           for: viewModel.settings.reminderTime,
           format: viewModel.settings.timeFormat,
-          period: viewModel.settings.reminderTimePeriod
+          period: viewModel.settings.reminderTimePeriod, 
+          tasks: viewModel.appState.projectRepository!.getSelectedProject().tasks
         )
       }
       .modifier(TabViewChildModifier())
@@ -160,7 +161,7 @@ private extension TaskListView {
   
   func navigationBarRightItem() -> some View {
     Button {
-      guard purchaseManager.canCreateTask() else {
+      guard purchaseManager.canCreateTask(taskCount: viewModel.appState.taskRepository!.getTaskList().count) else {
         path.append(.subscription)
         return
       }
@@ -347,7 +348,7 @@ private extension TaskListView {
   func plusButton() -> some View {
     if viewModel.settings.showPlusButton {
       Button {
-        guard purchaseManager.canCreateTask() else {
+        guard purchaseManager.canCreateTask(taskCount: viewModel.appState.taskRepository!.getTaskList().count) else {
           path.append(.subscription)
           return
         }
@@ -542,7 +543,7 @@ private extension TaskListView {
 
 struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
-    TaskListView(path: .constant([TaskListNavigationView.sorting]))
+    TaskListView(viewModel: TaskListViewModel(appState: AppState()), path: .constant([TaskListNavigationView.sorting]))
       .environmentObject(LocalNotificationManager())
       .environmentObject(ThemeManager())
   }

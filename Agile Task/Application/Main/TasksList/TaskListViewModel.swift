@@ -30,20 +30,16 @@ final class TaskListViewModel: ObservableObject {
     @Published var calendarTasks: [CalendarItem] = []
     @Published var completedTasks: [TaskDTO] = []
     var localNotificationManager: LocalNotificationManager?
-    
-    let taskRepository: TaskRepository = TaskRepositoryImpl()
-    private let checkboxRepository: CheckboxRepository = CheckboxRepositoryImpl()
-    private let bulletRepository: BulletRepository = BulletRepositoryImpl()
-    private var settingsRepository: SettingsRepository = SettingsRepositoryImpl()
-    private var projectRepository: ProjectRepository = ProjectRepositoryImpl()
     var pastDate = Date()
     let tipsArray: [LocalizedStringKey] = [
         "swipe_right_task_list", "swipe_left_task_list", "double_tap_task_list", "hold_on_task_task_list"
     ]
+    var appState: AppState
     
-    init(loadedTasks: [TaskDTO] = []) {
+    init(appState: AppState, loadedTasks: [TaskDTO] = []) {
+        self.appState = appState
         self.loadedTasks = loadedTasks
-        let settings = settingsRepository.get()
+        let settings = appState.settingsRepository!.get()
         self.settings = settings
         loadTasks()
     }
@@ -64,13 +60,13 @@ final class TaskListViewModel: ObservableObject {
     }
     
     func loadTasks() {
-        let project = projectRepository.getSelectedProject()
+        let project = appState.projectRepository!.getSelectedProject()
         self.loadedTasks = project.tasks
-        self.settings = settingsRepository.get()
+        self.settings = appState.settingsRepository!.get()
     }
     
     func loadCompletedTasks() {
-        let project = projectRepository.getSelectedProject()
+        let project = appState.projectRepository!.getSelectedProject()
         self.completedTasks = project.tasks.filter({ $0.isCompleted })
     }
     
@@ -114,7 +110,7 @@ final class TaskListViewModel: ObservableObject {
     func deleteAll() {
         let tasksToDelete = completedTasks
         completedTasks.removeAll()
-        tasksToDelete.forEach { taskRepository.deleteTask(TaskObject($0)) }
+        tasksToDelete.forEach { appState.taskRepository!.deleteTask(TaskObject($0)) }
     }
 }
 
@@ -144,9 +140,9 @@ extension TaskListViewModel {
         }
         
         addNotification(for: quickTaskConfig)
-        var selectedProject = projectRepository.getSelectedProject()
+        var selectedProject = appState.projectRepository!.getSelectedProject()
         selectedProject.tasks.append(quickTaskConfig)
-        projectRepository.saveProject(selectedProject)
+        appState.projectRepository!.saveProject(selectedProject)
         
         if taskSortingOption == .all {
             groupedTasksBySelectedOption(.all)
@@ -213,11 +209,11 @@ extension TaskListViewModel {
     func deleteTask(_ task: TaskDTO) {
         guard let localNotificationManager else { return }
         
-        let project = projectRepository.getSelectedProject()
+        let project = appState.projectRepository!.getSelectedProject()
         let tasksToDelete = project.tasks.filter({ $0.parentId == task.parentId })
         filteredTasks.removeAll(where: { $0.parentId == task.parentId })
         loadedTasks.removeAll(where: { $0.parentId == task.parentId })
-        taskRepository.deleteAll(where: task.parentId)
+        appState.taskRepository!.deleteAll(where: task.parentId)
         tasksToDelete.forEach {
             localNotificationManager.deleteNotification(with: $0.id.stringValue)
         }
@@ -230,11 +226,11 @@ extension TaskListViewModel {
         }
         if let index = loadedTasks.firstIndex(where: { $0.id == task.id }) {
             loadedTasks[index].isCompleted.toggle()
-            taskRepository.saveTask(loadedTasks[index])
+            appState.taskRepository!.saveTask(loadedTasks[index])
         }
         if let index = completedTasks.firstIndex(where: { $0.id == task.id }) {
             completedTasks[index].isCompleted.toggle()
-            taskRepository.saveTask(completedTasks[index])
+            appState.taskRepository!.saveTask(completedTasks[index])
             completedTasks.remove(at: index)
         }
     }
@@ -246,19 +242,19 @@ extension TaskListViewModel {
         }
         if let index = loadedTasks.firstIndex(where: { $0.id == task.id }) {
             loadedTasks[index].showCheckboxes.toggle()
-            taskRepository.saveTask(loadedTasks[index])
+            appState.taskRepository!.saveTask(loadedTasks[index])
         }
         
         if let index = completedTasks.firstIndex(where: { $0.id == task.id }) {
             completedTasks[index].showCheckboxes.toggle()
-            taskRepository.saveTask(completedTasks[index])
+            appState.taskRepository!.saveTask(completedTasks[index])
         }
     }
     
     func updateCheckbox(_ checkbox: CheckboxDTO) {
         var object = checkbox
         object.isCompleted.toggle()
-        checkboxRepository.save(object)
+        appState.checkboxRepository!.save(object)
     }
     
     func completeCheckbox(_ checkbox: CheckboxDTO, with taskId: String) {
@@ -270,13 +266,13 @@ extension TaskListViewModel {
         if let taskIndex = loadedTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
             if let checkboxIndex = loadedTasks[taskIndex].checkBoxArray.firstIndex(where: { $0.id == checkbox.id }) {
                 loadedTasks[taskIndex].checkBoxArray[checkboxIndex].isCompleted.toggle()
-                checkboxRepository.save(loadedTasks[taskIndex].checkBoxArray[checkboxIndex])
+                appState.checkboxRepository!.save(loadedTasks[taskIndex].checkBoxArray[checkboxIndex])
             }
         }
     }
     
     func dateFormat() -> String {
-        let settings = settingsRepository.get()
+        let settings = appState.settingsRepository!.get()
         
         switch settings.taskDateFormat {
         case .dayMonthYear:
@@ -320,7 +316,7 @@ extension TaskListViewModel {
             }
         }
         
-        taskRepository.saveTasks(orderedTasks)
+        appState.taskRepository!.saveTasks(orderedTasks)
     }
     
     func moveTask(fromOffsets indices: IndexSet, toOffset newOffset: Int) {
@@ -330,7 +326,7 @@ extension TaskListViewModel {
         
         if settings.taskSorting != .manual {
             settings.taskSorting = .manual
-            settingsRepository.save(settings)
+            appState.settingsRepository!.save(settings)
         }
     }
     

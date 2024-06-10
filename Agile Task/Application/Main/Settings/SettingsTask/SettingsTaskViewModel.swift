@@ -14,12 +14,11 @@ final class SettingsTaskViewModel: ObservableObject {
     @Published var isShowingAlert = false
     @Published var isNotificationAccess = false
     @Published var isTypedTime = false
+    var appState: AppState
     
-    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
-    private let tasksRepository: TaskRepository = TaskRepositoryImpl()
-    
-    init() {
-        settings = settingsRepository.get()
+    init(appState: AppState) {
+        self.appState = appState
+        settings = appState.settingsRepository!.get()
     }
     
     func getAppVersion() -> String {
@@ -39,7 +38,7 @@ final class SettingsTaskViewModel: ObservableObject {
     }
     
     func deleteAllTasks() {
-        tasksRepository.deleteAll()
+        appState.taskRepository!.deleteAll()
     }
     
     func requestNotificationPermission() {

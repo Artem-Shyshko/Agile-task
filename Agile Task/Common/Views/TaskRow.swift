@@ -13,6 +13,7 @@ struct TaskRow: View {
     // MARK: - Properties
     
     @EnvironmentObject var themeManager: ThemeManager
+    @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) var colorScheme
     
     @StateObject var viewModel: TaskListViewModel
@@ -44,7 +45,7 @@ struct TaskRow: View {
             }
         }
         .navigationDestination(isPresented: $showAddNewTaskView) {
-            NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.filteredTasks, editTask: self.task)
+            NewTaskView(viewModel: NewTaskViewModel(appState: appState), taskList: viewModel.filteredTasks, editTask: self.task)
         }
         .swipeActions(edge: .trailing) {
             Button {
@@ -55,7 +56,7 @@ struct TaskRow: View {
             .tint(.red)
             
             NavigationLink {
-                NewTaskView(viewModel: NewTaskViewModel(), taskList: viewModel.filteredTasks, editTask: task)
+                NewTaskView(viewModel: NewTaskViewModel(appState: appState), taskList: viewModel.filteredTasks, editTask: task)
             } label: {
                 Image("edit")
             }
@@ -252,7 +253,7 @@ private extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(viewModel: TaskListViewModel(), task: .constant(TaskDTO.mockArray().first!))
+        TaskRow(viewModel: TaskListViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!))
             .environmentObject(ThemeManager())
     }
 }

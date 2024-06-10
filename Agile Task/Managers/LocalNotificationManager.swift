@@ -13,7 +13,6 @@ final class LocalNotificationManager: NSObject, ObservableObject {
     
     let notificationCenter = UNUserNotificationCenter.current()
     var pendingNotifications = [UNNotificationRequest]()
-    let projectRepository: ProjectRepository = ProjectRepositoryImpl()
     
     override init() {
         super.init()
@@ -70,11 +69,10 @@ final class LocalNotificationManager: NSObject, ObservableObject {
         await schedule(localNotification: notification)
     }
     
-    func addDailyNotification(for reminderTime: Date, format: TimeFormat, period: TimePeriod) async {
+    func addDailyNotification(for reminderTime: Date, format: TimeFormat, period: TimePeriod, tasks: [TaskDTO]) async {
         deleteNotification(with: Constants.shared.dailyNotificationID)
         var dateComponents = Constants.shared.calendar.dateComponents([.hour, .minute], from: reminderTime)
-        let project = projectRepository.getSelectedProject()
-        var tasks = project.tasks
+        var tasks = tasks
         let currentDate = Date()
         
         if format == .twelve {

@@ -24,9 +24,8 @@ protocol TaskRepository {
 
 final class TaskRepositoryImpl: TaskRepository {
     private let storage: StorageService
-    private let projectRepo: ProjectRepository = ProjectRepositoryImpl()
     
-    init(storage: StorageService = StorageService()) {
+    init(storage: StorageService) {
         self.storage = storage
     }
     

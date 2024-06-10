@@ -7,7 +7,6 @@
 
 import SwiftUI
 import BackgroundTasks
-
 import SwiftyDropbox
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -35,11 +34,8 @@ struct Master_TaskApp: App {
     @State private var isDarkModeOn = false
     @State private var showAuthView = false
     
-    let settingsRepository: SettingsRepository = SettingsRepositoryImpl()
-    let projectRepository: ProjectRepository = ProjectRepositoryImpl()
-    
     var isNoneAuthorised: Bool {
-        let settings = settingsRepository.get()
+        let settings = appState.settingsRepository!.get()
         
         if settings.securityOption != .none,
            authManager.state == .noneAuth {
@@ -61,7 +57,7 @@ struct Master_TaskApp: App {
                 }
                 
                 if isNoneAuthorised {
-                    AuthView(vm: AuthViewModel(), isShowing: $showAuthView)
+                    AuthView(vm: AuthViewModel(appState: appState), isShowing: $showAuthView)
                 }
             }
             .ignoresSafeArea()
@@ -73,8 +69,8 @@ struct Master_TaskApp: App {
             .preferredColorScheme(appThemeManager.theme.colorScheme)
             .onAppear {
                 UserDefaults.standard.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-                let settings = settingsRepository.get()
-                let _ = projectRepository.getSelectedProject()
+                let settings = appState.settingsRepository!.get()
+                let _ = appState.projectRepository!.getSelectedProject()
                 if settings.securityOption != .none {
                     showAuthView = true
                 }
@@ -93,42 +89,6 @@ struct Master_TaskApp: App {
                     authManager.state = .noneAuth
                 }
             }
-            
-            if scene == .background {
-                scheduleAppRefresh()
-            }
-        }
-        .backgroundTask(.appRefresh("com.masterapps.agile-task.refresh")) {
-//                let settings = await settingsRepository.getAsync()
-//                if let settings {
-//                    await localNotificationManager.addDailyNotification(
-//                        for: settings.reminderTime,
-//                        format: settings.timeFormat,
-//                        period: settings.reminderTimePeriod
-//                    )
-//                }
-        }
-    }
-}
-
-private extension Master_TaskApp {
-    func scheduleAppRefresh() {
-        let request = BGAppRefreshTaskRequest(identifier: "com.masterapps.agile-task.refresh")
-        
-        let preferredHour: TimeInterval = 3 * 60 * 60 // 3 hours from midnight in seconds
-        
-        // Schedule from now assuming the next possible 3 AM window
-        if let nextPreferredTime = Calendar.current.nextDate(after: Date(), matching: DateComponents(hour: 3), matchingPolicy: .nextTime) {
-            request.earliestBeginDate = nextPreferredTime
-        } else {
-            request.earliestBeginDate = Date(timeIntervalSinceNow: preferredHour)
-        }
-        
-        do {
-            try BGTaskScheduler.shared.submit(request)
-            print("Ready")
-        } catch {
-            print(error.localizedDescription)
         }
     }
 }

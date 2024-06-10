@@ -56,7 +56,7 @@ private extension CheckboxTaskRow {
 
 #Preview {
     CheckboxTaskRow(
-        viewModel: TaskListViewModel(),
+        viewModel: TaskListViewModel(appState: AppState()),
         checkbox: .constant(CheckboxDTO(object: CheckboxObject())),
         colorName: "red", 
         taskId: ""
