@@ -188,7 +188,7 @@ private extension SettingsTaskView {
   
   func addInfoTipsButton() -> some View {
     Button {
-      viewModel.settings.isShowingInfoTips.toggle()
+      viewModel.turnOnTips()
     } label: {
       HStack {
         if viewModel.settings.isShowingInfoTips {

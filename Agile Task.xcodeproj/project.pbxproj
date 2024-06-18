@@ -166,6 +166,7 @@
 		75F3AD5F2ABCA36500660A99 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */; };
 		75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F3AD612ABCA72900660A99 /* LocalNotification.swift */; };
 		75F6A85A2B91CC86006A7067 /* Helvetica-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 75F6A8592B91CC86006A7067 /* Helvetica-Light.ttf */; };
+		75F6F9BC2C21A4AD00E9E17F /* TipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F9BB2C21A4AD00E9E17F /* TipView.swift */; };
 		75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B722A8648440062D2BA /* NewTaskViewModel.swift */; };
 		75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */; };
 /* End PBXBuildFile section */
@@ -357,6 +358,7 @@
 		75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		75F3AD612ABCA72900660A99 /* LocalNotification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotification.swift; sourceTree = "<group>"; };
 		75F6A8592B91CC86006A7067 /* Helvetica-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Helvetica-Light.ttf"; sourceTree = "<group>"; };
+		75F6F9BB2C21A4AD00E9E17F /* TipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
 		75F96B722A8648440062D2BA /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextFieldStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -797,6 +799,7 @@
 				75F96B742A86953C0062D2BA /* Style */,
 				75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */,
 				75D516592B59881F002D351C /* NavigationTitle.swift */,
+				75F6F9BB2C21A4AD00E9E17F /* TipView.swift */,
 				75D516552B59676B002D351C /* MagnifyingGlassButton.swift */,
 				752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */,
 				75E11C752B4C2679003B891B /* BulletTaskRow.swift */,
@@ -1133,6 +1136,7 @@
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
 				75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */,
 				75C97AAC2C08D4F7002CF4BA /* BackupView.swift in Sources */,
+				75F6F9BC2C21A4AD00E9E17F /* TipView.swift in Sources */,
 				75481B312AE01144003ABED5 /* CompletedTaskView.swift in Sources */,
 				7590CF992AF3A01F0015B396 /* SearchableView.swift in Sources */,
 				7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */,
@@ -1383,7 +1387,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Agile Task.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Agile Task/Preview Content\"";
 				DEVELOPMENT_TEAM = L42WZN2QX6;
 				ENABLE_PREVIEWS = YES;
@@ -1399,7 +1403,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1418,7 +1422,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Agile Task.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_ASSET_PATHS = "\"Agile Task/Preview Content\"";
 				DEVELOPMENT_TEAM = L42WZN2QX6;
 				ENABLE_PREVIEWS = YES;
@@ -1434,7 +1438,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1.3;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.masterapps.agile-task";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

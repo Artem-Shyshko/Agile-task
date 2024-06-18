@@ -951,6 +951,7 @@
       }
     },
     "double_tap_task_list" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1195,6 +1196,7 @@
       }
     },
     "hold_on_task_task_list" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2500,6 +2502,7 @@
       }
     },
     "swipe_left_task_list" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2516,6 +2519,7 @@
       }
     },
     "swipe_right_task_list" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2716,6 +2720,83 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Час:"
+          }
+        }
+      }
+    },
+    "tip_add_advanced_features" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add advanced \nfeatures\nto the task"
+          }
+        }
+      }
+    },
+    "tip_add_new_task" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add new task"
+          }
+        }
+      }
+    },
+    "tip_advanced_navigation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced navigation selector"
+          }
+        }
+      }
+    },
+    "tip_double_tab" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Double tap to \ncomplete task  Tap and hold to change \ntask order in the list"
+          }
+        }
+      }
+    },
+    "tip_find_completed_task" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find completed tasks in this section"
+          }
+        }
+      }
+    },
+    "tip_quick_add" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick add tasks"
+          }
+        }
+      }
+    },
+    "tip_swipe_left" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe left to\neditt/delete task  Swipe right to\ncomplete task"
           }
         }
       }

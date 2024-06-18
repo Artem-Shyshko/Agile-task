@@ -15,6 +15,15 @@ final class SettingsTaskViewModel: ObservableObject {
     @Published var isNotificationAccess = false
     @Published var isTypedTime = false
     var appState: AppState
+    let tipKeys = [
+        "tip_find_completed_task",
+        "tip_add_new_task",
+        "tip_double_tab",
+        "tip_advanced_navigation",
+        "tip_quick_add",
+        "tip_add_advanced_features",
+        "tip_swipe_left"
+    ]
     
     init(appState: AppState) {
         self.appState = appState
@@ -26,6 +35,22 @@ final class SettingsTaskViewModel: ObservableObject {
             return version
         } else {
             return "x.x"
+        }
+    }
+    
+    func turnOnTips() {
+        settings.isShowingInfoTips.toggle()
+        appState.settingsRepository!.save(settings)
+        
+        let defaults = UserDefaults.standard
+        if settings.isShowingInfoTips {
+            tipKeys.forEach { key in
+                defaults.removeObject(forKey: key)
+            }
+        } else {
+            tipKeys.forEach { key in
+                defaults.setValue(false, forKey: key)
+            }
         }
     }
     

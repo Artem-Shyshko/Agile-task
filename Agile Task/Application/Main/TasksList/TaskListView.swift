@@ -45,6 +45,12 @@ struct TaskListView: View {
             )
           }
           taskList()
+            .overlay(alignment: .top) {
+              HStack {
+                TipView(title: "tip_double_tab", arrowEdge: .top)
+                TipView(title: "tip_swipe_left", arrowEdge: .top)
+              }
+            }
           
           Spacer()
         }
@@ -95,13 +101,14 @@ struct TaskListView: View {
         viewModel.isShowingAddTask = false
       }
       .overlay(alignment: .bottomTrailing) {
-        plusButton()
+          plusButton()
       }
+      .overlay(alignment: .bottomTrailing) {
+            TipView(title: "tip_quick_add", arrowEdge: .trailing)
+            .padding(.bottom, 25)
+    }
       .overlay(alignment: .bottom, content: {
         newTaskView()
-      })
-      .overlay(alignment: .bottomLeading, content: {
-        infoButton()
       })
       .overlay(alignment: .top, content: {
         if viewModel.isShowingCalendarPicker {
@@ -140,7 +147,9 @@ private extension TaskListView {
       ),
       rightItem: navigationBarRightItem()
     )
-    
+    .overlay(alignment: .trailing, content: {
+      TipView(title: "tip_add_new_task", arrowEdge: .trailing)
+    })
     .onChange(of: viewModel.taskSortingOption) { _ in
       viewModel.groupedTasksBySelectedOption(viewModel.taskSortingOption)
     }
@@ -276,6 +285,14 @@ private extension TaskListView {
       .foregroundColor(.white)
       .padding(.horizontal, 15)
       .frame(maxWidth: .infinity)
+      .overlay(alignment: .trailing) {
+          TipView(title: "tip_find_completed_task", arrowEdge: .trailing)
+      }
+      .overlay(alignment: .top) {
+        if viewModel.taskSortingOption != .all {
+          TipView(title: "tip_advanced_navigation", arrowEdge: .top)
+        }
+      }
     }
   }
   
@@ -468,77 +485,6 @@ private extension TaskListView {
         .background(themeManager.theme.sectionColor(colorScheme))
       }
     }
-  }
-  
-  @ViewBuilder
-  func infoButton() -> some View {
-    if appState.settings.isShowingInfoTips, !viewModel.isShowingAddTask {
-      HStack(alignment: .center, spacing: 0) {
-        Button {
-          viewModel.isShowingInfoView.toggle()
-        } label: {
-          Image(.info)
-            .resizable()
-            .scaledToFit()
-            .frame(size: Constants.shared.imagesSize)
-        }
-        .buttonStyle(.borderless)
-        .padding(.leading, 5)
-        
-        if viewModel.isShowingInfoView {
-          swipeView()
-        }
-      }
-      .padding(.leading, 23)
-      .frame(height: 60)
-      .padding(.bottom, 17)
-    }
-  }
-  
-  @ViewBuilder
-  func swipeView() -> some View {
-    let arrowScale: CGFloat = 20
-    
-    HStack {
-      Button {
-        if viewModel.tipIndex == 0 {
-          viewModel.tipIndex = viewModel.tipsArray.count - 1
-        } else {
-          viewModel.tipIndex -= 1
-        }
-      } label: {
-        Image(.arrowLeft)
-          .renderingMode(.template)
-          .resizable()
-          .scaledToFit()
-          .frame(width: arrowScale)
-      }
-      
-      Spacer()
-      Text(viewModel.tipsArray[viewModel.tipIndex])
-        .font(.helveticaRegular(size: 14))
-        .multilineTextAlignment(.center)
-      Spacer()
-      Button {
-        if viewModel.tipIndex == viewModel.tipsArray.count - 1 {
-          viewModel.tipIndex = 0
-        } else {
-          viewModel.tipIndex += 1
-        }
-      } label: {
-        Image(.arrowRight)
-          .renderingMode(.template)
-          .resizable()
-          .scaledToFit()
-          .frame(width: arrowScale)
-      }
-    }
-    .padding(.vertical, 10)
-    .padding(.horizontal, 5)
-    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-    .background(themeManager.theme.sectionColor(colorScheme))
-    .cornerRadius(5)
-    .padding(.horizontal, 5)
   }
 }
 
