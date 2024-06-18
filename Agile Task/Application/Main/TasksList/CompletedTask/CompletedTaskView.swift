@@ -45,7 +45,7 @@ struct CompletedTaskView: View {
             
             Button {
                 viewModel.completedTasks.forEach { task in
-                    viewModel.updateTaskCompletion(task)
+                    viewModel.updateTaskCompletion(task.id.stringValue)
                 }
             } label: {
                 Text("Restore")

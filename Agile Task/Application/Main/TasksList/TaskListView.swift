@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MasterAppsUI
+import StoreKit
 
 struct TaskListView: View {
   
@@ -19,6 +20,7 @@ struct TaskListView: View {
   @Environment(\.scenePhase) var scenePhase
   @StateObject var viewModel: TaskListViewModel
   @EnvironmentObject var appState: AppState
+  @Environment(\.requestReview) var requestReview
   
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
@@ -72,6 +74,11 @@ struct TaskListView: View {
       .onAppear {
         viewModel.localNotificationManager = notificationManager
         viewModel.onAppear()
+        
+        if UserDefaults.standard.integer(forKey: "CompletedTask") >= 20 {
+          requestReview()
+          UserDefaults.standard.setValue(0, forKey: "CompletedTask")
+        }
       }
       .task {
         try? await notificationManager.requestAuthorization()

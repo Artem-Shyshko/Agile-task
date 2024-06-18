@@ -332,6 +332,11 @@ final class NewTaskViewModel: ObservableObject {
     
     func toggleCompletionAction(_ editTask: TaskDTO) {
         isCompleted.toggle()
+        if isCompleted {
+            var value = UserDefaults.standard.integer(forKey: "CompletedTask")
+            value += 1
+            UserDefaults.standard.setValue(value, forKey: "CompletedTask")
+        }
     }
     
     

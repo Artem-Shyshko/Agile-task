@@ -214,16 +214,22 @@ extension TaskListViewModel {
         }
     }
     
-    func updateTaskCompletion(_ task: TaskDTO) {
-        if let index = filteredTasks.firstIndex(where: { $0.id == task.id }) {
+    func updateTaskCompletion(_ taskId: String) {
+        if let index = filteredTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
             filteredTasks[index].isCompleted.toggle()
             filteredTasks = sortedCompletedTasks(filteredTasks, settings: settings)
         }
-        if let index = loadedTasks.firstIndex(where: { $0.id == task.id }) {
+        if let index = loadedTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
             loadedTasks[index].isCompleted.toggle()
             appState.taskRepository!.saveTask(loadedTasks[index])
+            
+            if loadedTasks[index].isCompleted {
+                var value = UserDefaults.standard.integer(forKey: "CompletedTask")
+                value += 1
+                UserDefaults.standard.setValue(value, forKey: "CompletedTask")
+            }
         }
-        if let index = completedTasks.firstIndex(where: { $0.id == task.id }) {
+        if let index = completedTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
             completedTasks[index].isCompleted.toggle()
             appState.taskRepository!.saveTask(completedTasks[index])
             completedTasks.remove(at: index)

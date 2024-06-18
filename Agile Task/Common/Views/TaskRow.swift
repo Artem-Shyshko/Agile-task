@@ -7,6 +7,7 @@
 
 import SwiftUI
 import RealmSwift
+import StoreKit
 
 struct TaskRow: View {
     
@@ -15,6 +16,7 @@ struct TaskRow: View {
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appState: AppState
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.requestReview) var requestReview
     
     @StateObject var viewModel: TaskListViewModel
     @Binding var task: TaskDTO
@@ -64,7 +66,8 @@ struct TaskRow: View {
         }
         .swipeActions(edge: .leading) {
             Button {
-                viewModel.updateTaskCompletion(task)
+                viewModel.updateTaskCompletion(task.id.stringValue)
+                makeRequestPreview()
             } label: {
                 Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
             }
@@ -76,6 +79,13 @@ struct TaskRow: View {
 // MARK: - Layout
 
 private extension TaskRow {
+    
+    func makeRequestPreview() {
+        if UserDefaults.standard.integer(forKey: "CompletedTask") >= 20 {
+          requestReview()
+          UserDefaults.standard.setValue(0, forKey: "CompletedTask")
+        }
+    }
     
     func foregroundColor() -> Color {
         if task.isCompleted {
@@ -121,7 +131,8 @@ private extension TaskRow {
         .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .onTapGesture(count: 2, perform: {
-            viewModel.updateTaskCompletion(task)
+            viewModel.updateTaskCompletion(task.id.stringValue)
+            makeRequestPreview()
         })
     }
     
