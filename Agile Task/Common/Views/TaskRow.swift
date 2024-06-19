@@ -73,6 +73,15 @@ struct TaskRow: View {
             }
             .tint(.green)
         }
+        .listRowBackground(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color(task.colorName))
+                    .padding(.trailing, 10)
+                    .overlay(alignment: .topTrailing, content: {
+                        Image(.swipes)
+                    })
+        )
+        .padding(.trailing, 10)
     }
 }
 

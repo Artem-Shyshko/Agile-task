@@ -204,10 +204,6 @@ private extension TaskListView {
           Section {
             ForEach(.constant(viewModel.sectionContent(key)), id: \.id) { task in
               TaskRow(viewModel: viewModel, task: task)
-                .listRowBackground(
-                  RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(task.colorName.wrappedValue))
-                )
             }
           } header: {
             weekSectionHeader(key: key)
@@ -216,10 +212,6 @@ private extension TaskListView {
       default:
         ForEach($viewModel.filteredTasks, id: \.id) { task in
           TaskRow(viewModel: viewModel, task: task)
-            .listRowBackground(
-              RoundedRectangle(cornerRadius: 4)
-                .fill(Color(task.colorName.wrappedValue))
-            )
             .onChange(of: task.wrappedValue) { _ in
               viewModel.loadTasks()
             }

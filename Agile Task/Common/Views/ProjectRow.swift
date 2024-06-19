@@ -51,6 +51,16 @@ struct ProjectRow: View {
                 vm.deleteProject(project)
             }
         }
+        .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
+        .listRowBackground(
+            RoundedRectangle(cornerRadius: 4)
+                .fill(themeManager.theme.sectionColor(colorScheme))
+                .padding(.trailing, 10)
+            .overlay(alignment: .topTrailing, content: {
+                Image(.swipes)
+            })
+        )
+        .padding(.trailing, 10)
     }
     
     var checkMark: some View {
