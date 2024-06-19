@@ -17,6 +17,7 @@ enum NewTaskError: String, Error, Localizable {
 
 final class NewTaskViewModel: ObservableObject {
     private lazy var currentDate = Date()
+    @Published var taskType: TaskType = .advanced
     @Published var taskStatus: TaskStatus = .none
     @Published var title: String = ""
     @Published var description: String = ""
@@ -60,6 +61,7 @@ final class NewTaskViewModel: ObservableObject {
         settings = appState.settingsRepository!.get()
         selectedProjectName = appState.projectRepository!.getSelectedProject().name
         projectsNames = appState.projectRepository!.getProjects().map {$0.name}
+        taskType = settings.newTaskFeature
     }
     
     // MARK: - Methods

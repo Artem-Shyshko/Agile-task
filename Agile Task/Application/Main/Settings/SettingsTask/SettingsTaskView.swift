@@ -19,23 +19,26 @@ struct SettingsTaskView: View {
   var body: some View {
     VStack(spacing: Constants.shared.viewSectionSpacing) {
       navigationBar()
-      
-      VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
-        languageSection()
-        weekStartsOnSection()
-        dateSection()
-        timeSection()
-        defaultSortingSection()
-        newTasksSection()
-        completedTaskSection()
-        dailyReminder()
-        addPlusButton()
-        pushNotificationView()
-        addInfoTipsButton()
-        deleteAllTasksButton()
-        versionView()
-        Spacer()
+      ScrollView {
+        VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
+          languageSection()
+          weekStartsOnSection()
+          newTaskFeaturesSection()
+          dateSection()
+          timeSection()
+          defaultSortingSection()
+          newTasksSection()
+          completedTaskSection()
+          dailyReminder()
+          addPlusButton()
+          pushNotificationView()
+          addInfoTipsButton()
+          deleteAllTasksButton()
+          versionView()
+          Spacer()
+        }
       }
+      .padding(.bottom, 5)
     }
     .modifier(TabViewChildModifier())
     .onChange(of: viewModel.settings) { _ in
@@ -136,6 +139,14 @@ private extension SettingsTaskView {
       title: "Completed tasks",
       options: CompletedTask.allCases,
       selection: $viewModel.settings.completedTask
+    )
+  }
+  
+  func newTaskFeaturesSection() -> some View {
+    CustomPickerView(
+      title: "New task features",
+      options: TaskType.allCases,
+      selection: $viewModel.settings.newTaskFeature
     )
   }
   

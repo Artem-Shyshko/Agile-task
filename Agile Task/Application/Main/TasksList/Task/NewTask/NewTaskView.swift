@@ -43,17 +43,24 @@ struct NewTaskView: View {
             navigationBar()
             ScrollView {
                 VStack(spacing: Constants.shared.listRowSpacing) {
-                    statusView()
-                    titleView()
-                    descriptionView()
-                    checkList()
-                    bulletListView()
-                    dateView()
-                    timeView()
-                    recurringView()
-                    reminderView()
-                    colorView()
-                    projectView()
+                    if viewModel.taskType == .advanced {
+                        statusView()
+                        titleView()
+                        descriptionView()
+                        checkList()
+                        bulletListView()
+                        dateView()
+                        timeView()
+                        recurringView()
+                        reminderView()
+                        colorView()
+                        projectView()
+                    } else {
+                        titleView()
+                        dateView()
+                        timeView()
+                        reminderView()
+                    }
                     bottomButton()
                     Spacer()
                 }
@@ -423,7 +430,11 @@ private extension NewTaskView {
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: tabBarCancelButton(),
-            header: NavigationTitle("New Task"),
+            header: CustomSegmentedControl(
+                options: TaskType.allCases,
+                selection: $viewModel.taskType,
+                textColor: themeManager.theme.sectionTextColor(colorScheme)
+            ).padding(.horizontal),
             rightItem: tabBarSaveButton()
         )
     }

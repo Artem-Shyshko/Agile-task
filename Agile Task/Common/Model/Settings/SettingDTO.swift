@@ -18,6 +18,7 @@ struct SettingsDTO {
     var taskDateSorting: TaskDateSorting = .today
     var addNewTaskIn: AddingNewTask = .top
     var completedTask: CompletedTask = .hide
+    var newTaskFeature: TaskType = .advanced
     var defaultReminder: DefaultReminder = .oneHourBefore
     var dailyReminderOption: DailyReminderOption = .custom
     var reminderTime: Date = Date()
@@ -43,6 +44,7 @@ extension SettingsDTO {
         dailyReminderOption = object.dailyReminderOption ?? .custom
         reminderTime = object.reminderTime ?? _reminderTime
         reminderTimePeriod = object.reminderTimePeriod ?? .am
+        newTaskFeature = object.newTaskFeature ?? .advanced
         defaultReminder = object.defaultReminder
         showPlusButton = object.showPlusButton
         isPushNotificationEnabled = object.isPushNotificationEnabled

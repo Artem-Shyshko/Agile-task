@@ -1473,6 +1473,7 @@
       }
     },
     "New Task" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -1481,6 +1482,9 @@
           }
         }
       }
+    },
+    "New task features" : {
+
     },
     "New tasks" : {
       "extractionState" : "manual",
@@ -2571,6 +2575,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назва завдання"
+          }
+        }
+      }
+    },
+    "task_type_advanced" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced"
+          }
+        }
+      }
+    },
+    "task_type_light" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Light"
           }
         }
       }

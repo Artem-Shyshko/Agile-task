@@ -22,6 +22,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var dailyReminderOption: DailyReminderOption?
     @Persisted var reminderTime: Date?
     @Persisted var reminderTimePeriod: TimePeriod?
+    @Persisted var newTaskFeature: TaskType?
     @Persisted var showPlusButton: Bool = true
     @Persisted var isShowingInfoTips: Bool?
     @Persisted var isPushNotificationEnabled: Bool = true
@@ -47,6 +48,7 @@ extension SettingsObject {
         completedTask = dto.completedTask
         defaultReminder = dto.defaultReminder
         showPlusButton = dto.showPlusButton
+        newTaskFeature = dto.newTaskFeature
         isPushNotificationEnabled = dto.isPushNotificationEnabled
         isShowingInfoTips = dto.isShowingInfoTips
         rememberLastPickedOptionView = dto.rememberLastPickedOptionView
@@ -167,6 +169,15 @@ enum TaskDateSorting: String, PersistableEnum, CaseIterable, CustomStringConvert
   case month = "Month"
     
     public var description: String {
+        self.rawValue
+    }
+}
+
+enum TaskType: String, CaseIterable, CustomStringConvertible, PersistableEnum {
+    case light = "task_type_light"
+    case advanced = "task_type_advanced"
+    
+    var description: String {
         self.rawValue
     }
 }
