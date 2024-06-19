@@ -33,27 +33,28 @@ struct TaskListView: View {
     NavigationStack(path: $path) {
       VStack(spacing: Constants.shared.viewSectionSpacing) {
         navigationBar()
+        Group {
         dateBarView()
         
-        VStack(spacing: 5) {
-          if viewModel.taskSortingOption == .month {
-            CustomCalendarView(
-              selectedCalendarDay: $viewModel.selectedCalendarDate,
-              isShowingCalendarPicker: $viewModel.isShowingCalendar,
-              currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
-              backgroundColor: themeManager.theme.sectionColor(colorScheme),
-              items: viewModel.calendarTasks,
-              calendar: Constants.shared.calendar
-            )
-          }
-          taskList()
-            .overlay(alignment: .top) {
-              HStack {
-                TipView(title: "tip_double_tab", arrowEdge: .top)
-                TipView(title: "tip_swipe_left", arrowEdge: .top)
-              }
+          VStack(spacing: 5) {
+            if viewModel.taskSortingOption == .month {
+              CustomCalendarView(
+                selectedCalendarDay: $viewModel.selectedCalendarDate,
+                isShowingCalendarPicker: $viewModel.isShowingCalendar,
+                currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                backgroundColor: themeManager.theme.sectionColor(colorScheme),
+                items: viewModel.calendarTasks,
+                calendar: Constants.shared.calendar
+              )
             }
-          
+            taskList()
+              .overlay(alignment: .top) {
+                HStack {
+                  TipView(title: "tip_double_tab", arrowEdge: .top)
+                  TipView(title: "tip_swipe_left", arrowEdge: .top)
+                }
+              }
+          }
           Spacer()
         }
       }
@@ -134,6 +135,12 @@ struct TaskListView: View {
         viewModel.search(with: newValue)
       }
       .environment(\.locale, Locale(identifier: viewModel.settings.appLanguage.identifier))
+      .overlay(alignment: .top) {
+        if viewModel.taskSortingOption != .all, viewModel.taskSortingOption != .month {
+          TipView(title: "tip_advanced_navigation", arrowEdge: .top)
+            .offset(y: 40)
+        }
+      }
     }
   }
 }
@@ -286,11 +293,6 @@ private extension TaskListView {
       .frame(maxWidth: .infinity)
       .overlay(alignment: .trailing) {
           TipView(title: "tip_find_completed_task", arrowEdge: .trailing)
-      }
-      .overlay(alignment: .top) {
-        if viewModel.taskSortingOption != .all {
-          TipView(title: "tip_advanced_navigation", arrowEdge: .top)
-        }
       }
     }
   }
