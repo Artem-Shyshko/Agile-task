@@ -17,27 +17,16 @@ struct RecurringTimeView: View {
     
     var body: some View {
         HStack {
-            HStack {
-                Image("done-checkbox")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 15, height: 15)
-                Text("Recurring")
-            }
+            Text("Time:")
+            Spacer()
             
-            HStack {
-                Spacer()
-                Text("Time:")
-                
-                TimeView(
-                    date: $reminderTime,
-                    timePeriod: $timePeriod,
-                    timeFormat: timeFormat,
-                    isTypedTime: $isTypedTime,
-                    isFocus: isFocus
-                )
-            }
+            TimeView(
+                date: $reminderTime,
+                timePeriod: $timePeriod,
+                timeFormat: timeFormat,
+                isTypedTime: $isTypedTime,
+                isFocus: isFocus
+            )
         }
         .modifier(SectionStyle())
     }

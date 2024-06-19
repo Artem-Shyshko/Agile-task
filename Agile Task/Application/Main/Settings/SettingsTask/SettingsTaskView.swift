@@ -142,7 +142,7 @@ private extension SettingsTaskView {
   func dailyReminder() -> some View {
     VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
       CustomPickerView(
-        title: "Daily reminder",
+        title: "daily_reminder",
         options: DailyReminderOption.allCases,
         selection: $viewModel.settings.dailyReminderOption
       )

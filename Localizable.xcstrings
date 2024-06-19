@@ -796,8 +796,15 @@
         }
       }
     },
-    "Daily reminder" : {
+    "daily_reminder" : {
+      "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recutting daily reminder"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
