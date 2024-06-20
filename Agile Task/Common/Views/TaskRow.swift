@@ -46,9 +46,6 @@ struct TaskRow: View {
                 viewModel.deleteTask(task)
             }
         }
-        .navigationDestination(isPresented: $showAddNewTaskView) {
-            NewTaskView(viewModel: NewTaskViewModel(appState: appState), taskList: viewModel.filteredTasks, editTask: self.task)
-        }
         .swipeActions(edge: .trailing) {
             Button {
                 isDeleteAlert = true
@@ -57,10 +54,8 @@ struct TaskRow: View {
             }
             .tint(.red)
             
-            NavigationLink {
-                NewTaskView(viewModel: NewTaskViewModel(appState: appState), taskList: viewModel.filteredTasks, editTask: task)
-            } label: {
-                Image("edit")
+            NavigationLink(value: TaskListNavigationView.createTask(editedTask: task)) {
+                    Image("edit")
             }
             .tint(Color.editButtonColor)
         }

@@ -12,7 +12,7 @@ import MasterAppsUI
 // MARK: - Enum
 
 enum TaskListNavigationView: Hashable {
-    case createTask, completedTasks, sorting, newCheckBox, subscription
+    case createTask(editedTask: TaskDTO? = nil), completedTasks, sorting, newCheckBox, subscription
 }
 
 enum SettingsNavigationView: Hashable {
@@ -90,7 +90,7 @@ struct TabBarView: View {
                 appState.selectedTab = .taskList
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if taskListNavigationStack.isEmpty {
-                        taskListNavigationStack.append(.createTask)
+                        taskListNavigationStack.append(.createTask())
                     }
                 }
             case .dropbox:

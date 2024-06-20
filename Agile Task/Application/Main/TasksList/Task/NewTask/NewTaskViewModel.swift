@@ -49,6 +49,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var calendarDate = Date()
     @Published var error: NewTaskError?
     var appState: AppState
+    var taskList: [TaskDTO]
     
     var localNotificationManager: LocalNotificationManager?
     var settings: SettingsDTO
@@ -56,8 +57,9 @@ final class NewTaskViewModel: ObservableObject {
     
     // MARK: - init
     
-    init(appState: AppState) {
+    init(appState: AppState, taskList: [TaskDTO]) {
         self.appState = appState
+        self.taskList = taskList
         settings = appState.settingsRepository!.get()
         selectedProjectName = appState.projectRepository!.getSelectedProject().name
         projectsNames = appState.projectRepository!.getProjects().map {$0.name}
@@ -367,8 +369,8 @@ final class NewTaskViewModel: ObservableObject {
     
     func saveButtonAction(
         hasUnlockedPro: Bool,
-        editTask: TaskDTO?,
-        taskList: [TaskDTO]) {
+        editTask: TaskDTO?
+    ) {
             if let editTask {
                 writeEditedTask(editTask)
             } else {

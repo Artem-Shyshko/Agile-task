@@ -211,6 +211,6 @@ struct CheckBoxView: View {
 
 struct RecurringView_Previews: PreviewProvider {
     static var previews: some View {
-        RecurringView(viewModel: NewTaskViewModel(appState: AppState()))
+        RecurringView(viewModel: NewTaskViewModel(appState: AppState(), taskList: []))
     }
 }

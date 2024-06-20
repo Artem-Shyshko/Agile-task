@@ -60,8 +60,8 @@ struct TaskListView: View {
       }
       .navigationDestination(for: TaskListNavigationView.self) { views in
         switch views {
-        case .createTask:
-          NewTaskView(viewModel: NewTaskViewModel(appState: appState), taskList: viewModel.filteredTasks)
+        case .createTask(let editedTask):
+          NewTaskView(viewModel: NewTaskViewModel(appState: appState, taskList: viewModel.filteredTasks), editTask: editedTask)
         case .completedTasks:
           CompletedTaskView(viewModel: viewModel)
         case .sorting:
@@ -191,7 +191,7 @@ private extension TaskListView {
         path.append(.subscription)
         return
       }
-      path.append(.createTask)
+      path.append(.createTask())
     } label: {
       Image(.add)
         .resizable()

@@ -32,8 +32,6 @@ struct NewTaskView: View {
     @State private var isDescriptionEmpty = true
     
     @Environment(\.dismiss) var dismiss
-    
-    var taskList: [TaskDTO]
     var editTask: TaskDTO?
     
     // MARK: - Body
@@ -371,8 +369,7 @@ private extension NewTaskView {
             if viewModel.isValidForm() {
                 viewModel.saveButtonAction(
                     hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                    editTask: editTask,
-                    taskList: taskList
+                    editTask: editTask
                 )
                 dismiss.callAsFunction()
             }
@@ -416,8 +413,7 @@ private extension NewTaskView {
         if viewModel.isValidForm() {
             viewModel.saveButtonAction(
                 hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                editTask: editTask,
-                taskList: taskList
+                editTask: editTask
             )
             dismiss.callAsFunction()
         }
@@ -494,7 +490,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
 
 struct NewTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        NewTaskView(viewModel: NewTaskViewModel(appState: AppState()), taskList: TaskDTO.mockArray(), editTask: TaskDTO(object: TaskObject()))
+        NewTaskView(viewModel: NewTaskViewModel(appState: AppState(), taskList: TaskDTO.mockArray()), editTask: TaskDTO(object: TaskObject()))
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
             .environmentObject(ThemeManager())
