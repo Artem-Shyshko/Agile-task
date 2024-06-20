@@ -2777,6 +2777,12 @@
             "state" : "translated",
             "value" : "Add advanced \nfeatures\nto the task"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати розширені\nособливості\nдо задачі"
+          }
         }
       }
     },
@@ -2787,6 +2793,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Add new task"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додайте нову задачу"
           }
         }
       }
@@ -2799,6 +2811,12 @@
             "state" : "translated",
             "value" : "Advanced navigation selector"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Продвинутий селектор навігації"
+          }
         }
       }
     },
@@ -2809,6 +2827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Double tap to \ncomplete task  Tap and hold to change \ntask order in the list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подвійний натиск\nщоб виконати задачу  Натиск та утримання\nщоб редагувати \nпорядок задачі у списку"
           }
         }
       }
@@ -2821,6 +2845,12 @@
             "state" : "translated",
             "value" : "Find completed tasks in this section"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Секція виконаних\nзадач"
+          }
         }
       }
     },
@@ -2832,6 +2862,12 @@
             "state" : "translated",
             "value" : "Quick add tasks"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Швидкє створення задачі"
+          }
         }
       }
     },
@@ -2842,6 +2878,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Swipe left to\neditt/delete task  Swipe right to\ncomplete task"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проведіть вліво щоб\nредагуваи/видалити \nзадачу  Проведіть вправо щоб\nвиконати задачу"
           }
         }
       }
