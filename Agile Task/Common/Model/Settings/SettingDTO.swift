@@ -44,7 +44,7 @@ extension SettingsDTO {
         dailyReminderOption = object.dailyReminderOption ?? .custom
         reminderTime = object.reminderTime ?? _reminderTime
         reminderTimePeriod = object.reminderTimePeriod ?? .am
-        newTaskFeature = object.newTaskFeature ?? .advanced
+        newTaskFeature = object.newTaskFeature ?? .light
         defaultReminder = object.defaultReminder
         showPlusButton = object.showPlusButton
         isPushNotificationEnabled = object.isPushNotificationEnabled
