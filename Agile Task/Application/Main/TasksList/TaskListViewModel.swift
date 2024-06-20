@@ -132,6 +132,8 @@ extension TaskListViewModel {
             if let taskWithMinSortingOrder = filteredTasks.min(by: { $0.sortingOrder < $1.sortingOrder }) {
                 quickTaskConfig.sortingOrder = taskWithMinSortingOrder.sortingOrder - 1
                 loadedTasks.insert(quickTaskConfig, at: 0)
+            } else {
+                loadedTasks.append(quickTaskConfig)
             }
         }
         addNotification(for: quickTaskConfig)
