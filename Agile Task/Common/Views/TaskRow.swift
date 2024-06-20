@@ -71,12 +71,13 @@ struct TaskRow: View {
         .listRowBackground(
                 RoundedRectangle(cornerRadius: 4)
                     .fill(Color(task.colorName))
-                    .padding(.trailing, 10)
+                    .padding(.trailing, 12)
                     .overlay(alignment: .topTrailing, content: {
                         Image(.swipes)
+                            .padding(.trailing, 2)
                     })
         )
-        .padding(.trailing, 10)
+        .padding(.trailing, 12)
     }
 }
 
