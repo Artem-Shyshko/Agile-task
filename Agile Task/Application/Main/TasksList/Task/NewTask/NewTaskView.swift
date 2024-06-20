@@ -109,6 +109,10 @@ struct NewTaskView: View {
         .alert(viewModel.error?.localized ?? "", isPresented: $viewModel.isShowingAlert) {
             Button("OK") {}
         }
+        .overlay(alignment: .top) {
+            TipView(title: "tip_add_advanced_features", arrowEdge: .top)
+                .padding(.leading, 50)
+        }
     }
 }
 

@@ -292,7 +292,9 @@ private extension TaskListView {
       .padding(.horizontal, 15)
       .frame(maxWidth: .infinity)
       .overlay(alignment: .trailing) {
+        if viewModel.taskSortingOption == .all || viewModel.taskSortingOption == .month {
           TipView(title: "tip_find_completed_task", arrowEdge: .trailing)
+        }
       }
     }
   }
