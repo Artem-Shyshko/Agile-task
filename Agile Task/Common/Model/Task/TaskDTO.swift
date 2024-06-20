@@ -149,28 +149,8 @@ extension TaskDTO {
                 sortingOrder: 5,
                 showCheckboxes: false,
                 checkBoxArray: [],
-                bulletArray: []
-            ),
-            TaskDTO(
-                id: ObjectId.generate(),
-                status: .none,
-                title: "use_broad_task_mock",
-                description: "add_more_detail_task_mock",
-                timePeriod: .am,
-                colorName: Color.sectionColor.name,
-                isCompleted: false,
-                sortingOrder: 4,
-                showCheckboxes: true,
-                checkBoxArray:
-                    [
-                        .init(id: ObjectId.generate(), title: "add_checklists_task_mock", sortingOrder: 0),
-                        .init(id: ObjectId.generate(), title: "control_progress_task_mock", isCompleted: true, sortingOrder: 1)
-                    ],
-                bulletArray:
-                    [
-                        .init(id: ObjectId.generate(), title: "add_bullet_task_mock", sortingOrder: 0),
-                        .init(id: ObjectId.generate(), title: "determinate_points_task_mock", sortingOrder: 1)
-                    ]
+                bulletArray: [], 
+                taskType: .advanced
             )
         ]
     }
