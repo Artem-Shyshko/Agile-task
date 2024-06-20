@@ -33,8 +33,9 @@ struct TaskDTO: CalendarItem {
     var showCheckboxes = true
     var checkBoxArray: [CheckboxDTO]
     var bulletArray: [BulletDTO]
+    var taskType: TaskType
     
-    init(id: ObjectId = ObjectId(), status: TaskStatus = .none, title: String, description: String? = nil, date: Date? = nil, dateOption: DateType = .none, time: Date? = nil, timeOption: TimeOption = .none, timePeriod: TimePeriod, recurring: RecurringConfigurationDTO? = nil, reminder: Reminder = .none, reminderDate: Date? = nil, createdDate: Date = Date(), modificationDate: Date? = nil, completedDate: Date? = nil, colorName: String, isCompleted: Bool, sortingOrder: Int, showCheckboxes: Bool = true, checkBoxArray: [CheckboxDTO], bulletArray: [BulletDTO]) {
+    init(id: ObjectId = ObjectId(), status: TaskStatus = .none, title: String, description: String? = nil, date: Date? = nil, dateOption: DateType = .none, time: Date? = nil, timeOption: TimeOption = .none, timePeriod: TimePeriod, recurring: RecurringConfigurationDTO? = nil, reminder: Reminder = .none, reminderDate: Date? = nil, createdDate: Date = Date(), modificationDate: Date? = nil, completedDate: Date? = nil, colorName: String, isCompleted: Bool, sortingOrder: Int, showCheckboxes: Bool = true, checkBoxArray: [CheckboxDTO], bulletArray: [BulletDTO], taskType: TaskType) {
         self.id = id
         self.parentId = id
         self.status = status
@@ -57,6 +58,7 @@ struct TaskDTO: CalendarItem {
         self.showCheckboxes = showCheckboxes
         self.checkBoxArray = checkBoxArray
         self.bulletArray = bulletArray
+        self.taskType = taskType
     }
     
     var isReminder: Bool {
@@ -102,6 +104,7 @@ extension TaskDTO {
         showCheckboxes = object.showCheckboxes
         checkBoxArray = object.checkBoxList.map { CheckboxDTO(object: $0) }
         bulletArray = object.bulletList.map { BulletDTO(object: $0) }
+        taskType = object.taskType ?? .light
         
         if let recurringConfig = object.recurring {
             self.recurring = RecurringConfigurationDTO(recurringConfig)

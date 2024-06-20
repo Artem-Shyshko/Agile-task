@@ -87,6 +87,7 @@ final class NewTaskViewModel: ObservableObject {
         task.colorName = selectedColor.name
         task.checkBoxArray = checkBoxes
         task.bulletArray = bullets
+        task.taskType = taskType
         
         return task
     }
@@ -124,6 +125,7 @@ final class NewTaskViewModel: ObservableObject {
         task.isCompleted = isCompleted
         task.checkBoxArray = checkBoxes
         task.bulletArray = bullets
+        task.taskType = taskType
         
         return task
     }
@@ -150,6 +152,7 @@ final class NewTaskViewModel: ObservableObject {
         task.colorName = parent.colorName
         task.checkBoxArray = parent.checkBoxArray
         task.bulletArray = parent.bulletArray
+        task.taskType = parent.taskType
         
         return task
     }
@@ -200,6 +203,7 @@ final class NewTaskViewModel: ObservableObject {
             bullets = editTask.bulletArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
             selectedColor = Color(editTask.colorName)
             isCompleted = editTask.isCompleted
+            taskType = editTask.taskType
             
             if let recurring = editTask.recurring {
                 recurringConfiguration = recurring

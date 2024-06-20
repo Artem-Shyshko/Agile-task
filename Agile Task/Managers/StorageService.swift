@@ -27,7 +27,7 @@ final class StorageService {
     private var storage: Realm?
     private let realmURL = URL.storeURL(databaseName: "default.realm")
         
-    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 14)) {
+    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 15)) {
         print(realmURL.path())
         initializeRealm(with: configuration)
         createBackupDirectory()

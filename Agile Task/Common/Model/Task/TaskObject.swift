@@ -32,10 +32,11 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
     @Persisted var showCheckboxes = true
     @Persisted var checkBoxList: RealmSwift.List<CheckboxObject>
     @Persisted var bulletList: RealmSwift.List<BulletObject>
+    @Persisted var taskType: TaskType?
     
     @Persisted(originProperty: "tasks") var assignee: LinkingObjects<ProjectObject>
     
-    convenience init(id: ObjectId = ObjectId(), status: TaskStatus = .none, title: String, description: String? = nil, date: Date? = nil, dateOption: DateType = .none, time: Date? = nil, timeOption: TimeOption = .none, timePeriod: TimePeriod, recurring: RecurringConfiguration? = nil, reminder: Reminder = .none, reminderDate: Date? = nil, createdDate: Date = Date(), modificationDate: Date? = nil, completedDate: Date? = nil, colorName: String, isCompleted: Bool, sortingOrder: Int, showCheckboxes: Bool = true, checkBoxList: [CheckboxObject], bulletList: [BulletObject]) {
+    convenience init(id: ObjectId = ObjectId(), status: TaskStatus = .none, title: String, description: String? = nil, date: Date? = nil, dateOption: DateType = .none, time: Date? = nil, timeOption: TimeOption = .none, timePeriod: TimePeriod, recurring: RecurringConfiguration? = nil, reminder: Reminder = .none, reminderDate: Date? = nil, createdDate: Date = Date(), modificationDate: Date? = nil, completedDate: Date? = nil, colorName: String, isCompleted: Bool, sortingOrder: Int, showCheckboxes: Bool = true, checkBoxList: [CheckboxObject], bulletList: [BulletObject], taskType: TaskType) {
         self.init()
         self.id = id
         self.parentId = id
@@ -59,6 +60,7 @@ class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
         self.showCheckboxes = showCheckboxes
         self.checkBoxList.append(objectsIn: checkBoxList)
         self.bulletList.append(objectsIn: bulletList)
+        self.taskType = taskType
     }
     
     var isReminder: Bool {
@@ -108,6 +110,7 @@ extension TaskObject {
         isCompleted = dto.isCompleted
         showCheckboxes = dto.showCheckboxes
         sortingOrder = dto.sortingOrder
+        taskType = dto.taskType
         if let recurring = dto.recurring {
             self.recurring = RecurringConfiguration(recurring)
         }
