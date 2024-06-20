@@ -216,6 +216,7 @@ private extension TaskListView {
             weekSectionHeader(key: key)
           }
         }
+        .listRowSeparator(.hidden)
       default:
         ForEach($viewModel.filteredTasks, id: \.id) { task in
           TaskRow(viewModel: viewModel, task: task)
@@ -226,6 +227,7 @@ private extension TaskListView {
         .onMove(perform: { from, to in
           viewModel.moveTask(fromOffsets: from, toOffset: to)
         })
+        .listRowSeparator(.hidden)
       }
     }
     .listRowSpacing(Constants.shared.listRowSpacing)
