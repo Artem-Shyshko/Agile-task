@@ -72,7 +72,7 @@ struct TaskRow: View {
                 RoundedRectangle(cornerRadius: 4)
                     .fill(Color(task.colorName))
                     .padding(.trailing, 12)
-                    .overlay(alignment: .topTrailing, content: {
+                    .overlay(alignment: .trailing, content: {
                         Image(.swipes)
                             .padding(.trailing, 2)
                     })

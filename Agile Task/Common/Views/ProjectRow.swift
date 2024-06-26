@@ -56,7 +56,7 @@ struct ProjectRow: View {
             RoundedRectangle(cornerRadius: 4)
                 .fill(themeManager.theme.sectionColor(colorScheme))
                 .padding(.trailing, 10)
-            .overlay(alignment: .topTrailing, content: {
+            .overlay(alignment: .trailing   , content: {
                 Image(.swipes)
             })
         )
