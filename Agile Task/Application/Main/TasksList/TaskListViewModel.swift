@@ -132,14 +132,17 @@ extension TaskListViewModel {
             if let taskWithMinSortingOrder = filteredTasks.min(by: { $0.sortingOrder < $1.sortingOrder }) {
                 quickTaskConfig.sortingOrder = taskWithMinSortingOrder.sortingOrder - 1
                 loadedTasks.insert(quickTaskConfig, at: 0)
+                filteredTasks.insert(quickTaskConfig, at: 0)
             } else {
                 loadedTasks.append(quickTaskConfig)
+                filteredTasks.append(quickTaskConfig)
             }
         }
         addNotification(for: quickTaskConfig)
         var selectedProject = appState.projectRepository!.getSelectedProject()
         selectedProject.tasks.append(quickTaskConfig)
         appState.projectRepository!.saveProject(selectedProject)
+        saveSortingOrder()
         
         if taskSortingOption == .all {
             groupedTasksBySelectedOption(.all)
