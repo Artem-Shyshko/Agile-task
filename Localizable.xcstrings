@@ -2602,12 +2602,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Light"
+            "value" : "Simple"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Light"
           }
         }
