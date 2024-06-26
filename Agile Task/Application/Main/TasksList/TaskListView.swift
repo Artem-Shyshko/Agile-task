@@ -111,10 +111,6 @@ struct TaskListView: View {
       .overlay(alignment: .bottomTrailing) {
           plusButton()
       }
-      .overlay(alignment: .bottomTrailing) {
-            TipView(title: "tip_quick_add", arrowEdge: .trailing)
-            .padding(.bottom, 25)
-    }
       .overlay(alignment: .bottom, content: {
         newTaskView()
       })

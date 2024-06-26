@@ -27,16 +27,11 @@ struct TipView: View {
                 }, label: {
                     VStack(spacing: 0) {
                         if arrowEdge == .top {
-                            Triangle()
-                                .frame(size: triangleSize)
-                                .foregroundStyle(Color(.lightRed))
+                            triangle(rotation: 11)
                         }
                         HStack(spacing: 0) {
                             if arrowEdge == .leading {
-                                Triangle()
-                                    .frame(size: triangleSize)
-                                    .foregroundStyle(Color(.lightRed))
-                                    .rotationEffect(Angle(radians: 11))
+                                triangle(rotation: 9.4)
                             }
                             
                             HStack {
@@ -53,18 +48,12 @@ struct TipView: View {
                             .cornerRadius(10)
                             
                             if arrowEdge == .trailing {
-                                Triangle()
-                                    .frame(size: triangleSize)
-                                    .foregroundStyle(Color(.lightRed))
-                                    .rotationEffect(Angle(radians: -11))
+                                triangle(rotation: 0)
                             }
                         }
                         
                         if arrowEdge == .bottom {
-                            Triangle()
-                                .frame(size: triangleSize)
-                                .foregroundStyle(Color(.lightRed))
-                                .rotationEffect(Angle(radians: 9.4))
+                            triangle(rotation: -11)
                         }
                     }
                 })
@@ -90,23 +79,19 @@ private extension TipView {
             return .trailing
         }
     }
+    
+    func triangle(rotation: Double) -> some View {
+        Image(.triangle)
+            .resizable()
+            .scaledToFit()
+            .frame(size: triangleSize)
+            .foregroundStyle(Color(.lightRed))
+            .rotationEffect(Angle(radians: rotation))
+    }
 }
 
 #Preview {
-    TipView(title: " dsa", arrowEdge: .top)
-}
-
-struct Triangle: Shape {
-    func path(in rect: CGRect) -> Path {
-        var path = Path()
-        
-        path.move(to: CGPoint(x: rect.midX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.midX, y: rect.minY))
-        
-        return path
-    }
+    TipView(title: " dsa", arrowEdge: .bottom)
 }
 
 extension String {

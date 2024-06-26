@@ -55,6 +55,9 @@ private extension ProjectsView {
             header: NavigationTitle("Projects"),
             rightItem: rightNavigationButton()
         )
+        .overlay(alignment: .trailing) {
+            TipView(title: "tip_add_new_project", arrowEdge: .trailing)
+        }
     }
     
     @ViewBuilder
@@ -75,6 +78,9 @@ private extension ProjectsView {
         .listRowSpacing(Constants.shared.listRowSpacing)
         .scrollContentBackground(.hidden)
         .listStyle(.plain)
+        .overlay(alignment: .top) {
+            TipView(title: "tip_swipe_left_project", arrowEdge: .top)
+        }
     }
     
     func magnifyingGlassButton() -> some View {

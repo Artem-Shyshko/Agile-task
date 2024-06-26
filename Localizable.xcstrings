@@ -1262,9 +1262,6 @@
         }
       }
     },
-    "Key" : {
-      "extractionState" : "manual"
-    },
     "Language" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2786,6 +2783,23 @@
         }
       }
     },
+    "tip_add_new_project" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add new project"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додайте новий проект"
+          }
+        }
+      }
+    },
     "tip_add_new_task" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2854,19 +2868,19 @@
         }
       }
     },
-    "tip_quick_add" : {
+    "tip_group_taks" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quick add tasks"
+            "value" : "Group taks in projetcs "
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Швидкє створення задачі"
+            "value" : "Групуйте задачі у проекти"
           }
         }
       }
@@ -2884,6 +2898,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проведіть вліво щоб\nредагуваи/видалити \nзадачу  Проведіть вправо щоб\nвиконати задачу"
+          }
+        }
+      }
+    },
+    "tip_swipe_left_project" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Swipe left to\neditt/delete project"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проведіть вліво для\nредагування/видалення проекту"
           }
         }
       }
