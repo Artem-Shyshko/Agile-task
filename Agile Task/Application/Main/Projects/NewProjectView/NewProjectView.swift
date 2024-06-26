@@ -45,7 +45,12 @@ private extension NewProjectView {
     
     func saveButton() -> some View {
         Button {
-            let isSaved = vm.saveButtonAction(purchaseManager: purchaseManager)
+            guard purchaseManager.canCreateProject(projectCount:vm.appState.projectRepository!.getProjects().count) else {
+                vm.appState.projectsNavigationStack.append(.subscription)
+                return
+            }
+            
+            let isSaved = vm.saveButtonAction()
             
             if isSaved {
                 dismiss.callAsFunction()

@@ -18,6 +18,15 @@ final class AppState: ObservableObject {
     var checkboxRepository: CheckboxRepository?
     var bulletRepository: BulletRepository?
     
+    @Published var taskListNavigationStack: [TaskListNavigationView] = []
+    @Published var projectsNavigationStack: [ProjectNavigationView] = []
+    @Published var settingsNavigationStack: [SettingsNavigationView] = []
+    var isTabBarHidden: Bool {
+        taskListNavigationStack.contains(.subscription)
+        || settingsNavigationStack.contains(.subscription)
+        || projectsNavigationStack.contains(.subscription)
+    }
+    
     init() {
         let storage = StorageService()
         self.storage = storage

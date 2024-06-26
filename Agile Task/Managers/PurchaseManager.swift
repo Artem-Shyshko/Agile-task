@@ -15,7 +15,6 @@ final class PurchaseManager: NSObject, ObservableObject {
     private let productsID = [Constants.shared.monthlySubscriptionID, Constants.shared.yearlySubscriptionID]
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil
-    private let maxFreeTasks = 4
     private let maxFreeProjects = 2
     
     @Published private(set) var products: [Product] = []
@@ -48,10 +47,10 @@ final class PurchaseManager: NSObject, ObservableObject {
         updates?.cancel()
     }
     
-    func canCreateTask(taskCount: Int) -> Bool {
+    func canCreateTask(_ task: TaskDTO) -> Bool {
         guard hasUnlockedPro == false else { return  true }
         
-        return maxFreeTasks <= taskCount ? false : true
+        return task.taskType == .light ? true : false
     }
     
     func canCreateProject(projectCount: Int) -> Bool {

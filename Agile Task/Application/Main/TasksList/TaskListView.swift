@@ -183,10 +183,6 @@ private extension TaskListView {
   
   func navigationBarRightItem() -> some View {
     Button {
-      guard purchaseManager.canCreateTask(taskCount: viewModel.appState.taskRepository!.getTaskList().count) else {
-        path.append(.subscription)
-        return
-      }
       path.append(.createTask())
     } label: {
       Image(.add)
@@ -369,11 +365,6 @@ private extension TaskListView {
   func plusButton() -> some View {
     if viewModel.settings.showPlusButton {
       Button {
-        guard purchaseManager.canCreateTask(taskCount: viewModel.appState.taskRepository!.getTaskList().count) else {
-          path.append(.subscription)
-          return
-        }
-        
         isAddTaskFocused = true
         viewModel.isShowingAddTask = true
       } label: {

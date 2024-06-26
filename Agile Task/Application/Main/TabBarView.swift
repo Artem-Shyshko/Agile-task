@@ -50,29 +50,20 @@ struct TabBarView: View {
     
     @EnvironmentObject var appState: AppState
     
-    @State private var taskListNavigationStack: [TaskListNavigationView] = []
-    @State private var projectsNavigationStack: [ProjectNavigationView] = []
-    @State private var settingsNavigationStack: [SettingsNavigationView] = []
-    private var isTabBarHidden: Bool {
-        taskListNavigationStack.contains(.subscription)
-        || settingsNavigationStack.contains(.subscription)
-        || projectsNavigationStack.contains(.subscription)
-    }
-    
     // MARK: - Body
     
     var body: some View {
         ZStack {
             TabView(selection: $appState.selectedTab) {
-                TaskListView(viewModel: TaskListViewModel(appState: appState), path: $taskListNavigationStack)
+                TaskListView(viewModel: TaskListViewModel(appState: appState), path: $appState.taskListNavigationStack)
                     .tag(Tab.taskList)
-                ProjectsView(vm: ProjectsViewModel(appState: appState), path: $projectsNavigationStack)
+                ProjectsView(vm: ProjectsViewModel(appState: appState), path: $appState.projectsNavigationStack)
                     .tag(Tab.projects)
-                SettingsView(path: $settingsNavigationStack)
+                SettingsView(path: $appState.settingsNavigationStack)
                     .tag(Tab.settings)
             }
             .overlay(alignment: .bottom) {
-                if !isTabBarHidden {
+                if !appState.isTabBarHidden {
                     customTabItem()
                 }
             }
@@ -82,9 +73,9 @@ struct TabBarView: View {
             }
         }
         .onChange(of: appState.selectedTab) { newValue in
-            taskListNavigationStack = []
-            settingsNavigationStack = []
-            projectsNavigationStack = []
+            appState.taskListNavigationStack = []
+            appState.settingsNavigationStack = []
+            appState.projectsNavigationStack = []
         }
         .onOpenURL { incomingURL in
             guard let incomeState = AppHelper.shared.handleIncomingURL(incomingURL) else { return }
@@ -93,8 +84,8 @@ struct TabBarView: View {
             case .widgetNewTask:
                 appState.selectedTab = .taskList
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if taskListNavigationStack.isEmpty {
-                        taskListNavigationStack.append(.createTask())
+                    if appState.taskListNavigationStack.isEmpty {
+                        appState.taskListNavigationStack.append(.createTask())
                     }
                 }
             case .dropbox:
@@ -143,11 +134,11 @@ private extension TabBarView {
             if appState.selectedTab == tab {
                 switch appState.selectedTab {
                 case .taskList:
-                    taskListNavigationStack = []
+                    appState.taskListNavigationStack = []
                 case .projects:
-                    projectsNavigationStack = []
+                    appState.projectsNavigationStack = []
                 case .settings:
-                    settingsNavigationStack = []
+                    appState.settingsNavigationStack = []
                 }
             }
         }

@@ -371,11 +371,24 @@ private extension NewTaskView {
     func tabBarSaveButton() -> some View {
         Button {
             if viewModel.isValidForm() {
-                viewModel.saveButtonAction(
-                    hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                    editTask: editTask
-                )
-                dismiss.callAsFunction()
+                if editTask == nil, viewModel.taskType == .advanced {
+                    guard purchaseManager.hasUnlockedPro == true else {
+                        appState.taskListNavigationStack.append(.subscription)
+                        return
+                    }
+                    
+                    viewModel.saveButtonAction(
+                        hasUnlockedPro: purchaseManager.hasUnlockedPro,
+                        editTask: editTask
+                    )
+                    dismiss.callAsFunction()
+                } else {
+                    viewModel.saveButtonAction(
+                        hasUnlockedPro: purchaseManager.hasUnlockedPro,
+                        editTask: editTask
+                    )
+                    dismiss.callAsFunction()
+                }
             }
         } label: {
             Text("Save")

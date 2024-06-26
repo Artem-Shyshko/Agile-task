@@ -19,7 +19,7 @@ final class NewProjectViewModel: ObservableObject {
         self.projectName = editedProject?.name ?? ""
     }
     
-    func saveButtonAction(purchaseManager: PurchaseManager) -> Bool {
+    func saveButtonAction() -> Bool {
         if var editedProject {
             editedProject.name = projectName
             appState.projectRepository!.saveProject(editedProject)

@@ -91,10 +91,6 @@ private extension ProjectsView {
     
     func rightNavigationButton() -> some View {
         Button {
-            guard purchaseManager.canCreateProject(projectCount: vm.appState.projectRepository!.getProjects().count) else {
-                path.append(.subscription)
-                return
-            }
             path.append(.newProject())
         } label: {
             Image(.add)
