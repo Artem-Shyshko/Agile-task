@@ -32,29 +32,25 @@ struct SubscriptionView: View {
         && !purchaseManager.showProcessView
     }
     private let checkmarkItems = [
-            "purchase_unlimited_tasks",
-            "purchase_unlimited_projects",
-            "purchase_statuses",
-            "purchase_checklists_bullets",
-            "purchase_notification_reminders",
-            "purchase_recurring",
-            "purchase_faceid",
-            "purchase_data_backup"
-        ]
+        "purchase_unlimited_tasks",
+        "purchase_unlimited_projects",
+        "purchase_advanced_features"
+    ]
     
     // MARK: - Body
     
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
-                navigationBar()
+            navigationBar()
             ScrollView {
                 VStack(spacing: 40) {
                     VStack(spacing: 20) {
                         title()
-                        descriptionView()
+                        subtitle()
                         Spacer()
                         checkmarksView()
                         Spacer()
+                        reviews()
                         products()
                     }
                     bottomButtons()
@@ -108,15 +104,8 @@ private extension SubscriptionView {
         }
     }
     
-    func descriptionView() -> some View {
-        Text("subscription_description")
-            .font(.helveticaRegular(size: 16))
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, 20)
-    }
-    
     func bottomButtons() -> some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 20) {
             Button {
                 if let selectedProduct {
                     Task {
@@ -131,11 +120,20 @@ private extension SubscriptionView {
             .buttonStyle(PrimaryButtonStyle())
             
             HStack(spacing: 30) {
-                PrivacyPolicyButton()
-                    .font(.helveticaRegular(size: 13))
+                    PrivacyPolicyButton()
+                        .font(.helveticaRegular(size: 15))
+                        .overlay(alignment: .bottom) {
+                            Rectangle()
+                                .frame(height: 0.5)
+                        }
                 TermsOfUseButton()
-                    .font(.helveticaRegular(size: 13))
+                    .font(.helveticaRegular(size: 15))
+                    .overlay(alignment: .bottom) {
+                        Rectangle()
+                            .frame(height: 0.5)
+                    }
             }
+            .opacity(0.8)
         }
     }
     
@@ -166,29 +164,53 @@ private extension SubscriptionView {
     }
     
     func title() -> some View {
-        VStack(spacing: 10) {
-            Text("subscription_title")
-            Text("subscription_subtitle")
+        Text("subscription_title")
+            .font(.helveticaBold(size: 28))
+            .multilineTextAlignment(.center)
+            .padding(.top, 15)
+    }
+    
+    func subtitle() -> some View {
+        Text("purchase_welcome_offer".uppercased())
+            .font(.helveticaRegular(size: 12))
+            .padding(10)
+            .overlay {
+                Capsule()
+                    .foregroundStyle(.white.opacity(0.2))
+            }
+    }
+    
+    func reviews() -> some View {
+        HStack {
+            Image(.leftWreath)
+            ForEach(0..<5) { _ in
+                Image(.star)
+            }
+            Image(.rightWreath)
         }
-        .font(.helveticaRegular(size: 32))
-        .multilineTextAlignment(.center)
-        .padding(.top, 15)
+        .overlay(alignment: .center) {
+            Text("purchase_reviews")
+                .font(.helveticaRegular(size: 15))
+                .offset(y: 25)
+        }
     }
     
     func products() -> some View {
         VStack(spacing: 5) {
             ForEach(purchaseManager.products) { product in
-                Button {
-                    selectedProduct = product
-                } label: {
-                    planView(
-                        title: LocalizedStringKey(product.displayName.trimmingCharacters(in: .whitespacesAndNewlines)),
-                        description: product.description,
-                        price: product.displayPrice,
-                        isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id
-                    )
+                if product.id == Constants.shared.yearlySubscriptionID {
+                    Button {
+                        selectedProduct = product
+                    } label: {
+                        planView(
+                            title: LocalizedStringKey(product.displayName.trimmingCharacters(in: .whitespacesAndNewlines)),
+                            description: product.description,
+                            price: product.displayPrice,
+                            isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id
+                        )
+                    }
+                    .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
                 }
-                .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
             }
         }
     }
@@ -199,41 +221,37 @@ private extension SubscriptionView {
         price: String?,
         isSelected: Bool
     ) -> some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Image("SubscribtionCheckmark")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 15, height: 15)
-                    .opacity(isSelected ? 1 : 0)
-                HStack {
-                    Text(title)
+        VStack(alignment: .center, spacing: 12) {
+            if let price {
+                HStack(spacing: 10) {
+                    Text("$49.99 ")
+                        .font(.helveticaBold(size: 20))
+                        .opacity(0.5)
+                        .strikethrough()
+                    Text(price)
+                        .font(.helveticaBold(size: 30))
+                    Text("Save 80%")
                         .font(.helveticaBold(size: 16))
-                    Text(LocalizedStringKey(description))
-                        .font(.helveticaRegular(size: 14))
                 }
-                Spacer()
-                if let price {
-                    HStack(spacing: 0) {
-                        Text("\(price)")
-                    }
+                .font(.helveticaBold(size: 16))
+            }
+            
+            HStack {
+                Text(title)
                     .font(.helveticaBold(size: 16))
-                }
+                Text(LocalizedStringKey(description))
+                    .font(.helveticaRegular(size: 14))
             }
-            .hAlign(alignment: .leading)
         }
-        .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
-        .padding(15)
-        .frame(height: 56)
+        .foregroundColor(themeManager.theme.textColor(colorScheme))
+        .padding(24)
         .frame(maxWidth: .infinity)
-        .background(themeManager.theme.sectionColor(colorScheme))
-        .cornerRadius(Layout.cornerRadius)
+        .background(Color.white.opacity(0.3))
+        .clipShape(.rect(cornerRadius: 28))
         .overlay {
-            if isSelected {
-                RoundedRectangle(cornerRadius: Layout.cornerRadius)
-                    .stroke(lineWidth: 3)
-                    .fill(Color.orangeGradient)
-            }
+            RoundedRectangle(cornerRadius: 28)
+                .stroke(lineWidth: 1)
+                .opacity(0.6)
         }
     }
 }
@@ -242,4 +260,7 @@ private extension SubscriptionView {
 
 #Preview {
     SubscriptionView()
+        .environmentObject(PurchaseManager())
+        .environmentObject(ThemeManager())
+        .environmentObject(AppState())
 }

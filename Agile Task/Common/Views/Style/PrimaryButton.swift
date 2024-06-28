@@ -16,10 +16,10 @@ struct PrimaryButtonStyle: ButtonStyle {
             .font(.helveticaBold(size: 16))
             .foregroundColor(Color(hex: "#F77062"))
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 15)
+            .padding(.vertical, 19)
             .background(themeManager.theme.sectionColor(colorScheme))
-            .cornerRadius(3)
-            .padding(.horizontal, 50)
+            .cornerRadius(14)
+            .padding(.horizontal, 40)
             .shadow(
                 color: .init(hex: "000000").opacity(0.3),
                 radius: 5, x: 0, y: 4

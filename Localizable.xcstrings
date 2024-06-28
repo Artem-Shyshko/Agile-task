@@ -144,6 +144,9 @@
         }
       }
     },
+    "$49.99 " : {
+
+    },
     "1 project" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1820,6 +1823,23 @@
         }
       }
     },
+    "purchase_advanced_features" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Advanced features"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Розширені можливості"
+          }
+        }
+      }
+    },
     "purchase_checklists_bullets" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1905,6 +1925,23 @@
         }
       }
     },
+    "purchase_reviews" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reviews"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reviews"
+          }
+        }
+      }
+    },
     "purchase_statuses" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1952,6 +1989,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unlimited tasks"
+          }
+        }
+      }
+    },
+    "purchase_welcome_offer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome offer"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome offer"
           }
         }
       }
@@ -2253,6 +2307,16 @@
         }
       }
     },
+    "Save 80%" : {
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Save 80%"
+          }
+        }
+      }
+    },
     "save_button" : {
       "localizations" : {
         "en" : {
@@ -2410,7 +2474,14 @@
       }
     },
     "START" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "START"
+          }
+        }
+      }
     },
     "Status" : {
       "extractionState" : "manual",
@@ -2441,6 +2512,7 @@
       }
     },
     "subscription_description" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2457,6 +2529,7 @@
       }
     },
     "subscription_subtitle" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2477,13 +2550,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Improve your life"
+            "value" : "Improve your productivity\nwith Agile Task"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Покращуйте своє життя"
+            "value" : "Підвищуйте свою продуктивність\nз Agile Task"
           }
         }
       }
@@ -3273,7 +3346,14 @@
       }
     },
     "You don't have any task" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You don't have any task"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
