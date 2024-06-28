@@ -446,9 +446,10 @@ private extension NewTaskView {
                 options: TaskType.allCases,
                 selection: $viewModel.taskType,
                 textColor: themeManager.theme.sectionTextColor(colorScheme)
-            ).padding(.horizontal),
+            ).padding(.horizontal, viewModel.settings.appLanguage == .ukrainian ? 35 : 15),
             rightItem: tabBarSaveButton()
         )
+        .padding(.horizontal, viewModel.settings.appLanguage == .ukrainian ? -10 : 0)
     }
 }
 
@@ -510,5 +511,7 @@ struct NewTaskView_Previews: PreviewProvider {
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
             .environmentObject(ThemeManager())
+            .environmentObject(AppState())
+            .environment(\.locale, NSLocale(localeIdentifier: "uk") as Locale)
     }
 }

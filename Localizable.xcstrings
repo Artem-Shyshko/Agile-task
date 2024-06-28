@@ -2662,7 +2662,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Advanced"
+            "value" : "Продвинуто"
           }
         }
       }
@@ -2678,8 +2678,8 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Light"
+            "state" : "translated",
+            "value" : "Просто"
           }
         }
       }
