@@ -7,7 +7,6 @@
 
 import Foundation
 import RealmSwift
-import MasterAppsUI
 
 struct SettingsDTO {
     var id: ObjectId

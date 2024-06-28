@@ -7,7 +7,6 @@
 
 import Foundation
 import RealmSwift
-import MasterAppsUI
 
 final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
@@ -180,4 +179,14 @@ enum TaskType: String, CaseIterable, CustomStringConvertible, PersistableEnum {
     var description: String {
         self.rawValue
     }
+}
+
+enum TimePeriod: String, CaseIterable {
+    case pm = "PM"
+    case am = "AM"
+}
+
+enum TimeFormat: String, CaseIterable {
+    case twentyFour = "24h"
+    case twelve = "12h"
 }

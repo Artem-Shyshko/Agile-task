@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import MasterAppsUI
 import RealmSwift
 import SwiftUI
 

@@ -6,7 +6,6 @@
 //
 
 import RealmSwift
-import MasterAppsUI
 import SwiftUI
 
 class TaskObject: Object, ObjectKeyIdentifiable, CalendarItem {
@@ -305,4 +304,12 @@ extension RecurringConfigurationDTO {
             repeatOnDays: []
         )
     }
+}
+
+// MARK: - CalendarItem
+
+protocol CalendarItem {
+    var title: String { get set }
+    var date: Date? { get set }
+    var createdDate: Date { get set }
 }

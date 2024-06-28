@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MasterAppsUI
 
 extension View {
     func hAlign(alignment: Alignment) -> some View {

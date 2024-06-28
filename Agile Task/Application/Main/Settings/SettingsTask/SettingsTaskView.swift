@@ -7,7 +7,6 @@
 
 import SwiftUI
 import RealmSwift
-import MasterAppsUI
 
 struct SettingsTaskView: View {
   @StateObject var viewModel: SettingsTaskViewModel

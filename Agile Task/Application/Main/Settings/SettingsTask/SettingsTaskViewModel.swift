@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MasterAppsUI
 
 @MainActor
 final class SettingsTaskViewModel: ObservableObject {

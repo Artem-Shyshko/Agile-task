@@ -8,7 +8,6 @@
 
 import SwiftUI
 import RealmSwift
-import MasterAppsUI
 
 struct NewTaskView: View {
     

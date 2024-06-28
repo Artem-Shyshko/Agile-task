@@ -6,7 +6,6 @@
 //
 
 import NotificationCenter
-import MasterAppsUI
 
 @MainActor
 final class LocalNotificationManager: NSObject, ObservableObject {

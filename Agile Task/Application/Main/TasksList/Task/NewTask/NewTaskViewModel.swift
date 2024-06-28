@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MasterAppsUI
 import RealmSwift
 
 enum NewTaskError: String, Error, Localizable {

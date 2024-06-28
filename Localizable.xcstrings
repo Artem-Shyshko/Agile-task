@@ -1555,6 +1555,7 @@
       }
     },
     "occurrences" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -3270,6 +3271,9 @@
           }
         }
       }
+    },
+    "You don't have any task" : {
+
     }
   },
   "version" : "1.0"

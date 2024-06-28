@@ -73,6 +73,28 @@ extension Date {
         self.format("EEEE d/M/yy")
     }
     
+    /// Return full date string.
+    ///
+    /// - Returns: dd.MM.yyyy format
+    var fullDateTextField: String {
+        self.format("dd.MM.yyyy")
+    }
+    
+    var weekInt: Int {
+        Int(self.format("w")) ?? 1
+    }
+    
+    var yearInt: Int {
+        Int(self.yearString) ?? 2021
+    }
+    
+    /// Return string with full year format.
+    ///
+    /// - Returns: YYYY  format
+    var yearString: String {
+        self.format("YYYY")
+    }
+    
     /// Return string with day name.
     ///
     /// - Returns: EEEE  format

@@ -7,9 +7,10 @@
 
 import SwiftUI
 import RealmSwift
-import MasterAppsUI
 
 final class TaskListViewModel: ObservableObject {
+    @ObservedObject var watchConnector = WatchConnector()
+    
     @Published var isSearchBarHidden: Bool = true
     @Published var showAddNewTaskView = false
     @Published var searchText: String = ""
@@ -23,7 +24,11 @@ final class TaskListViewModel: ObservableObject {
     @Published var isShowingCalendar = false
     @Published var isShowingCalendarPicker: Bool = false
     
-    @Published var loadedTasks: [TaskDTO] = []
+    @Published var loadedTasks: [TaskDTO] = [] {
+        didSet {
+            watchConnector.sendTasks(loadedTasks)
+        }
+    }
     @Published var filteredTasks: [TaskDTO] = []
     @Published var calendarTasks: [CalendarItem] = []
     @Published var completedTasks: [TaskDTO] = []
@@ -52,6 +57,8 @@ final class TaskListViewModel: ObservableObject {
         Task {
             await checkTaskForNotifications()
         }
+        
+        watchConnector.sendTasks(filteredTasks)
     }
     
     func loadTasks() {

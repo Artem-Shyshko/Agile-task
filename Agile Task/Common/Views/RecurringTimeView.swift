@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import MasterAppsUI
 
 struct RecurringTimeView: View {
     @Binding var reminderTime: Date

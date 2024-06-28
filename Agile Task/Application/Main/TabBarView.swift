@@ -7,7 +7,6 @@
 
 import SwiftUI
 import RealmSwift
-import MasterAppsUI
 
 // MARK: - Enum
 

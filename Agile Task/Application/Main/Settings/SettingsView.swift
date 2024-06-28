@@ -27,7 +27,7 @@ struct SettingsView: View {
                     SettingsThemeView()
                     settingsView()
                     securityView()
-                    backupView()
+//                    backupView()
                     moreAppsView()
                     emailView()
                     Spacer()

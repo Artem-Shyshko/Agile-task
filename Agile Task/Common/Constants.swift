@@ -66,8 +66,3 @@ final class Constants {
         static let viewsSpacing = 2
     }
 }
-
-extension Notification.Name {
-    static let dropboxAuthSuccess = Notification.Name("dropboxAuthSuccess")
-    static let dropboxAuthFailed = Notification.Name("dropboxAuthFailed")
-}
