@@ -33,6 +33,7 @@ struct Master_TaskApp: App {
     
     @State private var isDarkModeOn = false
     @State private var showAuthView = false
+    @State private var showTabBar = false
     
     var isNoneAuthorised: Bool {
         let settings = appState.settingsRepository!.get()
@@ -48,11 +49,11 @@ struct Master_TaskApp: App {
         WindowGroup {
             ZStack {
                 Color.greenGradient
-                if AppHelper.shared.isOnboarding {
+                if AppHelper.shared.isOnboarding || showTabBar {
                         TabBarView()
                 } else {
                     NavigationStack {
-                        WelcomeView()
+                        WelcomeView(showTabBar: $showTabBar)
                     }
                 }
                 

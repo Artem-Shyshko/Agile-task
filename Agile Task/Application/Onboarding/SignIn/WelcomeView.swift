@@ -13,7 +13,7 @@ struct WelcomeView: View {
     
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
-    @State var showTabBar = false
+    @Binding var showTabBar: Bool
     
     // MARK: - body
     
@@ -37,9 +37,6 @@ struct WelcomeView: View {
             }
             .font(.helveticaRegular(size: 14))
             .foregroundColor(themeManager.theme.textColor(colorScheme))
-            .navigationDestination(isPresented: $showTabBar) {
-                TabBarView()
-            }
         }
     }
 }
@@ -84,7 +81,7 @@ private extension WelcomeView {
 // MARK: - Preview
 
 #Preview("Ukrainian") {
-    WelcomeView()
+    WelcomeView(showTabBar: .constant(false))
         .environmentObject(ThemeManager())
         .environment(\.locale, Locale(identifier: "UK"))
 }
