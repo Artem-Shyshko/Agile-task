@@ -146,10 +146,15 @@ extension TaskListViewModel {
             }
         }
         addNotification(for: quickTaskConfig)
+        
+        for index in self.loadedTasks.indices {
+            self.loadedTasks[index].sortingOrder = index
+        }
+        appState.taskRepository?.saveTasks(loadedTasks)
+        
         var selectedProject = appState.projectRepository!.getSelectedProject()
         selectedProject.tasks.append(quickTaskConfig)
         appState.projectRepository!.saveProject(selectedProject)
-        saveSortingOrder()
         
         if taskSortingOption == .all {
             groupedTasksBySelectedOption(.all)

@@ -283,7 +283,7 @@ private extension StorageService {
 
 public extension URL {
     static func storeURL(databaseName: String) -> URL {
-        let appGroup = "group.agiletask.app"
+        let appGroup = Constants.shared.appGroupID
         
         guard let fileContainer = FileManager.default
             .containerURL(forSecurityApplicationGroupIdentifier: appGroup)

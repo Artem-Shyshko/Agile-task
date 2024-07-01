@@ -41,6 +41,7 @@ final class Constants {
     let monthlySubscriptionID = "agile_task_monthly"
     let dropboxKey = "2uhkb4ofg0in4ie"
     let dropboxAccessToken = "dropboxAccessToken"
+    let appGroupID = "group.agiletask.app"
     
     lazy var currentDate = Date()
     
