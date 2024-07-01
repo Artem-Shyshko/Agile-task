@@ -25,12 +25,6 @@ struct SubscriptionView: View {
     @State var showPurchasesAlert = false
     @State var isRestored = false
     
-    private var isPurchaseCompleted: Bool {
-        purchaseManager.selectedSubscriptionID == Constants.shared.yearlySubscriptionID
-        && !purchaseManager.showProcessView
-        || purchaseManager.selectedSubscriptionID == Constants.shared.monthlySubscriptionID
-        && !purchaseManager.showProcessView
-    }
     private let checkmarkItems = [
         "purchase_unlimited_tasks",
         "purchase_unlimited_projects",
@@ -42,21 +36,19 @@ struct SubscriptionView: View {
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
-            ScrollView {
-                VStack(spacing: 40) {
-                    VStack(spacing: 20) {
-                        title()
-                        subtitle()
-                        Spacer()
-                        checkmarksView()
-                        Spacer()
-                        reviews()
-                        products()
-                    }
-                    bottomButtons()
+            VStack(spacing: 40) {
+                VStack(spacing: 20) {
+                    title()
+                    subtitle()
+                    Spacer()
+                    checkmarksView()
+                    Spacer()
+                    reviews()
+                    products()
                 }
-                .padding(.horizontal, 2)
+                bottomButtons()
             }
+            .padding(.horizontal, 2)
         }
         .onAppear {
             Task {
@@ -82,6 +74,7 @@ struct SubscriptionView: View {
                 || newValue == Constants.shared.monthlySubscriptionID {
                 dismiss()
                 appState.selectedTab = .taskList
+                appState.projectsNavigationStack = []
             }
         }
     }
@@ -171,13 +164,18 @@ private extension SubscriptionView {
     }
     
     func subtitle() -> some View {
-        Text("purchase_welcome_offer".uppercased())
+        Text("purchase_welcome_offer")
             .font(.helveticaRegular(size: 12))
             .padding(10)
             .overlay {
                 Capsule()
                     .foregroundStyle(.white.opacity(0.2))
             }
+    }
+    
+    
+    func sum<T: AdditiveArithmetic>(firsValue: T, secondValue: T) -> T {
+        firsValue + secondValue
     }
     
     func reviews() -> some View {
@@ -199,17 +197,11 @@ private extension SubscriptionView {
         VStack(spacing: 5) {
             ForEach(purchaseManager.products) { product in
                 if product.id == Constants.shared.yearlySubscriptionID {
-                    Button {
-                        selectedProduct = product
-                    } label: {
-                        planView(
-                            title: LocalizedStringKey(product.displayName.trimmingCharacters(in: .whitespacesAndNewlines)),
-                            description: product.description,
-                            price: product.displayPrice,
-                            isSelected: selectedProduct?.id == product.id || purchaseManager.selectedSubscriptionID == product.id
-                        )
-                    }
-                    .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
+                    planView(
+                        title: LocalizedStringKey(product.displayName.trimmingCharacters(in: .whitespacesAndNewlines)),
+                        description: product.description,
+                        price: product.displayPrice
+                    )
                 }
             }
         }
@@ -218,8 +210,7 @@ private extension SubscriptionView {
     func planView(
         title: LocalizedStringKey,
         description: String,
-        price: String?,
-        isSelected: Bool
+        price: String?
     ) -> some View {
         VStack(alignment: .center, spacing: 12) {
             if let price {

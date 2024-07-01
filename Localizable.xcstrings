@@ -1265,6 +1265,9 @@
         }
       }
     },
+    "Key" : {
+      "extractionState" : "manual"
+    },
     "Language" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1999,13 +2002,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome offer"
+            "value" : "WELCOME OFFER"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome offer"
+            "value" : "WELCOME OFFER"
           }
         }
       }
@@ -2846,13 +2849,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add advanced \nfeatures\nto the task"
+            "value" : "Add advanced \nfeatures to the task"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Додати розширені\nособливості\nдо задачі"
+            "value" : "Додайте розширені\nможливості\nдо задачі"
           }
         }
       }
@@ -2897,13 +2900,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Advanced navigation selector"
+            "value" : "Advanced calendar"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Продвинутий селектор навігації"
+            "value" : "Продвинутий календар"
           }
         }
       }
@@ -2920,7 +2923,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подвійний натиск\nщоб виконати задачу  Натиск та утримання\nщоб редагувати \nпорядок задачі у списку"
+            "value" : "Подвійний тап\nдля виконання задачі  Натиск та утримання\nдля редагування \nпозиції задачі у списку"
           }
         }
       }
@@ -2931,18 +2934,18 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Find completed tasks in this section"
+            "value" : "Completed tasks"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Секція виконаних\nзадач"
+            "value" : "Виконані задачі"
           }
         }
       }
     },
-    "tip_group_taks" : {
+    "tip_group_tasks" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -2965,13 +2968,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swipe left to\neditt/delete task  Swipe right to\ncomplete task"
+            "value" : "Swipe left to\nedit/delete task  Swipe right to\ncomplete task"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Проведіть вліво щоб\nредагуваи/видалити \nзадачу  Проведіть вправо щоб\nвиконати задачу"
+            "value" : "Проведіть вліво для\nредагування/видалення \nзадачі  Проведіть вправо щоб\nвиконати задачу"
           }
         }
       }
