@@ -15,10 +15,10 @@ struct TaskListView: View {
   @EnvironmentObject var notificationManager: LocalNotificationManager
   @EnvironmentObject var purchaseManager: PurchaseManager
   @EnvironmentObject var themeManager: ThemeManager
+  @EnvironmentObject var appState: AppState
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.scenePhase) var scenePhase
   @StateObject var viewModel: TaskListViewModel
-  @EnvironmentObject var appState: AppState
   @Environment(\.requestReview) var requestReview
   
   @FocusState private var isFocused: Bool
@@ -48,10 +48,11 @@ struct TaskListView: View {
             }
             taskList()
               .overlay(alignment: .top) {
-                HStack {
+                HStack(alignment: .top) {
                   TipView(title: "tip_double_tab", arrowEdge: .top)
                   TipView(title: "tip_swipe_left", arrowEdge: .top)
                 }
+                .padding(.top, 15)
               }
           }
           Spacer()
@@ -133,7 +134,13 @@ struct TaskListView: View {
       .overlay(alignment: .top) {
         if viewModel.taskSortingOption != .all, viewModel.taskSortingOption != .month {
           TipView(title: "tip_advanced_navigation", arrowEdge: .top)
-            .offset(y: 40)
+            .offset(y: 50)
+        }
+      }
+      .overlay(alignment: .bottom) {
+        if viewModel.taskSortingOption == .all {
+          TipView(title: "tip_group_tasks", arrowEdge: .bottom)
+            .offset(y:50)
         }
       }
     }
@@ -486,5 +493,7 @@ struct TaskListView_Previews: PreviewProvider {
     TaskListView(viewModel: TaskListViewModel(appState: AppState()), path: .constant([TaskListNavigationView.sorting]))
       .environmentObject(LocalNotificationManager())
       .environmentObject(ThemeManager())
+      .environmentObject(PurchaseManager())
+      .environmentObject(AppState())
   }
 }

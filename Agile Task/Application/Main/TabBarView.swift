@@ -66,10 +66,6 @@ struct TabBarView: View {
                     customTabItem()
                 }
             }
-            .overlay(alignment: .bottom) {
-                TipView(title: "tip_group_taks", arrowEdge: .bottom)
-                    .padding(.bottom, 30)
-            }
         }
         .onChange(of: appState.selectedTab) { newValue in
             appState.taskListNavigationStack = []
