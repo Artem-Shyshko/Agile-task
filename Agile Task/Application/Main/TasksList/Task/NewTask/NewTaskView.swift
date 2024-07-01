@@ -370,24 +370,15 @@ private extension NewTaskView {
     func tabBarSaveButton() -> some View {
         Button {
             if viewModel.isValidForm() {
-                if editTask == nil, viewModel.taskType == .advanced {
+                if viewModel.taskType == .advanced {
                     guard purchaseManager.hasUnlockedPro == true else {
                         appState.taskListNavigationStack.append(.subscription)
                         return
                     }
-                    
-                    viewModel.saveButtonAction(
-                        hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                        editTask: editTask
-                    )
-                    dismiss.callAsFunction()
-                } else {
-                    viewModel.saveButtonAction(
-                        hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                        editTask: editTask
-                    )
-                    dismiss.callAsFunction()
                 }
+                
+                viewModel.saveButtonAction(editTask: editTask)
+                dismiss.callAsFunction()
             }
         } label: {
             Text("Save")
@@ -427,10 +418,14 @@ private extension NewTaskView {
     
     func keyboardButtonAction() {
         if viewModel.isValidForm() {
-            viewModel.saveButtonAction(
-                hasUnlockedPro: purchaseManager.hasUnlockedPro,
-                editTask: editTask
-            )
+            if viewModel.taskType == .advanced {
+                guard purchaseManager.hasUnlockedPro == true else {
+                    appState.taskListNavigationStack.append(.subscription)
+                    return
+                }
+            }
+            
+            viewModel.saveButtonAction(editTask: editTask)
             dismiss.callAsFunction()
         }
     }

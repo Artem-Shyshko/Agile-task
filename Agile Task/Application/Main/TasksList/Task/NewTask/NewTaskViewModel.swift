@@ -370,10 +370,7 @@ final class NewTaskViewModel: ObservableObject {
         return error == nil
     }
     
-    func saveButtonAction(
-        hasUnlockedPro: Bool,
-        editTask: TaskDTO?
-    ) {
+    func saveButtonAction(editTask: TaskDTO?) {
             if let editTask {
                 writeEditedTask(editTask)
             } else {
