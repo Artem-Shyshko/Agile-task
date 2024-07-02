@@ -46,6 +46,7 @@ private extension NewProjectView {
     func saveButton() -> some View {
         Button {
             guard purchaseManager.canCreateProject(projectCount:vm.appState.projectRepository!.getProjects().count) else {
+                vm.appState.projectsNavigationStack.removeAll()
                 vm.appState.projectsNavigationStack.append(.subscription)
                 return
             }
