@@ -35,21 +35,16 @@ extension WatchConnector: WCSessionDelegate {
     }
     
     func sendTasks(_ tasks: [TaskDTO]) {
-        if session.isReachable {
-            print("Session is reachable")
-            
-            let data: [String: [String]] = [
-                "tasks": tasks
-                    .map(\.title)
-            ]
-            
-            do {
-                try session.updateApplicationContext(data)
-            } catch {
-                print(error)
-            }
-        } else {
-            print("Session is not reachable")
+        let data: [String: [String]] = [
+            "tasks": tasks
+                .map(\.title)
+        ]
+        
+        do {
+            try session.updateApplicationContext(data)
+        } catch {
+            print(error)
         }
+        session.transferUserInfo(data)
     }
 }

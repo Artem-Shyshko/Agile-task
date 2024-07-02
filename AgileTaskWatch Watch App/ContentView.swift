@@ -40,7 +40,7 @@ struct ContentView: View {
 private extension ContentView {
     func taskTitle(_ title: String) -> some View {
         Text(LocalizedStringKey(title))
-            .font(.helveticaRegular(size: 12))
+            .font(.helveticaRegular(size: 15))
             .lineLimit(1)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, Constants.horizontalPadding)

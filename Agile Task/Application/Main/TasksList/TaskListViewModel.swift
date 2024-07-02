@@ -26,7 +26,9 @@ final class TaskListViewModel: ObservableObject {
     
     @Published var loadedTasks: [TaskDTO] = [] {
         didSet {
-            watchConnector.sendTasks(loadedTasks)
+            let gropedRecurringTasks = groupedTasks(with: loadedTasks)
+            let sortedCompletedTasks = sortedCompletedTasks(gropedRecurringTasks, settings: settings)
+            watchConnector.sendTasks(sortedCompletedTasks)
         }
     }
     @Published var filteredTasks: [TaskDTO] = []
@@ -57,8 +59,6 @@ final class TaskListViewModel: ObservableObject {
         Task {
             await checkTaskForNotifications()
         }
-        
-        watchConnector.sendTasks(filteredTasks)
     }
     
     func loadTasks() {
