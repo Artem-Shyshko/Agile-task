@@ -70,23 +70,38 @@ final class NewTaskViewModel: ObservableObject {
     func createTask() -> TaskDTO {
         compareDateAndTime()
         var task = TaskDTO(object: TaskObject())
-        task.parentId = task.id
-        task.status = taskStatus
-        task.title = title
-        task.description = description.isEmpty ? nil : description
-        task.date = selectedDateOption != .none ? taskDate : nil
-        task.dateOption = selectedDateOption
-        task.recurring = recurringConfiguration
-        task.time = selectedTimeOption == .none ? nil : taskTime
-        task.timePeriod = selectedDateTimePeriod
-        task.timeOption = selectedTimeOption
-        task.reminder = reminder
-        task.reminderDate = reminder != .none ? reminderDate : nil
-        task.createdDate = Date()
-        task.colorName = selectedColor.name
-        task.checkBoxArray = checkBoxes
-        task.bulletArray = bullets
-        task.taskType = taskType
+        switch taskType {
+        case .light:
+            task.taskType = taskType
+            task.parentId = task.id
+            task.title = title
+            task.date = selectedDateOption != .none ? taskDate : nil
+            task.dateOption = selectedDateOption
+            task.time = selectedTimeOption == .none ? nil : taskTime
+            task.timePeriod = selectedDateTimePeriod
+            task.timeOption = selectedTimeOption
+            task.reminder = reminder
+            task.reminderDate = reminder != .none ? reminderDate : nil
+            task.createdDate = Date()
+        case .advanced:
+            task.parentId = task.id
+            task.status = taskStatus
+            task.title = title
+            task.description = description.isEmpty ? nil : description
+            task.date = selectedDateOption != .none ? taskDate : nil
+            task.dateOption = selectedDateOption
+            task.recurring = recurringConfiguration
+            task.time = selectedTimeOption == .none ? nil : taskTime
+            task.timePeriod = selectedDateTimePeriod
+            task.timeOption = selectedTimeOption
+            task.reminder = reminder
+            task.reminderDate = reminder != .none ? reminderDate : nil
+            task.createdDate = Date()
+            task.colorName = selectedColor.name
+            task.checkBoxArray = checkBoxes
+            task.bulletArray = bullets
+            task.taskType = taskType
+        }
         
         return task
     }
