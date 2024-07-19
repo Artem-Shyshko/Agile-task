@@ -30,23 +30,6 @@
         }
       }
     },
-    "--- %@ ---" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "--- %@ ---"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "--- %@ ---"
-          }
-        }
-      }
-    },
     "/" : {
       "localizations" : {
         "fr" : {
@@ -80,29 +63,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@/"
-          }
-        }
-      }
-    },
-    "%@/%@" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@/%2$@"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@/%2$@"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "%1$@/%2$@"
           }
         }
       }
@@ -146,39 +106,6 @@
     },
     "$49.99 " : {
 
-    },
-    "1 project" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "1 проект"
-          }
-        }
-      }
-    },
-    "8 tasks" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "8 завдань"
-          }
-        }
-      }
-    },
-    "Account" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Акаунт"
-          }
-        }
-      }
     },
     "Add" : {
       "localizations" : {
@@ -479,23 +406,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви впевнені, що хочете видалити всі завдання?"
-          }
-        }
-      }
-    },
-    "Are you sure you want to delete task?" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Êtes-vous sûr de vouloir supprimer la tâche?"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ви впевнені, що хочете видалити завдання?"
           }
         }
       }
@@ -805,7 +715,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recutting daily reminder"
+            "value" : "Recurring daily reminder"
           }
         },
         "uk" : {
@@ -960,23 +870,6 @@
         }
       }
     },
-    "double_tap_task_list" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Double tap for quick task completion"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Двічі торкніться, щоб швидко виконати завдання"
-          }
-        }
-      }
-    },
     "dropbox_backup" : {
       "localizations" : {
         "en" : {
@@ -1070,23 +963,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Англійська"
-          }
-        }
-      }
-    },
-    "Enter old password" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Entrez l'ancien mot de passe"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Введіть старий пароль"
           }
         }
       }
@@ -1205,23 +1081,6 @@
         }
       }
     },
-    "hold_on_task_task_list" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hold on task to change task order in the list"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Утримуйте завдання, щоб змінити порядок завдань у списку"
-          }
-        }
-      }
-    },
     "iCloud_backup" : {
       "localizations" : {
         "en" : {
@@ -1328,23 +1187,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Плануйте швидко, легко та без зайвого клопоту. Agile Task - це ефективний трекер завдань для професійних або особистих проектів, який дозволяє відстежувати завдання та ефективно їх виконувати. \nПлануйте все - від ділових зустрічей, поїздок і візитів до лікаря до списків продуктів. \nНаведіть лад у своїх нотатках та організуйте свій графік за допомогою Agile Task."
-          }
-        }
-      }
-    },
-    "Manage subscription" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gérer l'abonnement"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Керування підпискою"
           }
         }
       }
@@ -1556,23 +1398,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відсутнє"
-          }
-        }
-      }
-    },
-    "occurrences" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "occurrences"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "випадки"
           }
         }
       }
@@ -2191,23 +2016,6 @@
         }
       }
     },
-    "Restore subscription" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Restaurer l'abonnement"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Відновити підписку"
-          }
-        }
-      }
-    },
     "Restore task" : {
       "localizations" : {
         "fr" : {
@@ -2459,23 +2267,6 @@
         }
       }
     },
-    "Start" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Commencer"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Почати"
-          }
-        }
-      }
-    },
     "START" : {
       "localizations" : {
         "uk" : {
@@ -2493,57 +2284,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Статус"
-          }
-        }
-      }
-    },
-    "Subscription" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abonnement"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Підписка"
-          }
-        }
-      }
-    },
-    "subscription_description" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Join Agile Task to unlock your full potential and boost productivity!"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Приєднуйтесь до Agile Task, щоб розкрити свій потенціал і підвищити продуктивність!"
-          }
-        }
-      }
-    },
-    "subscription_subtitle" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "with Agile Task"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "разом з Agile Task"
           }
         }
       }
@@ -2575,34 +2315,6 @@
         }
       }
     },
-    "Swipe right to complete task" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Swipe right to complete task"
-          }
-        }
-      }
-    },
-    "swipe_left_task_list" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Swipe left to edit or delete task"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Проведіть пальцем ліворуч, щоб редагувати або видалити задачу"
-          }
-        }
-      }
-    },
     "swipe_right_task_list" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2616,23 +2328,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проведіть пальцем праворуч, щоб виконати задачу"
-          }
-        }
-      }
-    },
-    "Task should have title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La tâche doit avoir un titre"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Завдання має мати назву"
           }
         }
       }
@@ -3061,40 +2756,6 @@
         }
       }
     },
-    "unlimited_projects_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unlimited projects"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Необмежена кількість проєктів"
-          }
-        }
-      }
-    },
-    "unlimited_tasks_title" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unlimited tasks"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Необмежена кількість задач"
-          }
-        }
-      }
-    },
     "upper_case" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -3272,23 +2933,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Що ви шукаєте"
-          }
-        }
-      }
-    },
-    "Wrong password" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mauvais mot de passe"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Неправильний пароль"
           }
         }
       }

@@ -111,33 +111,36 @@ private extension TaskRow {
     }
     
     func generalRow() -> some View {
-        HStack(spacing: 5) {
-            HStack(spacing: 7) {
-                chevronButton()
-                
-                if task.status != .none {
-                    Image(task.status.iconName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 16, height: 16)
+        Button {} label: {
+            HStack(spacing: 5) {
+                HStack(spacing: 7) {
+                    chevronButton()
+                    
+                    if task.status != .none {
+                        Image(task.status.iconName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 16, height: 16)
+                    }
+                    
+                    Text(LocalizedStringKey(task.title))
+                        .font(.helveticaRegular(size: 16))
                 }
-                
-                Text(LocalizedStringKey(task.title))
-                    .font(.helveticaRegular(size: 16))
+                Spacer()
+                dateView()
+                timeView()
+                recurringDateView()
+                reminderImage()
+                recurringImage()
             }
-            Spacer()
-            dateView()
-            timeView()
-            recurringDateView()
-            reminderImage()
-            recurringImage()
         }
+        .buttonStyle(.borderless)
         .foregroundColor(foregroundColor())
         .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
-        .onTapGesture(count: 2, perform: {
-            viewModel.updateTaskCompletion(task.id.stringValue)
-            makeRequestPreview()
+        .simultaneousGesture(TapGesture(count: 2).onEnded {
+                viewModel.updateTaskCompletion(task.id.stringValue)
+                makeRequestPreview()
         })
     }
     
