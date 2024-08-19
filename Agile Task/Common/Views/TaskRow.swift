@@ -20,12 +20,14 @@ struct TaskRow: View {
     
     @StateObject var viewModel: TaskListViewModel
     @Binding var task: TaskDTO
+    @Binding var path: [TaskListNavigationView]
     
     @State private var draggingOffset: CGFloat = .zero
     @State private var startOffset: CGFloat = 0
     @State private var isDragging = false
     @State private var isDeleteAlert = false
     @State private var showAddNewTaskView = false
+    @State private var showEditTask = false
     
     // MARK: - Body
     
@@ -55,7 +57,7 @@ struct TaskRow: View {
             .tint(.red)
             
             NavigationLink(value: TaskListNavigationView.createTask(editedTask: task)) {
-                    Image("edit")
+                Image("edit")
             }
             .tint(Color.editButtonColor)
         }
@@ -69,15 +71,22 @@ struct TaskRow: View {
             .tint(.green)
         }
         .listRowBackground(
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(task.colorName))
-                    .padding(.trailing, 12)
-                    .overlay(alignment: .trailing, content: {
-                        Image(.swipes)
-                            .padding(.trailing, 2)
-                    })
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Color(task.colorName))
+                .padding(.trailing, 12)
         )
         .padding(.trailing, 12)
+        .overlay(alignment: .trailing, content: {
+            Button {
+                path.append(.createTask(editedTask: task))
+            } label: {
+                Image(.swipes)
+                    .padding(.trailing, 2)
+                    .frame(size: 20)
+            }
+            .offset(x: 25)
+            .buttonStyle(.borderless)
+        })
     }
 }
 
@@ -87,8 +96,8 @@ private extension TaskRow {
     
     func makeRequestPreview() {
         if UserDefaults.standard.integer(forKey: "CompletedTask") >= 20 {
-          requestReview()
-          UserDefaults.standard.setValue(0, forKey: "CompletedTask")
+            requestReview()
+            UserDefaults.standard.setValue(0, forKey: "CompletedTask")
         }
     }
     
@@ -139,8 +148,8 @@ private extension TaskRow {
         .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .simultaneousGesture(TapGesture(count: 2).onEnded {
-                viewModel.updateTaskCompletion(task.id.stringValue)
-                makeRequestPreview()
+            viewModel.updateTaskCompletion(task.id.stringValue)
+            makeRequestPreview()
         })
     }
     
@@ -272,7 +281,8 @@ private extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(viewModel: TaskListViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!))
-            .environmentObject(ThemeManager())
+        TaskRow(viewModel: TaskListViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!),
+                path: .constant([]))
+        .environmentObject(ThemeManager())
     }
 }

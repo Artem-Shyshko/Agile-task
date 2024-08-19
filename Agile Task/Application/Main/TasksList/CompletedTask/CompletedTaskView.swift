@@ -14,6 +14,8 @@ struct CompletedTaskView: View {
     @State private var showDeleteAlert = false
     @State private var showRestoreAlert = false
     
+    @Binding var path: [TaskListNavigationView]
+    
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
@@ -96,7 +98,7 @@ private extension CompletedTaskView {
     func completedTasksList() -> some View {
         List {
             ForEach($viewModel.completedTasks, id: \.id) { task in
-                TaskRow(viewModel: viewModel, task: task)
+                TaskRow(viewModel: viewModel, task: task, path: $path)
                     .listRowBackground(
                         RoundedRectangle(cornerRadius: 4)
                             .fill(Color(task.colorName.wrappedValue))
@@ -113,5 +115,5 @@ private extension CompletedTaskView {
 // MARK: - Preview
 
 #Preview {
-    CompletedTaskView(viewModel: TaskListViewModel(appState: AppState()))
+    CompletedTaskView(viewModel: TaskListViewModel(appState: AppState()), path: .constant([]))
 }
