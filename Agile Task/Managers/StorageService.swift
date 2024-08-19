@@ -27,14 +27,22 @@ final class StorageService {
     private var storage: Realm?
     private let realmURL = URL.storeURL(databaseName: "default.realm")
         
-    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 15)) {
+    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 16)) {
         print(realmURL.path())
         initializeRealm(with: configuration)
         createBackupDirectory()
     }
     
     private func initializeRealm(with configuration: Realm.Configuration) {
-        let config = Realm.Configuration(fileURL: realmURL, schemaVersion: configuration.schemaVersion)
+        let config = Realm.Configuration(fileURL: realmURL, 
+                                         schemaVersion: configuration.schemaVersion,
+                                         migrationBlock: { migration, oldSchemaVersion in
+            if oldSchemaVersion < configuration.schemaVersion {
+                migration.enumerateObjects(ofType: SettingsObject.className()) { oldObject, newObject in
+                    newObject?["сompletionСircle"] = true
+                }
+            }
+        })
         Realm.Configuration.defaultConfiguration = config
         
         do {

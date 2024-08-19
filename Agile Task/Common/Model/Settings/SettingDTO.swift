@@ -28,6 +28,7 @@ struct SettingsDTO {
     var rememberLastPickedOptionView: Bool = true
     var taskSorting: TaskSorting = .manual
     var securityOption: SecurityOption = .none
+    var сompletionСircle: Bool = true
 }
 
 extension SettingsDTO {
@@ -48,6 +49,7 @@ extension SettingsDTO {
         showPlusButton = object.showPlusButton
         isPushNotificationEnabled = object.isPushNotificationEnabled
         isShowingInfoTips = object.isShowingInfoTips ?? true
+        сompletionСircle = object.сompletionСircle
         rememberLastPickedOptionView = object.rememberLastPickedOptionView
         taskSorting = object.taskSorting ?? .manual
         securityOption = object.securityOption

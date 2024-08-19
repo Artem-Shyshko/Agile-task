@@ -2240,6 +2240,22 @@
         }
       }
     },
+    "settings_сompletion_сircle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completion circle"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completion circle"
+          }
+        }
+      }
+    },
     "SettingsTab" : {
       "extractionState" : "manual",
       "localizations" : {

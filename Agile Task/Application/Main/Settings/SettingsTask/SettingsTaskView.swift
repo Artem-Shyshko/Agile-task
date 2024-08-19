@@ -30,6 +30,7 @@ struct SettingsTaskView: View {
           completedTaskSection()
           dailyReminder()
           addPlusButton()
+          сompletionСircleView()
           pushNotificationView()
           addInfoTipsButton()
           deleteAllTasksButton()
@@ -211,6 +212,22 @@ private extension SettingsTaskView {
     .padding(.vertical, 10)
     .modifier(SectionStyle())
   }
+  
+  func сompletionСircleView() -> some View {
+          Button {
+              viewModel.сompletionСircleAction()
+          } label: {
+              HStack {
+                  if viewModel.settings.сompletionСircle {
+                      checkMark
+                  }
+                  
+                  Text("settings_сompletion_сircle")
+              }
+          }
+          .padding(.vertical, 10)
+          .modifier(SectionStyle())
+      }
   
   func pushNotificationView() -> some View {
     Button {
