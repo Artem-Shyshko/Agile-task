@@ -15,7 +15,7 @@ final class SettingsTaskViewModel: ObservableObject {
     @Published var isTypedTime = false
     var appState: AppState
     let tipKeys = [
-        "tip_find_completed_task",
+        "tip_find_share_task",
         "tip_add_new_task",
         "tip_double_tab",
         "tip_advanced_navigation",

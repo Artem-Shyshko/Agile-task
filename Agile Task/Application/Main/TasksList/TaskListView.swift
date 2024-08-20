@@ -33,8 +33,8 @@ struct TaskListView: View {
       VStack(spacing: Constants.shared.viewSectionSpacing) {
         navigationBar()
         Group {
-        dateBarView()
-        
+          dateBarView()
+          
           VStack(spacing: 5) {
             if viewModel.taskSortingOption == .month {
               CustomCalendarView(
@@ -90,7 +90,7 @@ struct TaskListView: View {
         await notificationManager.addDailyNotification(
           for: viewModel.settings.reminderTime,
           format: viewModel.settings.timeFormat,
-          period: viewModel.settings.reminderTimePeriod, 
+          period: viewModel.settings.reminderTimePeriod,
           tasks: viewModel.appState.projectRepository!.getSelectedProject().tasks
         )
       }
@@ -109,7 +109,7 @@ struct TaskListView: View {
         viewModel.isShowingAddTask = false
       }
       .overlay(alignment: .bottomTrailing) {
-          plusButton()
+        plusButton()
       }
       .overlay(alignment: .bottom, content: {
         newTaskView()
@@ -181,10 +181,26 @@ private extension TaskListView {
   }
   
   func navigationBarLeftItem() -> some View {
-    MagnifyingGlassButton(action: {
-      viewModel.isSearchBarHidden.toggle()
-      viewModel.searchText.removeAll()
-    })
+    Menu {
+      Button("button_search") {
+        viewModel.isSearchBarHidden.toggle()
+        viewModel.searchText.removeAll()
+      }
+      .foregroundColor(.white)
+      
+      NavigationLink(value: TaskListNavigationView.sorting) {
+        Text("tasks_view_sorting")
+      }
+      
+      NavigationLink(value: TaskListNavigationView.completedTasks) {
+        Text("tasks_view_completed_tasks")
+      }
+    } label: {
+      Image("Menu")
+        .resizable()
+        .scaledToFit()
+        .frame(size: Constants.shared.imagesSize)
+    }
   }
   
   func navigationBarRightItem() -> some View {
@@ -246,8 +262,10 @@ private extension TaskListView {
         }
     } else {
       HStack {
-        NavigationLink(value: TaskListNavigationView.sorting) {
-          Image(.sorting)
+        Button {
+          viewModel.showOrHideItems()
+        } label: {
+          Image(.expande)
             .resizable()
             .scaledToFit()
             .frame(size: Constants.shared.imagesSize)
@@ -281,8 +299,8 @@ private extension TaskListView {
         
         Spacer()
         
-        NavigationLink(value: TaskListNavigationView.completedTasks) {
-          Image(.completedTasks)
+        ShareLink(item: viewModel.sharedContent()) {
+          Image(.share)
             .resizable()
             .scaledToFit()
             .frame(size: Constants.shared.imagesSize)
@@ -293,7 +311,7 @@ private extension TaskListView {
       .frame(maxWidth: .infinity)
       .overlay(alignment: .trailing) {
         if viewModel.taskSortingOption == .all || viewModel.taskSortingOption == .month {
-          TipView(title: "tip_find_completed_task", arrowEdge: .trailing)
+          TipView(title: "tip_find_share_task", arrowEdge: .trailing)
         }
       }
     }
