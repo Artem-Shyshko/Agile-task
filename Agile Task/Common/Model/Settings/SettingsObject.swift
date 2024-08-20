@@ -28,6 +28,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var rememberLastPickedOptionView: Bool = true
     @Persisted var taskSorting: TaskSorting? = .manual
     @Persisted var securityOption: SecurityOption = .none
+    @Persisted var сompletionСircle: Bool = true
 }
 
 extension SettingsObject {
@@ -53,6 +54,7 @@ extension SettingsObject {
         rememberLastPickedOptionView = dto.rememberLastPickedOptionView
         taskSorting = dto.taskSorting
         securityOption = dto.securityOption
+        сompletionСircle = dto.сompletionСircle
     }
 }
 

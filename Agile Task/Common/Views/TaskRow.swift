@@ -55,7 +55,7 @@ struct TaskRow: View {
             .tint(.red)
             
             NavigationLink(value: TaskListNavigationView.createTask(editedTask: task)) {
-                    Image("edit")
+                Image("edit")
             }
             .tint(Color.editButtonColor)
         }
@@ -69,13 +69,13 @@ struct TaskRow: View {
             .tint(.green)
         }
         .listRowBackground(
-                RoundedRectangle(cornerRadius: 4)
-                    .fill(Color(task.colorName))
-                    .padding(.trailing, 12)
-                    .overlay(alignment: .trailing, content: {
-                        Image(.swipes)
-                            .padding(.trailing, 2)
-                    })
+            RoundedRectangle(cornerRadius: 4)
+                .fill(Color(task.colorName))
+                .padding(.trailing, 12)
+                .overlay(alignment: .trailing, content: {
+                    Image(.swipes)
+                        .padding(.trailing, 2)
+                })
         )
         .padding(.trailing, 12)
     }
@@ -87,8 +87,8 @@ private extension TaskRow {
     
     func makeRequestPreview() {
         if UserDefaults.standard.integer(forKey: "CompletedTask") >= 20 {
-          requestReview()
-          UserDefaults.standard.setValue(0, forKey: "CompletedTask")
+            requestReview()
+            UserDefaults.standard.setValue(0, forKey: "CompletedTask")
         }
     }
     
@@ -114,6 +114,9 @@ private extension TaskRow {
         Button {} label: {
             HStack(spacing: 5) {
                 HStack(spacing: 7) {
+                    if viewModel.settings.сompletionСircle {
+                        circleView()
+                    }
                     chevronButton()
                     
                     if task.status != .none {
@@ -139,9 +142,22 @@ private extension TaskRow {
         .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
         .strikethrough(task.isCompleted, color: .completedTaskLineColor)
         .simultaneousGesture(TapGesture(count: 2).onEnded {
-                viewModel.updateTaskCompletion(task.id.stringValue)
-                makeRequestPreview()
+            viewModel.updateTaskCompletion(task.id.stringValue)
+            makeRequestPreview()
         })
+    }
+    
+    @ViewBuilder
+    func circleView() -> some View {
+        Button {
+            viewModel.updateTaskCompletion(task.id.stringValue)
+        } label: {
+            Image(systemName: task.isCompleted ? "checkmark.circle" : "circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 16, height: 16)
+        }
+        .buttonStyle(.borderless)
     }
     
     @ViewBuilder
