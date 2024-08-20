@@ -49,13 +49,7 @@ struct Master_TaskApp: App {
         WindowGroup {
             ZStack {
                 Color.greenGradient
-                if AppHelper.shared.isOnboarding || showTabBar {
-                        TabBarView()
-                } else {
-                    NavigationStack {
-                        WelcomeView(showTabBar: $showTabBar)
-                    }
-                }
+                TabBarView()
                 
                 if isNoneAuthorised {
                     AuthView(vm: AuthViewModel(appState: appState), isShowing: $showAuthView)
