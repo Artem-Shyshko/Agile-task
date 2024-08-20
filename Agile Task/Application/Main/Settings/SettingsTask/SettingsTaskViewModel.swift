@@ -56,6 +56,10 @@ final class SettingsTaskViewModel: ObservableObject {
         }
     }
     
+    func сompletionСircleAction() {
+            settings.сompletionСircle.toggle()
+        }
+    
     func pushNotificationButtonAction() {
         settings.isPushNotificationEnabled.toggle()
     }

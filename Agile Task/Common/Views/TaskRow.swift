@@ -123,6 +123,9 @@ private extension TaskRow {
         Button {} label: {
             HStack(spacing: 5) {
                 HStack(spacing: 7) {
+                    if viewModel.settings.сompletionСircle {
+                        circleView()
+                    }
                     chevronButton()
                     
                     if task.status != .none {
@@ -151,6 +154,19 @@ private extension TaskRow {
             viewModel.updateTaskCompletion(task.id.stringValue)
             makeRequestPreview()
         })
+    }
+    
+    @ViewBuilder
+    func circleView() -> some View {
+        Button {
+            viewModel.updateTaskCompletion(task.id.stringValue)
+        } label: {
+            Image(systemName: task.isCompleted ? "checkmark.circle" : "circle")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 16, height: 16)
+        }
+        .buttonStyle(.borderless)
     }
     
     @ViewBuilder
