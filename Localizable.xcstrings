@@ -495,6 +495,22 @@
         }
       }
     },
+    "button_search" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пошук"
+          }
+        }
+      }
+    },
     "Cancel" : {
       "localizations" : {
         "fr" : {
@@ -1658,12 +1674,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lists"
+            "value" : "Tasks Lists"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Списки "
           }
         }
@@ -2459,6 +2475,55 @@
         }
       }
     },
+    "tasks_view_completed_tasks" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completed tasks"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виконані задачі"
+          }
+        }
+      }
+    },
+    "tasks_view_settings" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування"
+          }
+        }
+      }
+    },
+    "tasks_view_sorting" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sort"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сортування"
+          }
+        }
+      }
+    },
     "Terms of Service (EULA)" : {
       "localizations" : {
         "fr" : {
@@ -2657,18 +2722,18 @@
         }
       }
     },
-    "tip_find_completed_task" : {
+    "tip_find_share_task" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Completed tasks"
+            "value" : "Share tasks"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Виконані задачі"
           }
         }
