@@ -63,7 +63,7 @@ struct TaskListView: View {
         case .createTask(let editedTask):
           NewTaskView(viewModel: NewTaskViewModel(appState: appState, taskList: viewModel.filteredTasks), editTask: editedTask)
         case .completedTasks:
-          CompletedTaskView(viewModel: viewModel)
+          CompletedTaskView(viewModel: viewModel, path: $path)
         case .sorting:
           SortingView(viewModel: SortingViewModel(appState: appState))
         case .newCheckBox:
@@ -208,7 +208,7 @@ private extension TaskListView {
         ForEach(viewModel.sectionHeaders, id: \.self) { key  in
           Section {
             ForEach(.constant(viewModel.sectionContent(key)), id: \.id) { task in
-              TaskRow(viewModel: viewModel, task: task)
+              TaskRow(viewModel: viewModel, task: task, path: $path)
             }
           } header: {
             weekSectionHeader(key: key)
@@ -217,7 +217,7 @@ private extension TaskListView {
         .listRowSeparator(.hidden)
       default:
         ForEach($viewModel.filteredTasks, id: \.id) { task in
-          TaskRow(viewModel: viewModel, task: task)
+          TaskRow(viewModel: viewModel, task: task, path: $path)
             .onChange(of: task.wrappedValue) { _ in
               viewModel.loadTasks()
             }

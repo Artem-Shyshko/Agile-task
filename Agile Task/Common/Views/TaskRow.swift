@@ -20,12 +20,14 @@ struct TaskRow: View {
     
     @StateObject var viewModel: TaskListViewModel
     @Binding var task: TaskDTO
+    @Binding var path: [TaskListNavigationView]
     
     @State private var draggingOffset: CGFloat = .zero
     @State private var startOffset: CGFloat = 0
     @State private var isDragging = false
     @State private var isDeleteAlert = false
     @State private var showAddNewTaskView = false
+    @State private var showEditTask = false
     
     // MARK: - Body
     
@@ -72,12 +74,19 @@ struct TaskRow: View {
             RoundedRectangle(cornerRadius: 4)
                 .fill(Color(task.colorName))
                 .padding(.trailing, 12)
-                .overlay(alignment: .trailing, content: {
-                    Image(.swipes)
-                        .padding(.trailing, 2)
-                })
         )
         .padding(.trailing, 12)
+        .overlay(alignment: .trailing, content: {
+            Button {
+                path.append(.createTask(editedTask: task))
+            } label: {
+                Image(.swipes)
+                    .padding(.trailing, 2)
+                    .frame(size: 20)
+            }
+            .offset(x: 25)
+            .buttonStyle(.borderless)
+        })
     }
 }
 
@@ -288,7 +297,8 @@ private extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(viewModel: TaskListViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!))
-            .environmentObject(ThemeManager())
+        TaskRow(viewModel: TaskListViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!),
+                path: .constant([]))
+        .environmentObject(ThemeManager())
     }
 }
