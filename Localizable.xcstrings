@@ -1805,7 +1805,7 @@
         }
       }
     },
-    "purchase_unlimited_projects" : {
+    "purchase_unlimited_lists" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -1817,7 +1817,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlimited lists"
+            "value" : "Необмежені списки"
           }
         }
       }
@@ -1834,7 +1834,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlimited tasks"
+            "value" : "Необмежена кількість завдань"
           }
         }
       }

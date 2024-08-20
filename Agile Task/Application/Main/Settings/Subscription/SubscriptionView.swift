@@ -27,7 +27,7 @@ struct SubscriptionView: View {
     
     private let checkmarkItems = [
         "purchase_unlimited_tasks",
-        "purchase_unlimited_projects",
+        "purchase_unlimited_lists",
         "purchase_advanced_features"
     ]
     
