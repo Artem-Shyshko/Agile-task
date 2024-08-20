@@ -141,7 +141,6 @@ private extension TaskRow {
                 Spacer()
                 dateView()
                 timeView()
-                recurringDateView()
                 reminderImage()
                 recurringImage()
             }
