@@ -969,16 +969,22 @@
     },
     "Enter project name" : {
       "localizations" : {
-        "fr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "Enter list name"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Entrez le nom du projet"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Введіть назву проекту"
+            "value" : "Введіть назву списку"
           }
         }
       }
@@ -1622,10 +1628,16 @@
     "project" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "проект"
+            "value" : "Список"
           }
         }
       }
@@ -1643,10 +1655,16 @@
     },
     "Projects" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lists"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Проекти"
+            "value" : "Списки "
           }
         }
       }
@@ -1793,13 +1811,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlimited projects"
+            "value" : "Unlimited lists"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unlimited projects"
+            "value" : "Unlimited lists"
           }
         }
       }
@@ -2577,13 +2595,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Add new project"
+            "value" : "Add new list"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Додайте новий проект"
+            "value" : "Додайте новий список"
           }
         }
       }
@@ -2662,13 +2680,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Group taks in projetcs "
+            "value" : "Group taks in lists"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Групуйте задачі у проекти"
+            "state" : "needs_review",
+            "value" : "Групуйте задачі у списки"
           }
         }
       }
@@ -2696,13 +2714,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Swipe left to\neditt/delete project"
+            "value" : "Swipe left to\neditt/delete list"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Проведіть вліво для\nредагування/видалення проекту"
+            "value" : "Проведіть вліво для\nредагування/видалення списку"
           }
         }
       }
