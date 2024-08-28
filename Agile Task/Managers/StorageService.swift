@@ -27,7 +27,7 @@ final class StorageService {
     private var storage: Realm?
     private let realmURL = URL.storeURL(databaseName: "default.realm")
         
-    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 16)) {
+    init(_ configuration: Realm.Configuration = Realm.Configuration(schemaVersion: 17)) {
         print(realmURL.path())
         initializeRealm(with: configuration)
         createBackupDirectory()
@@ -40,6 +40,7 @@ final class StorageService {
             if oldSchemaVersion < configuration.schemaVersion {
                 migration.enumerateObjects(ofType: SettingsObject.className()) { oldObject, newObject in
                     newObject?["сompletionСircle"] = true
+                    newObject?["hapticFeedback"] = true
                 }
             }
         })
