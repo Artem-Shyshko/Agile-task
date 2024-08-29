@@ -32,6 +32,7 @@ struct SettingsTaskView: View {
           addPlusButton()
           сompletionСircleView()
           pushNotificationView()
+          hapticFeedbackButton()
           addInfoTipsButton()
           deleteAllTasksButton()
           versionView()
@@ -244,6 +245,22 @@ private extension SettingsTaskView {
     .padding(.vertical, 10)
     .modifier(SectionStyle())
   }
+  
+  func hapticFeedbackButton() -> some View {
+         Button {
+             viewModel.turnOnHapticFeedback()
+         } label: {
+             HStack {
+                 if viewModel.settings.hapticFeedback {
+                     checkMark
+                 }
+                 
+                 Text("settings_haptic_feedback")
+             }
+         }
+         .padding(.vertical, 10)
+         .modifier(SectionStyle())
+     }
   
   func deleteAllTasksButton() -> some View {
     Button {

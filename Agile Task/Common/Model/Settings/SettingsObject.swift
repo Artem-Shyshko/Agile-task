@@ -29,6 +29,7 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var taskSorting: TaskSorting? = .manual
     @Persisted var securityOption: SecurityOption = .none
     @Persisted var сompletionСircle: Bool = true
+    @Persisted var hapticFeedback: Bool = true
 }
 
 extension SettingsObject {
@@ -55,6 +56,7 @@ extension SettingsObject {
         taskSorting = dto.taskSorting
         securityOption = dto.securityOption
         сompletionСircle = dto.сompletionСircle
+        hapticFeedback = dto.hapticFeedback
     }
 }
 

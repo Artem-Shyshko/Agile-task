@@ -72,6 +72,10 @@ final class SettingsTaskViewModel: ObservableObject {
         appState.taskRepository!.deleteAll()
     }
     
+    func turnOnHapticFeedback() {
+            settings.hapticFeedback.toggle()
+        }
+    
     func requestNotificationPermission() {
         UNUserNotificationCenter.current()
             .requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
