@@ -70,6 +70,22 @@ struct TaskListView: View {
           EmptyView()
         case .subscription:
           SubscriptionView()
+        case .settings:
+          SettingsView()
+        case .taskSettings:
+          SettingsTaskView(viewModel: SettingsTaskViewModel(appState: appState))
+        case .security:
+          SecurityView(viewModel: SecurityViewModel(appState: appState))
+        case .more:
+          MoreOurAppsView()
+        case .contactUs:
+          Text("Contact Us")
+        case .backup:
+          BackupView(viewModel: BackupViewModel(appState: appState))
+        case .backupDetail(storage: let storage):
+          BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
+        case .backupList(storage: let storage):
+          BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
         }
       }
       .onAppear {
@@ -194,6 +210,10 @@ private extension TaskListView {
       
       NavigationLink(value: TaskListNavigationView.completedTasks) {
         Text("tasks_view_completed_tasks")
+      }
+      
+      NavigationLink(value: TaskListNavigationView.settings) {
+        Text("SettingsTab")
       }
     } label: {
       Image("Menu")

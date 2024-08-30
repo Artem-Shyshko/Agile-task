@@ -10,70 +10,51 @@ import SwiftUI
 struct SettingsView: View {
     
     // MARK: - Properties
-    
-    @Binding var path: [SettingsNavigationView]
     @State var showMailView = false
     @EnvironmentObject var purchaseManager: PurchaseManager
     @EnvironmentObject var appState: AppState
+    @Environment(\.dismiss) var dismiss
     
     // MARK: - Body
     
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack(spacing: Constants.shared.viewSectionSpacing) {
-                navigationBar()
-                VStack(spacing: Constants.shared.listRowSpacing) {
-                    accountView()
-                    SettingsThemeView()
-                    settingsView()
-                    securityView()
-//                    backupView()
-                    moreAppsView()
-                    emailView()
-                    Spacer()
-                }
+        VStack(spacing: Constants.shared.viewSectionSpacing) {
+            navigationBar()
+            VStack(spacing: Constants.shared.listRowSpacing) {
+                accountView()
+                SettingsThemeView()
+                settingsView()
+                securityView()
+                moreAppsView()
+                emailView()
+                Spacer()
             }
-            .modifier(TabViewChildModifier())
-            .navigationDestination(for: SettingsNavigationView.self) { views in
-                switch views {
-                case .subscription:
-                    SubscriptionView()
-                case .taskSettings:
-                    SettingsTaskView(viewModel: SettingsTaskViewModel(appState: appState))
-                case .security:
-                    SecurityView(viewModel: SecurityViewModel(appState: appState))
-                case .more:
-                    MoreOurAppsView()
-                case .contactUs:
-                    Text("Contact Us")
-                case .backup:
-                    BackupView(viewModel: BackupViewModel(appState: appState))
-                case .backupDetail(storage: let storage):
-                    BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
-                case .backupList(storage: let storage):
-                    BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
-                }
-            }
-            .sheet(isPresented: $showMailView, content: {
-                MailView()
-                    .tint(.blue)
-            })
         }
+        .modifier(TabViewChildModifier())
+        .sheet(isPresented: $showMailView, content: {
+            MailView()
+                .tint(.blue)
+        })
     }
 }
 
 private extension SettingsView {
-    
     func navigationBar() -> some View {
         NavigationBarView(
-            leftItem: EmptyView(),
+            leftItem: backButton(),
             header: NavigationTitle("Settings"),
             rightItem: EmptyView()
         )
     }
     
+    func backButton() -> some View {
+        backButton {
+            dismiss()
+        }
+    }
+    
     func accountView () -> some View {
-        NavigationLink(value: SettingsNavigationView.subscription) {
+        NavigationLink(value: TaskListNavigationView.subscription) {
             HStack {
                 Text("settings_subscription_title")
                 Spacer()
@@ -94,21 +75,21 @@ private extension SettingsView {
     }
     
     func settingsView() -> some View {
-        NavigationLink(value: SettingsNavigationView.taskSettings) {
+        NavigationLink(value: TaskListNavigationView.taskSettings) {
             Text("Settings")
                 .modifier(SectionStyle())
         }
     }
     
     func securityView() -> some View {
-        NavigationLink(value: SettingsNavigationView.security) {
+        NavigationLink(value: TaskListNavigationView.security) {
             Text("Security")
                 .modifier(SectionStyle())
         }
     }
     
     func moreAppsView() -> some View {
-        NavigationLink(value: SettingsNavigationView.more) {
+        NavigationLink(value: TaskListNavigationView.more) {
             Text("App credentials")
                 .modifier(SectionStyle())
         }
@@ -124,7 +105,7 @@ private extension SettingsView {
     }
     
     func backupView() -> some View {
-        NavigationLink(value: SettingsNavigationView.backup) {
+        NavigationLink(value: TaskListNavigationView.backup) {
             Text("backup_title")
                 .modifier(SectionStyle())
         }
@@ -133,6 +114,6 @@ private extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(path: .constant([SettingsNavigationView.subscription]))
+        SettingsView()
     }
 }

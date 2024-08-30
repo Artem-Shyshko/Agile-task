@@ -184,6 +184,32 @@
 		75F6F9BC2C21A4AD00E9E17F /* TipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F6F9BB2C21A4AD00E9E17F /* TipView.swift */; };
 		75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B722A8648440062D2BA /* NewTaskViewModel.swift */; };
 		75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */; };
+		CE05F3D12C7F7985001E13D0 /* SortingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3C82C7F7985001E13D0 /* SortingType.swift */; };
+		CE05F3D22C7F7985001E13D0 /* SettingsRecordInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3C92C7F7985001E13D0 /* SettingsRecordInfo.swift */; };
+		CE05F3D32C7F7985001E13D0 /* Protection.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3CA2C7F7985001E13D0 /* Protection.swift */; };
+		CE05F3D42C7F7985001E13D0 /* AutoClose.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3CB2C7F7985001E13D0 /* AutoClose.swift */; };
+		CE05F3D52C7F7985001E13D0 /* FieldsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3CD2C7F7985001E13D0 /* FieldsInfo.swift */; };
+		CE05F3D62C7F7985001E13D0 /* ProtectedRecordInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3CE2C7F7985001E13D0 /* ProtectedRecordInfo.swift */; };
+		CE05F3D72C7F7985001E13D0 /* OpenRecordInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3D02C7F7985001E13D0 /* OpenRecordInfo.swift */; };
+		CE05F3D92C7F79C5001E13D0 /* RecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3D82C7F79C5001E13D0 /* RecordRepository.swift */; };
+		CE05F3DB2C7F79DA001E13D0 /* RecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3DA2C7F79DA001E13D0 /* RecordDTO.swift */; };
+		CE05F3DD2C7F79DF001E13D0 /* RecordObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3DC2C7F79DF001E13D0 /* RecordObject.swift */; };
+		CE05F3F62C7F7A9D001E13D0 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E02C7F7A9D001E13D0 /* ShareViewController.swift */; };
+		CE05F3F72C7F7A9D001E13D0 /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E12C7F7A9D001E13D0 /* RecordListView.swift */; };
+		CE05F3F82C7F7A9D001E13D0 /* RecordInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E32C7F7A9D001E13D0 /* RecordInfoView.swift */; };
+		CE05F3F92C7F7A9D001E13D0 /* RecordInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E42C7F7A9D001E13D0 /* RecordInfoViewModel.swift */; };
+		CE05F3FA2C7F7A9D001E13D0 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E62C7F7A9D001E13D0 /* InfoView.swift */; };
+		CE05F3FB2C7F7A9D001E13D0 /* RecordListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E72C7F7A9D001E13D0 /* RecordListViewModel.swift */; };
+		CE05F4002C7F7A9D001E13D0 /* NewRecordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3EF2C7F7A9D001E13D0 /* NewRecordView.swift */; };
+		CE05F4012C7F7A9D001E13D0 /* NewRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3F02C7F7A9D001E13D0 /* NewRecordViewModel.swift */; };
+		CE05F4032C7F7A9D001E13D0 /* FieldInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3F32C7F7A9D001E13D0 /* FieldInfoModel.swift */; };
+		CE05F4042C7F7A9D001E13D0 /* FieldsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3F42C7F7A9D001E13D0 /* FieldsInfoView.swift */; };
+		CE05F4052C7F7A9D001E13D0 /* FieldsInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3F52C7F7A9D001E13D0 /* FieldsInfoViewModel.swift */; };
+		CE05F4072C7F7F4A001E13D0 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F4062C7F7F4A001E13D0 /* KeychainService.swift */; };
+		CE05F4092C7F8177001E13D0 /* CopyRecordHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F4082C7F8177001E13D0 /* CopyRecordHelper.swift */; };
+		CE05F40B2C7F82DE001E13D0 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F40A2C7F82DE001E13D0 /* RecordRow.swift */; };
+		CE05F40C2C7F8592001E13D0 /* SortingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3C82C7F7985001E13D0 /* SortingType.swift */; };
+		CE05F40D2C7F8593001E13D0 /* SortingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3C82C7F7985001E13D0 /* SortingType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -378,6 +404,30 @@
 		75F6F9BB2C21A4AD00E9E17F /* TipView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipView.swift; sourceTree = "<group>"; };
 		75F96B722A8648440062D2BA /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		75F96B772A8695800062D2BA /* NewTextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTextFieldStyle.swift; sourceTree = "<group>"; };
+		CE05F3C82C7F7985001E13D0 /* SortingType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortingType.swift; sourceTree = "<group>"; };
+		CE05F3C92C7F7985001E13D0 /* SettingsRecordInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRecordInfo.swift; sourceTree = "<group>"; };
+		CE05F3CA2C7F7985001E13D0 /* Protection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protection.swift; sourceTree = "<group>"; };
+		CE05F3CB2C7F7985001E13D0 /* AutoClose.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoClose.swift; sourceTree = "<group>"; };
+		CE05F3CD2C7F7985001E13D0 /* FieldsInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldsInfo.swift; sourceTree = "<group>"; };
+		CE05F3CE2C7F7985001E13D0 /* ProtectedRecordInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtectedRecordInfo.swift; sourceTree = "<group>"; };
+		CE05F3D02C7F7985001E13D0 /* OpenRecordInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenRecordInfo.swift; sourceTree = "<group>"; };
+		CE05F3D82C7F79C5001E13D0 /* RecordRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordRepository.swift; sourceTree = "<group>"; };
+		CE05F3DA2C7F79DA001E13D0 /* RecordDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDTO.swift; sourceTree = "<group>"; };
+		CE05F3DC2C7F79DF001E13D0 /* RecordObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordObject.swift; sourceTree = "<group>"; };
+		CE05F3E02C7F7A9D001E13D0 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		CE05F3E12C7F7A9D001E13D0 /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
+		CE05F3E32C7F7A9D001E13D0 /* RecordInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordInfoView.swift; sourceTree = "<group>"; };
+		CE05F3E42C7F7A9D001E13D0 /* RecordInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordInfoViewModel.swift; sourceTree = "<group>"; };
+		CE05F3E62C7F7A9D001E13D0 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		CE05F3E72C7F7A9D001E13D0 /* RecordListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListViewModel.swift; sourceTree = "<group>"; };
+		CE05F3EF2C7F7A9D001E13D0 /* NewRecordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecordView.swift; sourceTree = "<group>"; };
+		CE05F3F02C7F7A9D001E13D0 /* NewRecordViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRecordViewModel.swift; sourceTree = "<group>"; };
+		CE05F3F32C7F7A9D001E13D0 /* FieldInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldInfoModel.swift; sourceTree = "<group>"; };
+		CE05F3F42C7F7A9D001E13D0 /* FieldsInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldsInfoView.swift; sourceTree = "<group>"; };
+		CE05F3F52C7F7A9D001E13D0 /* FieldsInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FieldsInfoViewModel.swift; sourceTree = "<group>"; };
+		CE05F4062C7F7F4A001E13D0 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		CE05F4082C7F8177001E13D0 /* CopyRecordHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyRecordHelper.swift; sourceTree = "<group>"; };
+		CE05F40A2C7F82DE001E13D0 /* RecordRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,6 +549,7 @@
 		7537D01F2AA9DDC500F64175 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				CE05F4062C7F7F4A001E13D0 /* KeychainService.swift */,
 				75C97AB22C08D7FD002CF4BA /* KeychainManager.swift */,
 				7537D01D2AA9DDC000F64175 /* ThemeManager.swift */,
 				751712BE2BA347FD00F2B758 /* AppState.swift */,
@@ -506,6 +557,7 @@
 				7583617B2AB1D4DB0021FFDE /* AppHelper.swift */,
 				75F3AD5E2ABCA36500660A99 /* LocalNotificationManager.swift */,
 				757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */,
+				CE05F4082C7F8177001E13D0 /* CopyRecordHelper.swift */,
 				752CEDE42B3C57DB00CA1612 /* StorageService.swift */,
 				75A2D3A12C2D81D4009B3FFB /* WatchConnector.swift */,
 			);
@@ -712,6 +764,7 @@
 				75B58D0A2A8234B900937923 /* TabBarView.swift */,
 				75B58D122A826CD500937923 /* TasksList */,
 				7537D0202AAA0FF400F64175 /* Projects */,
+				CE05F3DE2C7F7A9D001E13D0 /* RecordList */,
 				75C710362A8CE49F008E8A62 /* Settings */,
 			);
 			path = Main;
@@ -744,6 +797,7 @@
 		75B58D142A827BE200937923 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				CE05F3C52C7F7964001E13D0 /* Record */,
 				752CEDDC2B3C567000CA1612 /* Task */,
 				752CEDE12B3C571A00CA1612 /* Checkbox */,
 				752CEE5D2B3DC27000CA1612 /* Project */,
@@ -781,6 +835,7 @@
 				752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */,
 				75E11C752B4C2679003B891B /* BulletTaskRow.swift */,
 				7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */,
+				CE05F40A2C7F82DE001E13D0 /* RecordRow.swift */,
 				75A3CFFF2A990BD4000F68BA /* TaskRow.swift */,
 				752CEE6A2B3EF2A000CA1612 /* MailView.swift */,
 				752CEE682B3EE25700CA1612 /* ProjectRow.swift */,
@@ -904,6 +959,113 @@
 				75E11C692B4BEB2B003B891B /* TabViewChildModifier.swift */,
 			);
 			path = Style;
+			sourceTree = "<group>";
+		};
+		CE05F3C52C7F7964001E13D0 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3C62C7F7985001E13D0 /* RecordModels */,
+				CE05F3D82C7F79C5001E13D0 /* RecordRepository.swift */,
+				CE05F3DA2C7F79DA001E13D0 /* RecordDTO.swift */,
+				CE05F3DC2C7F79DF001E13D0 /* RecordObject.swift */,
+			);
+			path = Record;
+			sourceTree = "<group>";
+		};
+		CE05F3C62C7F7985001E13D0 /* RecordModels */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3C72C7F7985001E13D0 /* Settings */,
+				CE05F3CC2C7F7985001E13D0 /* Protected */,
+				CE05F3CF2C7F7985001E13D0 /* Open */,
+			);
+			path = RecordModels;
+			sourceTree = "<group>";
+		};
+		CE05F3C72C7F7985001E13D0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3C82C7F7985001E13D0 /* SortingType.swift */,
+				CE05F3C92C7F7985001E13D0 /* SettingsRecordInfo.swift */,
+				CE05F3CA2C7F7985001E13D0 /* Protection.swift */,
+				CE05F3CB2C7F7985001E13D0 /* AutoClose.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		CE05F3CC2C7F7985001E13D0 /* Protected */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3CD2C7F7985001E13D0 /* FieldsInfo.swift */,
+				CE05F3CE2C7F7985001E13D0 /* ProtectedRecordInfo.swift */,
+			);
+			path = Protected;
+			sourceTree = "<group>";
+		};
+		CE05F3CF2C7F7985001E13D0 /* Open */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3D02C7F7985001E13D0 /* OpenRecordInfo.swift */,
+			);
+			path = Open;
+			sourceTree = "<group>";
+		};
+		CE05F3DE2C7F7A9D001E13D0 /* RecordList */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3E12C7F7A9D001E13D0 /* RecordListView.swift */,
+				CE05F3E72C7F7A9D001E13D0 /* RecordListViewModel.swift */,
+				CE05F3DF2C7F7A9D001E13D0 /* ShareVC */,
+				CE05F3E22C7F7A9D001E13D0 /* RecordInfoView */,
+				CE05F3EE2C7F7A9D001E13D0 /* NewRecord */,
+				CE05F3F22C7F7A9D001E13D0 /* FieldsInfoView */,
+			);
+			path = RecordList;
+			sourceTree = "<group>";
+		};
+		CE05F3DF2C7F7A9D001E13D0 /* ShareVC */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3E02C7F7A9D001E13D0 /* ShareViewController.swift */,
+			);
+			path = ShareVC;
+			sourceTree = "<group>";
+		};
+		CE05F3E22C7F7A9D001E13D0 /* RecordInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3E32C7F7A9D001E13D0 /* RecordInfoView.swift */,
+				CE05F3E42C7F7A9D001E13D0 /* RecordInfoViewModel.swift */,
+				CE05F3E52C7F7A9D001E13D0 /* InfoView */,
+			);
+			path = RecordInfoView;
+			sourceTree = "<group>";
+		};
+		CE05F3E52C7F7A9D001E13D0 /* InfoView */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3E62C7F7A9D001E13D0 /* InfoView.swift */,
+			);
+			path = InfoView;
+			sourceTree = "<group>";
+		};
+		CE05F3EE2C7F7A9D001E13D0 /* NewRecord */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3EF2C7F7A9D001E13D0 /* NewRecordView.swift */,
+				CE05F3F02C7F7A9D001E13D0 /* NewRecordViewModel.swift */,
+			);
+			path = NewRecord;
+			sourceTree = "<group>";
+		};
+		CE05F3F22C7F7A9D001E13D0 /* FieldsInfoView */ = {
+			isa = PBXGroup;
+			children = (
+				CE05F3F32C7F7A9D001E13D0 /* FieldInfoModel.swift */,
+				CE05F3F42C7F7A9D001E13D0 /* FieldsInfoView.swift */,
+				CE05F3F52C7F7A9D001E13D0 /* FieldsInfoViewModel.swift */,
+			);
+			path = FieldsInfoView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1087,6 +1249,7 @@
 				754714132C2C273700BF1CB3 /* AgileTaskWatchApp.swift in Sources */,
 				754714382C2D66F800BF1CB3 /* BulletObject.swift in Sources */,
 				754714392C2D66FB00BF1CB3 /* BulletDTO.swift in Sources */,
+				CE05F40D2C7F8593001E13D0 /* SortingType.swift in Sources */,
 				7547143E2C2D671400BF1CB3 /* Color+Ext.swift in Sources */,
 				7547143F2C2D676300BF1CB3 /* CheckboxRepository.swift in Sources */,
 				754714272C2C282400BF1CB3 /* StorageService.swift in Sources */,
@@ -1099,6 +1262,7 @@
 			files = (
 				752CEDDE2B3C569C00CA1612 /* TaskRepository.swift in Sources */,
 				75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */,
+				CE05F4032C7F7A9D001E13D0 /* FieldInfoModel.swift in Sources */,
 				754714472C2D6CB100BF1CB3 /* CalendarView.swift in Sources */,
 				75473EAB2BCD58FE000840F2 /* CheckingPasswordView.swift in Sources */,
 				753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */,
@@ -1112,11 +1276,16 @@
 				7590CF972AEFAE900015B396 /* NewCheckBoxViewModel.swift in Sources */,
 				752CEE6B2B3EF2A000CA1612 /* MailView.swift in Sources */,
 				752CEE692B3EE25700CA1612 /* ProjectRow.swift in Sources */,
+				CE05F3DB2C7F79DA001E13D0 /* RecordDTO.swift in Sources */,
 				75E11C762B4C2679003B891B /* BulletTaskRow.swift in Sources */,
+				CE05F3D72C7F7985001E13D0 /* OpenRecordInfo.swift in Sources */,
 				751BFB402A9E01AB00D3E0B8 /* RecurringView.swift in Sources */,
 				7561D8462AEBB3930073F1D9 /* AppFeaturesView.swift in Sources */,
+				CE05F3D32C7F7985001E13D0 /* Protection.swift in Sources */,
 				751BFB4A2A9E4DC600D3E0B8 /* String+Ext.swift in Sources */,
 				7547144C2C2D6CB100BF1CB3 /* CalendarViewModel.swift in Sources */,
+				CE05F3D62C7F7985001E13D0 /* ProtectedRecordInfo.swift in Sources */,
+				CE05F4012C7F7A9D001E13D0 /* NewRecordViewModel.swift in Sources */,
 				752CEDDB2B3C565C00CA1612 /* TaskDTO.swift in Sources */,
 				75A3D0002A990BD4000F68BA /* TaskRow.swift in Sources */,
 				7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */,
@@ -1128,11 +1297,13 @@
 				75B58D092A82255300937923 /* View+Ext.swift in Sources */,
 				75C710382A8CE4BC008E8A62 /* SettingsView.swift in Sources */,
 				752CEE6D2B3EF2DA00CA1612 /* MoreOurAppsView.swift in Sources */,
+				CE05F3D92C7F79C5001E13D0 /* RecordRepository.swift in Sources */,
 				75A2D3A22C2D81D4009B3FFB /* WatchConnector.swift in Sources */,
 				752CEDE52B3C57DB00CA1612 /* StorageService.swift in Sources */,
 				752CEE552B3C888300CA1612 /* AuthViewModel.swift in Sources */,
 				75C97AAD2C08D4F7002CF4BA /* BackupListView.swift in Sources */,
 				7547144D2C2D6CB100BF1CB3 /* TimeControlView.swift in Sources */,
+				CE05F3F72C7F7A9D001E13D0 /* RecordListView.swift in Sources */,
 				752CEE672B3ED09000CA1612 /* NewProjectViewModel.swift in Sources */,
 				7590CF952AEFADE80015B396 /* NewCheckBoxView.swift in Sources */,
 				75474BB82AEBAE89001119A9 /* PrimaryButton.swift in Sources */,
@@ -1142,11 +1313,14 @@
 				75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */,
 				75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */,
 				7507039B2BA9F65C0023D5FF /* RecurringTimeView.swift in Sources */,
+				CE05F4072C7F7F4A001E13D0 /* KeychainService.swift in Sources */,
 				75E11C6D2B4C1202003B891B /* BulletView.swift in Sources */,
+				CE05F3DD2C7F79DF001E13D0 /* RecordObject.swift in Sources */,
 				75677A2C2A813F360034C45B /* Master_TaskApp.swift in Sources */,
 				754714442C2D6CB100BF1CB3 /* CustomSegmentedControl.swift in Sources */,
 				75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */,
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
+				CE05F3D52C7F7985001E13D0 /* FieldsInfo.swift in Sources */,
 				75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */,
 				75C97AAC2C08D4F7002CF4BA /* BackupView.swift in Sources */,
 				75F6F9BC2C21A4AD00E9E17F /* TipView.swift in Sources */,
@@ -1158,16 +1332,21 @@
 				75C97AB32C08D7FD002CF4BA /* KeychainManager.swift in Sources */,
 				7511B3C82B99FF350090DB4E /* PrivacyPolicyButton.swift in Sources */,
 				75C97AAB2C08D4F7002CF4BA /* BackupViewModel.swift in Sources */,
+				CE05F3F62C7F7A9D001E13D0 /* ShareViewController.swift in Sources */,
+				CE05F3FA2C7F7A9D001E13D0 /* InfoView.swift in Sources */,
 				7547CD722ADEE6B400143598 /* NewTaskView.swift in Sources */,
 				752CEE1C2B3C619F00CA1612 /* ThreeHorizontalLinesView.swift in Sources */,
 				752CEE602B3DC45600CA1612 /* ProjectDTO.swift in Sources */,
+				CE05F4092C7F8177001E13D0 /* CopyRecordHelper.swift in Sources */,
 				7537D0242AAA316200F64175 /* NewProjectView.swift in Sources */,
 				751712BF2BA347FD00F2B758 /* AppState.swift in Sources */,
 				752CEE4F2B3C764A00CA1612 /* SettingsRepositoryImpl.swift in Sources */,
 				75B58D102A8250CF00937923 /* TaskListView.swift in Sources */,
 				75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */,
+				CE05F3F82C7F7A9D001E13D0 /* RecordInfoView.swift in Sources */,
 				75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */,
 				75C97AAE2C08D4F7002CF4BA /* BackupDetailView.swift in Sources */,
+				CE05F4042C7F7A9D001E13D0 /* FieldsInfoView.swift in Sources */,
 				752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */,
 				75474BB42AE97132001119A9 /* SubscriptionView.swift in Sources */,
 				7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */,
@@ -1176,29 +1355,37 @@
 				75B58D0B2A8234B900937923 /* TabBarView.swift in Sources */,
 				75B58D072A8224ED00937923 /* Font+Ext.swift in Sources */,
 				754714522C2D736F00BF1CB3 /* Notification.Name+Ext.swift in Sources */,
+				CE05F3D12C7F7985001E13D0 /* SortingType.swift in Sources */,
 				75473EAA2BCD58FE000840F2 /* PasswordView.swift in Sources */,
 				7562E6C32AD4479A00E895CD /* AuthManager.swift in Sources */,
 				753649142AD4202100C98975 /* SetPasswordView.swift in Sources */,
+				CE05F4052C7F7A9D001E13D0 /* FieldsInfoViewModel.swift in Sources */,
 				75E11C6F2B4C1259003B891B /* BulletViewModel.swift in Sources */,
 				7590CF9D2AF3FD790015B396 /* Binding+Ext.swift in Sources */,
 				759510C12ACD54EB0087004A /* SecurityViewModel.swift in Sources */,
 				752CEDE02B3C571000CA1612 /* CheckboxDTO.swift in Sources */,
+				CE05F4002C7F7A9D001E13D0 /* NewRecordView.swift in Sources */,
 				7583617C2AB1D4DB0021FFDE /* AppHelper.swift in Sources */,
+				CE05F3D42C7F7985001E13D0 /* AutoClose.swift in Sources */,
 				75A3CFFE2A99047D000F68BA /* Constants.swift in Sources */,
 				75E11C6A2B4BEB2B003B891B /* TabViewChildModifier.swift in Sources */,
 				757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */,
 				7590CF922AEFA81B0015B396 /* CheckboxObject.swift in Sources */,
 				759510C32ACD586B0087004A /* SectionStyle.swift in Sources */,
 				754714422C2D6CB100BF1CB3 /* CalendarPickerView.swift in Sources */,
+				CE05F40B2C7F82DE001E13D0 /* RecordRow.swift in Sources */,
 				7511B3C62B99FF130090DB4E /* TermsOfUseButton.swift in Sources */,
 				752CEE622B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift in Sources */,
 				75D0D8832ACC60E7003FC01F /* SecurityView.swift in Sources */,
 				754714462C2D6CB100BF1CB3 /* CalendarDayView.swift in Sources */,
 				753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */,
 				75B58D0E2A824C1400937923 /* Color+Ext.swift in Sources */,
+				CE05F3F92C7F7A9D001E13D0 /* RecordInfoViewModel.swift in Sources */,
 				75A709AF2A82900A003894F7 /* TaskListViewModel.swift in Sources */,
 				75E11C712B4C13DF003B891B /* BulletObject.swift in Sources */,
+				CE05F3FB2C7F7A9D001E13D0 /* RecordListViewModel.swift in Sources */,
 				7537D01E2AA9DDC000F64175 /* ThemeManager.swift in Sources */,
+				CE05F3D22C7F7985001E13D0 /* SettingsRecordInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1216,6 +1403,7 @@
 				75E11CD22B4C350A003B891B /* TaskEntry.swift in Sources */,
 				75E11CD82B4C350A003B891B /* TimeLineProvider.swift in Sources */,
 				75E11CD42B4C350A003B891B /* MasterTaskWidgetEntryView.swift in Sources */,
+				CE05F40C2C7F8592001E13D0 /* SortingType.swift in Sources */,
 				75C97AB42C08DFE0002CF4BA /* StorageService.swift in Sources */,
 				75E11CEF2B4C38B1003B891B /* ProjectObject.swift in Sources */,
 				75E11CED2B4C380A003B891B /* Color+Ext.swift in Sources */,

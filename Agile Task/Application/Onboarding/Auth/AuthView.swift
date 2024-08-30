@@ -17,6 +17,7 @@ struct AuthView: View {
     
     @StateObject var vm: AuthViewModel
     @Binding var isShowing: Bool
+    @State var recordPrptect: SecurityOption? = nil
     
     // MARK: - Body
     var body: some View {
@@ -27,7 +28,11 @@ struct AuthView: View {
         }
         .onAppear(perform: {
             vm.settings = vm.appState.settingsRepository!.get()
-            authWithFaceId()
+        })
+        .onAppear(perform: {
+            if scene == .active {
+                authWithFaceId()
+            }
         })
         .onChange(of: scene) { scene in
             if isShowing, scene == .active {
@@ -41,14 +46,16 @@ struct AuthView: View {
 private extension AuthView {
     func securityView() -> some View {
         VStack {
-            if vm.settings.securityOption == .password {
+            let securityOption = recordPrptect == nil ? vm.settings.securityOption : recordPrptect
+            if securityOption == .password {
                 PasswordView(vm: vm)
             }
         }
     }
     
     func authWithFaceId() {
-        if vm.settings.securityOption == .faceID {
+        let securityOption = recordPrptect == nil ? vm.settings.securityOption : recordPrptect
+        if securityOption == .faceID {
             authManager.auth()
             isShowing = authManager.state == .loggedIn ? false : true
         }

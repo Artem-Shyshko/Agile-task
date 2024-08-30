@@ -52,16 +52,16 @@ private extension BackupView {
     }
     
     func filesBackup() -> some View {
-        SectionLinkButton(title: "files_backup", value: SettingsNavigationView.backupDetail(storage: .locally))
+        SectionLinkButton(title: "files_backup", value: TaskListNavigationView.backupDetail(storage: .locally))
     }
     
     @ViewBuilder
     func iCloudBackup() -> some View {
-        SectionLinkButton(title: "iCloud_backup", value: SettingsNavigationView.backupDetail(storage: .iCloud))
+        SectionLinkButton(title: "iCloud_backup", value: TaskListNavigationView.backupDetail(storage: .iCloud))
     }
     
     func dropboxBackup() -> some View {
-        SectionLinkButton(title: "dropbox_backup", value: SettingsNavigationView.backupDetail(storage: .dropbox))
+        SectionLinkButton(title: "dropbox_backup", value: TaskListNavigationView.backupDetail(storage: .dropbox))
     }
 }
 

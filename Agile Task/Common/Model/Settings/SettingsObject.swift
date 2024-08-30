@@ -29,6 +29,8 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted var taskSorting: TaskSorting? = .manual
     @Persisted var securityOption: SecurityOption = .none
     @Persisted var сompletionСircle: Bool = true
+    @Persisted var sortingType: SortingType = .manualy
+    @Persisted var recordsSecurity: RecordsSecurity = .password
 }
 
 extension SettingsObject {
@@ -55,6 +57,8 @@ extension SettingsObject {
         taskSorting = dto.taskSorting
         securityOption = dto.securityOption
         сompletionСircle = dto.сompletionСircle
+        sortingType = dto.sortingType
+        recordsSecurity = dto.recordsSecurity
     }
 }
 

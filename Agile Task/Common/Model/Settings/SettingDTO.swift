@@ -29,6 +29,8 @@ struct SettingsDTO {
     var taskSorting: TaskSorting = .manual
     var securityOption: SecurityOption = .none
     var сompletionСircle: Bool = true
+    var sortingType: SortingType = .manualy
+    var recordsSecurity: RecordsSecurity = .password
 }
 
 extension SettingsDTO {
@@ -53,6 +55,8 @@ extension SettingsDTO {
         rememberLastPickedOptionView = object.rememberLastPickedOptionView
         taskSorting = object.taskSorting ?? .manual
         securityOption = object.securityOption
+        sortingType = object.sortingType
+        recordsSecurity = object.recordsSecurity
     }
     
     private var language: AppLanguage {
@@ -93,5 +97,28 @@ enum DailyReminderOption: String, PersistableEnum, CaseIterable, CustomStringCon
     
     var description: String {
         self.rawValue
+    }
+}
+
+enum RecordsSecurity: String, PersistableEnum, CaseIterable, CustomStringConvertible {
+    case password = "Password"
+    case faceID = "Face ID"
+    
+    var description: String {
+        switch self {
+        case .password:
+            "password_title"
+        case .faceID:
+            "face_id_title"
+        }
+    }
+    
+    var securityOption: SecurityOption {
+        switch self {
+        case .password:
+            return .password
+        case .faceID:
+            return .faceID
+        }
     }
 }

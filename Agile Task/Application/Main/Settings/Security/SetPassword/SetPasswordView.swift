@@ -79,7 +79,13 @@ private extension SetPasswordView {
     
     func cancelButton() -> some View {
         Button {
-            dismiss.callAsFunction()
+            switch viewModel.setPasswordGoal {
+            case .tasks:
+                dismiss.callAsFunction()
+            case .records:
+                viewModel.appState.selectedTab = .taskList
+                dismiss.callAsFunction()
+            }
         } label: {
             Text("cancel_button")
         }
@@ -111,18 +117,31 @@ private extension SetPasswordView {
             .modifier(SectionStyle())
     }
     
+    @ViewBuilder
     func secureWithFieldView() -> some View {
         HStack {
             Text("secure_app_with")
             Spacer()
             
-            Picker("", selection: $viewModel.settings.securityOption) {
-                ForEach(SecurityOption.allCases, id: \.self) {
-                    Text(LocalizedStringKey($0.description))
-                        .tag($0.rawValue)
+            switch viewModel.setPasswordGoal {
+            case .tasks:
+                Picker("", selection: $viewModel.settings.securityOption) {
+                    ForEach(SecurityOption.allCases, id: \.self) {
+                        Text(LocalizedStringKey($0.description))
+                            .tag($0.rawValue)
+                    }
                 }
+                .pickerStyle(.menu)
+            case .records:
+                Picker("", selection: $viewModel.settings.recordsSecurity) {
+                    ForEach(RecordsSecurity.allCases, id: \.self) {
+                        Text(LocalizedStringKey($0.description))
+                            .tag($0.rawValue)
+                    }
+                }
+                .pickerStyle(.menu)
             }
-            .pickerStyle(.menu)
+            
         }
         .modifier(SectionStyle())
     }
@@ -130,7 +149,9 @@ private extension SetPasswordView {
 
 struct SetPasswordView_Previews: PreviewProvider {
     static var previews: some View {
-        SetPasswordView(viewModel: SetPasswordViewModel(appState: AppState()), isFirstSetup: true)
+        SetPasswordView(viewModel: SetPasswordViewModel(appState: AppState(), 
+                                                        setPasswordGoal: .records),
+                        isFirstSetup: true)
     }
 }
 
