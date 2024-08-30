@@ -462,6 +462,40 @@
         }
       }
     },
+    "Alphabetically A-Z" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alphabetically A-Z"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За алфавітом А-Я"
+          }
+        }
+      }
+    },
+    "Alphabetically Z-A" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alphabetically Z-A"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За алфавітом Я-А"
+          }
+        }
+      }
+    },
     "App credentials" : {
       "localizations" : {
         "fr" : {
@@ -1539,6 +1573,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ручне сортування"
+          }
+        }
+      }
+    },
+    "manualy_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manualy"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вручну"
           }
         }
       }
