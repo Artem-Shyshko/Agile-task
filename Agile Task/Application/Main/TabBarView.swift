@@ -9,6 +9,10 @@ import SwiftUI
 import RealmSwift
 
 // MARK: - Enum
+enum SettingType {
+    case tasksList
+    case recordsList
+}
 
 enum TaskListNavigationView: Hashable {
     case createTask(editedTask: TaskDTO? = nil),
@@ -17,6 +21,7 @@ enum TaskListNavigationView: Hashable {
          newCheckBox,
          subscription,
          settings,
+         appSettings,
          taskSettings,
          security,
          more,
@@ -32,7 +37,8 @@ enum SecuredNavigationView: Hashable {
          purchase,
          sorting,
          settings,
-         settingsGeneral,
+         appSettings,
+         taskSettings,
          security,
          more,
          backup,

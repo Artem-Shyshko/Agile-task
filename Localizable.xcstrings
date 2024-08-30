@@ -465,6 +465,22 @@
         }
       }
     },
+    "app_settings_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App settings"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування додатку"
+          }
+        }
+      }
+    },
     "Apply" : {
 
     },
@@ -3019,6 +3035,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сортувати за датою"
+          }
+        }
+      }
+    },
+    "tasks_settings_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks settings"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування завдань"
           }
         }
       }

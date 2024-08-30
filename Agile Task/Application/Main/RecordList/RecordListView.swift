@@ -83,9 +83,11 @@ struct RecordListView: View {
                 case .recordInfo(record: let record):
                     RecordInfoView(viewModel: RecordInfoViewModel(appState: appState, record: record))
                 case .settings:
-                    SettingsView()
-                case .settingsGeneral:
-                    SettingsTaskView(viewModel: SettingsTaskViewModel(appState: appState))
+                    SettingsView(viewModel: SettingsViewModel(settingType: .recordsList))
+                case .appSettings:
+                    AppSettingsView(viewModel: AppSettingsViewModel(appState: appState))
+                case .taskSettings:
+                    TasksSettingsView(viewModel: TasksSettingsViewModel(appState: appState))
                 case .security:
                     SecurityView(viewModel: SecurityViewModel(appState: appState))
                 case .more:
@@ -132,6 +134,8 @@ private extension RecordListView {
                             viewModel.searchText.removeAll()
                         case .sorting:
                             path.append(.sorting)
+                        case .settings:
+                            path.append(.settings)
                         }
                     }
                 }

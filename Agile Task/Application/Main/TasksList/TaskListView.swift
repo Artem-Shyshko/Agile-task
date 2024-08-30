@@ -71,9 +71,9 @@ struct TaskListView: View {
         case .subscription:
           SubscriptionView()
         case .settings:
-          SettingsView()
-        case .taskSettings:
-          SettingsTaskView(viewModel: SettingsTaskViewModel(appState: appState))
+          SettingsView(viewModel: SettingsViewModel(settingType: .tasksList))
+        case .appSettings:
+          AppSettingsView(viewModel: AppSettingsViewModel(appState: appState))
         case .security:
           SecurityView(viewModel: SecurityViewModel(appState: appState))
         case .more:
@@ -86,6 +86,8 @@ struct TaskListView: View {
           BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
         case .backupList(storage: let storage):
           BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
+        case .taskSettings:
+          TasksSettingsView(viewModel: TasksSettingsViewModel(appState: appState))
         }
       }
       .onAppear {

@@ -12,6 +12,7 @@ import Combine
 enum RecordListMenu: String, CaseIterable {
     case search = "search_title"
     case sorting = "tasks_view_sorting"
+    case settings = "Settings"
 }
 
 final class RecordListViewModel: ObservableObject {
