@@ -14,6 +14,7 @@ struct SettingsView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) var dismiss
+    @StateObject var viewModel: SettingsViewModel
     
     // MARK: - Body
     
@@ -23,10 +24,12 @@ struct SettingsView: View {
             VStack(spacing: Constants.shared.listRowSpacing) {
                 accountView()
                 SettingsThemeView()
-                settingsView()
+                appSettingsView()
+                tasksSettingsView()
                 securityView()
                 moreAppsView()
                 emailView()
+                versionView()
                 Spacer()
             }
         }
@@ -74,22 +77,29 @@ private extension SettingsView {
         }
     }
     
-    func settingsView() -> some View {
-        NavigationLink(value: TaskListNavigationView.taskSettings) {
-            Text("Settings")
+    func appSettingsView() -> some View {
+        NavigationLink(value: viewModel.settingsGeneral) {
+            Text("app_settings_title")
+                .modifier(SectionStyle())
+        }
+    }
+    
+    func tasksSettingsView() -> some View {
+        NavigationLink(value: viewModel.tasksSettings) {
+            Text("tasks_settings_title")
                 .modifier(SectionStyle())
         }
     }
     
     func securityView() -> some View {
-        NavigationLink(value: TaskListNavigationView.security) {
+        NavigationLink(value: viewModel.security) {
             Text("Security")
                 .modifier(SectionStyle())
         }
     }
     
     func moreAppsView() -> some View {
-        NavigationLink(value: TaskListNavigationView.more) {
+        NavigationLink(value: viewModel.more) {
             Text("App credentials")
                 .modifier(SectionStyle())
         }
@@ -103,17 +113,16 @@ private extension SettingsView {
                 .modifier(SectionStyle())
         }
     }
-    
-    func backupView() -> some View {
-        NavigationLink(value: TaskListNavigationView.backup) {
-            Text("backup_title")
-                .modifier(SectionStyle())
-        }
+
+    func versionView() -> some View {
+      Text("Version \(viewModel.getAppVersion())")
+        .hAlign(alignment: .trailing)
+        .padding(.vertical)
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(viewModel: SettingsViewModel(settingType: .recordsList))
     }
 }

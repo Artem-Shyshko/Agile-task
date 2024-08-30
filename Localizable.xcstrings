@@ -512,6 +512,22 @@
         }
       }
     },
+    "app_settings_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App settings"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування додатку"
+          }
+        }
+      }
+    },
     "Apply" : {
 
     },
@@ -612,7 +628,20 @@
       }
     },
     "are_you_sure_you_want_to_delete_the_point" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви впевнені, що хочете видалити?"
+          }
+        }
+      }
     },
     "At the bottom of the list" : {
       "extractionState" : "manual",
@@ -1508,6 +1537,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сподобалась програма? Будь ласка, залиште відгук"
+          }
+        }
+      }
+    },
+    "lower_case" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lower case letters"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "букви нижнього регістру"
           }
         }
       }
@@ -3099,6 +3145,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сортувати за датою"
+          }
+        }
+      }
+    },
+    "tasks_settings_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasks settings"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування завдань"
           }
         }
       }

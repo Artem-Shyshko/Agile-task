@@ -62,7 +62,8 @@ final class SetPasswordViewModel: ObservableObject {
         return RecordDTO(id: id,
                          openRecordInfo: openRecordInfo,
                          protectedRecordInfo: protectedInfo,
-                         settingsRecordInfo: settings)
+                         settingsRecordInfo: settings, 
+                         taskType: .light)
     }
     
     func savePasswordDataFor(record: RecordDTO) {

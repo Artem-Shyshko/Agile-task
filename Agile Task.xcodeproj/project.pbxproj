@@ -119,7 +119,7 @@
 		75A3D0002A990BD4000F68BA /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A3CFFF2A990BD4000F68BA /* TaskRow.swift */; };
 		75A709AA2A828B68003894F7 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A709A92A828B68003894F7 /* Date+Ext.swift */; };
 		75A709AF2A82900A003894F7 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A709AE2A82900A003894F7 /* TaskListViewModel.swift */; };
-		75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AE02FB2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift */; };
+		75AE02FC2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AE02FB2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift */; };
 		75B1C8132AB85DFE00DAE207 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 75B1C8122AB85DFE00DAE207 /* Realm */; };
 		75B1C8152AB85DFE00DAE207 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75B1C8142AB85DFE00DAE207 /* RealmSwift */; };
 		75B58D072A8224ED00937923 /* Font+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D062A8224ED00937923 /* Font+Ext.swift */; };
@@ -131,7 +131,7 @@
 		75C7103D2A8CEE4F008E8A62 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */; };
 		75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */; };
 		75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */; };
-		75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */; };
+		75C710462A8D1AB7008E8A62 /* AppSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710452A8D1AB7008E8A62 /* AppSettingsView.swift */; };
 		75C97AAB2C08D4F7002CF4BA /* BackupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AA72C08D4F7002CF4BA /* BackupViewModel.swift */; };
 		75C97AAC2C08D4F7002CF4BA /* BackupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AA82C08D4F7002CF4BA /* BackupView.swift */; };
 		75C97AAD2C08D4F7002CF4BA /* BackupListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C97AA92C08D4F7002CF4BA /* BackupListView.swift */; };
@@ -210,6 +210,9 @@
 		CE05F40B2C7F82DE001E13D0 /* RecordRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F40A2C7F82DE001E13D0 /* RecordRow.swift */; };
 		CE05F40C2C7F8592001E13D0 /* SortingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3C82C7F7985001E13D0 /* SortingType.swift */; };
 		CE05F40D2C7F8593001E13D0 /* SortingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3C82C7F7985001E13D0 /* SortingType.swift */; };
+		CE05F40F2C81E2DA001E13D0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F40E2C81E2DA001E13D0 /* SettingsViewModel.swift */; };
+		CE6341EC2C81E77E00FDE98F /* TasksSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6341EB2C81E77E00FDE98F /* TasksSettingsView.swift */; };
+		CE6341EE2C81E78C00FDE98F /* TasksSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE6341ED2C81E78C00FDE98F /* TasksSettingsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -358,7 +361,7 @@
 		75A709A92A828B68003894F7 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		75A709AB2A828F6E003894F7 /* Agile-Task-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Agile-Task-Info.plist"; sourceTree = SOURCE_ROOT; };
 		75A709AE2A82900A003894F7 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
-		75AE02FB2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTaskViewModel.swift; sourceTree = "<group>"; };
+		75AE02FB2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		75B58D062A8224ED00937923 /* Font+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Ext.swift"; sourceTree = "<group>"; };
 		75B58D082A82255300937923 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		75B58D0A2A8234B900937923 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
@@ -368,7 +371,7 @@
 		75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
 		75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		75C710402A8D0C54008E8A62 /* SettingsThemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsThemeView.swift; sourceTree = "<group>"; };
-		75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = SettingsTaskView.swift; sourceTree = "<group>"; };
+		75C710452A8D1AB7008E8A62 /* AppSettingsView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = AppSettingsView.swift; sourceTree = "<group>"; };
 		75C97AA72C08D4F7002CF4BA /* BackupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewModel.swift; sourceTree = "<group>"; };
 		75C97AA82C08D4F7002CF4BA /* BackupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupView.swift; sourceTree = "<group>"; };
 		75C97AA92C08D4F7002CF4BA /* BackupListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupListView.swift; sourceTree = "<group>"; };
@@ -428,6 +431,9 @@
 		CE05F4062C7F7F4A001E13D0 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		CE05F4082C7F8177001E13D0 /* CopyRecordHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyRecordHelper.swift; sourceTree = "<group>"; };
 		CE05F40A2C7F82DE001E13D0 /* RecordRow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordRow.swift; sourceTree = "<group>"; };
+		CE05F40E2C81E2DA001E13D0 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		CE6341EB2C81E77E00FDE98F /* TasksSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSettingsView.swift; sourceTree = "<group>"; };
+		CE6341ED2C81E78C00FDE98F /* TasksSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksSettingsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -814,11 +820,13 @@
 			isa = PBXGroup;
 			children = (
 				75C710372A8CE4BC008E8A62 /* SettingsView.swift */,
+				CE05F40E2C81E2DA001E13D0 /* SettingsViewModel.swift */,
 				752CEE6C2B3EF2DA00CA1612 /* MoreOurAppsView.swift */,
 				75C97AA62C08D4F7002CF4BA /* Backup */,
 				75474BB22AE97121001119A9 /* Subscription */,
 				75C710442A8D1630008E8A62 /* SettingsTheme */,
-				75C710472A8D1AC0008E8A62 /* SettingsTask */,
+				75C710472A8D1AC0008E8A62 /* AppSettings */,
+				CE6341EA2C81E75500FDE98F /* TasksSettings */,
 				75D0D8812ACC60B2003FC01F /* Security */,
 			);
 			path = Settings;
@@ -867,13 +875,13 @@
 			path = SettingsTheme;
 			sourceTree = "<group>";
 		};
-		75C710472A8D1AC0008E8A62 /* SettingsTask */ = {
+		75C710472A8D1AC0008E8A62 /* AppSettings */ = {
 			isa = PBXGroup;
 			children = (
-				75C710452A8D1AB7008E8A62 /* SettingsTaskView.swift */,
-				75AE02FB2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift */,
+				75C710452A8D1AB7008E8A62 /* AppSettingsView.swift */,
+				75AE02FB2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift */,
 			);
-			path = SettingsTask;
+			path = AppSettings;
 			sourceTree = "<group>";
 		};
 		75C97AA62C08D4F7002CF4BA /* Backup */ = {
@@ -1066,6 +1074,15 @@
 				CE05F3F52C7F7A9D001E13D0 /* FieldsInfoViewModel.swift */,
 			);
 			path = FieldsInfoView;
+			sourceTree = "<group>";
+		};
+		CE6341EA2C81E75500FDE98F /* TasksSettings */ = {
+			isa = PBXGroup;
+			children = (
+				CE6341EB2C81E77E00FDE98F /* TasksSettingsView.swift */,
+				CE6341ED2C81E78C00FDE98F /* TasksSettingsViewModel.swift */,
+			);
+			path = TasksSettings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1292,7 +1309,7 @@
 				754714432C2D6CB100BF1CB3 /* TextFieldWithEnterButton.swift in Sources */,
 				752CEE4C2B3C723200CA1612 /* SettingDTO.swift in Sources */,
 				7567E5AA2BC3D306007C1C97 /* Localizable.swift in Sources */,
-				75C710462A8D1AB7008E8A62 /* SettingsTaskView.swift in Sources */,
+				75C710462A8D1AB7008E8A62 /* AppSettingsView.swift in Sources */,
 				7547144B2C2D6CB100BF1CB3 /* TimeView.swift in Sources */,
 				75B58D092A82255300937923 /* View+Ext.swift in Sources */,
 				75C710382A8CE4BC008E8A62 /* SettingsView.swift in Sources */,
@@ -1321,10 +1338,11 @@
 				75D516562B59676B002D351C /* MagnifyingGlassButton.swift in Sources */,
 				7534A2BD2AA0E7980049431C /* SortingView.swift in Sources */,
 				CE05F3D52C7F7985001E13D0 /* FieldsInfo.swift in Sources */,
-				75AE02FC2ACAA8CD00BC6C3F /* SettingsTaskViewModel.swift in Sources */,
+				75AE02FC2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift in Sources */,
 				75C97AAC2C08D4F7002CF4BA /* BackupView.swift in Sources */,
 				75F6F9BC2C21A4AD00E9E17F /* TipView.swift in Sources */,
 				75481B312AE01144003ABED5 /* CompletedTaskView.swift in Sources */,
+				CE05F40F2C81E2DA001E13D0 /* SettingsViewModel.swift in Sources */,
 				7590CF992AF3A01F0015B396 /* SearchableView.swift in Sources */,
 				7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */,
 				7537D0222AAA101300F64175 /* ProjectsView.swift in Sources */,
@@ -1348,6 +1366,7 @@
 				75C97AAE2C08D4F7002CF4BA /* BackupDetailView.swift in Sources */,
 				CE05F4042C7F7A9D001E13D0 /* FieldsInfoView.swift in Sources */,
 				752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */,
+				CE6341EE2C81E78C00FDE98F /* TasksSettingsViewModel.swift in Sources */,
 				75474BB42AE97132001119A9 /* SubscriptionView.swift in Sources */,
 				7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */,
 				75E11C732B4C1400003B891B /* BulletDTO.swift in Sources */,
@@ -1359,6 +1378,7 @@
 				75473EAA2BCD58FE000840F2 /* PasswordView.swift in Sources */,
 				7562E6C32AD4479A00E895CD /* AuthManager.swift in Sources */,
 				753649142AD4202100C98975 /* SetPasswordView.swift in Sources */,
+				CE6341EC2C81E77E00FDE98F /* TasksSettingsView.swift in Sources */,
 				CE05F4052C7F7A9D001E13D0 /* FieldsInfoViewModel.swift in Sources */,
 				75E11C6F2B4C1259003B891B /* BulletViewModel.swift in Sources */,
 				7590CF9D2AF3FD790015B396 /* Binding+Ext.swift in Sources */,

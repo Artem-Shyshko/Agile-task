@@ -8,8 +8,8 @@
 import SwiftUI
 import RealmSwift
 
-struct SettingsTaskView: View {
-  @StateObject var viewModel: SettingsTaskViewModel
+struct AppSettingsView: View {
+  @StateObject var viewModel: AppSettingsViewModel
   @EnvironmentObject var lnManager: LocalNotificationManager
   @EnvironmentObject var appState: AppState
   @Environment(\.dismiss) var dismiss
@@ -22,20 +22,12 @@ struct SettingsTaskView: View {
         VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
           languageSection()
           weekStartsOnSection()
-          newTaskFeaturesSection()
           dateSection()
           timeSection()
-          defaultSortingSection()
-          newTasksSection()
-          completedTaskSection()
           dailyReminder()
           addPlusButton()
-          сompletionСircleView()
           pushNotificationView()
-          hapticFeedbackButton()
           addInfoTipsButton()
-          deleteAllTasksButton()
-          versionView()
           Spacer()
         }
       }
@@ -45,13 +37,6 @@ struct SettingsTaskView: View {
     .onChange(of: viewModel.settings) { _ in
       viewModel.appState.settingsRepository!.save(viewModel.settings)
       appState.settings = viewModel.settings
-    }
-    .alert("Are you sure you want to delete all tasks?", isPresented: $viewModel.isShowingAlert) {
-      Button("Cancel", role: .cancel) {}
-      
-      Button("Delete") {
-        viewModel.deleteAllTasks()
-      }
     }
     .onAppear(perform: {
       Task {
@@ -76,7 +61,7 @@ struct SettingsTaskView: View {
 
 // MARK: - Private Views
 
-private extension SettingsTaskView {
+private extension AppSettingsView {
   
   func navigationBar() -> some View {
     NavigationBarView(
@@ -118,42 +103,6 @@ private extension SettingsTaskView {
       title: "Time",
       options: TimeFormat.allCases,
       selection: $viewModel.settings.timeFormat
-    )
-    .modifier(SectionStyle())
-  }
-  
-  func newTasksSection() -> some View {
-    CustomPickerView(
-      title: "New tasks",
-      options: AddingNewTask.allCases,
-      selection: $viewModel.settings.addNewTaskIn
-    )
-    .modifier(SectionStyle())
-  }
-  
-  func defaultSortingSection() -> some View {
-    CustomPickerView(
-      title: "Default screen view",
-      options: TaskDateSorting.allCases,
-      selection: $viewModel.settings.taskDateSorting
-    )
-    .modifier(SectionStyle())
-  }
-  
-  func completedTaskSection() -> some View {
-    CustomPickerView(
-      title: "Completed tasks",
-      options: CompletedTask.allCases,
-      selection: $viewModel.settings.completedTask
-    )
-    .modifier(SectionStyle())
-  }
-  
-  func newTaskFeaturesSection() -> some View {
-    CustomPickerView(
-      title: "New task features",
-      options: TaskType.allCases,
-      selection: $viewModel.settings.newTaskFeature
     )
     .modifier(SectionStyle())
   }
@@ -223,22 +172,6 @@ private extension SettingsTaskView {
     .modifier(SectionStyle())
   }
   
-  func сompletionСircleView() -> some View {
-          Button {
-              viewModel.сompletionСircleAction()
-          } label: {
-              HStack {
-                  if viewModel.settings.сompletionСircle {
-                      checkMark
-                  }
-                  
-                  Text("settings_сompletion_сircle")
-              }
-          }
-          .padding(.vertical, 10)
-          .modifier(SectionStyle())
-      }
-  
   func pushNotificationView() -> some View {
     Button {
       viewModel.requestNotificationPermission()
@@ -254,34 +187,7 @@ private extension SettingsTaskView {
     .padding(.vertical, 10)
     .modifier(SectionStyle())
   }
-  
-  func hapticFeedbackButton() -> some View {
-         Button {
-             viewModel.turnOnHapticFeedback()
-         } label: {
-             HStack {
-                 if viewModel.settings.hapticFeedback {
-                     checkMark
-                 }
-                 
-                 Text("settings_haptic_feedback")
-             }
-         }
-         .padding(.vertical, 10)
-         .modifier(SectionStyle())
-     }
-  
-  func deleteAllTasksButton() -> some View {
-    Button {
-      viewModel.isShowingAlert = true
-    } label: {
-      Text("Delete all tasks")
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-    .padding(.vertical, 10)
-    .modifier(SectionStyle())
-  }
-  
+
   var checkMark: some View {
     Image("Check")
       .renderingMode(.template)
@@ -289,15 +195,9 @@ private extension SettingsTaskView {
       .scaledToFit()
       .frame(width: 13, height: 13)
   }
-  
-  func versionView() -> some View {
-    Text("Version \(viewModel.getAppVersion())")
-      .hAlign(alignment: .trailing)
-      .padding(.vertical)
-  }
 }
 
-private extension SettingsTaskView {
+private extension AppSettingsView {
   func setupReminder(with option: DailyReminderOption) {
     switch option {
     case .custom:
@@ -319,6 +219,6 @@ private extension SettingsTaskView {
 
 struct SettingsTaskView_Previews: PreviewProvider {
   static var previews: some View {
-    SettingsTaskView(viewModel: SettingsTaskViewModel(appState: AppState()))
+    AppSettingsView(viewModel: AppSettingsViewModel(appState: AppState()))
   }
 }

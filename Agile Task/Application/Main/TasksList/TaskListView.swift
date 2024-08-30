@@ -71,9 +71,9 @@ struct TaskListView: View {
         case .subscription:
           SubscriptionView()
         case .settings:
-          SettingsView()
-        case .taskSettings:
-          SettingsTaskView(viewModel: SettingsTaskViewModel(appState: appState))
+          SettingsView(viewModel: SettingsViewModel(settingType: .tasksList))
+        case .appSettings:
+          AppSettingsView(viewModel: AppSettingsViewModel(appState: appState))
         case .security:
           SecurityView(viewModel: SecurityViewModel(appState: appState))
         case .more:
@@ -90,6 +90,8 @@ struct TaskListView: View {
           SetPasswordView(viewModel: SetPasswordViewModel(appState: appState,
                                                           isFirstSetup: false,
                                                           setPasswordGoal: .tasks))
+        case .taskSettings:
+          TasksSettingsView(viewModel: TasksSettingsViewModel(appState: appState))
         }
       }
       .onAppear {

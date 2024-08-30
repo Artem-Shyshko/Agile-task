@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-final class SettingsTaskViewModel: ObservableObject {
+final class AppSettingsViewModel: ObservableObject {
     @Published var settings: SettingsDTO
     @Published var isShowingAlert = false
     @Published var isNotificationAccess = false
@@ -35,14 +35,6 @@ final class SettingsTaskViewModel: ObservableObject {
         settings = appState.settingsRepository!.get()
     }
     
-    func getAppVersion() -> String {
-        if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
-            return version
-        } else {
-            return "x.x"
-        }
-    }
-    
     func turnOnTips() {
         settings.isShowingInfoTips.toggle()
         appState.settingsRepository!.save(settings)
@@ -58,11 +50,7 @@ final class SettingsTaskViewModel: ObservableObject {
             }
         }
     }
-    
-    func сompletionСircleAction() {
-            settings.сompletionСircle.toggle()
-        }
-    
+
     func pushNotificationButtonAction() {
         settings.isPushNotificationEnabled.toggle()
     }
@@ -70,14 +58,6 @@ final class SettingsTaskViewModel: ObservableObject {
     func addPlusButtonAction() {
         settings.showPlusButton.toggle()
     }
-    
-    func deleteAllTasks() {
-        appState.taskRepository!.deleteAll()
-    }
-    
-    func turnOnHapticFeedback() {
-            settings.hapticFeedback.toggle()
-        }
     
     func requestNotificationPermission() {
         UNUserNotificationCenter.current()
