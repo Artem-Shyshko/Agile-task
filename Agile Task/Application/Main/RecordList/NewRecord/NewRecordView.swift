@@ -83,7 +83,11 @@ private extension NewRecordView {
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: cancelButton(),
-            header: NavigationTitle(viewModel.editedRecord == nil ? "new_record" : "edit_record"),
+            header: CustomSegmentedControl(
+                options: TaskType.allCases,
+                selection: $viewModel.taskType,
+                textColor: themeManager.theme.sectionTextColor(colorScheme)
+            ).padding(.horizontal, viewModel.settings.appLanguage == .ukrainian ? 35 : 15),
             rightItem: saveButton()
         )
     }
@@ -194,7 +198,16 @@ private extension NewRecordView {
         )
     }
     
+    @ViewBuilder
     func mainListOfFields() -> some View {
+        if viewModel.taskType == .advanced {
+            advancedListOfFields()
+        } else {
+            simpleListOfFields()
+        }
+    }
+    
+    func advancedListOfFields() -> some View {
         List {
             Section() {
                 recordTitle()
@@ -223,6 +236,34 @@ private extension NewRecordView {
             Section(header: sectionTitle(title:"settings_title")) {
                 protectionSelector()
                 autoCloseSelector()
+            }
+            .padding(.horizontal, -5)
+            .listRowBackground(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color(themeManager.theme.sectionColor(colorScheme).name))
+            )
+        }
+        .scrollContentBackground(.hidden)
+        .listRowSeparator(.hidden)
+        .listStyle(.plain)
+        .listRowSpacing(Constants.shared.listRowSpacing)
+        .padding(.bottom, 10)
+    }
+    
+    func simpleListOfFields() -> some View {
+        List {
+            Section() {
+                recordTitle()
+            }
+            .padding(.horizontal, -5)
+            .listRowBackground(
+                RoundedRectangle(cornerRadius: 4)
+                    .fill(Color(themeManager.theme.sectionColor(colorScheme).name))
+            )
+            
+            Section(header: sectionTitle(title: "record_details")) {
+                userNameView()
+                passwordView()
             }
             .padding(.horizontal, -5)
             .listRowBackground(
@@ -266,6 +307,12 @@ private extension NewRecordView {
         switch viewModel.protectWith {
         case .none:
             Button {
+                if viewModel.taskType == .advanced {
+                    guard purchaseManager.hasUnlockedPro == true else {
+                        appState.securedNavigationStack.append(.purchase)
+                        return
+                    }
+                }
                 viewModel.saveRecord()
                 if viewModel.showErrorAlert != true {
                     dismiss.callAsFunction()
