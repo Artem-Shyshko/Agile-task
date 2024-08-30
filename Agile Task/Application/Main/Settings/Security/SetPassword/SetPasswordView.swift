@@ -18,7 +18,6 @@ struct SetPasswordView: View {
     @State private var showAuthView = false
     @State var showPasswordView = false
     
-    var isFirstSetup: Bool
     private let defaults = UserDefaults.standard
     
     // MARK: - Body
@@ -31,7 +30,7 @@ struct SetPasswordView: View {
                 passwordFieldView()
                 CheckingPasswordView(viewModel: viewModel, password: viewModel.newPassword)
                 repeatPasswordFieldView()
-                if isFirstSetup { secureWithFieldView() }
+                if viewModel.isFirstSetup { secureWithFieldView() }
                 Spacer()
             }
         }
@@ -41,6 +40,9 @@ struct SetPasswordView: View {
         .modifier(TabViewChildModifier())
         .onChange(of: viewModel.settings) { _ in
             viewModel.appState.settingsRepository!.save(viewModel.settings)
+        }
+        .onChange(of: viewModel.dismiss) { _ in
+            dismiss.callAsFunction()
         }
     }
 }
@@ -62,6 +64,8 @@ private extension SetPasswordView {
                     defaults.setValue(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
                     showPasswordView = true
                     AppHelper.shared.isOnboarding = true
+                    viewModel.saveRecordWith()
+                    dismiss()
                 }
             } else {
                 if let password = defaults.value(forKey: Constants.shared.userPassword) as? String,
@@ -150,8 +154,8 @@ private extension SetPasswordView {
 struct SetPasswordView_Previews: PreviewProvider {
     static var previews: some View {
         SetPasswordView(viewModel: SetPasswordViewModel(appState: AppState(), 
-                                                        setPasswordGoal: .records),
-                        isFirstSetup: true)
+                                                        isFirstSetup: true,
+                                                        setPasswordGoal: .records))
     }
 }
 

@@ -29,9 +29,6 @@ struct SecurityView: View {
             }
         }
         .modifier(TabViewChildModifier())
-        .navigationDestination(isPresented: $viewModel.showPasswordView) {
-            SetPasswordView(viewModel: SetPasswordViewModel(appState: viewModel.appState, setPasswordGoal: .records), isFirstSetup: false)
-        }
         .onChange(of: viewModel.settings.securityOption) { newValue in
             if newValue == .password, !isUserPassword {
                 viewModel.showPasswordView = true
@@ -78,11 +75,9 @@ private extension SecurityView {
     }
     
     func changePasswordView() -> some View {
-        Button {
-            viewModel.showPasswordView = true
-        } label: {
+        NavigationLink(value: TaskListNavigationView.setPassword) {
             HStack {
-                Text("Password")
+                Text("password_title")
                 Spacer()
                 Text(isUserPassword ? "Change" : "Set")
                     .padding(.trailing, 13)
