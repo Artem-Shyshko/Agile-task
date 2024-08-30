@@ -31,7 +31,7 @@ private extension SortingView {
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: backButton(),
-            header: NavigationTitle("Sorting"),
+            header: NavigationTitle("tasks_view_sorting"),
             rightItem: EmptyView()
         )
     }

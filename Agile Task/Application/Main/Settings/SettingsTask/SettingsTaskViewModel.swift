@@ -24,7 +24,10 @@ final class SettingsTaskViewModel: ObservableObject {
         "tip_swipe_left",
         "tip_swipe_left_project",
         "tip_add_new_project",
-        "tip_group_tasks"
+        "tip_group_tasks",
+        "tap_to_view_details",
+        "swipe_left_task_list",
+        "hold_on_task_task_list"
     ]
     
     init(appState: AppState) {

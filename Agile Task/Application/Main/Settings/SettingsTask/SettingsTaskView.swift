@@ -98,6 +98,7 @@ private extension SettingsTaskView {
       options: TaskDateFormmat.allCases,
       selection: $viewModel.settings.taskDateFormat
     )
+    .modifier(SectionStyle())
   }
   
   func languageSection() -> some View {
@@ -106,6 +107,7 @@ private extension SettingsTaskView {
       options: AppLanguage.allCases,
       selection: $viewModel.settings.appLanguage
     )
+    .modifier(SectionStyle())
     .onChange(of: viewModel.settings.appLanguage) { newValue in
       UserDefaults.standard.set(newValue.identifier, forKey: Constants.shared.appLanguage)
     }
@@ -117,6 +119,7 @@ private extension SettingsTaskView {
       options: TimeFormat.allCases,
       selection: $viewModel.settings.timeFormat
     )
+    .modifier(SectionStyle())
   }
   
   func newTasksSection() -> some View {
@@ -125,6 +128,7 @@ private extension SettingsTaskView {
       options: AddingNewTask.allCases,
       selection: $viewModel.settings.addNewTaskIn
     )
+    .modifier(SectionStyle())
   }
   
   func defaultSortingSection() -> some View {
@@ -133,6 +137,7 @@ private extension SettingsTaskView {
       options: TaskDateSorting.allCases,
       selection: $viewModel.settings.taskDateSorting
     )
+    .modifier(SectionStyle())
   }
   
   func completedTaskSection() -> some View {
@@ -141,6 +146,7 @@ private extension SettingsTaskView {
       options: CompletedTask.allCases,
       selection: $viewModel.settings.completedTask
     )
+    .modifier(SectionStyle())
   }
   
   func newTaskFeaturesSection() -> some View {
@@ -149,6 +155,7 @@ private extension SettingsTaskView {
       options: TaskType.allCases,
       selection: $viewModel.settings.newTaskFeature
     )
+    .modifier(SectionStyle())
   }
   
   func dailyReminder() -> some View {
@@ -158,6 +165,7 @@ private extension SettingsTaskView {
         options: DailyReminderOption.allCases,
         selection: $viewModel.settings.dailyReminderOption
       )
+      .modifier(SectionStyle())
       
       if viewModel.settings.dailyReminderOption == .custom {
         RecurringTimeView(
@@ -177,6 +185,7 @@ private extension SettingsTaskView {
       options: WeekStarts.allCases,
       selection: $viewModel.settings.startWeekFrom
     )
+    .modifier(SectionStyle())
     .onChange(of: viewModel.settings.startWeekFrom) { newValue in
       UserDefaults.standard.set(newValue.value, forKey: "WeekStart")
     }

@@ -17,13 +17,14 @@ final class AppState: ObservableObject {
     var taskRepository: TaskRepository?
     var checkboxRepository: CheckboxRepository?
     var bulletRepository: BulletRepository?
+    var recordsRepository: RecordRepository?
     
     @Published var taskListNavigationStack: [TaskListNavigationView] = []
     @Published var projectsNavigationStack: [ProjectNavigationView] = []
-    @Published var settingsNavigationStack: [SettingsNavigationView] = []
+    @Published var securedNavigationStack: [SecuredNavigationView] = []
     var isTabBarHidden: Bool {
         taskListNavigationStack.contains(.subscription)
-        || settingsNavigationStack.contains(.subscription)
+        || securedNavigationStack.contains(.purchase)
         || projectsNavigationStack.contains(.subscription)
     }
     
@@ -35,6 +36,7 @@ final class AppState: ObservableObject {
         self.taskRepository = TaskRepositoryImpl(storage: storage)
         self.checkboxRepository = CheckboxRepositoryImpl(storage: storage)
         self.bulletRepository = BulletRepositoryImpl(storage: storage)
+        self.recordsRepository = RecordRepositoryImpl(storage: storage)
     }
     
     func restore() {

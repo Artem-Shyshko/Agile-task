@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum SetPasswordGoal {
+    case tasks
+    case records
+}
+
 final class SetPasswordViewModel: ObservableObject {
     let characterLimit = 20
     @Published var settings: SettingsDTO
@@ -15,9 +20,12 @@ final class SetPasswordViewModel: ObservableObject {
     @Published var confirmPassword = ""
     @Published var allRequirementsMet = false
     var appState: AppState
+    var setPasswordGoal: SetPasswordGoal
     
-    init(appState: AppState) {
+    init(appState: AppState,
+         setPasswordGoal: SetPasswordGoal) {
         self.appState = appState
         self.settings = appState.settingsRepository!.get()
+        self.setPasswordGoal = setPasswordGoal
     }
 }

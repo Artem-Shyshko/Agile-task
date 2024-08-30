@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum RegEx: String {
+    case email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    case url = #"((https?|ftp)://)?(www\.)?[a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+(\/[a-zA-Z0-9#]+\/?)*"#
+}
+
 extension String {
     var firstLetter: String {
         String(self.prefix(1))
@@ -31,3 +36,28 @@ extension String {
         return maskedString
     }
 }
+
+// MARK: - Validation
+extension String {
+    func isStringValid(regEx: RegEx) -> Bool {
+        let predicate = NSPredicate(format:"SELF MATCHES %@",
+                                    regEx.rawValue)
+        return predicate.evaluate(with: self)
+    }
+}
+
+// MARK: - Date format
+extension String {
+    func formatToFormattedString(format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+        guard let date = dateFormatter.date(from: self) else {
+            return ""
+        }
+        
+        let newDateFormatter = DateFormatter()
+        newDateFormatter.dateFormat = format
+        return newDateFormatter.string(from: date)
+    }
+}
+

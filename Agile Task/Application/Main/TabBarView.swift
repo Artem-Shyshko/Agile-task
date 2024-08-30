@@ -11,11 +11,34 @@ import RealmSwift
 // MARK: - Enum
 
 enum TaskListNavigationView: Hashable {
-    case createTask(editedTask: TaskDTO? = nil), completedTasks, sorting, newCheckBox, subscription
+    case createTask(editedTask: TaskDTO? = nil),
+         completedTasks,
+         sorting,
+         newCheckBox,
+         subscription,
+         settings,
+         taskSettings,
+         security,
+         more,
+         contactUs,
+         backup,
+         backupDetail(storage: BackupStorage),
+         backupList(storage: BackupStorage)
 }
 
-enum SettingsNavigationView: Hashable {
-    case subscription, taskSettings, security, more, contactUs, backup, backupDetail(storage: BackupStorage), backupList(storage: BackupStorage)
+enum SecuredNavigationView: Hashable {
+    case createRecord(record: RecordDTO? = nil),
+         recordInfo(record: RecordDTO),
+         purchase,
+         sorting,
+         settings,
+         settingsGeneral,
+         security,
+         more,
+         backup,
+         backupDetail(storage: BackupStorage),
+         backupList(storage: BackupStorage),
+         setPassword
 }
 
 enum ProjectNavigationView: Hashable {
@@ -25,13 +48,13 @@ enum ProjectNavigationView: Hashable {
 enum Tab: LocalizedStringResource, Identifiable, CaseIterable {
     case taskList = "Tasks"
     case projects = "Projects"
-    case settings = "SettingsTab"
+    case secured = "SecuredTab"
     
     var imageName: String {
         switch self {
         case .taskList: return "tasks"
         case .projects: return "project"
-        case .settings: return "settings"
+        case .secured: return "Secured"
         }
     }
     
@@ -46,8 +69,11 @@ enum Tab: LocalizedStringResource, Identifiable, CaseIterable {
 struct TabBarView: View {
     
     // MARK: - Properties
-    
     @EnvironmentObject var appState: AppState
+    @State var showAuthViewForRecords: Bool = false
+    @State var showPasswordView: Bool = false
+    
+    private let defaults = UserDefaults.standard
     
     // MARK: - Body
     
@@ -58,8 +84,8 @@ struct TabBarView: View {
                     .tag(Tab.taskList)
                 ProjectsView(vm: ProjectsViewModel(appState: appState), path: $appState.projectsNavigationStack)
                     .tag(Tab.projects)
-                SettingsView(path: $appState.settingsNavigationStack)
-                    .tag(Tab.settings)
+                RecordListView(viewModel: RecordListViewModel(appState: appState), path: $appState.securedNavigationStack, showPasswordView: showPasswordView)
+                    .tag(Tab.secured)
             }
             .overlay(alignment: .bottom) {
                 if !appState.isTabBarHidden {
@@ -69,7 +95,7 @@ struct TabBarView: View {
         }
         .onChange(of: appState.selectedTab) { newValue in
             appState.taskListNavigationStack = []
-            appState.settingsNavigationStack = []
+            appState.securedNavigationStack = []
             appState.projectsNavigationStack = []
         }
         .onOpenURL { incomingURL in
@@ -92,7 +118,7 @@ struct TabBarView: View {
 
 struct TabBarView_Previews: PreviewProvider {
     static var previews: some View {
-        TabBarView()
+        TabBarView(showAuthViewForRecords: false)
             .background(Color.red)
             .previewDevice("iPhone 15 pro")
             .environmentObject(AppState())
@@ -132,8 +158,13 @@ private extension TabBarView {
                     appState.taskListNavigationStack = []
                 case .projects:
                     appState.projectsNavigationStack = []
-                case .settings:
-                    appState.settingsNavigationStack = []
+                case .secured:
+                    if defaults.value(forKey: Constants.shared.userPassword) == nil {
+                        showAuthViewForRecords = true
+                    } else {
+                        showPasswordView = true
+                    }
+                    appState.securedNavigationStack = []
                 }
             }
         }

@@ -107,6 +107,76 @@
     "$49.99 " : {
 
     },
+    "15_sec" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15 sec"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "15 сек"
+          }
+        }
+      }
+    },
+    "30_sec" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 sec"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "30 сек"
+          }
+        }
+      }
+    },
+    "60_sec" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "60 sec"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "60 сек"
+          }
+        }
+      }
+    },
+    "account_userName" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account/User name"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Акаунт/Ім'я користувача"
+          }
+        }
+      }
+    },
+    "add" : {
+
+    },
     "Add" : {
       "localizations" : {
         "fr" : {
@@ -184,6 +254,22 @@
         }
       }
     },
+    "add_field" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add field"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати поле"
+          }
+        }
+      }
+    },
     "add_more_detail_task_mock" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -197,6 +283,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Додайте більше деталей в описі завдання."
+          }
+        }
+      }
+    },
+    "address_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Address"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Адреса"
           }
         }
       }
@@ -299,6 +402,9 @@
           }
         }
       }
+    },
+    "alert_wrong_fields_requirements" : {
+
     },
     "alert_wrong_password" : {
       "localizations" : {
@@ -442,6 +548,25 @@
         }
       }
     },
+    "are_you_sure_you_want_to_delete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви впевнені, що хочете видалити?"
+          }
+        }
+      }
+    },
+    "are_you_sure_you_want_to_delete_the_point" : {
+
+    },
     "At the bottom of the list" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -449,6 +574,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "В низу списка"
+          }
+        }
+      }
+    },
+    "auto_close" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto close"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Авто закриття"
           }
         }
       }
@@ -475,6 +616,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Список з маркерами"
+          }
+        }
+      }
+    },
+    "bullet_list_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Маркований список"
           }
         }
       }
@@ -742,9 +900,42 @@
         }
       }
     },
+    "data_is_copied" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your data is copied and available for share. Please be careful with your data sharing."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ваші дані скопійовано та доступні для спільного використання. Будь ласка, будьте обережні з обміном даними."
+          }
+        }
+      }
+    },
     "Date" : {
       "extractionState" : "manual",
       "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дата"
+          }
+        }
+      }
+    },
+    "date_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Date"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -797,6 +988,9 @@
         }
       }
     },
+    "delete" : {
+
+    },
     "Delete" : {
       "localizations" : {
         "fr" : {
@@ -845,9 +1039,31 @@
         }
       }
     },
+    "description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опис"
+          }
+        }
+      }
+    },
     "Description" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -902,6 +1118,26 @@
         }
       }
     },
+    "e-mail_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-mail"
+          }
+        }
+      }
+    },
+    "edit" : {
+
+    },
     "Edit" : {
       "localizations" : {
         "fr" : {
@@ -914,6 +1150,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Редагувати"
+          }
+        }
+      }
+    },
+    "edit_record" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit record"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Редагувати запис"
           }
         }
       }
@@ -1021,6 +1273,23 @@
         }
       }
     },
+    "face_id_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face ID"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face ID"
+          }
+        }
+      }
+    },
     "files_backup" : {
       "localizations" : {
         "en" : {
@@ -1103,6 +1372,9 @@
         }
       }
     },
+    "hold_on_task_task_list" : {
+
+    },
     "iCloud_backup" : {
       "localizations" : {
         "en" : {
@@ -1142,6 +1414,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Через день"
+          }
+        }
+      }
+    },
+    "info_bulletlist" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bullet list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mаркований список"
           }
         }
       }
@@ -1364,6 +1652,22 @@
         }
       }
     },
+    "new_record" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New record"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новий запис"
+          }
+        }
+      }
+    },
     "Next week" : {
       "localizations" : {
         "fr" : {
@@ -1420,6 +1724,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відсутнє"
+          }
+        }
+      }
+    },
+    "none_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відсутнє"
+          }
+        }
+      }
+    },
+    "number_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Number"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Число"
           }
         }
       }
@@ -1484,6 +1822,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mot de passe"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пароль"
+          }
+        }
+      }
+    },
+    "password_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Password"
           }
         },
         "uk" : {
@@ -1572,6 +1927,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пароль"
+          }
+        }
+      }
+    },
+    "phone_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Phone"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Телефон"
           }
         }
       }
@@ -1681,6 +2053,22 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Списки "
+          }
+        }
+      }
+    },
+    "protect_with" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protect with"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Захистити запис з"
           }
         }
       }
@@ -1951,6 +2339,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кнопка швидкого введення"
+          }
+        }
+      }
+    },
+    "record_details" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Record details"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деталі запису"
+          }
+        }
+      }
+    },
+    "record_locked" : {
+
+    },
+    "record_title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
           }
         }
       }
@@ -2229,6 +2653,23 @@
         }
       }
     },
+    "search_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пошук"
+          }
+        }
+      }
+    },
     "secure_app_with" : {
       "localizations" : {
         "en" : {
@@ -2241,6 +2682,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Захистити додаток з"
+          }
+        }
+      }
+    },
+    "SecuredTab" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secured"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Secured"
           }
         }
       }
@@ -2341,6 +2798,23 @@
         }
       }
     },
+    "settings_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Налаштування"
+          }
+        }
+      }
+    },
     "settings_сompletion_сircle" : {
       "localizations" : {
         "en" : {
@@ -2375,6 +2849,7 @@
       }
     },
     "Sorting" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -2432,6 +2907,9 @@
         }
       }
     },
+    "swipe_left_task_list" : {
+
+    },
     "swipe_right_task_list" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2448,6 +2926,9 @@
           }
         }
       }
+    },
+    "tap_to_view_details" : {
+
     },
     "Task title" : {
       "localizations" : {
@@ -2738,6 +3219,23 @@
         }
       }
     },
+    "tip_add_new_record" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add new record"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати новий запис"
+          }
+        }
+      }
+    },
     "tip_add_new_task" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2823,6 +3321,23 @@
         }
       }
     },
+    "tip_share_copy" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share record details Copy record details"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поділіться  записом Скопіюйте деталі запису"
+          }
+        }
+      }
+    },
     "tip_swipe_left" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2853,6 +3368,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проведіть вліво для\nредагування/видалення списку"
+          }
+        }
+      }
+    },
+    "tip_tap_hold" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap and hold to change  record order in the list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Натиск та утримання\nдля редагування \nпозиції запису  у списку"
+          }
+        }
+      }
+    },
+    "title_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Текст"
           }
         }
       }
@@ -2939,6 +3488,23 @@
         }
       }
     },
+    "URL_field" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL"
+          }
+        }
+      }
+    },
     "use_broad_task_mock" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2971,6 +3537,9 @@
           }
         }
       }
+    },
+    "view_record" : {
+
     },
     "Visit our website" : {
       "localizations" : {

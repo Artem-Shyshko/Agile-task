@@ -127,6 +127,7 @@ private extension NewTaskView {
             selection: $viewModel.taskStatus,
             isSelected: viewModel.taskStatus != .none
         )
+        .modifier(SectionStyle())
     }
     
     func titleView() -> some View {
@@ -208,6 +209,7 @@ private extension NewTaskView {
                 selection: $viewModel.selectedDateOption,
                 isSelected: viewModel.selectedDateOption != .none
             )
+            .modifier(SectionStyle())
             
             if viewModel.selectedDateOption == .custom {
                 CustomCalendarView(
@@ -232,6 +234,7 @@ private extension NewTaskView {
                 selection: $viewModel.selectedTimeOption,
                 isSelected: viewModel.selectedTimeOption != .none
             )
+            .modifier(SectionStyle())
             
             if viewModel.selectedTimeOption == .custom {
                 TimeView(
@@ -259,6 +262,7 @@ private extension NewTaskView {
                 selection: $viewModel.recurringConfiguration.option,
                 isSelected: viewModel.recurringConfiguration.option != .none
             )
+            .modifier(SectionStyle())
             
             if viewModel.recurringConfiguration.option == .custom {
                 RecurringView(viewModel: viewModel)
@@ -275,6 +279,7 @@ private extension NewTaskView {
                 selection: $viewModel.reminder,
                 isSelected: viewModel.reminder != .none
             )
+            .modifier(SectionStyle())
             
             switch viewModel.reminder {
             case .custom:
@@ -356,6 +361,7 @@ private extension NewTaskView {
             selection: $viewModel.selectedProjectName,
             isSelected: true
         )
+        .modifier(SectionStyle())
     }
     
     func tabBarCancelButton() -> some View {
@@ -483,7 +489,6 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
         }
         .tint(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
         .foregroundStyle(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
-        .modifier(SectionStyle())
     }
     
     private func customPickerLabel(rightName: LocalizedStringKey, leftName: LocalizedStringKey) -> some View {

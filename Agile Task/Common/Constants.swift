@@ -42,6 +42,8 @@ final class Constants {
     let dropboxKey = "2uhkb4ofg0in4ie"
     let dropboxAccessToken = "dropboxAccessToken"
     let appGroupID = "group.agiletask.app"
+    let passwordsKeys = "passwordsKeys"
+    let charactersLimit = 40
     
     lazy var currentDate = Date()
     
