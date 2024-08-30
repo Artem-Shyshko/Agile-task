@@ -2209,6 +2209,23 @@
         }
       }
     },
+    "purchase_unlimited_checklists" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited checklists"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Необмежені контрольні списки"
+          }
+        }
+      }
+    },
     "purchase_unlimited_lists" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2226,6 +2243,23 @@
         }
       }
     },
+    "purchase_unlimited_secured" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited secured"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Необмежені захищені записи"
+          }
+        }
+      }
+    },
     "purchase_unlimited_tasks" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2239,6 +2273,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Необмежена кількість завдань"
+          }
+        }
+      }
+    },
+    "purchase_unlimited_to_do_lists" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unlimited to do lists"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Необмежені списки справ"
           }
         }
       }
@@ -2695,6 +2746,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Налаштування"
+          }
+        }
+      }
+    },
+    "settings_haptic_feedback" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haptic feedback"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тактильні сигнали"
           }
         }
       }
@@ -3601,6 +3668,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Що ви шукаєте"
+          }
+        }
+      }
+    },
+    "with_Agile_Task" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "with Agile Task"
           }
         }
       }

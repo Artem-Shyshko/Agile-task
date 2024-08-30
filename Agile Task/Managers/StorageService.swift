@@ -40,6 +40,7 @@ final class StorageService {
             if oldSchemaVersion < configuration.schemaVersion {
                 migration.enumerateObjects(ofType: SettingsObject.className()) { oldObject, newObject in
                     newObject?["сompletionСircle"] = true
+                    newObject?["hapticFeedback"] = true
                     newObject?["sortingType"] = SortingType.manualy
                     newObject?["recordsSecurity"] = RecordsSecurity.password
                 }

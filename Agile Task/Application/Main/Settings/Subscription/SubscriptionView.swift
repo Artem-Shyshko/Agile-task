@@ -28,6 +28,9 @@ struct SubscriptionView: View {
     private let checkmarkItems = [
         "purchase_unlimited_tasks",
         "purchase_unlimited_lists",
+        "purchase_unlimited_checklists",
+        "purchase_unlimited_to_do_lists",
+        "purchase_unlimited_secured",
         "purchase_advanced_features"
     ]
     
@@ -36,19 +39,19 @@ struct SubscriptionView: View {
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
-            VStack(spacing: 40) {
                 VStack(spacing: 20) {
-                    title()
-                    subtitle()
-                    Spacer()
-                    checkmarksView()
-                    Spacer()
-                    reviews()
-                    products()
+                    VStack {
+                        title()
+                        subtitle()
+                        Spacer()
+                        checkmarksView()
+                        Spacer()
+                        reviews()
+                        products()
+                    }
+                    bottomButtons()
                 }
-                bottomButtons()
-            }
-            .padding(.horizontal, 2)
+                .padding(.horizontal, 2)
         }
         .onAppear {
             Task {

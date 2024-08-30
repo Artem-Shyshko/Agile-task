@@ -283,6 +283,7 @@ extension TaskListViewModel {
     }
     
     func updateTaskCompletion(_ taskId: String) {
+        hapticFeedBack()
         if let index = filteredTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
             filteredTasks[index].isCompleted.toggle()
             filteredTasks = sortedCompletedTasks(filteredTasks, settings: settings)
@@ -327,6 +328,7 @@ extension TaskListViewModel {
     }
     
     func completeCheckbox(_ checkbox: CheckboxDTO, with taskId: String) {
+        hapticFeedBack()
         if let taskIndex = filteredTasks.firstIndex(where: { $0.id.stringValue == taskId }) {
             if let checkboxIndex = filteredTasks[taskIndex].checkBoxArray.firstIndex(where: { $0.id == checkbox.id }) {
                 filteredTasks[taskIndex].checkBoxArray[checkboxIndex].isCompleted.toggle()
@@ -586,5 +588,11 @@ extension TaskListViewModel {
     
     func sectionHeader(_ key: String) -> String {
         key
+    }
+    
+    func hapticFeedBack() {
+        guard settings.hapticFeedback else { return }
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.success)
     }
 }

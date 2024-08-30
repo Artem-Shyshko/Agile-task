@@ -29,6 +29,7 @@ struct SettingsDTO {
     var taskSorting: TaskSorting = .manual
     var securityOption: SecurityOption = .none
     var сompletionСircle: Bool = true
+    var hapticFeedback: Bool = true
     var sortingType: SortingType = .manualy
     var recordsSecurity: RecordsSecurity = .password
 }
@@ -55,6 +56,7 @@ extension SettingsDTO {
         rememberLastPickedOptionView = object.rememberLastPickedOptionView
         taskSorting = object.taskSorting ?? .manual
         securityOption = object.securityOption
+        hapticFeedback = object.hapticFeedback
         sortingType = object.sortingType
         recordsSecurity = object.recordsSecurity
     }
