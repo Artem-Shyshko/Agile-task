@@ -76,8 +76,8 @@ struct SubscriptionView: View {
             if newValue == Constants.shared.yearlySubscriptionID
                 || newValue == Constants.shared.monthlySubscriptionID {
                 dismiss()
-                appState.selectedTab = .taskList
                 appState.projectsNavigationStack = []
+                appState.taskListNavigationStack = []
             }
         }
     }

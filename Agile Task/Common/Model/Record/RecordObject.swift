@@ -28,6 +28,7 @@ final class RecordObject: Object, ObjectKeyIdentifiable {
     @Persisted var autoClose: AutoClose
     @Persisted var sortingOrder: Int = 0
     @Persisted var fieldsList: RealmSwift.List<FieldObject>
+    @Persisted var taskType: TaskType = .light
 }
 
 // MARK: - Convenience init
@@ -67,6 +68,7 @@ extension RecordObject {
         protection = dto.settingsRecordInfo.protectWith
         autoClose = dto.settingsRecordInfo.autoClose
         sortingOrder = dto.sortingOrder
+        taskType = dto.taskType
     }
 }
 
