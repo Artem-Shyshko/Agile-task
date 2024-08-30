@@ -36,7 +36,17 @@ private extension SortingView {
         )
     }
     
+    @ViewBuilder
     func sortingOptions() -> some View {
+        switch viewModel.sortingState {
+        case .tasks:
+            taskSorting()
+        case .records:
+           recordsSorting()
+        }
+    }
+    
+    func taskSorting() -> some View {
         VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
             ForEach(TaskSorting.allCases, id: \.self) { option in
                 Button {
@@ -44,6 +54,26 @@ private extension SortingView {
                 } label: {
                     HStack {
                         if viewModel.settings.taskSorting == option {
+                            checkMark
+                        }
+                        
+                        Text(LocalizedStringKey(option.description))
+                    }
+                }
+                .modifier(SectionStyle())
+            }
+            Spacer()
+        }
+    }
+    
+    func recordsSorting() -> some View {
+        VStack(alignment: .leading, spacing: Constants.shared.listRowSpacing) {
+            ForEach(SortingType.allCases, id: \.self) { option in
+                Button {
+                    viewModel.editValue(with: option)
+                } label: {
+                    HStack {
+                        if viewModel.settings.sortingType == option {
                             checkMark
                         }
                         
@@ -72,6 +102,6 @@ private extension SortingView {
 
 struct SortingView_Previews: PreviewProvider {
     static var previews: some View {
-        SortingView(viewModel: SortingViewModel(appState: AppState()))
+        SortingView(viewModel: SortingViewModel(appState: AppState(), sortingState: .records))
     }
 }

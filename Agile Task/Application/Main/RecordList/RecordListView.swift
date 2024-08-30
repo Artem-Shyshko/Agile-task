@@ -79,7 +79,7 @@ struct RecordListView: View {
                 case .purchase:
                     SubscriptionView()
                 case .sorting:
-                    SortingView(viewModel: SortingViewModel(appState: appState))
+                    SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .records))
                 case .recordInfo(record: let record):
                     RecordInfoView(viewModel: RecordInfoViewModel(appState: appState, record: record))
                 case .settings:

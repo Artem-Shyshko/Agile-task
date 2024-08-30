@@ -65,7 +65,7 @@ struct TaskListView: View {
         case .completedTasks:
           CompletedTaskView(viewModel: viewModel, path: $path)
         case .sorting:
-          SortingView(viewModel: SortingViewModel(appState: appState))
+          SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .tasks))
         case .newCheckBox:
           EmptyView()
         case .subscription:
