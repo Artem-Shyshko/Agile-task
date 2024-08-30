@@ -86,6 +86,10 @@ struct TaskListView: View {
           BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
         case .backupList(storage: let storage):
           BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
+        case .setPassword:
+          SetPasswordView(viewModel: SetPasswordViewModel(appState: appState,
+                                                          isFirstSetup: false,
+                                                          setPasswordGoal: .tasks))
         }
       }
       .onAppear {

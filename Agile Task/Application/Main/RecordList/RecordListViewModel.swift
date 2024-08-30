@@ -42,13 +42,14 @@ final class RecordListViewModel: ObservableObject {
         self.appState = appState
         let settings = appState.settingsRepository!.get()
         self.settings = settings
-        self.recordsSecurity = settings.recordsSecurity.securityOption
+        self.recordsSecurity = settings.securityOption == .none ? settings.recordsSecurity.securityOption : settings.securityOption
         setupSearch()
     }
     
     func mainLoad() {
         showingInfoTipsSetup()
         loadRecords()
+        getRecordsSecurity()
     }
     
     func deleteRecord(_ record: RecordDTO) {
@@ -128,5 +129,9 @@ private extension RecordListViewModel {
         case .alphabetZA:
             self.savedRecords = records.sorted { $0.openRecordInfo.title > $1.openRecordInfo.title }
         }
+    }
+    
+    func getRecordsSecurity() {
+        recordsSecurity = settings.securityOption == .none ? settings.recordsSecurity.securityOption : settings.securityOption
     }
 }
