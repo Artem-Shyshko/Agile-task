@@ -404,7 +404,20 @@
       }
     },
     "alert_wrong_fields_requirements" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please fill or/and meet requirements for the fields"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Будь ласка, заповніть і/або виконайте вимоги до полів"
+          }
+        }
+      }
     },
     "alert_wrong_password" : {
       "localizations" : {
@@ -445,6 +458,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Всі"
+          }
+        }
+      }
+    },
+    "Alphabetically A-Z" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alphabetically A-Z"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За алфавітом А-Я"
+          }
+        }
+      }
+    },
+    "Alphabetically Z-A" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alphabetically Z-A"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "За алфавітом Я-А"
           }
         }
       }
@@ -581,7 +628,20 @@
       }
     },
     "are_you_sure_you_want_to_delete_the_point" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви впевнені, що хочете видалити?"
+          }
+        }
+      }
     },
     "At the bottom of the list" : {
       "extractionState" : "manual",
@@ -1171,6 +1231,7 @@
       }
     },
     "edit_record" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1480,6 +1541,23 @@
         }
       }
     },
+    "lower_case" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lower case letters"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "букви нижнього регістру"
+          }
+        }
+      }
+    },
     "Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1541,6 +1619,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ручне сортування"
+          }
+        }
+      }
+    },
+    "manualy_title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Manualy"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вручну"
           }
         }
       }
@@ -1669,6 +1764,7 @@
       }
     },
     "new_record" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1833,6 +1929,7 @@
       }
     },
     "Password" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2377,7 +2474,20 @@
       }
     },
     "record_locked" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This record is locked"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей запис заблоковано"
+          }
+        }
+      }
     },
     "record_title" : {
       "localizations" : {
@@ -3571,7 +3681,20 @@
       }
     },
     "view_record" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View record"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переглянути запис"
+          }
+        }
+      }
     },
     "Visit our website" : {
       "localizations" : {

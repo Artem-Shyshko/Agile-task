@@ -15,6 +15,7 @@ struct RecordDTO {
     var protectedRecordInfo: ProtectedRecordInfo
     var settingsRecordInfo: SettingsRecordInfo
     var sortingOrder: Int = 0
+    var taskType: TaskType
 }
 
 // MARK: - RecordDTO Init
@@ -30,7 +31,7 @@ extension RecordDTO {
         settingsRecordInfo = SettingsRecordInfo(protectWith: object.protection,
                                                 autoClose: object.autoClose)
         sortingOrder = object.sortingOrder
-        
+        taskType = object.taskType
         var fields = [FieldsInfo]()
         fields += returnFieldsInfoFrom(object)
         protectedRecordInfo.fields = fields

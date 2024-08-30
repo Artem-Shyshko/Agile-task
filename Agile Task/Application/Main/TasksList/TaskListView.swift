@@ -65,7 +65,7 @@ struct TaskListView: View {
         case .completedTasks:
           CompletedTaskView(viewModel: viewModel, path: $path)
         case .sorting:
-          SortingView(viewModel: SortingViewModel(appState: appState))
+          SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .tasks))
         case .newCheckBox:
           EmptyView()
         case .subscription:
@@ -86,6 +86,10 @@ struct TaskListView: View {
           BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
         case .backupList(storage: let storage):
           BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
+        case .setPassword:
+          SetPasswordView(viewModel: SetPasswordViewModel(appState: appState,
+                                                          isFirstSetup: false,
+                                                          setPasswordGoal: .tasks))
         case .taskSettings:
           TasksSettingsView(viewModel: TasksSettingsViewModel(appState: appState))
         }

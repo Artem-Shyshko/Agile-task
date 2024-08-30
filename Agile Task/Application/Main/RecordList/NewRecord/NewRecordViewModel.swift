@@ -16,6 +16,7 @@ final class NewRecordViewModel: ObservableObject {
     @Published var isScreenClose = false
     @Published var editedRecord: RecordDTO?
     @Published var selectedAccount: String = ""
+    @Published var taskType: TaskType = .light
     
     // Open info
     @Published var title: String = ""
@@ -30,13 +31,11 @@ final class NewRecordViewModel: ObservableObject {
     
     // Settings
     @Published var protection: Protection = .none
-    @Published var autoClose: AutoClose = .sec15
+    @Published var autoClose: AutoClose = .none
     @Published var protectWith: Protection = .none
     
     // MARK: - Internal
-    var fieldsInfoModel: FieldsInfoViewModel {
-        .init(appState: appState, fieldArray: returnFieldInfpModel(from: editedRecord?.protectedRecordInfo.fields))
-    }
+    lazy var fieldsInfoModel = FieldsInfoViewModel(appState: appState, fieldArray: returnFieldInfpModel(from: editedRecord?.protectedRecordInfo.fields))
     var settings: SettingsDTO
     var appState: AppState
     
@@ -51,9 +50,10 @@ final class NewRecordViewModel: ObservableObject {
         self.account = editedRecord?.protectedRecordInfo.userName ?? ""
         self.fieldsInfo = editedRecord?.protectedRecordInfo.fields ?? []
         self.protection = editedRecord?.settingsRecordInfo.protectWith ?? .none
-        self.autoClose = editedRecord?.settingsRecordInfo.autoClose ?? .sec15
+        self.autoClose = editedRecord?.settingsRecordInfo.autoClose ?? .none
         self.isEditing = editedRecord != nil
-        protectWith = editedRecord?.settingsRecordInfo.protectWith ?? .none
+        self.protectWith = editedRecord?.settingsRecordInfo.protectWith ?? .none
+        self.taskType =  editedRecord?.taskType ?? settings.newTaskFeature
         self.getPassword()
     }
     
@@ -97,6 +97,41 @@ private extension NewRecordViewModel {
     }
     
     func returnRecord() -> RecordDTO {
+        switch taskType {
+        case .light:
+            returnSimpleRecord()
+        case .advanced:
+            returnAdvancedRecord()
+        }
+    }
+    
+    func returnSimpleRecord() -> RecordDTO {
+        let openRecordInfo = OpenRecordInfo(title: title,
+                                            recordDescription: "",
+                                            bulletInfo: [])
+        
+        let settings = SettingsRecordInfo(protectWith: .none,
+                                          autoClose: .none)
+        
+        
+        let id = editedRecord == nil ? ObjectId.generate() :
+        editedRecord?.id ?? ObjectId.generate()
+        
+        let protectedInfo = editedRecord == nil ? ProtectedRecordInfo(userName: account,
+                                                                      password: password,
+                                                                      fields: []) :
+        ProtectedRecordInfo(userName: account,
+                            password: editedRecord?.protectedRecordInfo.password ?? "",
+                            fields: [])
+        
+        return RecordDTO(id: id,
+                         openRecordInfo: openRecordInfo,
+                         protectedRecordInfo: protectedInfo,
+                         settingsRecordInfo: settings,
+                         taskType: taskType)
+    }
+    
+    func returnAdvancedRecord() -> RecordDTO {
         let openRecordInfo = OpenRecordInfo(title: title,
                                             recordDescription: description,
                                             bulletInfo: bulletInfo)
@@ -117,7 +152,8 @@ private extension NewRecordViewModel {
         return RecordDTO(id: id,
                          openRecordInfo: openRecordInfo,
                          protectedRecordInfo: protectedInfo,
-                         settingsRecordInfo: settings)
+                         settingsRecordInfo: settings,
+                         taskType: taskType)
     }
     
     func returnFieldInfpModel(from fieldsInfo : [FieldsInfo]?) -> [FieldInfoModel] {

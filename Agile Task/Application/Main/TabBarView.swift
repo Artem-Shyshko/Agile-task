@@ -24,6 +24,7 @@ enum TaskListNavigationView: Hashable {
          appSettings,
          taskSettings,
          security,
+         setPassword,
          more,
          contactUs,
          backup,
@@ -77,7 +78,8 @@ struct TabBarView: View {
     // MARK: - Properties
     @EnvironmentObject var appState: AppState
     @State var showAuthViewForRecords: Bool = false
-    @State var showPasswordView: Bool = false
+    @State var showPasswordViewForRecords: Bool = false
+    @State var reloadRecords: Bool = false
     
     private let defaults = UserDefaults.standard
     
@@ -90,7 +92,10 @@ struct TabBarView: View {
                     .tag(Tab.taskList)
                 ProjectsView(vm: ProjectsViewModel(appState: appState), path: $appState.projectsNavigationStack)
                     .tag(Tab.projects)
-                RecordListView(viewModel: RecordListViewModel(appState: appState), path: $appState.securedNavigationStack, showPasswordView: showPasswordView)
+                RecordListView(viewModel: RecordListViewModel(appState: appState), 
+                               path: $appState.securedNavigationStack,
+                               showPasswordView: $showPasswordViewForRecords,
+                               reloadRecords: $reloadRecords)
                     .tag(Tab.secured)
             }
             .overlay(alignment: .bottom) {
@@ -99,10 +104,21 @@ struct TabBarView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $showAuthViewForRecords, content: {
+            SetPasswordView(viewModel: SetPasswordViewModel(appState: appState,
+                                                            isFirstSetup: true,
+                                                            setPasswordGoal: .records))
+        })
         .onChange(of: appState.selectedTab) { newValue in
             appState.taskListNavigationStack = []
             appState.securedNavigationStack = []
             appState.projectsNavigationStack = []
+        }
+        .onChange(of: showAuthViewForRecords) { newValue in
+            if !newValue {
+                reloadRecords = true
+                showPasswordViewForRecords = true
+            }
         }
         .onOpenURL { incomingURL in
             guard let incomeState = AppHelper.shared.handleIncomingURL(incomingURL) else { return }
@@ -168,7 +184,7 @@ private extension TabBarView {
                     if defaults.value(forKey: Constants.shared.userPassword) == nil {
                         showAuthViewForRecords = true
                     } else {
-                        showPasswordView = true
+                        showPasswordViewForRecords = true
                     }
                     appState.securedNavigationStack = []
                 }

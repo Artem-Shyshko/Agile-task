@@ -20,7 +20,8 @@ struct RecordListView: View {
     
     @StateObject var viewModel: RecordListViewModel
     @Binding var path: [SecuredNavigationView]
-    @State var showPasswordView: Bool
+    @Binding var showPasswordView: Bool
+    @Binding var reloadRecords: Bool
     
     // MARK: - Body
     var body: some View {
@@ -31,19 +32,6 @@ struct RecordListView: View {
                 
                 VStack(spacing: 3) {
                     recordsList()
-                        .overlay(alignment: .topTrailing) {
-                            if viewModel.isShowAutoFill {
-                                TipView(title: "tip_share_copy", arrowEdge: .bottom)
-                                    .offset(y: -60)
-                            }
-                        }
-                        .overlay(alignment: .top) {
-                            HStack(alignment: .top) {
-                                TipView(title: "tip_tap_hold", arrowEdge: .top)
-                                Spacer()
-                                TipView(title: "tip_swipe_left", arrowEdge: .top)
-                            }
-                        }
                     Spacer()
                 }
             }
@@ -52,6 +40,11 @@ struct RecordListView: View {
             })
             .onAppear {
                 viewModel.mainLoad()
+            }
+            .onChange(of: reloadRecords) { newValue in
+                if newValue {
+                    viewModel.mainLoad()
+                }
             }
             .onReceive(authManager.$state) { newValue in
                 if newValue == .loggedIn {
@@ -71,6 +64,10 @@ struct RecordListView: View {
                     viewModel.mainLoad()
                 }
             })
+            .fullScreenCover(isPresented: $showPasswordView, content: {
+                AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
+                         recordPrptect: viewModel.recordsSecurity)
+            })
             .environment(\.locale, Locale(identifier: viewModel.settings.appLanguage.identifier))
             .navigationDestination(for: SecuredNavigationView.self) { views in
                 switch views {
@@ -79,7 +76,7 @@ struct RecordListView: View {
                 case .purchase:
                     SubscriptionView()
                 case .sorting:
-                    SortingView(viewModel: SortingViewModel(appState: appState))
+                    SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .records))
                 case .recordInfo(record: let record):
                     RecordInfoView(viewModel: RecordInfoViewModel(appState: appState, record: record))
                 case .settings:
@@ -100,7 +97,8 @@ struct RecordListView: View {
                     BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
                 case .setPassword:
                     SetPasswordView(viewModel: SetPasswordViewModel(appState: appState,
-                                                                    setPasswordGoal: .records), isFirstSetup: false)
+                                                                    isFirstSetup: false,
+                                                                    setPasswordGoal: .records))
                 }
             }
             .alert(LocalizedStringKey("data_is_copied"),
