@@ -31,7 +31,6 @@ extension RecordDTO {
                                                 autoClose: object.autoClose)
         sortingOrder = object.sortingOrder
         
-        
         var fields = [FieldsInfo]()
         fields += returnFieldsInfoFrom(object)
         protectedRecordInfo.fields = fields

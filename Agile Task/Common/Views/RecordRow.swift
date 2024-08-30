@@ -93,7 +93,6 @@ struct RecordRow: View {
                 performActionAfterAuth()
             }
         }
-        
         .onReceive(authManager.$state) { newValue in
             if newValue == .loggedIn {
                 showAuthView = false
