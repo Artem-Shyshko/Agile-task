@@ -47,10 +47,10 @@ final class PurchaseManager: NSObject, ObservableObject {
         updates?.cancel()
     }
     
-    func canCreateTask(_ task: TaskDTO) -> Bool {
+    func canCreateTask(taskCount: Int) -> Bool {
         guard hasUnlockedPro == false else { return  true }
         
-        return task.taskType == .light ? true : false
+        return taskCount > 3 ? false : true
     }
     
     func canCreateProject(projectCount: Int) -> Bool {

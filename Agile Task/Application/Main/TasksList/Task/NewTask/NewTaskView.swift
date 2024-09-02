@@ -376,15 +376,7 @@ private extension NewTaskView {
     func tabBarSaveButton() -> some View {
         Button {
             if viewModel.isValidForm() {
-                if viewModel.taskType == .advanced {
-                    guard purchaseManager.hasUnlockedPro == true else {
-                        appState.taskListNavigationStack.append(.subscription)
-                        return
-                    }
-                }
-                
-                viewModel.saveButtonAction(editTask: editTask)
-                dismiss.callAsFunction()
+                checkIfCanCreate()
             }
         } label: {
             Text("Save")
@@ -424,16 +416,26 @@ private extension NewTaskView {
     
     func keyboardButtonAction() {
         if viewModel.isValidForm() {
-            if viewModel.taskType == .advanced {
-                guard purchaseManager.hasUnlockedPro == true else {
-                    appState.taskListNavigationStack.append(.subscription)
-                    return
-                }
-            }
-            
-            viewModel.saveButtonAction(editTask: editTask)
-            dismiss.callAsFunction()
+            checkIfCanCreate()
         }
+    }
+    
+    func checkIfCanCreate() {
+            if viewModel.taskType == .advanced {
+                let project = appState.projectRepository!.getSelectedProject()
+                let taskCount = project.tasks
+                    .filter { $0.taskType == .advanced }
+                    .count
+                if !purchaseManager.canCreateTask(taskCount: taskCount) {
+                    appState.taskListNavigationStack.append(.subscription)
+                } else {
+                    viewModel.saveButtonAction(editTask: editTask)
+                    dismiss.callAsFunction()
+                }
+            } else {
+                viewModel.saveButtonAction(editTask: editTask)
+                dismiss.callAsFunction()
+            }
     }
     
     func colorsPanel() -> some View {
