@@ -30,6 +30,13 @@ final class NewProjectViewModel: ObservableObject {
             newProject.name = projectName
             appState.projectRepository!.saveProject(newProject)
             
+            let defaults = UserDefaults.standard
+            let key = Constants.shared.listReview
+            
+            var value = defaults.integer(forKey: key)
+            value += 1
+            defaults.setValue(value, forKey: key)
+                              
             return true
         }
     }

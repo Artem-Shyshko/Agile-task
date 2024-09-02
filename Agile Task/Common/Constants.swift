@@ -44,6 +44,9 @@ final class Constants {
     let appGroupID = "group.agiletask.app"
     let passwordsKeys = "passwordsKeys"
     let charactersLimit = 40
+    let simpleTaskReview = "SimpleTaskReview"
+    let advancedTaskReview = "AdvancedTaskReview"
+    let listReview = "ListReview"
     
     lazy var currentDate = Date()
     

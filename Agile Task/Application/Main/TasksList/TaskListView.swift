@@ -97,11 +97,7 @@ struct TaskListView: View {
       .onAppear {
         viewModel.localNotificationManager = notificationManager
         viewModel.onAppear()
-        
-        if UserDefaults.standard.integer(forKey: "CompletedTask") >= 20 {
-          requestReview()
-          UserDefaults.standard.setValue(0, forKey: "CompletedTask")
-        }
+        checkDataForReview()
       }
       .task {
         try? await notificationManager.requestAuthorization()
@@ -527,6 +523,25 @@ private extension TaskListView {
         .background(themeManager.theme.sectionColor(colorScheme))
       }
     }
+  }
+  
+  func checkDataForReview() {
+      let defaults = UserDefaults.standard
+      
+      if defaults.integer(forKey: Constants.shared.simpleTaskReview) >= 3 {
+          requestReview()
+          defaults.setValue(0, forKey: Constants.shared.simpleTaskReview)
+      }
+      
+      if defaults.integer(forKey: Constants.shared.advancedTaskReview) >= 3 {
+          requestReview()
+          defaults.setValue(0, forKey: Constants.shared.advancedTaskReview)
+      }
+      
+      if defaults.integer(forKey: Constants.shared.listReview) >= 2 {
+          requestReview()
+          defaults.setValue(0, forKey: Constants.shared.listReview)
+      }
   }
 }
 

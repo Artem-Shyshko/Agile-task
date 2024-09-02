@@ -399,6 +399,15 @@ final class NewTaskViewModel: ObservableObject {
                     }
                 }
                 
+                let defaults = UserDefaults.standard
+                let key = taskType == .advanced
+                ? Constants.shared.advancedTaskReview
+                : Constants.shared.simpleTaskReview
+                
+                var value = defaults.integer(forKey: key)
+                value += 1
+                defaults.setValue(value, forKey: key)
+                
                 addNotification(for: task)
                 writeRecurringTaskArray(for: task)
             }
