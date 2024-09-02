@@ -2159,12 +2159,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasks Lists"
+            "value" : "Tasks List"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Списки "
           }
         }
