@@ -145,10 +145,58 @@ extension TaskDTO {
                 reminderDate: Date(),
                 colorName: Color.nyanza.name,
                 isCompleted: false,
-                sortingOrder: 5,
+                sortingOrder: 0,
                 showCheckboxes: false,
                 checkBoxArray: [],
                 bulletArray: [], 
+                taskType: .advanced
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                status: .high,
+                title: "todo_task_mock",
+                date: Date(),
+                dateOption: .today,
+                time: Date(),
+                timeOption: .custom,
+                timePeriod: .am,
+                recurring: RecurringConfigurationDTO.mock,
+                reminder: .inOneHour,
+                reminderDate: Date(),
+                colorName: Color.nyanza.name,
+                isCompleted: false,
+                sortingOrder: 1,
+                showCheckboxes: true,
+                checkBoxArray: [],
+                bulletArray: [
+                    .init(id: .generate(), title: "Create tasks list", sortingOrder: 0),
+                    .init(id: .generate(), title: "Find tasks easier with advanced navigation ", sortingOrder: 1),
+                    .init(id: .generate(), title: "Share your task list", sortingOrder: 2)
+                ],
+                taskType: .advanced
+            ),
+            TaskDTO(
+                id: ObjectId.generate(),
+                status: .none,
+                title: "groceries_task_mock",
+                date: Date(),
+                dateOption: .today,
+                time: Date(),
+                timeOption: .custom,
+                timePeriod: .am,
+                recurring: RecurringConfigurationDTO.mock,
+                reminder: .inOneHour,
+                reminderDate: Date(),
+                colorName: Color.nyanza.name,
+                isCompleted: false,
+                sortingOrder: 2,
+                showCheckboxes: true,
+                checkBoxArray: [
+                    .init(id: .generate(), title: "Limon", sortingOrder: 0),
+                    .init(id: .generate(), title: "Sugar", sortingOrder: 1),
+                    .init(id: .generate(), title: "Soda", sortingOrder: 2)
+                ],
+                bulletArray: [],
                 taskType: .advanced
             )
         ]

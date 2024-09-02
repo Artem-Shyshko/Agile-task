@@ -220,40 +220,6 @@
         }
       }
     },
-    "add_bullet_task_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add bullet lists to your tasks"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Додайте списки маркерів до своїх задач"
-          }
-        }
-      }
-    },
-    "add_checklists_task_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add checklists to your tasks."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Додайте контрольні списки до своїх задач."
-          }
-        }
-      }
-    },
     "add_field" : {
       "localizations" : {
         "en" : {
@@ -266,23 +232,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Додати поле"
-          }
-        }
-      }
-    },
-    "add_more_detail_task_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Add more details in the task description. "
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Додайте більше деталей в описі завдання."
           }
         }
       }
@@ -904,23 +853,6 @@
         }
       }
     },
-    "control_progress_task_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Control progress on the go"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Контролюйте прогрес на ходу."
-          }
-        }
-      }
-    },
     "create_backup" : {
       "localizations" : {
         "en" : {
@@ -1144,23 +1076,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Опис задачі"
-          }
-        }
-      }
-    },
-    "determinate_points_task_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Determinate points and easily navigate thrue the task details"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Визначайте точки та легко орієнтуйтеся в деталях задач."
           }
         }
       }
@@ -1421,6 +1336,23 @@
         }
       }
     },
+    "groceries_task_mock" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groceries (Lemonade)"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Groceries (Lemonade)"
+          }
+        }
+      }
+    },
     "Hide from the list" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1428,23 +1360,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сховати з списку"
-          }
-        }
-      }
-    },
-    "highlight_tasks_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Highlight tasks with statuses and colors"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Виділіть завдання статусом і кольором"
           }
         }
       }
@@ -1591,23 +1506,6 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Плануйте швидко, легко та без зайвого клопоту. Agile Task - це ефективний трекер завдань для професійних або особистих проектів, який дозволяє відстежувати завдання та ефективно їх виконувати. \nПлануйте все - від ділових зустрічей, поїздок і візитів до лікаря до списків продуктів. \nНаведіть лад у своїх нотатках та організуйте свій графік за допомогою Agile Task."
-          }
-        }
-      }
-    },
-    "manage_closed_tasks_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Adjust how you want to manage closed tasks"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Налаштуйте спосіб керування закритими завданнями"
           }
         }
       }
@@ -3559,6 +3457,23 @@
         }
       }
     },
+    "todo_task_mock" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To do list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To do list"
+          }
+        }
+      }
+    },
     "Toggle task state" : {
       "localizations" : {
         "fr" : {
@@ -3643,23 +3558,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL"
-          }
-        }
-      }
-    },
-    "use_broad_task_mock" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use broad tasks feature lists, status, description, checklists, bullet lists, date and time, set reminders and make tasks recurring."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Використовуйте багатоіцнкціональність задач, статус, опис, контрольні списки, списки маркерів, дату й час, установлюйте нагадування та повторюйте завдання."
           }
         }
       }
