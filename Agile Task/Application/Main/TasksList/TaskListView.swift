@@ -537,11 +537,6 @@ private extension TaskListView {
           requestReview()
           defaults.setValue(0, forKey: Constants.shared.advancedTaskReview)
       }
-      
-      if defaults.integer(forKey: Constants.shared.listReview) >= 2 {
-          requestReview()
-          defaults.setValue(0, forKey: Constants.shared.listReview)
-      }
   }
 }
 

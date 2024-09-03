@@ -46,7 +46,6 @@ final class Constants {
     let charactersLimit = 40
     let simpleTaskReview = "SimpleTaskReview"
     let advancedTaskReview = "AdvancedTaskReview"
-    let listReview = "ListReview"
     
     lazy var currentDate = Date()
     
