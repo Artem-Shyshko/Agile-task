@@ -2044,9 +2044,15 @@
     "Project" : {
       "extractionState" : "manual",
       "localizations" : {
-        "uk" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
+            "value" : "List"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
             "value" : "Проект"
           }
         }
@@ -2057,12 +2063,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tasks List"
+            "value" : "Lists"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Списки "
           }
         }
