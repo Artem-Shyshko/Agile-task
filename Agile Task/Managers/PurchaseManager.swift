@@ -50,7 +50,7 @@ final class PurchaseManager: NSObject, ObservableObject {
     func canCreateTask(taskCount: Int) -> Bool {
         guard hasUnlockedPro == false else { return  true }
         
-        return taskCount > 3 ? false : true
+        return taskCount >= 3 ? false : true
     }
     
     func canCreateProject(projectCount: Int) -> Bool {

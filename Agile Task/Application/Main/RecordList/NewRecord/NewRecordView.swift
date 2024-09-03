@@ -307,16 +307,7 @@ private extension NewRecordView {
         switch viewModel.protectWith {
         case .none:
             Button {
-                if viewModel.taskType == .advanced {
-                    guard purchaseManager.hasUnlockedPro == true else {
-                        appState.securedNavigationStack.append(.purchase)
-                        return
-                    }
-                }
-                viewModel.saveRecord()
-                if viewModel.showErrorAlert != true {
-                    dismiss.callAsFunction()
-                }
+                checkIfCanCreate()
             } label: {
                 Text("save_button")
             }
@@ -362,6 +353,20 @@ private extension NewRecordView {
                     .preferredColorScheme(themeManager.theme.colorScheme)
             }
             Spacer()
+        }
+    }
+    
+    func checkIfCanCreate() {
+        let records = appState.recordsRepository!.getRecordList()
+        let recordCount = records
+            .filter { $0.taskType == viewModel.taskType }
+            .count
+        
+        if !purchaseManager.canCreateTask(taskCount: recordCount) {
+            appState.securedNavigationStack.append(.purchase)
+        } else {
+            viewModel.saveRecord()
+            dismiss.callAsFunction()
         }
     }
 }
