@@ -140,8 +140,8 @@ final class TaskListViewModel: ObservableObject {
             if task.status != .none {
                 text.append("Status: \(task.status.rawValue)\n")
             }
-            
-            text.append("\(task.title == "welcome_task_mock" ? "Welcome to Agile Task" : task.title)\n")
+            let title = NSLocalizedString(task.title, comment: "")
+            text.append("\(title)\n")
             if !task.checkBoxArray.isEmpty {
                 let checkBoxes = task.checkBoxArray.map { "- \($0.title)" }.joined(separator: "\n")
                 text.append("Checklist:\n\(checkBoxes)\n")
