@@ -121,13 +121,12 @@ private extension CalendarViewModel {
     func getDaysFromPrevMonth(currentDate: Date) -> [Date] {
         let startOfMonth = currentDate.startOfMonth.startDay
         let startOfMonthWeekday = calendar.component(.weekday, from: startOfMonth)
-        let trailOfPreviousMonth = startOfMonthWeekday - calendar.firstWeekday
+        let startWeekDay = startOfMonthWeekday - calendar.firstWeekday
+        let trailOfPreviousMonth = startWeekDay > 0 ? startWeekDay : startWeekDay + 7
         
-        return trailOfPreviousMonth > 0
-        ? Array(1...trailOfPreviousMonth).compactMap {
-            calendar.date(byAdding: .day, value: -$0, to: startOfMonth)?.startDay
+        return Array(1...trailOfPreviousMonth).compactMap {
+            calendar.date(byAdding: .day, value: -$0, to: startOfMonth)
         }.reversed()
-        : []
     }
     
     func getDaysFromNextMonth(currentDate: Date) -> [Date] {
