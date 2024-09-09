@@ -22,8 +22,9 @@ final class AuthViewModel: ObservableObject {
     }
     
     func getPasswordCount() {
-        let userPassword = UserDefaults.standard.string(forKey: Constants.shared.userPassword)
-        passwordCount = userPassword?.count ?? 6
+        guard let userPassword = UserDefaults.standard.string(forKey: Constants.shared.userPassword) else { return }
+        
+        passwordCount = userPassword.count
     }
     
     func checkPassword() {

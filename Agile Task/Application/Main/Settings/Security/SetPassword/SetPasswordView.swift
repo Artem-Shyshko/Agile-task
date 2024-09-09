@@ -30,7 +30,9 @@ struct SetPasswordView: View {
                 passwordFieldView()
                 CheckingPasswordView(viewModel: viewModel, password: viewModel.newPassword)
                 repeatPasswordFieldView()
-                if viewModel.isFirstSetup { secureWithFieldView() }
+                if viewModel.isFirstSetup {
+                    secureWithFieldView()
+                }
                 Spacer()
             }
         }
@@ -38,9 +40,6 @@ struct SetPasswordView: View {
             PasswordView(vm: AuthViewModel(appState: viewModel.appState))
         }
         .modifier(TabViewChildModifier())
-        .onChange(of: viewModel.settings) { _ in
-            viewModel.appState.settingsRepository!.save(viewModel.settings)
-        }
         .onChange(of: viewModel.dismiss) { _ in
             dismiss.callAsFunction()
         }
@@ -73,6 +72,7 @@ private extension SetPasswordView {
                    viewModel.newPassword == viewModel.confirmPassword,
                    viewModel.allRequirementsMet == true {
                     defaults.set(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
+                    viewModel.appState.settingsRepository!.save(viewModel.settings)
                     dismiss.callAsFunction()
                 }
             }

@@ -117,7 +117,10 @@ struct TabBarView: View {
         .onChange(of: showAuthViewForRecords) { newValue in
             if !newValue {
                 reloadRecords = true
-                showPasswordViewForRecords = true
+                
+                if defaults.value(forKey: Constants.shared.userPassword) != nil {
+                    showPasswordViewForRecords = true
+                }
             }
         }
         .onOpenURL { incomingURL in

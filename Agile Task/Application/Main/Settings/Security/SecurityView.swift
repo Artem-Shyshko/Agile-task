@@ -11,7 +11,6 @@ import RealmSwift
 struct SecurityView: View {
     
     @StateObject var viewModel: SecurityViewModel
-    @Environment(\.realm) var realm
     @Environment(\.dismiss) var dismiss
     
     var isUserPassword: Bool {
@@ -54,6 +53,9 @@ private extension SecurityView {
     
     func backButton() -> some View {
         backButton {
+            if UserDefaults.standard.string(forKey: Constants.shared.userPassword) == nil {
+                viewModel.appState.settingsRepository!.save(viewModel.oldSettings)
+            }
             dismiss.callAsFunction()
         }
     }

@@ -35,9 +35,6 @@ struct RecordListView: View {
                     Spacer()
                 }
             }
-            .overlay(alignment: .bottomLeading, content: {
-                
-            })
             .onAppear {
                 viewModel.mainLoad()
             }
@@ -49,6 +46,7 @@ struct RecordListView: View {
             .onReceive(authManager.$state) { newValue in
                 if newValue == .loggedIn {
                     showPasswordView = false
+                    viewModel.mainLoad()
                 }
             }
             .padding(.bottom, 10)
@@ -59,11 +57,6 @@ struct RecordListView: View {
                     viewModel.mainLoad()
                 }
             }
-            .onReceive(authManager.$state, perform: { _ in
-                if authManager.state == .loggedIn {
-                    viewModel.mainLoad()
-                }
-            })
             .fullScreenCover(isPresented: $showPasswordView, content: {
                 AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
                          recordPrptect: viewModel.recordsSecurity)
