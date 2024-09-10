@@ -17,7 +17,7 @@ struct AuthView: View {
     
     @StateObject var vm: AuthViewModel
     @Binding var isShowing: Bool
-    @State var recordPrptect: SecurityOption? = nil
+    @State var recordProtect: SecurityOption? = nil
     
     // MARK: - Body
     var body: some View {
@@ -46,7 +46,7 @@ struct AuthView: View {
 private extension AuthView {
     func securityView() -> some View {
         VStack {
-            let securityOption = recordPrptect == nil ? vm.settings.securityOption : recordPrptect
+            let securityOption = recordProtect == nil ? vm.settings.securityOption : recordProtect
             if securityOption == .password {
                 PasswordView(vm: vm)
             }
@@ -54,7 +54,7 @@ private extension AuthView {
     }
     
     func authWithFaceId() {
-        let securityOption = recordPrptect == nil ? vm.settings.securityOption : recordPrptect
+        let securityOption = recordProtect == nil ? vm.settings.securityOption : recordProtect
         if securityOption == .faceID {
             authManager.auth()
             isShowing = authManager.state == .loggedIn ? false : true

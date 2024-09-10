@@ -73,7 +73,7 @@ struct RecordInfoView: View {
         .fullScreenCover(isPresented: $showPasswordView) {
             AuthView(vm: AuthViewModel(appState: viewModel.appState),
                      isShowing: $showPasswordView,
-                     recordPrptect: viewModel.protectWith.securityOption)
+                     recordProtect: viewModel.protectWith.securityOption)
         }
         .alert(LocalizedStringKey("data_is_copied"),
                isPresented: $viewModel.showCopyAlert) {

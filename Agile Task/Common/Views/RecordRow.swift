@@ -74,7 +74,7 @@ struct RecordRow: View {
         .fullScreenCover(isPresented: $showPasswordView) {
             AuthView(vm: AuthViewModel(appState: vm.appState),
                      isShowing: $showPasswordView,
-                     recordPrptect: record.settingsRecordInfo.protectWith.securityOption)
+                     recordProtect: record.settingsRecordInfo.protectWith.securityOption)
         }
         .onChange(of: showPasswordView) { newValue in
             if newValue == false {

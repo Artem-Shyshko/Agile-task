@@ -66,7 +66,7 @@ struct NewRecordView: View {
         .fullScreenCover(isPresented: $showPasswordView) {
             AuthView(vm: AuthViewModel(appState: appState),
                      isShowing: $showPasswordView,
-                     recordPrptect: viewModel.protectWith.securityOption)
+                     recordProtect: viewModel.protectWith.securityOption)
         }
         .modifier(TabViewChildModifier())
         .alert(LocalizedStringKey("alert_wrong_fields_requirements"),

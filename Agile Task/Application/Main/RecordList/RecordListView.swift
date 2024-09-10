@@ -51,17 +51,11 @@ struct RecordListView: View {
             }
             .padding(.bottom, 10)
             .modifier(TabViewChildModifier())
-            .preferredColorScheme(themeManager.theme.colorScheme)
             .onChange(of: scenePhase) { newValue in
                 if newValue == .active, authManager.state == .loggedIn {
                     viewModel.mainLoad()
                 }
             }
-            .fullScreenCover(isPresented: $showPasswordView, content: {
-                AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
-                         recordPrptect: viewModel.recordsSecurity)
-            })
-            .environment(\.locale, Locale(identifier: viewModel.settings.appLanguage.identifier))
             .navigationDestination(for: SecuredNavigationView.self) { views in
                 switch views {
                 case .createRecord(let record):
@@ -94,10 +88,15 @@ struct RecordListView: View {
                                                                     setPasswordGoal: .records))
                 }
             }
-            .alert(LocalizedStringKey("data_is_copied"),
-                   isPresented: $viewModel.showCopyAlert) {
+            .alert(LocalizedStringKey("data_is_copied"), isPresented: $viewModel.showCopyAlert) {
                 Button("alert_ok") {
                     viewModel.showCopyAlert = false
+                }
+            }
+            .overlay {
+                if showPasswordView {
+                    AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
+                             recordProtect: viewModel.recordsSecurity)
                 }
             }
         }
