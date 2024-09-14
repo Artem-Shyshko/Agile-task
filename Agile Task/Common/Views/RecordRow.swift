@@ -123,14 +123,14 @@ struct RecordRow: View {
             } label: {
                 Image("trash")
             }
-            .tint(Color.red)
+            .tint(Color.white)
             
             Button {
                 path.append(.createRecord(record: record))
             } label: {
                 Image(.edit)
             }
-            .tint(Color.editButtonColor)
+            .tint(Color.white)
         }
         .alert("are_you_sure_you_want_to_delete", isPresented: $isShowingDeleteAlert) {
             Button("cancel_button", role: .cancel) { }

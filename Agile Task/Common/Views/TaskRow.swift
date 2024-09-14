@@ -52,14 +52,19 @@ struct TaskRow: View {
             Button {
                 isDeleteAlert = true
             } label: {
-                Image("trash")
+                Image(.trash)
             }
-            .tint(.red)
+            .tint(Color.white)
+            
+            ShareLink(item: viewModel.sharedContent()) {
+              Image(.shareTask)
+            }
+            .tint(Color.white)
             
             NavigationLink(value: TaskListNavigationView.createTask(editedTask: task)) {
-                Image("edit")
+                Image(.edit)
             }
-            .tint(Color.editButtonColor)
+            .tint(Color.white)
         }
         .swipeActions(edge: .leading) {
             Button {
@@ -68,7 +73,7 @@ struct TaskRow: View {
             } label: {
                 Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
             }
-            .tint(.green)
+            .tint(.white)
         }
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)

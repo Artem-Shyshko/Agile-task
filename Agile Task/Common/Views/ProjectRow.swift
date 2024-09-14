@@ -34,7 +34,7 @@ struct ProjectRow: View {
                 } label: {
                     Image("trash")
                 }
-                .tint(Color.red)
+                .tint(Color.white)
             }
             
             NavigationLink {
@@ -42,7 +42,7 @@ struct ProjectRow: View {
             } label: {
                 Image(.edit)
             }
-            .tint(Color.editButtonColor)
+            .tint(Color.white)
         }
         .alert("Are you sure you want to delete", isPresented: $isShowingDeleteAlert) {
             Button("Cancel", role: .cancel) { }
