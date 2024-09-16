@@ -56,7 +56,7 @@ struct TaskRow: View {
             }
             .tint(Color.white)
             
-            ShareLink(item: viewModel.sharedContent()) {
+            ShareLink(item: viewModel.shareTask(task)) {
               Image(.shareTask)
             }
             .tint(Color.white)

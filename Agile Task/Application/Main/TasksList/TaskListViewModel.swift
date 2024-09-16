@@ -137,32 +137,57 @@ final class TaskListViewModel: ObservableObject {
         var text = ""
         
         filteredTasks.forEach { task in
-            if task.status != .none {
-                text.append("Status: \(task.status.rawValue)\n")
-            }
-            let title = NSLocalizedString(task.title, comment: "")
-            text.append("\(title)\n")
-            if !task.checkBoxArray.isEmpty {
-                let checkBoxes = task.checkBoxArray.map { "- \($0.title)" }.joined(separator: "\n")
-                text.append("Checklist:\n\(checkBoxes)\n")
-            }
-            if !task.bulletArray.isEmpty {
-                let bullets = task.bulletArray.map { "• \($0.title)" }.joined(separator: "\n")
-                text.append("Bulet list:\n\(bullets)\n")
-            }
-            if let time = task.date {
-                text.append("date: \(time.format("dd.MM.yy"))\n")
-            }
-            
-            if let time = task.time {
-                let timeFormatter = DateFormatter()
-                timeFormatter.dateFormat = "HH:mm"
-                
-                let formattedTime = timeFormatter.string(from: time)
-                text.append("time: \(formattedTime)\n")
-            }
-            text.append("\n")
+            text.append(shareTask(task))
         }
+        return text
+    }
+    
+    func shareTask(_ task: TaskDTO) -> String {
+        var text = ""
+        
+         if task.status != .none {
+             text.append("Status: \(task.status.rawValue)\n")
+         }
+        
+        var title = NSLocalizedString(task.title, comment: "")
+        if task.isCompleted {
+            title.append("(Done)")
+        }
+        
+        text.append("Title: \(title)\n")
+        
+         if !task.checkBoxArray.isEmpty {
+             let checkBoxes = task.checkBoxArray.map { "- \($0.title) \($0.isCompleted ? "(Done)" : "")" }.joined(separator: "\n")
+             text.append("Checklist:\n\(checkBoxes)\n")
+         }
+        
+         if !task.bulletArray.isEmpty {
+             let bullets = task.bulletArray.map { "• \($0.title)" }.joined(separator: "\n")
+             text.append("Bulet list:\n\(bullets)\n")
+         }
+        
+         if let time = task.date {
+             text.append("Date: \(time.format("dd.MM.yy"))\n")
+         }
+         
+         if let time = task.time {
+             let timeFormatter = DateFormatter()
+             timeFormatter.dateFormat = "HH:mm"
+             
+             let formattedTime = timeFormatter.string(from: time)
+             text.append("Time: \(formattedTime)\n")
+         }
+        
+        if task.isRecurring, let recurring = task.recurring {
+            text.append("Recurring: \(NSLocalizedString(recurring.option.description, comment: ""))\n")
+        }
+        
+        if task.isReminder {
+            text.append("Reminder: \(NSLocalizedString(task.reminder.description, comment: ""))\n")
+        }
+        
+         text.append("\n")
+        
         return text
     }
 }
