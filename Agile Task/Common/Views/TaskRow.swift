@@ -73,9 +73,9 @@ struct TaskRow: View {
                 viewModel.updateTaskCompletion(task.id.stringValue)
                 makeRequestPreview()
             } label: {
-                Image(task.isCompleted ? "done-checkbox" : "empty-checkbox")
+                Image(task.isCompleted ? .doneCheckbox : .emptyCheckbox)
             }
-            .tint(.white)
+            .tint(.green)
         }
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)
