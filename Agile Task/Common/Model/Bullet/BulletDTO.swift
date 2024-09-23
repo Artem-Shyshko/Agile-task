@@ -7,7 +7,7 @@
 
 import RealmSwift
 
-struct BulletDTO: Hashable, Identifiable {
+struct BulletDTO: Hashable, Identifiable, TaskItem {
     var id: ObjectId
     var title: String
     var sortingOrder: Int = 0

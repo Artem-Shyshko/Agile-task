@@ -101,8 +101,8 @@ extension TaskDTO {
         isCompleted = object.isCompleted
         sortingOrder = object.sortingOrder
         showCheckboxes = object.showCheckboxes
-        checkBoxArray = object.checkBoxList.map { CheckboxDTO(object: $0) }
-        bulletArray = object.bulletList.map { BulletDTO(object: $0) }
+        checkBoxArray = object.checkBoxList.map { CheckboxDTO(object: $0) }.defaultSorting()
+        bulletArray = object.bulletList.map { BulletDTO(object: $0) }.defaultSorting()
         taskType = object.taskType ?? .light
         
         if let recurringConfig = object.recurring {
@@ -192,5 +192,18 @@ extension TaskDTO {
                 taskType: .advanced
             )
         ]
+    }
+}
+
+protocol TaskItem {
+    var id: ObjectId { get set }
+    var title: String { get set }
+    var sortingOrder: Int { get set }
+}
+
+extension Array where Element: TaskItem {
+    func defaultSorting() -> [Element] {
+        self
+            .sorted(by: {$0.sortingOrder < $1.sortingOrder})
     }
 }

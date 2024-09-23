@@ -279,8 +279,7 @@ private extension TaskRow {
     @ViewBuilder
     func checkboxesView() -> some View {
         if !task.checkBoxArray.isEmpty, task.showCheckboxes {
-            ForEach($task.checkBoxArray
-                .sorted(by: {$0.sortingOrder.wrappedValue < $1.sortingOrder.wrappedValue}), id: \.id.wrappedValue
+            ForEach($task.checkBoxArray, id: \.id.wrappedValue
             ) { checkBox in
                 CheckboxTaskRow(viewModel: viewModel, checkbox: checkBox, colorName: task.colorName, taskId: task.id.stringValue)
             }
@@ -290,8 +289,7 @@ private extension TaskRow {
     @ViewBuilder
     func bulletView() -> some View {
         if !task.bulletArray.isEmpty, task.showCheckboxes {
-            ForEach($task.bulletArray
-                .sorted(by: {$0.sortingOrder.wrappedValue < $1.sortingOrder.wrappedValue}), id: \.id.wrappedValue
+            ForEach($task.bulletArray, id: \.id.wrappedValue
             ) { bullet in
                 BulletTaskRow(viewModel: viewModel, bullet: bullet, colorName: task.colorName)
             }

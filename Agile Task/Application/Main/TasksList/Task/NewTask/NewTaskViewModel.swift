@@ -213,8 +213,8 @@ final class NewTaskViewModel: ObservableObject {
         if let editTask {
             taskStatus = editTask.status
             title = editTask.title
-            checkBoxes = editTask.checkBoxArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
-            bullets = editTask.bulletArray.sorted(by: { $0.sortingOrder < $1.sortingOrder })
+            checkBoxes = editTask.checkBoxArray
+            bullets = editTask.bulletArray
             selectedColor = Color(editTask.colorName)
             isCompleted = editTask.isCompleted
             taskType = editTask.taskType
@@ -302,42 +302,40 @@ final class NewTaskViewModel: ObservableObject {
     }
     
     func writeEditedTask(_ task: TaskDTO) {
-        let edited = self.updateTask(task: task)
+        var edited = self.updateTask(task: task)
         
         for (index, checkbox) in self.checkBoxes.enumerated() {
-            if task.checkBoxArray.contains(where: { $0.id == checkbox.id }) {
-                guard var check = task.checkBoxArray.first(where: {$0.id == checkbox.id}) else { return }
+            if edited.checkBoxArray.contains(where: { $0.id == checkbox.id }) {
+                guard var check = edited.checkBoxArray.first(where: {$0.id == checkbox.id}) else { return }
                 check.sortingOrder = index
                 check.title = checkbox.title
                 appState.taskRepository!.saveCheckbox(check)
             } else {
-                var task = task
                 var checkbox = checkbox
                 checkbox.sortingOrder = index
-                task.checkBoxArray.append(checkbox)
+                edited.checkBoxArray.append(checkbox)
                 appState.taskRepository!.saveCheckbox(checkbox)
             }
         }
         
         for (index, item) in self.bullets.enumerated() {
-            if task.bulletArray.contains(where: { $0.id == item.id }) {
-                guard var bullet = task.bulletArray.first(where: {$0.id == item.id}) else { return }
+            if edited.bulletArray.contains(where: { $0.id == item.id }) {
+                guard var bullet = edited.bulletArray.first(where: {$0.id == item.id}) else { return }
                 bullet.sortingOrder = index
                 bullet.title = item.title
-                appState.taskRepository!.saveBullet(bullet)
+                appState.bulletRepository!.save(bullet)
             } else {
-                var task = task
                 var item = item
                 item.sortingOrder = index
-                task.bulletArray.append(item)
-                appState.taskRepository!.saveBullet(item)
+                edited.bulletArray.append(item)
+                appState.bulletRepository!.save(item)
             }
         }
         
         let project = appState.projectRepository!.getSelectedProject()
         let tasksArray = project.tasks
-            .filter { $0.parentId == task.parentId }
-        appState.taskRepository!.deleteAll(where: task.parentId)
+            .filter { $0.parentId == edited.parentId }
+        appState.taskRepository!.deleteAll(where: edited.parentId)
         tasksArray.forEach { deleteNotification(for: $0.id.stringValue) }
         
         addNotification(for: edited)

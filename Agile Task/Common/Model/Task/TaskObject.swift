@@ -114,8 +114,8 @@ extension TaskObject {
             self.recurring = RecurringConfiguration(recurring)
         }
         
-        dto.checkBoxArray.forEach { checkBoxList.append(CheckboxObject($0)) }
-        dto.bulletArray.forEach { bulletList.append(BulletObject($0)) }
+        dto.checkBoxArray.defaultSorting().forEach { checkBoxList.append(CheckboxObject($0)) }
+        dto.bulletArray.defaultSorting().forEach { bulletList.append(BulletObject($0)) }
     }
 }
 

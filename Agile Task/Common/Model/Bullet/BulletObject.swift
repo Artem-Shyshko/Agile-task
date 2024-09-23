@@ -7,7 +7,7 @@
 
 import RealmSwift
 
-class BulletObject: Object, ObjectKeyIdentifiable {
+class BulletObject: Object, ObjectKeyIdentifiable, TaskItem {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var title: String
     @Persisted var sortingOrder: Int = 0
