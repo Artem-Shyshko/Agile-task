@@ -60,8 +60,10 @@ struct TaskRow: View {
               Image(.shareTask)
             }
             .tint(Color.white)
-            
-            NavigationLink(value: TaskListNavigationView.createTask(editedTask: task)) {
+             
+            Button {
+                path.append(.createTask(editedTask: task))
+            } label: {
                 Image(.edit)
             }
             .tint(Color.white)
