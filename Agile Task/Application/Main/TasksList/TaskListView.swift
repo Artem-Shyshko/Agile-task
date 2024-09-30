@@ -249,6 +249,8 @@ private extension TaskListView {
             }
           } header: {
             weekSectionHeader(key: key)
+              .padding(.horizontal, -40)
+              .offset(y: -10)
           }
         }
         .listRowSeparator(.hidden)
@@ -388,22 +390,22 @@ private extension TaskListView {
       let title = viewModel.sectionHeader(key).components(separatedBy: " ").first ?? ""
       Spacer()
       if key == Date().fullDayShortDateFormat {
-        HStack(spacing: 2) {
-          Text("+++")
-          Text(LocalizedStringKey(title))
-          Text("+++")
-        }
+        Text(LocalizedStringKey(title))
+          .font(.helveticaBold(size: 14))
       } else {
-        HStack(spacing: 2) {
-          Text("---")
-          Text(LocalizedStringKey(title))
-          Text("---")
-        }
+        Text(LocalizedStringKey(title))
+          .font(.helveticaRegular(size: 14))
       }
       Spacer()
     }
-    .font(.helveticaRegular(size: 14))
     .foregroundStyle(themeManager.theme.textColor(colorScheme))
+    .overlay {
+      if key == Date().fullDayShortDateFormat {
+        Color.white.opacity(0.1)
+          .frame(height: 40)
+          .clipShape(.rect(cornerRadius: 3))
+      }
+    }
   }
   
   @ViewBuilder
@@ -548,5 +550,16 @@ struct TaskListView_Previews: PreviewProvider {
       .environmentObject(ThemeManager())
       .environmentObject(PurchaseManager())
       .environmentObject(AppState())
+  }
+}
+
+struct ListSectionSpacingModify: ViewModifier {
+  func body(content: Content) -> some View {
+    if #available(iOS 17.0, *) {
+      content
+        .listSectionSpacing(30)
+    } else {
+      content
+    }
   }
 }
