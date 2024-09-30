@@ -45,15 +45,16 @@ struct CustomCalendarView: View {
                 items: items
             )
             .padding(.horizontal, 20)
-            .padding(.top, 50)
+            .padding(.top, 60)
             .padding(.bottom, 10)
             
-            HStack {
-                monthButton()
-                Spacer()
-                backToCurrentDateButton()
+            HStack(spacing: 20) {
                 minusMonthButton()
+                    .hAlign(alignment: .leading)
+                monthButton()
+                backToCurrentDateButton()
                 addMonthButton()
+                    .hAlign(alignment: .trailing)
             }
             .padding(.top, 15)
             .padding(.horizontal, 15)
@@ -81,6 +82,7 @@ private extension CustomCalendarView {
             isShowingCalendarPicker.toggle()
         } label: {
             Text(selectedCalendarDay.monthString)
+                .font(.helveticaBold(size: 17))
                 .foregroundStyle(currentMonthDatesColor)
         }
     }
@@ -90,6 +92,9 @@ private extension CustomCalendarView {
             viewModel.addToCurrentDate(currentDate: &selectedCalendarDay, component: .month, value: 1)
         } label: {
             Image(systemName: "chevron.right")
+                .resizable()
+                .scaledToFit()
+                .frame(size: 20)
         }
         .foregroundStyle(currentMonthDatesColor)
     }
@@ -99,6 +104,7 @@ private extension CustomCalendarView {
             viewModel.backToCurrentDateButtonAction(&selectedCalendarDay)
         }, label: {
             Image(systemName: "arrow.circlepath")
+                .frame(size: 26)
         })
         .foregroundStyle(currentMonthDatesColor)
     }
@@ -108,6 +114,9 @@ private extension CustomCalendarView {
             viewModel.minusFromCurrentDate(currentDate: &selectedCalendarDay, component: .month, value: 1)
         } label: {
             Image(systemName: "chevron.left")
+                .resizable()
+                .scaledToFit()
+                .frame(size: 20)
         }
         .foregroundStyle(currentMonthDatesColor)
     }
