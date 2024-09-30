@@ -85,8 +85,7 @@ private extension NewRecordView {
             leftItem: cancelButton(),
             header: CustomSegmentedControl(
                 options: TaskType.allCases,
-                selection: $viewModel.taskType,
-                textColor: themeManager.theme.sectionTextColor(colorScheme)
+                selection: $viewModel.taskType
             ).padding(.horizontal, viewModel.settings.appLanguage == .ukrainian ? 35 : 15),
             rightItem: saveButton()
         )

@@ -176,8 +176,7 @@ private extension TaskListView {
       leftItem: navigationBarLeftItem(),
       header: CustomSegmentedControl(
         options: TaskDateSorting.allCases,
-        selection: $viewModel.taskSortingOption,
-        textColor: themeManager.theme.sectionTextColor(colorScheme)
+        selection: $viewModel.taskSortingOption
       ),
       rightItem: navigationBarRightItem()
     )
