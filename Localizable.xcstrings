@@ -2379,6 +2379,40 @@
         }
       }
     },
+    "record_list_protection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This section is \nprotected"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Цей розділ є \nзахищеним"
+          }
+        }
+      }
+    },
+    "record_list_view_section" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "View section"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Переглянути розділ"
+          }
+        }
+      }
+    },
     "record_locked" : {
       "localizations" : {
         "en" : {

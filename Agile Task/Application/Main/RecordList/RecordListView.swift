@@ -22,6 +22,7 @@ struct RecordListView: View {
     @Binding var path: [SecuredNavigationView]
     @Binding var showPasswordView: Bool
     @Binding var reloadRecords: Bool
+    @State var showProtect = true
     
     // MARK: - Body
     var body: some View {
@@ -37,6 +38,7 @@ struct RecordListView: View {
             }
             .onAppear {
                 viewModel.mainLoad()
+                showProtect = true
             }
             .onChange(of: reloadRecords) { newValue in
                 if newValue {
@@ -95,8 +97,12 @@ struct RecordListView: View {
             }
             .overlay {
                 if showPasswordView {
-                    AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
-                             recordProtect: viewModel.recordsSecurity)
+                    if showProtect {
+                        protectionView()
+                    } else {
+                        AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
+                                 recordProtect: viewModel.recordsSecurity)
+                    }
                 }
             }
         }
@@ -239,5 +245,33 @@ private extension RecordListView {
         .background(themeManager.theme.sectionColor(colorScheme))
         .cornerRadius(5)
         .padding(.horizontal, 5)
+    }
+    
+    func protectionView() -> some View {
+        VStack(spacing: 30) {
+            Text("record_list_protection")
+                .font(.helveticaBold(size: 16))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(themeManager.theme.textColor(colorScheme))
+            
+            Image(.lock)
+                .resizable()
+                .scaledToFit()
+                .frame(size: 50)
+            
+            Button {
+                showPasswordView = true
+                showProtect = false
+            } label: {
+                Text("record_list_view_section")
+                    .font(.helveticaRegular(size: 16))
+                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
+            }
+            .padding(.horizontal, 60)
+            .padding(.vertical, 13)
+            .background(themeManager.theme.sectionColor(colorScheme))
+            .clipShape(.rect(cornerRadius: 4))
+        }
+        .modifier(TabViewChildModifier())
     }
 }
