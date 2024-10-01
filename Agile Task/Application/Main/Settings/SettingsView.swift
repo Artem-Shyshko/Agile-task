@@ -57,7 +57,7 @@ private extension SettingsView {
     }
     
     func accountView () -> some View {
-        NavigationLink(value: TaskListNavigationView.subscription) {
+        NavigationLink(value: TasksNavigation.subscription) {
             HStack {
                 Text("settings_subscription_title")
                 Spacer()

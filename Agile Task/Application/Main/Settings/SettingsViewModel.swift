@@ -18,45 +18,45 @@ final class SettingsViewModel: ObservableObject {
     var purchase: any Hashable {
         switch settingType {
         case .tasksList:
-            return TaskListNavigationView.subscription
+            return TasksNavigation.subscription
         case .recordsList:
-            return SecuredNavigationView.purchase
+            return SecuredNavigation.purchase
         }
     }
     
     var settingsGeneral: any Hashable {
         switch settingType {
         case .tasksList:
-            return TaskListNavigationView.appSettings
+            return TasksNavigation.appSettings
         case .recordsList:
-            return SecuredNavigationView.appSettings
+            return SecuredNavigation.appSettings
         }
     }
     
     var tasksSettings: any Hashable {
         switch settingType {
         case .tasksList:
-            return TaskListNavigationView.taskSettings
+            return TasksNavigation.taskSettings
         case .recordsList:
-            return SecuredNavigationView.taskSettings
+            return SecuredNavigation.taskSettings
         }
     }
     
     var more: any Hashable {
         switch settingType {
         case .tasksList:
-            return TaskListNavigationView.more
+            return TasksNavigation.more
         case .recordsList:
-            return SecuredNavigationView.more
+            return SecuredNavigation.more
         }
     }
     
     var security: any Hashable {
         switch settingType {
         case .tasksList:
-            return TaskListNavigationView.security
+            return TasksNavigation.security
         case .recordsList:
-            return SecuredNavigationView.security
+            return SecuredNavigation.security
         }
     }
    

@@ -13,8 +13,8 @@ struct ProjectsView: View {
     @EnvironmentObject var purchaseManager: PurchaseManager
     @Environment(\.colorScheme) var colorScheme
 
-    @StateObject var vm: ProjectsViewModel
-    @Binding var path: [ProjectNavigationView]
+    @StateObject var viewModel: ProjectsViewModel
+    @Binding var path: [ProjectNavigation]
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -26,12 +26,12 @@ struct ProjectsView: View {
             }
             .modifier(TabViewChildModifier())
             .onAppear {
-                vm.savedProjects = vm.appState.projectRepository!.getProjects()
+                viewModel.savedProjects = viewModel.appState.projectRepository!.getProjects()
             }
-            .navigationDestination(for: ProjectNavigationView.self) { view in
+            .navigationDestination(for: ProjectNavigation.self) { view in
                 switch view {
                     case .newProject(let project):
-                    NewProjectView(vm: NewProjectViewModel(appState: vm.appState, editedProject: project))
+                    NewProjectView(vm: NewProjectViewModel(appState: viewModel.appState, editedProject: project))
                 case .subscription:
                     SubscriptionView()
                 }
@@ -42,7 +42,7 @@ struct ProjectsView: View {
 
 struct AccountView_Previews: PreviewProvider {
     static var previews: some View {
-        ProjectsView(vm: ProjectsViewModel(appState: AppState()), path: .constant([]))
+        ProjectsView(viewModel: ProjectsViewModel(appState: AppState()), path: .constant([]))
             .environmentObject(ThemeManager())
     }
 }
@@ -62,16 +62,16 @@ private extension ProjectsView {
     
     @ViewBuilder
     func searchView() -> some View {
-        if !vm.isSearchBarHidden {
-            SearchableView(searchText: $vm.searchText, isSearchBarHidden: $vm.isSearchBarHidden)
+        if !viewModel.isSearchBarHidden {
+            SearchableView(searchText: $viewModel.searchText, isSearchBarHidden: $viewModel.isSearchBarHidden)
                 .foregroundColor(themeManager.theme.textColor(colorScheme))
         }
     }
     
     func accountsList() -> some View {
         List {
-            ForEach(vm.savedProjects, id: \.id) { project in
-                ProjectRow(vm: vm, project: project)
+            ForEach(viewModel.savedProjects, id: \.id) { project in
+                ProjectRow(vm: viewModel, project: project)
             }
             .listRowSeparator(.hidden)
         }
@@ -85,7 +85,7 @@ private extension ProjectsView {
     
     func magnifyingGlassButton() -> some View {
         MagnifyingGlassButton {
-            vm.isSearchBarHidden.toggle()
+            viewModel.isSearchBarHidden.toggle()
         }
     }
     

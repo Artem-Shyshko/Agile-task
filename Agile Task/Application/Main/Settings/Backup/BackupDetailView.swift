@@ -91,7 +91,7 @@ private extension BackupDetailView {
     }
     
     func downloadBackup() -> some View {
-        SectionLinkButton(title: "restore_backup", value: TaskListNavigationView.backupList(storage: backupStorage))
+        SectionLinkButton(title: "restore_backup", value: TasksNavigation.backupList(storage: backupStorage))
     }
 }
 

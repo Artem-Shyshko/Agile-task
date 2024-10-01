@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-final class AuthViewModel: ObservableObject {
+final class AuthenticationViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var passwordCount: Int = 6
     @Published var showAlert: Bool = false

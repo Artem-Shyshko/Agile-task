@@ -1492,9 +1492,6 @@
         }
       }
     },
-    "Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently.\n\nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task." : {
-
-    },
     "Make your plans quickly, easily and without hassle. Agile Task is an efficient task tracker for professional or personal projects to track tasks and execute them efficiently. \nPlan everything - from business meetings, trips and doctor appointments to groceries lists. \nDeclutter your notes and organize your schedule with Agile Task." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2926,6 +2923,7 @@
       }
     },
     "START" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -3719,6 +3717,7 @@
       }
     },
     "Welcome \nto Agile Task" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

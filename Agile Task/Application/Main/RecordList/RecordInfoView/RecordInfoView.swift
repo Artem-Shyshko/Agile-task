@@ -71,7 +71,7 @@ struct RecordInfoView: View {
             }
         }
         .fullScreenCover(isPresented: $showPasswordView) {
-            AuthView(vm: AuthViewModel(appState: viewModel.appState),
+            AuthenticationView(viewModel: AuthenticationViewModel(appState: viewModel.appState),
                      isShowing: $showPasswordView,
                      recordProtect: viewModel.protectWith.securityOption)
         }

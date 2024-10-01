@@ -77,7 +77,7 @@ private extension SecurityView {
     }
     
     func changePasswordView() -> some View {
-        NavigationLink(value: TaskListNavigationView.setPassword) {
+        NavigationLink(value: TasksNavigation.setPassword) {
             HStack {
                 Text("password_title")
                 Spacer()

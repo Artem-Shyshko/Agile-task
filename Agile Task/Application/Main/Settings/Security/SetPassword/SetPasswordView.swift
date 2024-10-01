@@ -37,7 +37,7 @@ struct SetPasswordView: View {
             }
         }
         .navigationDestination(isPresented: $showPasswordView) {
-            PasswordView(vm: AuthViewModel(appState: viewModel.appState))
+            PasswordView(viewModel: AuthenticationViewModel(appState: viewModel.appState))
         }
         .modifier(TabViewChildModifier())
         .onChange(of: viewModel.dismiss) { _ in

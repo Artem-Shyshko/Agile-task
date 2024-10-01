@@ -8,14 +8,14 @@
 import SwiftUI
 import RealmSwift
 
-struct AuthView: View {
+struct AuthenticationView: View {
     // MARK: - Properties
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scene
     
-    @StateObject var vm: AuthViewModel
+    @StateObject var viewModel: AuthenticationViewModel
     @Binding var isShowing: Bool
     @State var recordProtect: SecurityOption? = nil
     
@@ -27,7 +27,7 @@ struct AuthView: View {
             securityView()
         }
         .onAppear(perform: {
-            vm.settings = vm.appState.settingsRepository!.get()
+            viewModel.settings = viewModel.appState.settingsRepository!.get()
         })
         .onAppear(perform: {
             if scene == .active {
@@ -43,18 +43,18 @@ struct AuthView: View {
 }
 
 // MARK: - Private setup
-private extension AuthView {
+private extension AuthenticationView {
     func securityView() -> some View {
         VStack {
-            let securityOption = recordProtect == nil ? vm.settings.securityOption : recordProtect
+            let securityOption = recordProtect == nil ? viewModel.settings.securityOption : recordProtect
             if securityOption == .password {
-                PasswordView(vm: vm)
+                PasswordView(viewModel: viewModel)
             }
         }
     }
     
     func authWithFaceId() {
-        let securityOption = recordProtect == nil ? vm.settings.securityOption : recordProtect
+        let securityOption = recordProtect == nil ? viewModel.settings.securityOption : recordProtect
         if securityOption == .faceID {
             authManager.auth()
             isShowing = authManager.state == .loggedIn ? false : true

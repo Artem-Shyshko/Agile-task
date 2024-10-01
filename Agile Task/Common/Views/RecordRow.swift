@@ -24,7 +24,7 @@ struct RecordRow: View {
     @State private var shareRecord = false
     @State private var textToCopy = ""
     
-    @Binding var path: [SecuredNavigationView]
+    @Binding var path: [SecuredNavigation]
     
     var record: RecordDTO
     
@@ -72,7 +72,7 @@ struct RecordRow: View {
             }
         }
         .fullScreenCover(isPresented: $showPasswordView) {
-            AuthView(vm: AuthViewModel(appState: vm.appState),
+            AuthenticationView(viewModel: AuthenticationViewModel(appState: vm.appState),
                      isShowing: $showPasswordView,
                      recordProtect: record.settingsRecordInfo.protectWith.securityOption)
         }

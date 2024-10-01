@@ -52,7 +52,7 @@ struct Master_TaskApp: App {
                 TabBarView()
                 
                 if isNoneAuthorised {
-                    AuthView(vm: AuthViewModel(appState: appState), isShowing: $showAuthView)
+                    AuthenticationView(viewModel: AuthenticationViewModel(appState: appState), isShowing: $showAuthView)
                 }
             }
             .ignoresSafeArea()

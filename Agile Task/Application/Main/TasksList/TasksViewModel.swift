@@ -8,7 +8,7 @@
 import SwiftUI
 import RealmSwift
 
-final class TaskListViewModel: ObservableObject {
+final class TasksViewModel: ObservableObject {
     @ObservedObject var watchConnector = WatchConnector()
     
     @Published var isSearchBarHidden: Bool = true
@@ -194,7 +194,7 @@ final class TaskListViewModel: ObservableObject {
 
 // MARK: - Quick Task
 
-extension TaskListViewModel {
+extension TasksViewModel {
     func addNotification(for task: TaskDTO) {
         guard let localNotificationManager else { return }
         
@@ -286,7 +286,7 @@ extension TaskListViewModel {
 
 // MARK: - TaskRow
 
-extension TaskListViewModel {
+extension TasksViewModel {
     
     func calculateDateColor(whit date: Date, themeTextColor: Color, isDate: Bool) -> Color {
         let currentDate = Date()
@@ -391,7 +391,7 @@ extension TaskListViewModel {
 
 // MARK: - Grouping and Sorting
 
-extension TaskListViewModel {
+extension TasksViewModel {
     
     func saveSortingOrder() {
         var orderedTasks = [TaskDTO]()
@@ -583,7 +583,7 @@ extension TaskListViewModel {
 
 // MARK: - Week List Sorting
 
-extension TaskListViewModel {
+extension TasksViewModel {
     private var taskGropedByDate: [String: [TaskDTO]] {
         Dictionary(grouping: filteredTasks) {
             if let taskDate = $0.date {

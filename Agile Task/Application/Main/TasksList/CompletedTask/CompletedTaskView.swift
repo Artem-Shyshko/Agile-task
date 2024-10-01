@@ -9,12 +9,12 @@ import SwiftUI
 import RealmSwift
 
 struct CompletedTaskView: View {
-    @StateObject var viewModel: TaskListViewModel
+    @StateObject var viewModel: TasksViewModel
     @Environment(\.dismiss) var dismiss
     @State private var showDeleteAlert = false
     @State private var showRestoreAlert = false
     
-    @Binding var path: [TaskListNavigationView]
+    @Binding var path: [TasksNavigation]
     
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
@@ -115,5 +115,5 @@ private extension CompletedTaskView {
 // MARK: - Preview
 
 #Preview {
-    CompletedTaskView(viewModel: TaskListViewModel(appState: AppState()), path: .constant([]))
+    CompletedTaskView(viewModel: TasksViewModel(appState: AppState()), path: .constant([]))
 }

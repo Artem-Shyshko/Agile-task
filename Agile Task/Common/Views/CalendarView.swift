@@ -49,11 +49,15 @@ struct CustomCalendarView: View {
             .padding(.top, 60)
             .padding(.bottom, 10)
             
-            HStack(spacing: 26) {
-                minusMonthButton()
+            ZStack {
                 monthButton()
-                backToCurrentDateButton()
-                addMonthButton()
+                    .hAlign(alignment: .center)
+                HStack(spacing: 26) {
+                    minusMonthButton()
+                    Spacer()
+                    backToCurrentDateButton()
+                    addMonthButton()
+                }
             }
             .padding(.top, 15)
             .padding(.horizontal, 15)
@@ -84,7 +88,6 @@ private extension CustomCalendarView {
             Text(selectedCalendarDay.monthString)
                 .font(.helveticaBold(size: 17))
                 .foregroundStyle(currentMonthDatesColor)
-                .hAlign(alignment: .center)
         }
     }
     

@@ -11,7 +11,7 @@ struct BulletTaskRow: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
     
-    var viewModel: TaskListViewModel
+    var viewModel: TasksViewModel
     @Binding var bullet: BulletDTO
     var colorName: String
     
@@ -47,7 +47,7 @@ private extension BulletTaskRow {
 
 #Preview {
     BulletTaskRow(
-        viewModel: TaskListViewModel(appState: AppState()),
+        viewModel: TasksViewModel(appState: AppState()),
         bullet: .constant(BulletDTO(object: BulletObject())),
         colorName: "red"
     )

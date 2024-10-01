@@ -8,7 +8,7 @@
 import SwiftUI
 import StoreKit
 
-struct TaskListView: View {
+struct TasksView: View {
   
   // MARK: - Properties
   
@@ -18,13 +18,13 @@ struct TaskListView: View {
   @EnvironmentObject var appState: AppState
   @Environment(\.colorScheme) var colorScheme
   @Environment(\.scenePhase) var scenePhase
-  @StateObject var viewModel: TaskListViewModel
+  @StateObject var viewModel: TasksViewModel
   @Environment(\.requestReview) var requestReview
   
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
   
-  @Binding var path: [TaskListNavigationView]
+  @Binding var path: [TasksNavigation]
   
   // MARK: - Body
   
@@ -58,7 +58,7 @@ struct TaskListView: View {
           .padding(.bottom, 10)
         }
       }
-      .navigationDestination(for: TaskListNavigationView.self) { views in
+      .navigationDestination(for: TasksNavigation.self) { views in
         switch views {
         case .createTask(let editedTask):
           NewTaskView(viewModel: NewTaskViewModel(appState: appState, taskList: viewModel.filteredTasks), editTask: editedTask)
@@ -167,7 +167,7 @@ struct TaskListView: View {
 
 // MARK: - Private Views
 
-private extension TaskListView {
+private extension TasksView {
   
   // MARK: - topbar
   
@@ -205,15 +205,15 @@ private extension TaskListView {
       }
       .foregroundColor(.white)
       
-      NavigationLink(value: TaskListNavigationView.sorting) {
+      NavigationLink(value: TasksNavigation.sorting) {
         Text("tasks_view_sorting")
       }
       
-      NavigationLink(value: TaskListNavigationView.completedTasks) {
+      NavigationLink(value: TasksNavigation.completedTasks) {
         Text("tasks_view_completed_tasks")
       }
       
-      NavigationLink(value: TaskListNavigationView.settings) {
+      NavigationLink(value: TasksNavigation.settings) {
         Text("SettingsTab")
       }
     } label: {
@@ -269,7 +269,7 @@ private extension TaskListView {
     }
     .listRowSpacing(Constants.shared.listRowSpacing)
     .scrollContentBackground(.hidden)
-    .listStyle(.plain)
+    .listStyle(.grouped)
   }
   
   // MARK: - dateBarView
@@ -546,7 +546,7 @@ private extension TaskListView {
 
 struct TaskListView_Previews: PreviewProvider {
   static var previews: some View {
-    TaskListView(viewModel: TaskListViewModel(appState: AppState()), path: .constant([TaskListNavigationView.sorting]))
+    TasksView(viewModel: TasksViewModel(appState: AppState()), path: .constant([TasksNavigation.sorting]))
       .environmentObject(LocalNotificationManager())
       .environmentObject(ThemeManager())
       .environmentObject(PurchaseManager())

@@ -19,9 +19,9 @@ final class AppState: ObservableObject {
     var bulletRepository: BulletRepository?
     var recordsRepository: RecordRepository?
     
-    @Published var taskListNavigationStack: [TaskListNavigationView] = []
-    @Published var projectsNavigationStack: [ProjectNavigationView] = []
-    @Published var securedNavigationStack: [SecuredNavigationView] = []
+    @Published var taskListNavigationStack: [TasksNavigation] = []
+    @Published var projectsNavigationStack: [ProjectNavigation] = []
+    @Published var securedNavigationStack: [SecuredNavigation] = []
     var isTabBarHidden: Bool {
         taskListNavigationStack.contains(.subscription)
         || securedNavigationStack.contains(.purchase)

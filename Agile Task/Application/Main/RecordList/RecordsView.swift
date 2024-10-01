@@ -8,7 +8,7 @@
 import SwiftUI
 import StoreKit
 
-struct RecordListView: View {
+struct RecordsView: View {
     // MARK: - Properties
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appState: AppState
@@ -19,7 +19,7 @@ struct RecordListView: View {
     @Environment(\.requestReview) var requestReview
     
     @StateObject var viewModel: RecordListViewModel
-    @Binding var path: [SecuredNavigationView]
+    @Binding var path: [SecuredNavigation]
     @Binding var showPasswordView: Bool
     @Binding var reloadRecords: Bool
     @State var showProtect = true
@@ -58,7 +58,7 @@ struct RecordListView: View {
                     viewModel.mainLoad()
                 }
             }
-            .navigationDestination(for: SecuredNavigationView.self) { views in
+            .navigationDestination(for: SecuredNavigation.self) { views in
                 switch views {
                 case .createRecord(let record):
                     NewRecordView(viewModel: NewRecordViewModel(appState: appState, editedRecord: record))
@@ -100,7 +100,7 @@ struct RecordListView: View {
                     if showProtect {
                         protectionView()
                     } else {
-                        AuthView(vm: AuthViewModel(appState: appState), isShowing: $showPasswordView,
+                        AuthenticationView(viewModel: AuthenticationViewModel(appState: appState), isShowing: $showPasswordView,
                                  recordProtect: viewModel.recordsSecurity)
                     }
                 }
@@ -110,7 +110,7 @@ struct RecordListView: View {
 }
 
 // MARK: - Private Views
-private extension RecordListView {
+private extension RecordsView {
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: navigationBarLeftItem(),
@@ -145,7 +145,7 @@ private extension RecordListView {
     }
     
     func navigationBarRightItem() -> some View {
-        NavigationLink(value: SecuredNavigationView.createRecord(record: nil))
+        NavigationLink(value: SecuredNavigation.createRecord(record: nil))
         {
             Image(.add)
                 .resizable()

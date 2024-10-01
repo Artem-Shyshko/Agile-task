@@ -18,9 +18,9 @@ struct TaskRow: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.requestReview) var requestReview
     
-    @StateObject var viewModel: TaskListViewModel
+    @StateObject var viewModel: TasksViewModel
     @Binding var task: TaskDTO
-    @Binding var path: [TaskListNavigationView]
+    @Binding var path: [TasksNavigation]
     
     @State private var draggingOffset: CGFloat = .zero
     @State private var startOffset: CGFloat = 0
@@ -301,7 +301,7 @@ private extension TaskRow {
 
 struct TaskRow_Previews: PreviewProvider {
     static var previews: some View {
-        TaskRow(viewModel: TaskListViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!),
+        TaskRow(viewModel: TasksViewModel(appState: AppState()), task: .constant(TaskDTO.mockArray().first!),
                 path: .constant([]))
         .environmentObject(ThemeManager())
     }

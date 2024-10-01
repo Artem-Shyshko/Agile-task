@@ -14,7 +14,7 @@ enum SettingType {
     case recordsList
 }
 
-enum TaskListNavigationView: Hashable {
+enum TasksNavigation: Hashable {
     case createTask(editedTask: TaskDTO? = nil),
          completedTasks,
          sorting,
@@ -32,7 +32,7 @@ enum TaskListNavigationView: Hashable {
          backupList(storage: BackupStorage)
 }
 
-enum SecuredNavigationView: Hashable {
+enum SecuredNavigation: Hashable {
     case createRecord(record: RecordDTO? = nil),
          recordInfo(record: RecordDTO),
          purchase,
@@ -48,7 +48,7 @@ enum SecuredNavigationView: Hashable {
          setPassword
 }
 
-enum ProjectNavigationView: Hashable {
+enum ProjectNavigation: Hashable {
     case subscription, newProject(editHabit: ProjectDTO? = nil)
 }
 
@@ -88,14 +88,15 @@ struct TabBarView: View {
     var body: some View {
         ZStack {
             TabView(selection: $appState.selectedTab) {
-                TaskListView(viewModel: TaskListViewModel(appState: appState), path: $appState.taskListNavigationStack)
+                TasksView(viewModel: TasksViewModel(appState: appState), path: $appState.taskListNavigationStack)
                     .tag(Tab.taskList)
-                ProjectsView(vm: ProjectsViewModel(appState: appState), path: $appState.projectsNavigationStack)
+                ProjectsView(viewModel: ProjectsViewModel(appState: appState), path: $appState.projectsNavigationStack)
                     .tag(Tab.projects)
-                RecordListView(viewModel: RecordListViewModel(appState: appState), 
+                RecordsView(viewModel: RecordListViewModel(appState: appState), 
                                path: $appState.securedNavigationStack,
                                showPasswordView: $showPasswordViewForRecords,
-                               reloadRecords: $reloadRecords)
+                               reloadRecords: $reloadRecords,
+                            showProtect: true)
                     .tag(Tab.secured)
             }
             .overlay(alignment: .bottom) {

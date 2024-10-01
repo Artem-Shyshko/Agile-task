@@ -29,7 +29,7 @@
 		752CEE4C2B3C723200CA1612 /* SettingDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE4A2B3C71FD00CA1612 /* SettingDTO.swift */; };
 		752CEE4F2B3C764A00CA1612 /* SettingsRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE4D2B3C763000CA1612 /* SettingsRepositoryImpl.swift */; };
 		752CEE522B3C87AD00CA1612 /* CheckboxTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */; };
-		752CEE552B3C888300CA1612 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE532B3C886A00CA1612 /* AuthViewModel.swift */; };
+		752CEE552B3C888300CA1612 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE532B3C886A00CA1612 /* AuthenticationViewModel.swift */; };
 		752CEE602B3DC45600CA1612 /* ProjectDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */; };
 		752CEE622B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE612B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift */; };
 		752CEE642B3DCB1900CA1612 /* ProjectsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEE632B3DCB1900CA1612 /* ProjectsViewModel.swift */; };
@@ -91,7 +91,6 @@
 		7562E6C12AD42DBA00E895CD /* SetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562E6C02AD42DBA00E895CD /* SetPasswordViewModel.swift */; };
 		7562E6C32AD4479A00E895CD /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7562E6C22AD4479A00E895CD /* AuthManager.swift */; };
 		75677A2C2A813F360034C45B /* Master_TaskApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75677A2B2A813F360034C45B /* Master_TaskApp.swift */; };
-		75677A2E2A813F360034C45B /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75677A2D2A813F360034C45B /* WelcomeView.swift */; };
 		75677A302A813F380034C45B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A2F2A813F380034C45B /* Assets.xcassets */; };
 		75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A322A813F380034C45B /* Preview Assets.xcassets */; };
 		7567E5AA2BC3D306007C1C97 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7567E5A92BC3D306007C1C97 /* Localizable.swift */; };
@@ -100,7 +99,7 @@
 		75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75896DD62A83DCC900B0C6F2 /* TaskObject.swift */; };
 		758B02042BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
 		758B02062BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
-		758B22862AD59C1A00D4654D /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758B22852AD59C1A00D4654D /* AuthView.swift */; };
+		758B22862AD59C1A00D4654D /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758B22852AD59C1A00D4654D /* AuthenticationView.swift */; };
 		7590CF922AEFA81B0015B396 /* CheckboxObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF912AEFA81B0015B396 /* CheckboxObject.swift */; };
 		7590CF952AEFADE80015B396 /* NewCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF942AEFADE80015B396 /* NewCheckBoxView.swift */; };
 		7590CF972AEFAE900015B396 /* NewCheckBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF962AEFAE900015B396 /* NewCheckBoxViewModel.swift */; };
@@ -118,7 +117,7 @@
 		75A3CFFE2A99047D000F68BA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A3CFFD2A99047D000F68BA /* Constants.swift */; };
 		75A3D0002A990BD4000F68BA /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A3CFFF2A990BD4000F68BA /* TaskRow.swift */; };
 		75A709AA2A828B68003894F7 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A709A92A828B68003894F7 /* Date+Ext.swift */; };
-		75A709AF2A82900A003894F7 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A709AE2A82900A003894F7 /* TaskListViewModel.swift */; };
+		75A709AF2A82900A003894F7 /* TasksViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A709AE2A82900A003894F7 /* TasksViewModel.swift */; };
 		75AE02FC2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75AE02FB2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift */; };
 		75B1C8132AB85DFE00DAE207 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 75B1C8122AB85DFE00DAE207 /* Realm */; };
 		75B1C8152AB85DFE00DAE207 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 75B1C8142AB85DFE00DAE207 /* RealmSwift */; };
@@ -126,7 +125,7 @@
 		75B58D092A82255300937923 /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D082A82255300937923 /* View+Ext.swift */; };
 		75B58D0B2A8234B900937923 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0A2A8234B900937923 /* TabBarView.swift */; };
 		75B58D0E2A824C1400937923 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0D2A824C1400937923 /* Color+Ext.swift */; };
-		75B58D102A8250CF00937923 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0F2A8250CF00937923 /* TaskListView.swift */; };
+		75B58D102A8250CF00937923 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0F2A8250CF00937923 /* TasksView.swift */; };
 		75C710382A8CE4BC008E8A62 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710372A8CE4BC008E8A62 /* SettingsView.swift */; };
 		75C7103D2A8CEE4F008E8A62 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */; };
 		75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */; };
@@ -195,7 +194,7 @@
 		CE05F3DB2C7F79DA001E13D0 /* RecordDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3DA2C7F79DA001E13D0 /* RecordDTO.swift */; };
 		CE05F3DD2C7F79DF001E13D0 /* RecordObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3DC2C7F79DF001E13D0 /* RecordObject.swift */; };
 		CE05F3F62C7F7A9D001E13D0 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E02C7F7A9D001E13D0 /* ShareViewController.swift */; };
-		CE05F3F72C7F7A9D001E13D0 /* RecordListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E12C7F7A9D001E13D0 /* RecordListView.swift */; };
+		CE05F3F72C7F7A9D001E13D0 /* RecordsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E12C7F7A9D001E13D0 /* RecordsView.swift */; };
 		CE05F3F82C7F7A9D001E13D0 /* RecordInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E32C7F7A9D001E13D0 /* RecordInfoView.swift */; };
 		CE05F3F92C7F7A9D001E13D0 /* RecordInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E42C7F7A9D001E13D0 /* RecordInfoViewModel.swift */; };
 		CE05F3FA2C7F7A9D001E13D0 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE05F3E62C7F7A9D001E13D0 /* InfoView.swift */; };
@@ -293,7 +292,7 @@
 		752CEE4A2B3C71FD00CA1612 /* SettingDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDTO.swift; sourceTree = "<group>"; };
 		752CEE4D2B3C763000CA1612 /* SettingsRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepositoryImpl.swift; sourceTree = "<group>"; };
 		752CEE502B3C879700CA1612 /* CheckboxTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxTaskRow.swift; sourceTree = "<group>"; };
-		752CEE532B3C886A00CA1612 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		752CEE532B3C886A00CA1612 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		752CEE5C2B3DC0A800CA1612 /* Agile Task.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Agile Task.entitlements"; sourceTree = "<group>"; };
 		752CEE5E2B3DC28900CA1612 /* ProjectDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDTO.swift; sourceTree = "<group>"; };
 		752CEE612B3DC8BD00CA1612 /* ProjectRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepositoryImpl.swift; sourceTree = "<group>"; };
@@ -332,7 +331,6 @@
 		7562E6C22AD4479A00E895CD /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		75677A282A813F360034C45B /* Agile Task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Agile Task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		75677A2B2A813F360034C45B /* Master_TaskApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Master_TaskApp.swift; sourceTree = "<group>"; };
-		75677A2D2A813F360034C45B /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		75677A2F2A813F380034C45B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75677A322A813F380034C45B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7567E5A92BC3D306007C1C97 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
@@ -341,7 +339,7 @@
 		7583617B2AB1D4DB0021FFDE /* AppHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHelper.swift; sourceTree = "<group>"; };
 		75896DD62A83DCC900B0C6F2 /* TaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskObject.swift; sourceTree = "<group>"; };
 		758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		758B22852AD59C1A00D4654D /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		758B22852AD59C1A00D4654D /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		7590CF912AEFA81B0015B396 /* CheckboxObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxObject.swift; sourceTree = "<group>"; };
 		7590CF942AEFADE80015B396 /* NewCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCheckBoxView.swift; sourceTree = "<group>"; };
 		7590CF962AEFAE900015B396 /* NewCheckBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCheckBoxViewModel.swift; sourceTree = "<group>"; };
@@ -360,13 +358,13 @@
 		75A3CFFF2A990BD4000F68BA /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
 		75A709A92A828B68003894F7 /* Date+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Ext.swift"; sourceTree = "<group>"; };
 		75A709AB2A828F6E003894F7 /* Agile-Task-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Agile-Task-Info.plist"; sourceTree = SOURCE_ROOT; };
-		75A709AE2A82900A003894F7 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
+		75A709AE2A82900A003894F7 /* TasksViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksViewModel.swift; sourceTree = "<group>"; };
 		75AE02FB2ACAA8CD00BC6C3F /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		75B58D062A8224ED00937923 /* Font+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Ext.swift"; sourceTree = "<group>"; };
 		75B58D082A82255300937923 /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
 		75B58D0A2A8234B900937923 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		75B58D0D2A824C1400937923 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
-		75B58D0F2A8250CF00937923 /* TaskListView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
+		75B58D0F2A8250CF00937923 /* TasksView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
 		75C710372A8CE4BC008E8A62 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
 		75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
@@ -418,7 +416,7 @@
 		CE05F3DA2C7F79DA001E13D0 /* RecordDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordDTO.swift; sourceTree = "<group>"; };
 		CE05F3DC2C7F79DF001E13D0 /* RecordObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordObject.swift; sourceTree = "<group>"; };
 		CE05F3E02C7F7A9D001E13D0 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
-		CE05F3E12C7F7A9D001E13D0 /* RecordListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordListView.swift; sourceTree = "<group>"; };
+		CE05F3E12C7F7A9D001E13D0 /* RecordsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordsView.swift; sourceTree = "<group>"; };
 		CE05F3E32C7F7A9D001E13D0 /* RecordInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordInfoView.swift; sourceTree = "<group>"; };
 		CE05F3E42C7F7A9D001E13D0 /* RecordInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordInfoViewModel.swift; sourceTree = "<group>"; };
 		CE05F3E62C7F7A9D001E13D0 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
@@ -580,6 +578,15 @@
 			path = Projects;
 			sourceTree = "<group>";
 		};
+		7544A38E2CAC412400FE3118 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				758B22852AD59C1A00D4654D /* AuthenticationView.swift */,
+				752CEE532B3C886A00CA1612 /* AuthenticationViewModel.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
 		754714112C2C273700BF1CB3 /* AgileTaskWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
@@ -629,15 +636,6 @@
 				75481B302AE01144003ABED5 /* CompletedTaskView.swift */,
 			);
 			path = CompletedTask;
-			sourceTree = "<group>";
-		};
-		755B9B3F2B6160D2005D0A0C /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				758B22852AD59C1A00D4654D /* AuthView.swift */,
-				752CEE532B3C886A00CA1612 /* AuthViewModel.swift */,
-			);
-			path = Auth;
 			sourceTree = "<group>";
 		};
 		75677A1F2A813F360034C45B = {
@@ -727,18 +725,10 @@
 		75B58D032A82245700937923 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				75B58D0C2A8237A600937923 /* Onboarding */,
+				7544A38E2CAC412400FE3118 /* Authentication */,
 				75B58D112A826CC000937923 /* Main */,
 			);
 			path = Application;
-			sourceTree = "<group>";
-		};
-		75B58D042A82246C00937923 /* SignIn */ = {
-			isa = PBXGroup;
-			children = (
-				75677A2D2A813F360034C45B /* WelcomeView.swift */,
-			);
-			path = SignIn;
 			sourceTree = "<group>";
 		};
 		75B58D052A82249B00937923 /* Extensions */ = {
@@ -753,15 +743,6 @@
 				754714512C2D736F00BF1CB3 /* Notification.Name+Ext.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		75B58D0C2A8237A600937923 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				755B9B3F2B6160D2005D0A0C /* Auth */,
-				75B58D042A82246C00937923 /* SignIn */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		75B58D112A826CC000937923 /* Main */ = {
@@ -779,8 +760,8 @@
 		75B58D122A826CD500937923 /* TasksList */ = {
 			isa = PBXGroup;
 			children = (
-				75B58D0F2A8250CF00937923 /* TaskListView.swift */,
-				75A709AE2A82900A003894F7 /* TaskListViewModel.swift */,
+				75B58D0F2A8250CF00937923 /* TasksView.swift */,
+				75A709AE2A82900A003894F7 /* TasksViewModel.swift */,
 				7533B1A42A8F5B91007CF2EE /* Task */,
 				7534A2BB2AA0E7840049431C /* Sorting */,
 				75481B2F2AE0112A003ABED5 /* CompletedTask */,
@@ -1021,7 +1002,7 @@
 		CE05F3DE2C7F7A9D001E13D0 /* RecordList */ = {
 			isa = PBXGroup;
 			children = (
-				CE05F3E12C7F7A9D001E13D0 /* RecordListView.swift */,
+				CE05F3E12C7F7A9D001E13D0 /* RecordsView.swift */,
 				CE05F3E72C7F7A9D001E13D0 /* RecordListViewModel.swift */,
 				CE05F3DF2C7F7A9D001E13D0 /* ShareVC */,
 				CE05F3E22C7F7A9D001E13D0 /* RecordInfoView */,
@@ -1317,15 +1298,14 @@
 				CE05F3D92C7F79C5001E13D0 /* RecordRepository.swift in Sources */,
 				75A2D3A22C2D81D4009B3FFB /* WatchConnector.swift in Sources */,
 				752CEDE52B3C57DB00CA1612 /* StorageService.swift in Sources */,
-				752CEE552B3C888300CA1612 /* AuthViewModel.swift in Sources */,
+				752CEE552B3C888300CA1612 /* AuthenticationViewModel.swift in Sources */,
 				75C97AAD2C08D4F7002CF4BA /* BackupListView.swift in Sources */,
 				7547144D2C2D6CB100BF1CB3 /* TimeControlView.swift in Sources */,
-				CE05F3F72C7F7A9D001E13D0 /* RecordListView.swift in Sources */,
+				CE05F3F72C7F7A9D001E13D0 /* RecordsView.swift in Sources */,
 				752CEE672B3ED09000CA1612 /* NewProjectViewModel.swift in Sources */,
 				7590CF952AEFADE80015B396 /* NewCheckBoxView.swift in Sources */,
 				75474BB82AEBAE89001119A9 /* PrimaryButton.swift in Sources */,
-				758B22862AD59C1A00D4654D /* AuthView.swift in Sources */,
-				75677A2E2A813F360034C45B /* WelcomeView.swift in Sources */,
+				758B22862AD59C1A00D4654D /* AuthenticationView.swift in Sources */,
 				752CEDE32B3C573800CA1612 /* CheckboxRepository.swift in Sources */,
 				75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */,
 				75F96B732A8648450062D2BA /* NewTaskViewModel.swift in Sources */,
@@ -1359,7 +1339,7 @@
 				7537D0242AAA316200F64175 /* NewProjectView.swift in Sources */,
 				751712BF2BA347FD00F2B758 /* AppState.swift in Sources */,
 				752CEE4F2B3C764A00CA1612 /* SettingsRepositoryImpl.swift in Sources */,
-				75B58D102A8250CF00937923 /* TaskListView.swift in Sources */,
+				75B58D102A8250CF00937923 /* TasksView.swift in Sources */,
 				75F3AD622ABCA72900660A99 /* LocalNotification.swift in Sources */,
 				CE05F3F82C7F7A9D001E13D0 /* RecordInfoView.swift in Sources */,
 				75F96B782A8695800062D2BA /* NewTextFieldStyle.swift in Sources */,
@@ -1401,7 +1381,7 @@
 				753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */,
 				75B58D0E2A824C1400937923 /* Color+Ext.swift in Sources */,
 				CE05F3F92C7F7A9D001E13D0 /* RecordInfoViewModel.swift in Sources */,
-				75A709AF2A82900A003894F7 /* TaskListViewModel.swift in Sources */,
+				75A709AF2A82900A003894F7 /* TasksViewModel.swift in Sources */,
 				75E11C712B4C13DF003B891B /* BulletObject.swift in Sources */,
 				CE05F3FB2C7F7A9D001E13D0 /* RecordListViewModel.swift in Sources */,
 				7537D01E2AA9DDC000F64175 /* ThemeManager.swift in Sources */,

@@ -11,7 +11,7 @@ struct CheckboxTaskRow: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
     
-    var viewModel: TaskListViewModel
+    var viewModel: TasksViewModel
     @Binding var checkbox: CheckboxDTO
     var colorName: String
     var taskId: String
@@ -56,7 +56,7 @@ private extension CheckboxTaskRow {
 
 #Preview {
     CheckboxTaskRow(
-        viewModel: TaskListViewModel(appState: AppState()),
+        viewModel: TasksViewModel(appState: AppState()),
         checkbox: .constant(CheckboxDTO(object: CheckboxObject())),
         colorName: "red", 
         taskId: ""

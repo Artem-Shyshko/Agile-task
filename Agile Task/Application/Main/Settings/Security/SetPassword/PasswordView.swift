@@ -13,7 +13,7 @@ struct PasswordView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
     
-    @StateObject var vm: AuthViewModel
+    @StateObject var viewModel: AuthenticationViewModel
     @FocusState private var keyboardFocused: Bool
     
     // MARK: - Body
@@ -25,7 +25,7 @@ struct PasswordView: View {
                 VStack {
                     Spacer()
                     ZStack {
-                        TextField("", text: $vm.password)
+                        TextField("", text: $viewModel.password)
                             .keyboardType(.alphabet)
                             .disableAutocorrection(true)
                             .foregroundColor(.clear)
@@ -36,11 +36,11 @@ struct PasswordView: View {
                             }
                         
                         HStack {
-                            ForEach(0..<(vm.passwordCount), id: \.self) { index in
+                            ForEach(0..<(viewModel.passwordCount), id: \.self) { index in
                                 PasswordCircleView(index: index,
                                                    geometry: geometry,
-                                                   password: $vm.password,
-                                                   passwordCount: $vm.passwordCount)
+                                                   password: $viewModel.password,
+                                                   passwordCount: $viewModel.passwordCount)
                             }
                         }
                     }
@@ -49,15 +49,15 @@ struct PasswordView: View {
             }
             .modifier(TabViewChildModifier())
         }
-        .onChange(of: vm.password) { newValue in
-            vm.checkPassword()
-            if vm.isRightPassword {
+        .onChange(of: viewModel.password) { newValue in
+            viewModel.checkPassword()
+            if viewModel.isRightPassword {
                 authManager.state = .loggedIn
             }
         }
-        .alert("alert_wrong_password", isPresented: $vm.showAlert) {
+        .alert("alert_wrong_password", isPresented: $viewModel.showAlert) {
             Button {
-                vm.showAlert = false
+                viewModel.showAlert = false
             } label: {
                 Text("alert_ok")
             }
@@ -101,5 +101,5 @@ struct PasswordCircleView: View {
 
 
 #Preview {
-    PasswordView(vm: AuthViewModel(appState: AppState()))
+    PasswordView(viewModel: AuthenticationViewModel(appState: AppState()))
 }
