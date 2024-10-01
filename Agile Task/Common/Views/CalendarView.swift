@@ -44,22 +44,22 @@ struct CustomCalendarView: View {
                 currentMonthDatesColor: currentMonthDatesColor,
                 items: items
             )
+            .vAlign(alignment: .top)
             .padding(.horizontal, 20)
             .padding(.top, 60)
             .padding(.bottom, 10)
             
-            HStack(spacing: 20) {
+            HStack(spacing: 26) {
                 minusMonthButton()
-                    .hAlign(alignment: .leading)
                 monthButton()
                 backToCurrentDateButton()
                 addMonthButton()
-                    .hAlign(alignment: .trailing)
             }
             .padding(.top, 15)
             .padding(.horizontal, 15)
             .vAlign(alignment: .top)
         }
+        .frame(height: 360)
         .overlay(alignment: .top) {
             if isShowingCalendarPicker {
                 CalendarPickerView(
@@ -84,6 +84,7 @@ private extension CustomCalendarView {
             Text(selectedCalendarDay.monthString)
                 .font(.helveticaBold(size: 17))
                 .foregroundStyle(currentMonthDatesColor)
+                .hAlign(alignment: .center)
         }
     }
     

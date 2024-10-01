@@ -21,6 +21,7 @@
 
     },
     "---" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -78,6 +79,7 @@
       }
     },
     "+++" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {

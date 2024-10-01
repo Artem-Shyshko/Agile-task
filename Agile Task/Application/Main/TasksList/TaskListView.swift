@@ -55,7 +55,7 @@ struct TaskListView: View {
                 .padding(.top, 15)
               }
           }
-          Spacer()
+          .padding(.bottom, 10)
         }
       }
       .navigationDestination(for: TaskListNavigationView.self) { views in
@@ -392,10 +392,10 @@ private extension TaskListView {
       Spacer()
       if key == today {
         Text(LocalizedStringKey(title))
-          .font(.helveticaBold(size: 14))
+          .font(.helveticaBold(size: 16))
       } else {
         Text(LocalizedStringKey(title))
-          .font(.helveticaRegular(size: 14))
+          .font(.helveticaRegular(size: 16))
       }
       Spacer()
     }

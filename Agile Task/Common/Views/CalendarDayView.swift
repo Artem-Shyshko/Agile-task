@@ -41,7 +41,7 @@ public struct CalendarDayView: View {
         VStack(spacing: 11) {
             HStack {
                 ForEach(viewModel.getWeekSymbols(), id: \.self) { day in
-                    Text(day)
+                    Text(day.uppercased())
                         .font(.helveticaRegular(size: weekDayFontSize))
                         .foregroundStyle(currentMonthDatesColor)
                 }
