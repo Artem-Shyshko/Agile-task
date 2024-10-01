@@ -387,9 +387,10 @@ private extension TaskListView {
   
   func weekSectionHeader(key: String) -> some View {
     HStack {
-      let title = viewModel.sectionHeader(key).components(separatedBy: " ").first ?? ""
+      let title = viewModel.sectionHeader(key)
+      let today = Date().format(viewModel.dateFormat())
       Spacer()
-      if key == Date().fullDayShortDateFormat {
+      if key == today {
         Text(LocalizedStringKey(title))
           .font(.helveticaBold(size: 14))
       } else {
@@ -400,7 +401,7 @@ private extension TaskListView {
     }
     .foregroundStyle(themeManager.theme.textColor(colorScheme))
     .overlay {
-      if key == Date().fullDayShortDateFormat {
+      if key == Date().format(viewModel.dateFormat()) {
         Color.white.opacity(0.1)
           .frame(height: 40)
           .clipShape(.rect(cornerRadius: 3))

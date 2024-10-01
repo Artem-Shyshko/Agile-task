@@ -587,15 +587,15 @@ extension TaskListViewModel {
     private var taskGropedByDate: [String: [TaskDTO]] {
         Dictionary(grouping: filteredTasks) {
             if let taskDate = $0.date {
-                return taskDate.fullDayShortDateFormat
+                return taskDate.format(self.dateFormat())
             } else {
-                return $0.createdDate.fullDayShortDateFormat
+                return $0.createdDate.format(self.dateFormat())
             }
         }
     }
     
     var sectionHeaders: [String] {
-        currentDate.daysOfWeek().map { $0.fullDayShortDateFormat }
+        currentDate.daysOfWeek().map { $0.format(self.dateFormat()) }
     }
     
     func sectionContent(_ key: String) -> [TaskDTO] {
