@@ -54,6 +54,7 @@ struct SubscriptionView: View {
                 .padding(.horizontal, 2)
         }
         .onAppear {
+            appState.isTabBarHidden = true
             Task {
                 try await purchaseManager.loadProducts()
                 
@@ -78,6 +79,7 @@ struct SubscriptionView: View {
                 dismiss()
                 appState.projectsNavigationStack = []
                 appState.taskListNavigationStack = []
+                appState.isTabBarHidden = false
             }
         }
     }

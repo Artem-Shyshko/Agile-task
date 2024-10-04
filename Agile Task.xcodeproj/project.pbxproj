@@ -587,6 +587,18 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		7544A38F2CAD74F500FE3118 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				75B58D0F2A8250CF00937923 /* TasksView.swift */,
+				75A709AE2A82900A003894F7 /* TasksViewModel.swift */,
+				7533B1A42A8F5B91007CF2EE /* Task */,
+				7534A2BB2AA0E7840049431C /* Sorting */,
+				75481B2F2AE0112A003ABED5 /* CompletedTask */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
 		754714112C2C273700BF1CB3 /* AgileTaskWatch Watch App */ = {
 			isa = PBXGroup;
 			children = (
@@ -749,6 +761,7 @@
 			isa = PBXGroup;
 			children = (
 				75B58D0A2A8234B900937923 /* TabBarView.swift */,
+				7544A38F2CAD74F500FE3118 /* Tasks */,
 				75B58D122A826CD500937923 /* TasksList */,
 				7537D0202AAA0FF400F64175 /* Projects */,
 				CE05F3DE2C7F7A9D001E13D0 /* RecordList */,
@@ -760,11 +773,6 @@
 		75B58D122A826CD500937923 /* TasksList */ = {
 			isa = PBXGroup;
 			children = (
-				75B58D0F2A8250CF00937923 /* TasksView.swift */,
-				75A709AE2A82900A003894F7 /* TasksViewModel.swift */,
-				7533B1A42A8F5B91007CF2EE /* Task */,
-				7534A2BB2AA0E7840049431C /* Sorting */,
-				75481B2F2AE0112A003ABED5 /* CompletedTask */,
 			);
 			path = TasksList;
 			sourceTree = "<group>";

@@ -23,6 +23,7 @@ struct TasksView: View {
   
   @FocusState private var isFocused: Bool
   @FocusState private var isAddTaskFocused: Bool
+  @State var isShowingAddTaskCalendar = false
   
   @Binding var path: [TasksNavigation]
   
@@ -161,6 +162,7 @@ struct TasksView: View {
             .offset(y:50)
         }
       }
+      .toolbar(isShowingAddTaskCalendar ? .hidden : .visible, for: .tabBar)
     }
   }
 }
@@ -239,9 +241,9 @@ private extension TasksView {
   
   @ViewBuilder
   func taskList() -> some View {
-    List {
-      switch viewModel.taskSortingOption {
-      case .week:
+    switch viewModel.taskSortingOption {
+    case .week:
+      List {
         ForEach(viewModel.sectionHeaders, id: \.self) { key  in
           Section {
             ForEach(.constant(viewModel.sectionContent(key)), id: \.id) { task in
@@ -254,7 +256,12 @@ private extension TasksView {
           }
         }
         .listRowSeparator(.hidden)
-      default:
+      }
+      .listRowSpacing(Constants.shared.listRowSpacing)
+      .scrollContentBackground(.hidden)
+      .listStyle(.grouped)
+    default:
+      List {
         ForEach($viewModel.filteredTasks, id: \.id) { task in
           TaskRow(viewModel: viewModel, task: task, path: $path)
             .onChange(of: task.wrappedValue) { _ in
@@ -266,10 +273,10 @@ private extension TasksView {
         })
         .listRowSeparator(.hidden)
       }
+      .listRowSpacing(Constants.shared.listRowSpacing)
+      .scrollContentBackground(.hidden)
+      .listStyle(.plain)
     }
-    .listRowSpacing(Constants.shared.listRowSpacing)
-    .scrollContentBackground(.hidden)
-    .listStyle(.grouped)
   }
   
   // MARK: - dateBarView
@@ -456,89 +463,127 @@ private extension TasksView {
               .renderingMode(.template)
               .resizable()
               .scaledToFit()
-              .frame(width: 12, height: 14)
-            Button("Tomorrow") {
-              if viewModel.quickTaskConfig.dateOption == .tomorrow {
-                viewModel.quickTaskConfig.dateOption = .none
-              } else {
-                viewModel.quickTaskConfig.dateOption = .tomorrow
+              .frame(width: 17, height: 17)
+            
+            if viewModel.isQuickTaskDateSelected {
+              Button {
+                viewModel.quickTaskDateType = .date
+                viewModel.isQuickTaskDateSelected = false
+                isShowingAddTaskCalendar = false
+                appState.isTabBarHidden = false
+                isAddTaskFocused = !isShowingAddTaskCalendar
+              } label: {
+                HStack(spacing: 5) {
+                  Text(viewModel.quickTaskDate.format("dd.MM EE"))
+                    Image(systemName: "xmark").renderingMode(.template)
+                      .resizable()
+                      .scaledToFit()
+                      .frame(width: 9, height: 9)
+                }
+              }
+            } else {
+              Button {
+                viewModel.quickTaskDateType = .date
+                viewModel.isQuickTaskDateSelected = true
+                isShowingAddTaskCalendar = true
+                appState.isTabBarHidden = true
+                isAddTaskFocused = !isShowingAddTaskCalendar
+              } label: {
+                Text("Set date")
               }
             }
-            .font(
-              viewModel.quickTaskConfig.dateOption == .tomorrow
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
-            
-            Button("Next week") {
-              if viewModel.quickTaskConfig.dateOption == .nextWeek {
-                viewModel.quickTaskConfig.dateOption = .none
-              } else {
-                viewModel.quickTaskConfig.dateOption = .nextWeek
-              }
-            }
-            .font(
-              viewModel.quickTaskConfig.dateOption == .nextWeek
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
-            
-            Spacer()
-            Text("/")
-            Spacer()
             
             Image(.reminders)
               .renderingMode(.template)
               .resizable()
               .scaledToFit()
-              .frame(width: 12, height: 14)
-            Button("In 1 hour") {
-              if viewModel.quickTaskConfig.reminder == .inOneHour {
-                viewModel.quickTaskConfig.reminder = .none
-              } else {
-                viewModel.quickTaskConfig.reminder = .inOneHour
+              .frame(width: 17, height: 17)
+            if viewModel.isQuickTaskReminderDateSelected {
+              Button {
+                viewModel.quickTaskDateType = .reminder
+                viewModel.isQuickTaskReminderDateSelected = false
+                isShowingAddTaskCalendar = false
+                appState.isTabBarHidden = false
+                isAddTaskFocused = !isShowingAddTaskCalendar
+              } label: {
+                HStack(spacing: 5) {
+                    Text(viewModel.quickTaskReminderDate.format("dd.MM EE"))
+                    Image(systemName: "xmark").renderingMode(.template)
+                      .resizable()
+                      .scaledToFit()
+                      .frame(width: 9, height: 9)
+                }
+              }
+            } else {
+              Button {
+                viewModel.quickTaskDateType = .reminder
+                viewModel.isQuickTaskReminderDateSelected = true
+                isShowingAddTaskCalendar = true
+                appState.isTabBarHidden = true
+                isAddTaskFocused = !isShowingAddTaskCalendar
+              } label: {
+                Text("Set reminder")
               }
             }
-            .font(
-              viewModel.quickTaskConfig.reminder == .inOneHour
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
             
-            Button("Tomorrow") {
-              if viewModel.quickTaskConfig.reminder == .tomorrow {
-                viewModel.quickTaskConfig.reminder = .none
-              } else {
-                viewModel.quickTaskConfig.reminder = .tomorrow
-              }
-            }
-            .font(
-              viewModel.quickTaskConfig.reminder == .tomorrow
-              ? .helveticaBold(size: 14)
-              : .helveticaRegular(size: 15)
-            )
+            Spacer()
           }
+          .font(.helveticaRegular(size: 16))
           .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
           .padding(.horizontal, 10)
         }
         .padding(.bottom, 10)
         .background(themeManager.theme.sectionColor(colorScheme))
+        
+        if isShowingAddTaskCalendar {
+          if viewModel.quickTaskDateType == .reminder {
+            RecurringTimeView(
+              reminderTime: $viewModel.quickTaskReminderTime,
+              timePeriod: $viewModel.quickTaskReminderDatePeriod,
+              isTypedTime: $viewModel.isTypedReminderTime,
+              timeFormat: viewModel.settings.timeFormat,
+              isFocus: false
+            )
+            CustomCalendarView(
+              selectedCalendarDay: $viewModel.quickTaskReminderDate,
+              isShowingCalendarPicker: $viewModel.isShowingCalendar,
+              currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+              backgroundColor: themeManager.theme.sectionColor(colorScheme),
+              calendar: Constants.shared.calendar
+            )
+          } else {
+            CustomCalendarView(
+              selectedCalendarDay: $viewModel.quickTaskDate,
+              isShowingCalendarPicker: $viewModel.isShowingCalendar,
+              currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+              backgroundColor: themeManager.theme.sectionColor(colorScheme),
+              calendar: Constants.shared.calendar
+            )
+          }
+        }
+      }
+      .offset(y: isShowingAddTaskCalendar ? 35 : 0)
+      .onChange(of: isAddTaskFocused) { newValue in
+        if newValue {
+          isShowingAddTaskCalendar = false
+          appState.isTabBarHidden = false
+        }
       }
     }
   }
   
   func checkDataForReview() {
-      let defaults = UserDefaults.standard
-      
-      if defaults.integer(forKey: Constants.shared.simpleTaskReview) >= 3 {
-          requestReview()
-          defaults.setValue(0, forKey: Constants.shared.simpleTaskReview)
-      }
-      
-      if defaults.integer(forKey: Constants.shared.advancedTaskReview) >= 3 {
-          requestReview()
-          defaults.setValue(0, forKey: Constants.shared.advancedTaskReview)
-      }
+    let defaults = UserDefaults.standard
+    
+    if defaults.integer(forKey: Constants.shared.simpleTaskReview) >= 3 {
+      requestReview()
+      defaults.setValue(0, forKey: Constants.shared.simpleTaskReview)
+    }
+    
+    if defaults.integer(forKey: Constants.shared.advancedTaskReview) >= 3 {
+      requestReview()
+      defaults.setValue(0, forKey: Constants.shared.advancedTaskReview)
+    }
   }
 }
 

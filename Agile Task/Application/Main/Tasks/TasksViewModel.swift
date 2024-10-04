@@ -9,6 +9,10 @@ import SwiftUI
 import RealmSwift
 
 final class TasksViewModel: ObservableObject {
+    
+    enum QuickTaskDate {
+        case reminder, date
+    }
     @ObservedObject var watchConnector = WatchConnector()
     
     @Published var isSearchBarHidden: Bool = true
@@ -18,7 +22,15 @@ final class TasksViewModel: ObservableObject {
     @Published var settings: SettingsDTO
     @Published var selectedCalendarDate = Date()
     @Published var quickTaskConfig = TaskDTO(object: TaskObject())
+    @Published var quickTaskDate = Date()
+    @Published var isQuickTaskDateSelected = false
+    @Published var quickTaskReminderDate = Date()
+    @Published var quickTaskReminderTime = Date()
+    @Published var quickTaskReminderDatePeriod: TimePeriod = .am
+    @Published var isTypedReminderTime: Bool = false
+    @Published var isQuickTaskReminderDateSelected = false
     @Published var isShowingAddTask: Bool = false
+    @Published var quickTaskDateType: QuickTaskDate = .date
     @Published var taskSortingOption: TaskDateSorting = .all
     @Published var calendarDate = Date()
     @Published var isShowingCalendar = false
@@ -205,8 +217,19 @@ extension TasksViewModel {
     
     func createTask() {
         guard !quickTaskConfig.title.isEmpty else { return }
-        setupTaskDate(with: quickTaskConfig.dateOption)
-        quickTaskConfig.reminderDate = Date()
+        quickTaskConfig.date = isQuickTaskDateSelected ? quickTaskDate : nil
+        quickTaskConfig.dateOption = isQuickTaskDateSelected ? .custom : .none
+        quickTaskConfig.reminderDate = isQuickTaskReminderDateSelected ? quickTaskReminderDate : nil
+        quickTaskConfig.reminder = isQuickTaskReminderDateSelected ? .custom : .none
+        quickTaskConfig.time = isQuickTaskReminderDateSelected ? quickTaskReminderTime : nil
+        quickTaskConfig.timeOption = isQuickTaskReminderDateSelected ? .custom : .none
+        quickTaskConfig.timePeriod = quickTaskReminderDatePeriod
+        
+        quickTaskConfig.reminderDate = Constants.shared.calendar.date(
+            bySettingHour: quickTaskReminderTime.dateComponents([.hour]).hour ?? 12,
+            minute: quickTaskReminderTime.dateComponents([.minute]).minute ?? 00,
+            second: 0, of: quickTaskReminderDate
+        )!
         
         if settings.addNewTaskIn == .bottom {
             quickTaskConfig.sortingOrder = filteredTasks.count + 1
@@ -237,25 +260,6 @@ extension TasksViewModel {
         }
         
         quickTaskConfig = TaskDTO(object: TaskObject())
-    }
-    
-    func setupTaskDate(with type: DateType) {
-        switch type {
-        case .none, .custom:
-            quickTaskConfig.date = nil
-        case .today:
-            quickTaskConfig.date = Date()
-        case .tomorrow:
-            guard let tomorrowDate = Constants.shared.calendar.date(byAdding: .day, value: 1, to: currentDate)
-            else { return }
-            
-            quickTaskConfig.date = tomorrowDate
-        case .nextWeek:
-            guard let nextWeekDate = Constants.shared.calendar.date(byAdding: .weekOfYear, value: 1, to: currentDate)
-            else { return }
-            
-            quickTaskConfig.date = nextWeekDate.startOfWeek(using: Constants.shared.calendar)
-        }
     }
     
     @MainActor

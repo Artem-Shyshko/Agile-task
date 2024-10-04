@@ -32,6 +32,7 @@
       }
     },
     "/" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -1386,6 +1387,7 @@
       }
     },
     "In 1 hour" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -1678,6 +1680,7 @@
       }
     },
     "Next week" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2797,6 +2800,12 @@
         }
       }
     },
+    "Set date" : {
+
+    },
+    "Set reminder" : {
+
+    },
     "Settings" : {
       "localizations" : {
         "fr" : {
@@ -3531,6 +3540,7 @@
       }
     },
     "Tomorrow" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

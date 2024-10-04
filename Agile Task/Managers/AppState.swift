@@ -22,11 +22,7 @@ final class AppState: ObservableObject {
     @Published var taskListNavigationStack: [TasksNavigation] = []
     @Published var projectsNavigationStack: [ProjectNavigation] = []
     @Published var securedNavigationStack: [SecuredNavigation] = []
-    var isTabBarHidden: Bool {
-        taskListNavigationStack.contains(.subscription)
-        || securedNavigationStack.contains(.purchase)
-        || projectsNavigationStack.contains(.subscription)
-    }
+    @Published var isTabBarHidden: Bool = false
     
     init() {
         let storage = StorageService()
