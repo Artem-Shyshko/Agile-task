@@ -22,23 +22,23 @@ struct RecordsView: View {
     @Binding var path: [SecuredNavigation]
     @Binding var showPasswordView: Bool
     @Binding var reloadRecords: Bool
-    @State var showProtect = true
     
     // MARK: - Body
     var body: some View {
-        NavigationStack(path: $path) {
             VStack(spacing: Constants.shared.viewSectionSpacing) {
-                navigationBar()
-                searchView()
-                
-                VStack(spacing: 3) {
-                    recordsList()
-                    Spacer()
+                if authManager.state == .loggedIn {
+                    navigationBar()
+                    searchView()
+                    
+                    VStack(spacing: 3) {
+                        recordsList()
+                        Spacer()
+                    }
                 }
             }
             .onAppear {
+                authManager.state = .noneAuth
                 viewModel.mainLoad()
-                showProtect = true
             }
             .onChange(of: reloadRecords) { newValue in
                 if newValue {
@@ -58,38 +58,6 @@ struct RecordsView: View {
                     viewModel.mainLoad()
                 }
             }
-            .navigationDestination(for: SecuredNavigation.self) { views in
-                switch views {
-                case .createRecord(let record):
-                    NewRecordView(viewModel: NewRecordViewModel(appState: appState, editedRecord: record))
-                case .purchase:
-                    SubscriptionView()
-                case .sorting:
-                    SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .records))
-                case .recordInfo(record: let record):
-                    RecordInfoView(viewModel: RecordInfoViewModel(appState: appState, record: record))
-                case .settings:
-                    SettingsView(viewModel: SettingsViewModel(settingType: .recordsList))
-                case .appSettings:
-                    AppSettingsView(viewModel: AppSettingsViewModel(appState: appState))
-                case .taskSettings:
-                    TasksSettingsView(viewModel: TasksSettingsViewModel(appState: appState))
-                case .security:
-                    SecurityView(viewModel: SecurityViewModel(appState: appState))
-                case .more:
-                    MoreOurAppsView()
-                case .backup:
-                    BackupView(viewModel: BackupViewModel(appState: appState))
-                case .backupDetail(storage: let storage):
-                    BackupDetailView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
-                case .backupList(storage: let storage):
-                    BackupListView(viewModel: BackupViewModel(appState: appState), backupStorage: storage)
-                case .setPassword:
-                    SetPasswordView(viewModel: SetPasswordViewModel(appState: appState,
-                                                                    isFirstSetup: false,
-                                                                    setPasswordGoal: .records))
-                }
-            }
             .alert(LocalizedStringKey("data_is_copied"), isPresented: $viewModel.showCopyAlert) {
                 Button("alert_ok") {
                     viewModel.showCopyAlert = false
@@ -97,15 +65,10 @@ struct RecordsView: View {
             }
             .overlay {
                 if showPasswordView {
-                    if showProtect {
-                        protectionView()
-                    } else {
-                        AuthenticationView(viewModel: AuthenticationViewModel(appState: appState), isShowing: $showPasswordView,
-                                 recordProtect: viewModel.recordsSecurity)
-                    }
+                    AuthenticationView(viewModel: AuthenticationViewModel(appState: appState), isShowing: $showPasswordView,
+                                       recordProtect: viewModel.recordsSecurity)
                 }
             }
-        }
     }
 }
 
@@ -245,33 +208,5 @@ private extension RecordsView {
         .background(themeManager.theme.sectionColor(colorScheme))
         .cornerRadius(5)
         .padding(.horizontal, 5)
-    }
-    
-    func protectionView() -> some View {
-        VStack(spacing: 30) {
-            Text("record_list_protection")
-                .font(.helveticaBold(size: 16))
-                .multilineTextAlignment(.center)
-                .foregroundStyle(themeManager.theme.textColor(colorScheme))
-            
-            Image(.lock)
-                .resizable()
-                .scaledToFit()
-                .frame(size: 50)
-            
-            Button {
-                showPasswordView = true
-                showProtect = false
-            } label: {
-                Text("record_list_view_section")
-                    .font(.helveticaRegular(size: 16))
-                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-            }
-            .padding(.horizontal, 60)
-            .padding(.vertical, 13)
-            .background(themeManager.theme.sectionColor(colorScheme))
-            .clipShape(.rect(cornerRadius: 4))
-        }
-        .modifier(TabViewChildModifier())
     }
 }

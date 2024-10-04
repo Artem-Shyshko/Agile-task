@@ -45,6 +45,7 @@
 		7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0262AAA391300F64175 /* ProjectObject.swift */; };
 		753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DFB692B62A7FE00D4FD11 /* Theme.swift */; };
 		753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F581A2AC70293007FC650 /* SortingViewModel.swift */; };
+		7544A3992CB01B2400FE3118 /* ProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7544A3982CB01B2400FE3118 /* ProtectionView.swift */; };
 		754714132C2C273700BF1CB3 /* AgileTaskWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754714122C2C273700BF1CB3 /* AgileTaskWatchApp.swift */; };
 		754714152C2C273700BF1CB3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754714142C2C273700BF1CB3 /* ContentView.swift */; };
 		754714172C2C273800BF1CB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 754714162C2C273800BF1CB3 /* Assets.xcassets */; };
@@ -312,6 +313,7 @@
 		753DA8612BBEF63300A60849 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		753DFB692B62A7FE00D4FD11 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		753F581A2AC70293007FC650 /* SortingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingViewModel.swift; sourceTree = "<group>"; };
+		7544A3982CB01B2400FE3118 /* ProtectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtectionView.swift; sourceTree = "<group>"; };
 		754714102C2C273700BF1CB3 /* AgileTaskWatch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AgileTaskWatch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		754714122C2C273700BF1CB3 /* AgileTaskWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgileTaskWatchApp.swift; sourceTree = "<group>"; };
 		754714142C2C273700BF1CB3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 				CE05F3E22C7F7A9D001E13D0 /* RecordInfoView */,
 				CE05F3EE2C7F7A9D001E13D0 /* NewRecord */,
 				CE05F3F22C7F7A9D001E13D0 /* FieldsInfoView */,
+				7544A3982CB01B2400FE3118 /* ProtectionView.swift */,
 			);
 			path = RecordList;
 			sourceTree = "<group>";
@@ -1332,6 +1335,7 @@
 				75481B312AE01144003ABED5 /* CompletedTaskView.swift in Sources */,
 				CE05F40F2C81E2DA001E13D0 /* SettingsViewModel.swift in Sources */,
 				7590CF992AF3A01F0015B396 /* SearchableView.swift in Sources */,
+				7544A3992CB01B2400FE3118 /* ProtectionView.swift in Sources */,
 				7520047E2ABB4DFF00EDAF3E /* SettingsObject.swift in Sources */,
 				7537D0222AAA101300F64175 /* ProjectsView.swift in Sources */,
 				754714492C2D6CB100BF1CB3 /* ColorPanel.swift in Sources */,

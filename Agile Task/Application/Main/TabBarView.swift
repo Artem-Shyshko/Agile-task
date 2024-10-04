@@ -33,7 +33,8 @@ enum TasksNavigation: Hashable {
 }
 
 enum SecuredNavigation: Hashable {
-    case createRecord(record: RecordDTO? = nil),
+    case recordsList,
+         createRecord(record: RecordDTO? = nil),
          recordInfo(record: RecordDTO),
          purchase,
          sorting,
@@ -92,11 +93,7 @@ struct TabBarView: View {
                     .tag(Tab.taskList)
                 ProjectsView(viewModel: ProjectsViewModel(appState: appState), path: $appState.projectsNavigationStack)
                     .tag(Tab.projects)
-                RecordsView(viewModel: RecordListViewModel(appState: appState), 
-                               path: $appState.securedNavigationStack,
-                               showPasswordView: $showPasswordViewForRecords,
-                               reloadRecords: $reloadRecords,
-                            showProtect: true)
+                ProtectionView(path: $appState.securedNavigationStack, showPasswordViewForRecords: $showPasswordViewForRecords, reloadRecords: $reloadRecords)
                     .tag(Tab.secured)
             }
             .overlay(alignment: .bottom) {
