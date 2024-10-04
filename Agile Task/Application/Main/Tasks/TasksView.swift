@@ -438,7 +438,8 @@ private extension TasksView {
           isAddTaskFocused = false
           viewModel.isShowingAddTask = false
         } label: {
-          Color.black.opacity(0.1)
+          Color.black.opacity(0.01)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea()
         }
         
@@ -453,10 +454,7 @@ private extension TasksView {
           .tint(themeManager.theme.sectionTextColor(colorScheme))
           .modifier(SectionStyle())
           
-          Rectangle()
-            .frame(maxWidth: .infinity)
-            .frame(height: 1)
-            .padding(.horizontal, 10)
+          addTaskDivider()
           
           HStack(spacing: 6) {
             Image(.calendarIcon)
@@ -475,10 +473,10 @@ private extension TasksView {
               } label: {
                 HStack(spacing: 5) {
                   Text(viewModel.quickTaskDate.format("dd.MM EE"))
-                    Image(systemName: "xmark").renderingMode(.template)
-                      .resizable()
-                      .scaledToFit()
-                      .frame(width: 9, height: 9)
+                  Image(systemName: "xmark").renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 9, height: 9)
                 }
               }
             } else {
@@ -489,7 +487,7 @@ private extension TasksView {
                 appState.isTabBarHidden = true
                 isAddTaskFocused = !isShowingAddTaskCalendar
               } label: {
-                Text("Set date")
+                Text("quick_task_set_date")
               }
             }
             
@@ -498,6 +496,7 @@ private extension TasksView {
               .resizable()
               .scaledToFit()
               .frame(width: 17, height: 17)
+              .padding(.leading, 5)
             if viewModel.isQuickTaskReminderDateSelected {
               Button {
                 viewModel.quickTaskDateType = .reminder
@@ -507,11 +506,11 @@ private extension TasksView {
                 isAddTaskFocused = !isShowingAddTaskCalendar
               } label: {
                 HStack(spacing: 5) {
-                    Text(viewModel.quickTaskReminderDate.format("dd.MM EE"))
-                    Image(systemName: "xmark").renderingMode(.template)
-                      .resizable()
-                      .scaledToFit()
-                      .frame(width: 9, height: 9)
+                  Text(viewModel.quickTaskReminderDate.format("dd.MM EE"))
+                  Image(systemName: "xmark").renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 9, height: 9)
                 }
               }
             } else {
@@ -522,7 +521,7 @@ private extension TasksView {
                 appState.isTabBarHidden = true
                 isAddTaskFocused = !isShowingAddTaskCalendar
               } label: {
-                Text("Set reminder")
+                Text("quick_task_set_reminder")
               }
             }
             
@@ -531,36 +530,42 @@ private extension TasksView {
           .font(.helveticaRegular(size: 16))
           .foregroundColor(themeManager.theme.sectionTextColor(colorScheme))
           .padding(.horizontal, 10)
+          .padding(.vertical, 7)
+          
+          if isShowingAddTaskCalendar {
+            addTaskDivider()
+            
+            if viewModel.quickTaskDateType == .reminder {
+              RecurringTimeView(
+                reminderTime: $viewModel.quickTaskReminderTime,
+                timePeriod: $viewModel.quickTaskReminderDatePeriod,
+                isTypedTime: $viewModel.isTypedReminderTime,
+                timeFormat: viewModel.settings.timeFormat,
+                isFocus: false
+              )
+              
+              addTaskDivider()
+              
+              CustomCalendarView(
+                selectedCalendarDay: $viewModel.quickTaskReminderDate,
+                isShowingCalendarPicker: $viewModel.isShowingCalendar,
+                currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                backgroundColor: themeManager.theme.sectionColor(colorScheme),
+                calendar: Constants.shared.calendar
+              )
+            } else {
+              CustomCalendarView(
+                selectedCalendarDay: $viewModel.quickTaskDate,
+                isShowingCalendarPicker: $viewModel.isShowingCalendar,
+                currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                backgroundColor: themeManager.theme.sectionColor(colorScheme),
+                calendar: Constants.shared.calendar
+              )
+            }
+          }
         }
         .padding(.bottom, 10)
         .background(themeManager.theme.sectionColor(colorScheme))
-        
-        if isShowingAddTaskCalendar {
-          if viewModel.quickTaskDateType == .reminder {
-            RecurringTimeView(
-              reminderTime: $viewModel.quickTaskReminderTime,
-              timePeriod: $viewModel.quickTaskReminderDatePeriod,
-              isTypedTime: $viewModel.isTypedReminderTime,
-              timeFormat: viewModel.settings.timeFormat,
-              isFocus: false
-            )
-            CustomCalendarView(
-              selectedCalendarDay: $viewModel.quickTaskReminderDate,
-              isShowingCalendarPicker: $viewModel.isShowingCalendar,
-              currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
-              backgroundColor: themeManager.theme.sectionColor(colorScheme),
-              calendar: Constants.shared.calendar
-            )
-          } else {
-            CustomCalendarView(
-              selectedCalendarDay: $viewModel.quickTaskDate,
-              isShowingCalendarPicker: $viewModel.isShowingCalendar,
-              currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
-              backgroundColor: themeManager.theme.sectionColor(colorScheme),
-              calendar: Constants.shared.calendar
-            )
-          }
-        }
       }
       .offset(y: isShowingAddTaskCalendar ? 35 : 0)
       .onChange(of: isAddTaskFocused) { newValue in
@@ -570,6 +575,14 @@ private extension TasksView {
         }
       }
     }
+  }
+  
+  func addTaskDivider() -> some View {
+    Rectangle()
+      .frame(maxWidth: .infinity)
+      .frame(height: 1)
+      .padding(.horizontal, 10)
+      .foregroundStyle(.black.opacity(0.5))
   }
   
   func checkDataForReview() {

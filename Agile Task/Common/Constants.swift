@@ -49,7 +49,13 @@ final class Constants {
     
     lazy var currentDate = Date()
     
-    lazy var dateFormatter = DateFormatter()
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        let language = UserDefaults.standard.string(forKey: appLanguage) ?? "en"
+        formatter.locale = Locale(identifier: "\(language)_\(SettingsDTO.region)")
+        
+        return formatter
+    }
     
     var calendar: Calendar {
         let weekStart = UserDefaults.standard.integer(forKey: "WeekStart")
@@ -60,9 +66,8 @@ final class Constants {
         
         var calendar = Calendar.current
         calendar.firstWeekday = UserDefaults.standard.integer(forKey: "WeekStart")
-        if let language = UserDefaults.standard.value(forKey: appLanguage) as? String {
-            calendar.locale = NSLocale(localeIdentifier: "\(language)_\(SettingsDTO.region)") as Locale
-        }
+        let language = UserDefaults.standard.string(forKey: appLanguage) ?? "en"
+        calendar.locale = NSLocale(localeIdentifier: "\(language)_\(SettingsDTO.region)") as Locale
         
         return calendar
     }

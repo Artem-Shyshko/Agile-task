@@ -62,7 +62,7 @@ extension SettingsDTO {
     }
     
     private var language: AppLanguage {
-        guard let language = Locale.current.language.languageCode?.identifier else { return .english }
+        guard let language = Locale.current.language.languageCode?.identifier, UserDefaults.standard.string(forKey: Constants.shared.appLanguage) == nil else { return .english }
         
         switch language {
         case "uk":

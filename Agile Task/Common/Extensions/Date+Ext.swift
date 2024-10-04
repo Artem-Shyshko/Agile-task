@@ -9,9 +9,10 @@ import Foundation
 
 extension Date {
     func format(_ format: String) -> String {
-        Constants.shared.dateFormatter.dateFormat = format
+        var formatter = Constants.shared.dateFormatter
+        formatter.dateFormat = format
         
-        return Constants.shared.dateFormatter.string(from: self)
+        return formatter.string(from: self)
     }
     
     var startDay: Date {

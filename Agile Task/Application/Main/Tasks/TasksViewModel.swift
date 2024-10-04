@@ -260,6 +260,11 @@ extension TasksViewModel {
         }
         
         quickTaskConfig = TaskDTO(object: TaskObject())
+        isQuickTaskDateSelected = false
+        isQuickTaskReminderDateSelected = false
+        quickTaskReminderTime = Date()
+        quickTaskDate = Date()
+        quickTaskReminderDate = Date()
     }
     
     @MainActor

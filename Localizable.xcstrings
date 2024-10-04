@@ -1433,6 +1433,9 @@
     "Key" : {
       "extractionState" : "manual"
     },
+    "Key 1" : {
+      "extractionState" : "manual"
+    },
     "Language" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2362,6 +2365,40 @@
         }
       }
     },
+    "quick_task_set_date" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set date"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Встановити дату"
+          }
+        }
+      }
+    },
+    "quick_task_set_reminder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set reminder"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Встановити нагадування"
+          }
+        }
+      }
+    },
     "record_details" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2799,12 +2836,6 @@
           }
         }
       }
-    },
-    "Set date" : {
-
-    },
-    "Set reminder" : {
-
     },
     "Settings" : {
       "localizations" : {
