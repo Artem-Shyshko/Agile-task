@@ -226,7 +226,7 @@ private extension SubscriptionView {
                         .strikethrough()
                     Text(price)
                         .font(.helveticaBold(size: 30))
-                    Text("Save 80%")
+                    Text("Save 88%")
                         .font(.helveticaBold(size: 16))
                 }
                 .font(.helveticaBold(size: 16))
