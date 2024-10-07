@@ -88,11 +88,13 @@ struct TimeView: View {
             })
         }
         .toolbar {
-            ToolbarItem(placement: .keyboard) {
-                Button("Done") {
-                    isFocused = false
+            if isFocused {
+                ToolbarItem(placement: .keyboard) {
+                    Button("Done") {
+                        isFocused = false
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
     }
