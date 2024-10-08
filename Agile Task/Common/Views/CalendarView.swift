@@ -15,6 +15,7 @@ struct CustomCalendarView: View {
     var backgroundColor: Color
     var items: [CalendarItem]?
     var months: [String]
+    var onDateTap: ()->()
     
     init(
         selectedCalendarDay: Binding<Date>,
@@ -22,13 +23,15 @@ struct CustomCalendarView: View {
         currentMonthDatesColor: Color,
         backgroundColor: Color,
         items: [CalendarItem]? = nil,
-        calendar: Calendar
+        calendar: Calendar,
+        onDateTap: @escaping ()->() = {}
     ) {
         self._selectedCalendarDay = selectedCalendarDay
         self._isShowingCalendarPicker = isShowingCalendarPicker
         self.currentMonthDatesColor = currentMonthDatesColor
         self.backgroundColor = backgroundColor
         self.items = items
+        self.onDateTap = onDateTap
         months = calendar.standaloneMonthSymbols
         viewModel.calendar = calendar
     }
@@ -42,7 +45,8 @@ struct CustomCalendarView: View {
                 viewModel: viewModel,
                 calendarDate: $selectedCalendarDay,
                 currentMonthDatesColor: currentMonthDatesColor,
-                items: items
+                items: items, 
+                onDateTap: onDateTap
             )
             .vAlign(alignment: .top)
             .padding(.horizontal, 20)

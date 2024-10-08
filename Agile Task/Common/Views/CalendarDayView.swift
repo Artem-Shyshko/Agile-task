@@ -14,6 +14,7 @@ public struct CalendarDayView: View {
     var currentMonthDatesColor: Color
     var items: [CalendarItem]?
     var isForCalendarPicker: Bool
+    var onDateTap: ()->()
     
     var cellFrame: CGFloat {
         isForCalendarPicker ? 30 : 40
@@ -28,13 +29,15 @@ public struct CalendarDayView: View {
         calendarDate: Binding<Date>,
         currentMonthDatesColor: Color,
         items: [CalendarItem]? = nil,
-        isForCalendarPicker: Bool = false
+        isForCalendarPicker: Bool = false,
+        onDateTap: @escaping ()->()
     ) {
         self.viewModel = viewModel
         self._calendarDate = calendarDate
         self.currentMonthDatesColor = currentMonthDatesColor
         self.items = items
         self.isForCalendarPicker = isForCalendarPicker
+        self.onDateTap = onDateTap
     }
     
     public var body: some View {
@@ -65,6 +68,7 @@ private extension CalendarDayView {
             if date.isSameMonth(with: calendarDate) {
                 Button {
                     calendarDate = date
+                    onDateTap()
                 } label: {
                     if date.isSameDay(with: calendarDate) {
                         Text(date.format("d"))
@@ -107,6 +111,7 @@ private extension CalendarDayView {
     CalendarDayView(
         viewModel: CalendarViewModel(),
         calendarDate: .constant(Date()),
-        currentMonthDatesColor: .black
+        currentMonthDatesColor: .black,
+        onDateTap: {}
     )
 }
