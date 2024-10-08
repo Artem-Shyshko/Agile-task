@@ -435,6 +435,8 @@ private extension TasksView {
     if viewModel.isShowingAddTask {
       VStack(spacing: 0) {
         Button {
+          isShowingAddTaskCalendar = false
+          appState.isTabBarHidden = false
           isAddTaskFocused = false
           viewModel.isShowingAddTask = false
         } label: {
@@ -472,7 +474,7 @@ private extension TasksView {
                 isAddTaskFocused = !isShowingAddTaskCalendar
               } label: {
                 HStack(spacing: 5) {
-                  Text(viewModel.quickTaskDate.format("dd.MM EE"))
+                  Text(viewModel.quickTaskDate.format(viewModel.dateFormat()))
                   Image(systemName: "xmark").renderingMode(.template)
                     .resizable()
                     .scaledToFit()
@@ -506,7 +508,7 @@ private extension TasksView {
                 isAddTaskFocused = !isShowingAddTaskCalendar
               } label: {
                 HStack(spacing: 5) {
-                  Text(viewModel.quickTaskReminderDate.format("dd.MM EE"))
+                  Text(viewModel.quickTaskReminderDate.format(viewModel.dateFormat()))
                   Image(systemName: "xmark").renderingMode(.template)
                     .resizable()
                     .scaledToFit()
@@ -551,7 +553,8 @@ private extension TasksView {
                 isShowingCalendarPicker: $viewModel.isShowingCalendar,
                 currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
                 backgroundColor: themeManager.theme.sectionColor(colorScheme),
-                calendar: Constants.shared.calendar
+                calendar: Constants.shared.calendar,
+                onDateTap: { isAddTaskFocused = true }
               )
             } else {
               CustomCalendarView(
@@ -559,7 +562,8 @@ private extension TasksView {
                 isShowingCalendarPicker: $viewModel.isShowingCalendar,
                 currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
                 backgroundColor: themeManager.theme.sectionColor(colorScheme),
-                calendar: Constants.shared.calendar
+                calendar: Constants.shared.calendar,
+                onDateTap: { isAddTaskFocused = true }
               )
             }
           }
@@ -570,7 +574,9 @@ private extension TasksView {
       .offset(y: isShowingAddTaskCalendar ? 35 : 0)
       .onChange(of: isAddTaskFocused) { newValue in
         if newValue {
-          isShowingAddTaskCalendar = false
+          withAnimation {
+            isShowingAddTaskCalendar = false
+          }
           appState.isTabBarHidden = false
         }
       }

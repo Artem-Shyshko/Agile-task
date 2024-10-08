@@ -111,7 +111,8 @@ private extension CalendarPickerView {
             viewModel: viewModel,
             calendarDate: $calendarDate,
             currentMonthDatesColor: currentMonthDatesColor,
-            isForCalendarPicker: true
+            isForCalendarPicker: true,
+            onDateTap: {}
         )
     }
     

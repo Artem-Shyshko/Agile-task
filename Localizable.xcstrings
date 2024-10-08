@@ -2731,6 +2731,7 @@
       }
     },
     "Save 80%" : {
+      "extractionState" : "stale",
       "localizations" : {
         "uk" : {
           "stringUnit" : {
@@ -2739,6 +2740,9 @@
           }
         }
       }
+    },
+    "Save 88%" : {
+
     },
     "save_button" : {
       "localizations" : {
