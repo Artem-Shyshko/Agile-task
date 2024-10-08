@@ -467,11 +467,13 @@ private extension TasksView {
             
             if viewModel.isQuickTaskDateSelected {
               Button {
-                viewModel.quickTaskDateType = .date
-                viewModel.isQuickTaskDateSelected = false
-                isShowingAddTaskCalendar = false
-                appState.isTabBarHidden = false
-                isAddTaskFocused = !isShowingAddTaskCalendar
+                withAnimation {
+                  viewModel.quickTaskDateType = .date
+                  viewModel.isQuickTaskDateSelected = false
+                  isShowingAddTaskCalendar = false
+                  appState.isTabBarHidden = false
+                  isAddTaskFocused = !isShowingAddTaskCalendar
+                }
               } label: {
                 HStack(spacing: 5) {
                   Text(viewModel.quickTaskDate.format(viewModel.dateFormat()))
@@ -483,11 +485,13 @@ private extension TasksView {
               }
             } else {
               Button {
-                viewModel.quickTaskDateType = .date
-                viewModel.isQuickTaskDateSelected = true
-                isShowingAddTaskCalendar = true
-                appState.isTabBarHidden = true
-                isAddTaskFocused = !isShowingAddTaskCalendar
+                withAnimation {
+                  viewModel.quickTaskDateType = .date
+                  viewModel.isQuickTaskDateSelected = true
+                  isShowingAddTaskCalendar = true
+                  appState.isTabBarHidden = true
+                  isAddTaskFocused = !isShowingAddTaskCalendar
+                }
               } label: {
                 Text("quick_task_set_date")
               }
@@ -501,11 +505,13 @@ private extension TasksView {
               .padding(.leading, 5)
             if viewModel.isQuickTaskReminderDateSelected {
               Button {
-                viewModel.quickTaskDateType = .reminder
-                viewModel.isQuickTaskReminderDateSelected = false
-                isShowingAddTaskCalendar = false
-                appState.isTabBarHidden = false
-                isAddTaskFocused = !isShowingAddTaskCalendar
+                withAnimation {
+                  viewModel.quickTaskDateType = .reminder
+                  viewModel.isQuickTaskReminderDateSelected = false
+                  isShowingAddTaskCalendar = false
+                  appState.isTabBarHidden = false
+                  isAddTaskFocused = !isShowingAddTaskCalendar
+                }
               } label: {
                 HStack(spacing: 5) {
                   Text(viewModel.quickTaskReminderDate.format(viewModel.dateFormat()))
@@ -517,11 +523,13 @@ private extension TasksView {
               }
             } else {
               Button {
-                viewModel.quickTaskDateType = .reminder
-                viewModel.isQuickTaskReminderDateSelected = true
-                isShowingAddTaskCalendar = true
-                appState.isTabBarHidden = true
-                isAddTaskFocused = !isShowingAddTaskCalendar
+                withAnimation {
+                  viewModel.quickTaskDateType = .reminder
+                  viewModel.isQuickTaskReminderDateSelected = true
+                  isShowingAddTaskCalendar = true
+                  appState.isTabBarHidden = true
+                  isAddTaskFocused = !isShowingAddTaskCalendar
+                }
               } label: {
                 Text("quick_task_set_reminder")
               }
