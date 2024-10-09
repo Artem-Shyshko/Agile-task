@@ -283,15 +283,6 @@ private extension NewTaskView {
             
             switch viewModel.reminder {
             case .custom:
-                CustomCalendarView(
-                    selectedCalendarDay: $viewModel.reminderDate,
-                    isShowingCalendarPicker: $viewModel.isShowingReminderCalendarPicker,
-                    currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
-                    backgroundColor: themeManager.theme.sectionColor(colorScheme),
-                    calendar: Constants.shared.calendar
-                )
-                .modifier(SectionStyle())
-                
                 TimeView(
                     date: $viewModel.reminderTime,
                     timePeriod: $viewModel.selectedReminderTimePeriod,
@@ -300,6 +291,15 @@ private extension NewTaskView {
                     isFocus: editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
+                .modifier(SectionStyle())
+                
+                CustomCalendarView(
+                    selectedCalendarDay: $viewModel.reminderDate,
+                    isShowingCalendarPicker: $viewModel.isShowingReminderCalendarPicker,
+                    currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                    backgroundColor: themeManager.theme.sectionColor(colorScheme),
+                    calendar: Constants.shared.calendar
+                )
                 .modifier(SectionStyle())
             case .tomorrow, .nextWeek:
                 TimeView(
