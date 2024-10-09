@@ -12,8 +12,8 @@ struct SettingsDTO {
     var id: ObjectId
     var appLanguage: AppLanguage = .english
     var startWeekFrom: WeekStarts = .monday
-    var taskDateFormat: TaskDateFormmat = .dayMonthYear
-    var timeFormat: TimeFormat = .twentyFour
+    var taskDateFormat: TaskDateFormmat = .monthDayYear
+    var timeFormat: TimeFormat = .twelve
     var taskDateSorting: TaskDateSorting = .today
     var addNewTaskIn: AddingNewTask = .top
     var completedTask: CompletedTask = .hide

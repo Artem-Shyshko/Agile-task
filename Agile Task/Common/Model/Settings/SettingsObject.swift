@@ -12,8 +12,8 @@ final class SettingsObject: Object, ObjectKeyIdentifiable {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var appLanguage: AppLanguage?
     @Persisted var startWeekFrom: WeekStarts = .monday
-    @Persisted var taskDateFormat: TaskDateFormmat = .dayMonthYear
-    @Persisted var timeFormat: TimeFormat = .twentyFour
+    @Persisted var taskDateFormat: TaskDateFormmat = .monthDayYear
+    @Persisted var timeFormat: TimeFormat = .twelve
     @Persisted var taskDateSorting: TaskDateSorting = .all
     @Persisted var addNewTaskIn: AddingNewTask? = .top
     @Persisted var completedTask: CompletedTask? = .moveToBottom
