@@ -61,6 +61,13 @@ final class CalendarViewModel: ObservableObject {
         return Array(symbols[firstWeekday-1..<symbols.count]) + symbols[0..<firstWeekday-1]
     }
     
+    func getMonthSymbolFor(_ date: Date) -> String {
+        let monthIndex = calendar.component(.month, from: date) - 1
+        let monthSymbols = calendar.monthSymbols
+        
+        return monthSymbols[monthIndex].capitalized
+    }
+    
     func addToCurrentDate(currentDate: inout Date, component: Calendar.Component, value: Int) {
         currentDate = calendar.date(byAdding: component, value: value, to: currentDate)!
     }

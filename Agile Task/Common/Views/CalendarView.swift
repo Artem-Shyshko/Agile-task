@@ -89,7 +89,7 @@ private extension CustomCalendarView {
         Button {
             isShowingCalendarPicker.toggle()
         } label: {
-            Text(selectedCalendarDay.monthString)
+            Text(viewModel.getMonthSymbolFor(selectedCalendarDay))
                 .font(.helveticaBold(size: 17))
                 .foregroundStyle(currentMonthDatesColor)
         }
