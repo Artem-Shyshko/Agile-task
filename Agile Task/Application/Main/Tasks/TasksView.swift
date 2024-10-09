@@ -99,6 +99,7 @@ struct TasksView: View {
         viewModel.localNotificationManager = notificationManager
         viewModel.onAppear()
         checkDataForReview()
+        reloadTabBarAndPlusButton()
       }
       .task {
         try? await notificationManager.requestAuthorization()
@@ -435,10 +436,7 @@ private extension TasksView {
     if viewModel.isShowingAddTask {
       VStack(spacing: 0) {
         Button {
-          isShowingAddTaskCalendar = false
-          appState.isTabBarHidden = false
-          isAddTaskFocused = false
-          viewModel.isShowingAddTask = false
+          reloadTabBarAndPlusButton()
         } label: {
           Color.black.opacity(0.01)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -597,6 +595,13 @@ private extension TasksView {
       .frame(height: 1)
       .padding(.horizontal, 10)
       .foregroundStyle(.black.opacity(0.5))
+  }
+  
+  func reloadTabBarAndPlusButton() {
+    isShowingAddTaskCalendar = false
+    appState.isTabBarHidden = false
+    isAddTaskFocused = false
+    viewModel.isShowingAddTask = false
   }
   
   func checkDataForReview() {
