@@ -35,7 +35,8 @@ struct TimeView: View {
                 .keyboardType(.numberPad)
                 .frame(width: 60)
                 .onAppear {
-                    time = date.getTimeString(with: timeFormat)
+                    let timeString = date.getTimeString(with: timeFormat)
+                    time = timeString.count == 4 ? "0\(timeString)" : timeString
                     if isFocus {
                         isFocused = true
                     }
@@ -120,7 +121,11 @@ class TimeViewModel: ObservableObject {
             var minute = limitedString[index...]
             
             if let hourInt = Int(hour) {
-                hour = hourInt > maxHourTime ? "12" : hour
+                if hourInt == 0 && format == .twelve {
+                    hour = "12"
+                } else {
+                    hour = hourInt > maxHourTime ? "00" : hour
+                }
             }
             
             if let minuteInt = Int(minute) {
