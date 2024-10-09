@@ -91,7 +91,7 @@ struct TaskRow: View {
                     .padding(.trailing, 2)
                     .frame(size: 20)
             }
-            .offset(x: 25)
+            .offset(x: 21.5)
             .buttonStyle(.borderless)
         })
     }
