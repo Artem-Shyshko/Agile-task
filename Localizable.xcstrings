@@ -1351,7 +1351,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Groceries (Lemonade)"
+            "value" : "Продукти (Лимонад)"
           }
         }
       }
@@ -3553,7 +3553,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "To do list"
+            "value" : "Список справ"
           }
         }
       }

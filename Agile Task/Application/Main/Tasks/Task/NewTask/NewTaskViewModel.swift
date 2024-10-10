@@ -212,7 +212,7 @@ final class NewTaskViewModel: ObservableObject {
     func updateFromEditTask(_ editTask: TaskDTO?) {
         if let editTask {
             taskStatus = editTask.status
-            title = editTask.title
+            title = checkDefaultTasksFor(title: editTask.title)
             checkBoxes = editTask.checkBoxArray
             bullets = editTask.bulletArray
             selectedColor = Color(editTask.colorName)
@@ -568,5 +568,44 @@ private extension NewTaskViewModel {
     
     func addTimePeriod(for date: inout Date, component: Calendar.Component, addingValue: Int) {
         date = Constants.shared.calendar.date(byAdding: component, value: addingValue, to: date) ?? date
+    }
+    
+    func checkDefaultTasksFor(title: String) -> String {
+        switch title {
+        case "welcome_task_mock": 
+            return getWelcomeTask()
+        case "groceries_task_mock":
+            return getGroceriesTask()
+        case "todo_task_mock":
+            return getToDoTask()
+        default: return title
+        }
+    }
+    
+    func getWelcomeTask() -> String {
+        switch settings.appLanguage {
+        case .english:
+            "Welcome to Agile Task"
+        case .ukrainian:
+            "Ласкаво просимо до Agile Task"
+        }
+    }
+    
+    func getGroceriesTask() -> String {
+        switch settings.appLanguage {
+        case .english:
+            "Groceries (Lemonade)"
+        case .ukrainian:
+            "Продукти (Лимонад)"
+        }
+    }
+    
+    func getToDoTask() -> String {
+        switch settings.appLanguage {
+        case .english:
+            "To do list"
+        case .ukrainian:
+            "Список справ"
+        }
     }
 }

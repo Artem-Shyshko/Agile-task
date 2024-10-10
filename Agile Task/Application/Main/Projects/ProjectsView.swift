@@ -71,7 +71,7 @@ private extension ProjectsView {
     func accountsList() -> some View {
         List {
             ForEach(viewModel.savedProjects, id: \.id) { project in
-                ProjectRow(vm: viewModel, project: project)
+                ProjectRow(vm: viewModel, project: project, path: $path)
             }
             .listRowSeparator(.hidden)
         }
