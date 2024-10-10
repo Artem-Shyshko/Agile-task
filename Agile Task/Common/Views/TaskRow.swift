@@ -91,9 +91,15 @@ struct TaskRow: View {
                     .padding(.trailing, 2)
                     .frame(size: 20)
             }
-            .offset(x: 21.5)
+            .offset(x: setOffsetForSwipesButton())
             .buttonStyle(.borderless)
         })
+    }
+    
+    func setOffsetForSwipesButton() -> CGFloat {
+        let screenWidth = UIScreen.main.bounds.size.width
+        // different value for iPads and phones with smaller width
+        return (screenWidth < 744 && screenWidth > 400) ? 25 : 21.5
     }
 }
 
