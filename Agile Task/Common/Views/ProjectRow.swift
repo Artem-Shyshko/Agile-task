@@ -68,36 +68,12 @@ struct ProjectRow: View {
             }
         }
         .padding(.horizontal, Constants.shared.listRowHorizontalPadding)
-//        .listRowBackground(
-//            RoundedRectangle(cornerRadius: 4)
-//                .fill(themeManager.theme.sectionColor(colorScheme))
-//                .padding(.trailing, 10)
-//            .overlay(alignment: .trailing   , content: {
-//                Image(.swipes)
-//                    .onTapGesture {
-//                        path.append(.newProject(editHabit: project))
-//                    }
-//            })
-//        )
-//        .padding(.trailing, 10)
-        
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)
                 .fill(themeManager.theme.sectionColor(colorScheme))
                 .padding(.trailing, 12)
         )
         .padding(.trailing, 12)
-//        .overlay(alignment: .trailing, content: {
-//            Button {
-////                path.append(.createTask(editedTask: task))
-//            } label: {
-//                Image(.swipes)
-//                    .padding(.trailing, 2)
-//                    .frame(size: 20)
-//            }
-////            .offset(x: 25)
-//            .buttonStyle(.borderless)
-//        })
     }
     
     var checkMark: some View {
