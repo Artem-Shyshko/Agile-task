@@ -471,9 +471,7 @@ extension TasksViewModel {
                 }
         case .month:
             let sortedCompletedTasks = sortedCompletedTasks(loadedTasks, settings: settings)
-            
-            udateCalendarInfo()
-            
+            updateCalendarInfo()
             filteredTasks = sortedCompletedTasks
                 .lazy
                 .filter {
@@ -490,14 +488,14 @@ extension TasksViewModel {
         saveSortingOrder()
     }
     
-    func udateCalendarInfo() {
+    func updateCalendarInfo() {
         calendarTasks = loadedTasks
             .lazy
             .filter({
                 if let taskDate = $0.date {
-                    return taskDate.isSameMonth(with: calendarDate)
+                    return taskDate.isSameMonth(with: selectedCalendarDate)
                 } else if $0.isRecurring {
-                    return $0.createdDate.isSameMonth(with: calendarDate)
+                    return $0.createdDate.isSameMonth(with: selectedCalendarDate)
                 }
                 
                 return false
