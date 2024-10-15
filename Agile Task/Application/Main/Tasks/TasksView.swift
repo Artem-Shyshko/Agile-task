@@ -145,7 +145,7 @@ struct TasksView: View {
         }
       })
       .onChange(of: viewModel.calendarDate) { _ in
-        viewModel.udateCalendarInfo()
+        viewModel.updateCalendarInfo()
       }
       .onChange(of: viewModel.searchText) { newValue in
         viewModel.search(with: newValue)
