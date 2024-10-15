@@ -221,7 +221,7 @@ extension TasksViewModel {
         quickTaskConfig.dateOption = isQuickTaskDateSelected ? .custom : .none
         quickTaskConfig.reminderDate = isQuickTaskReminderDateSelected ? quickTaskReminderDate : nil
         quickTaskConfig.reminder = isQuickTaskReminderDateSelected ? .custom : .none
-        quickTaskConfig.time = isQuickTaskReminderDateSelected ? quickTaskReminderTime : nil
+        quickTaskConfig.time = nil
         quickTaskConfig.timeOption = isQuickTaskReminderDateSelected ? .custom : .none
         quickTaskConfig.timePeriod = quickTaskReminderDatePeriod
         

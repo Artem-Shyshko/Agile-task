@@ -37,19 +37,21 @@ struct TimeView: View {
                 .onAppear {
                     let timeString = date.getTimeString(with: timeFormat)
                     time = timeString.count == 4 ? "0\(timeString)" : timeString
+                    
+                    if timeFormat == .twelve {
+                        let hour = Calendar.current.component(.hour, from: date)
+                        timePeriod = hour >= 12 ? .pm : .am
+                    }
+                    
                     if isFocus {
                         isFocused = true
                     }
                 }
+                .onChange(of: timePeriod) { _ in
+                    reloadTime()
+                }
                 .onChange(of: time) { newValue in
-                    time = viewModel.formatTimeInput(newValue, format: timeFormat)
-                    date = Calendar.current.date(
-                        bySettingHour: Int(time.prefix(2)) ?? 00,
-                        minute: Int(time.suffix(2)) ?? 00,
-                        second: 0,
-                        of: date
-                    ) ?? date
-                    isTypedTime = time.count == 5
+                    reloadTime()
                 }
                 .focused($isFocused)
             
@@ -98,6 +100,24 @@ struct TimeView: View {
                 }
             }
         }
+    }
+    
+    func reloadTime() {
+        time = viewModel.formatTimeInput(time, format: timeFormat)
+        
+        var hour = Int(time.prefix(2)) ?? 00
+        let minute = Int(time.suffix(2)) ?? 00
+        
+        if timeFormat == .twelve {
+            if timePeriod == .pm && hour < 12 {
+                hour += 12
+            } else if timePeriod == .am && hour == 12 {
+                hour = 0
+            }
+        }
+        
+        date = Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: date) ?? date
+        isTypedTime = time.count == 5
     }
 }
 
