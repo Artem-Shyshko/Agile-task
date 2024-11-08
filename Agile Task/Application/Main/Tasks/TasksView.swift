@@ -208,14 +208,6 @@ private extension TasksView {
       }
       .foregroundColor(.white)
       
-      NavigationLink(value: TasksNavigation.sorting) {
-        Text("tasks_view_sorting")
-      }
-      
-      NavigationLink(value: TasksNavigation.completedTasks) {
-        Text("tasks_view_completed_tasks")
-      }
-      
       NavigationLink(value: TasksNavigation.settings) {
         Text("SettingsTab")
       }
