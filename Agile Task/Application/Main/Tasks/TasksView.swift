@@ -294,6 +294,13 @@ private extension TasksView {
             .frame(size: Constants.shared.imagesSize)
         }
         
+        NavigationLink(value: TasksNavigation.sorting) {
+          Image(.sorting)
+            .resizable()
+            .scaledToFit()
+            .frame(size: Constants.shared.imagesSize)
+        }
+        
         Spacer()
         VStack {
           switch viewModel.taskSortingOption {
@@ -321,6 +328,13 @@ private extension TasksView {
         }
         
         Spacer()
+        
+        NavigationLink(value: TasksNavigation.completedTasks) {
+          Image(.completedTasks)
+            .resizable()
+            .scaledToFit()
+            .frame(size: Constants.shared.imagesSize)
+        }
         
         ShareLink(item: viewModel.sharedContent()) {
           Image(.share)
@@ -418,7 +432,6 @@ private extension TasksView {
       } label: {
         Image(.quickTask)
       }
-      .padding(.trailing, 23)
       .padding(.bottom, 30)
     }
   }
