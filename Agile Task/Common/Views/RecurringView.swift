@@ -17,6 +17,7 @@ struct RecurringView: View {
             endsAfterView()
             endsView()
         }
+        .padding(.leading, 20)
     }
 }
 
@@ -105,22 +106,24 @@ private extension RecurringView {
     func endsView() -> some View {
         HStack(spacing: 30) {
             Text("Ends")
-            Spacer()
-            Button {
-                viewModel.recurringConfiguration.endsOption = .on
-            } label: {
-                Image(viewModel.recurringConfiguration.endsOption == .on ? "done-checkbox" : "empty-checkbox")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 15, height: 15)
+                .hAlign(alignment: .leading)
+            HStack(spacing: 20) {
+                Button {
+                    viewModel.recurringConfiguration.endsOption = .on
+                } label: {
+                    Image(viewModel.recurringConfiguration.endsOption == .on ? "done-checkbox" : "empty-checkbox")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 15, height: 15)
+                }
+                .padding(.leading)
+                
+                DatePicker("", selection: $viewModel.recurringConfiguration.endsDate, displayedComponents: .date)
+                    .disabled(viewModel.recurringConfiguration.endsOption != .on)
+                    .frame(width: 80, height: 35)
+                    .foregroundColor(viewModel.recurringConfiguration.endsOption == .on ? .black : .secondary)
             }
-            .padding(.leading)
-            
-            DatePicker("", selection: $viewModel.recurringConfiguration.endsDate, displayedComponents: .date)
-                .disabled(viewModel.recurringConfiguration.endsOption != .on)
-                .frame(width: 80, height: 35)
-                .foregroundColor(viewModel.recurringConfiguration.endsOption == .on ? .black : .secondary)
             
             Button {
                 viewModel.recurringConfiguration.endsOption = .never
@@ -209,8 +212,6 @@ struct CheckBoxView: View {
 
 // MARK: - Preview
 
-struct RecurringView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecurringView(viewModel: NewTaskViewModel(appState: AppState(), taskList: []))
-    }
+#Preview {
+    RecurringView(viewModel: .init(appState: AppState(), taskList: []))
 }
