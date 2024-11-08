@@ -79,6 +79,16 @@ extension Color {
         endPoint: .bottomTrailing
     )
     
+    static let rubySubscriptionGradient = LinearGradient(
+        gradient: Gradient(stops: [
+            Gradient.Stop(color: Color(hex: "#DA055A"), location: 0.0),
+            Gradient.Stop(color: Color(hex: "#B21C8D"), location: 0.58),
+            Gradient.Stop(color: Color(hex: "#8734C4"), location: 1)
+        ]),
+        startPoint: .leading,
+        endPoint: .trailing
+    )
+    
     static let oceanGradient = LinearGradient(
         colors: [Color(hex: "#1A4C99"), Color(hex: "#1E8BE1"), Color(hex: "#1FC2FF"), Color(hex: "#9AF5FF")],
         startPoint: .topLeading,

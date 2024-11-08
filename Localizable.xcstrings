@@ -107,9 +107,6 @@
         }
       }
     },
-    "$49.99 " : {
-
-    },
     "15_sec" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -744,6 +741,9 @@
           }
         }
       }
+    },
+    "Change or cancel plan anytime" : {
+
     },
     "Checklist" : {
       "localizations" : {
@@ -1982,6 +1982,7 @@
       }
     },
     "plane_continue_title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2741,9 +2742,6 @@
         }
       }
     },
-    "Save 88%" : {
-
-    },
     "save_button" : {
       "localizations" : {
         "en" : {
@@ -2987,6 +2985,9 @@
           }
         }
       }
+    },
+    "Subscribe" : {
+
     },
     "subscription_title" : {
       "localizations" : {

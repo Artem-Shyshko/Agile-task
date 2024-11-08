@@ -37,21 +37,16 @@ struct SubscriptionView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: Constants.shared.viewSectionSpacing) {
-            navigationBar()
-                VStack(spacing: 20) {
-                    VStack {
-                        title()
-                        subtitle()
-                        Spacer()
-                        checkmarksView()
-                        Spacer()
-                        reviews()
-                        products()
-                    }
-                    bottomButtons()
+        VStack(spacing: Constants.shared.listRowSpacing) {
+                navigationBar()
+            if AppHelper.shared.isIPad {
+                content()
+            } else {
+                ScrollView {
+                    content()
                 }
-                .padding(.horizontal, 2)
+                .padding(.bottom, 5)
+            }
         }
         .onAppear {
             appState.isTabBarHidden = true
@@ -59,15 +54,21 @@ struct SubscriptionView: View {
                 try await purchaseManager.loadProducts()
                 
                 if purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription,
-                   let yearlyPurchaseIndex = purchaseManager.products.firstIndex(where: { $0.id == Constants.shared.yearlySubscriptionID}) {
+                   let yearlyPurchaseIndex = purchaseManager.products.firstIndex(where: { $0.id == Constants.shared.monthlySubscriptionID}) {
                     await MainActor.run {
                         selectedProduct = purchaseManager.products[yearlyPurchaseIndex]
+                    }
+                } else if let subscription = purchaseManager.products.first(where: {$0.id == purchaseManager.selectedSubscriptionID }) {
+                    await MainActor.run {
+                        selectedProduct = subscription
                     }
                 }
             }
         }
+        .onDisappear(perform: {
+            appState.isTabBarHidden = false
+        })
         .manageSubscriptionsSheet(isPresented: $isPresentedManageSubscription)
-        .toolbar(.hidden, for: .tabBar)
         .modifier(TabViewChildModifier())
         .overlay {
             loaderView(show: purchaseManager.showProcessView)
@@ -77,17 +78,31 @@ struct SubscriptionView: View {
             if newValue == Constants.shared.yearlySubscriptionID
                 || newValue == Constants.shared.monthlySubscriptionID {
                 dismiss()
-                appState.projectsNavigationStack = []
-                appState.taskListNavigationStack = []
-                appState.isTabBarHidden = false
             }
         }
     }
 }
 
 // MARK: - Private views
-
 private extension SubscriptionView {
+    
+    func content() -> some View {
+        VStack(spacing: 20) {
+            title()
+            reviews()
+            Spacer()
+            checkmarksView()
+            Spacer()
+            VStack(spacing: 12) {
+                products()
+                Text("Change or cancel plan anytime")
+                    .font(.helveticaRegular(size: 16))
+                bottomButtons()
+            }
+        }
+        .padding(.horizontal, 2)
+    }
+    
     func navigationBar() -> some View {
         NavigationBarView(
             leftItem: backButton(),
@@ -113,17 +128,17 @@ private extension SubscriptionView {
                     isPresentedManageSubscription = true
                 }
             } label: {
-                Text(purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription ? "plane_continue_title" : "plane_manage_subscription")
+                Text(purchaseManager.selectedSubscriptionID == Constants.shared.freeSubscription ? "Subscribe" : "plane_manage_subscription")
             }
             .buttonStyle(PrimaryButtonStyle())
             
             HStack(spacing: 30) {
-                    PrivacyPolicyButton()
-                        .font(.helveticaRegular(size: 15))
-                        .overlay(alignment: .bottom) {
-                            Rectangle()
-                                .frame(height: 0.5)
-                        }
+                PrivacyPolicyButton()
+                    .font(.helveticaRegular(size: 15))
+                    .overlay(alignment: .bottom) {
+                        Rectangle()
+                            .frame(height: 0.5)
+                    }
                 TermsOfUseButton()
                     .font(.helveticaRegular(size: 15))
                     .overlay(alignment: .bottom) {
@@ -136,7 +151,7 @@ private extension SubscriptionView {
     }
     
     func checkmarksView() -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: AppHelper.shared.isIPad ? 25 : 20) {
             ForEach(checkmarkItems, id: \.self) { item in
                 HStack {
                     Image(systemName: "checkmark.circle.fill")
@@ -144,6 +159,7 @@ private extension SubscriptionView {
                         .frame(width: 25, height: 25)
                         .foregroundColor(.white)
                     Text(LocalizedStringKey(item))
+                        .font(.helveticaRegular(size: AppHelper.shared.isIPad ? 20 : 16))
                 }
             }
         }
@@ -178,82 +194,64 @@ private extension SubscriptionView {
             }
     }
     
-    
     func sum<T: AdditiveArithmetic>(firsValue: T, secondValue: T) -> T {
         firsValue + secondValue
     }
     
     func reviews() -> some View {
-        HStack {
+        HStack(spacing: 15) {
             Image(.leftWreath)
-            ForEach(0..<5) { _ in
-                Image(.star)
+            HStack(spacing: 20) {
+                ForEach(0..<5) { _ in
+                    Image(.star)
+                }
             }
             Image(.rightWreath)
-        }
-        .overlay(alignment: .center) {
-            Text("purchase_reviews")
-                .font(.helveticaRegular(size: 15))
-                .offset(y: 25)
         }
     }
     
     func products() -> some View {
         VStack(spacing: 5) {
             ForEach(purchaseManager.products) { product in
-                if product.id == Constants.shared.yearlySubscriptionID {
-                    planView(
-                        title: LocalizedStringKey(product.displayName.trimmingCharacters(in: .whitespacesAndNewlines)),
-                        description: product.description,
-                        price: product.displayPrice
-                    )
+                Button {
+                    selectedProduct = product
+                } label: {
+                    if selectedProduct == product {
+                        planView(for: product)
+                            .background(Color.rubySubscriptionGradient.opacity(0.6))
+                            .clipShape(.rect(cornerRadius: 10))
+                    } else {
+                        planView(for: product)
+                            .background(.clear)
+                            .clipShape(.rect(cornerRadius: 10))
+                    }
                 }
+                .disabled(purchaseManager.selectedSubscriptionID != Constants.shared.freeSubscription)
             }
         }
     }
     
-    func planView(
-        title: LocalizedStringKey,
-        description: String,
-        price: String?
-    ) -> some View {
-        VStack(alignment: .center, spacing: 12) {
-            if let price {
-                HStack(spacing: 10) {
-                    Text("$49.99 ")
-                        .font(.helveticaBold(size: 20))
-                        .opacity(0.5)
-                        .strikethrough()
-                    Text(price)
-                        .font(.helveticaBold(size: 30))
-                    Text("Save 88%")
-                        .font(.helveticaBold(size: 16))
-                }
-                .font(.helveticaBold(size: 16))
-            }
-            
-            HStack {
-                Text(title)
-                    .font(.helveticaBold(size: 16))
-                Text(LocalizedStringKey(description))
-                    .font(.helveticaRegular(size: 14))
-            }
+    func planView(for product: Product) -> some View {
+        HStack(spacing: 5) {
+            Text(product.displayPrice)
+                    .font(.helveticaBold(size: 24))
+            Text(LocalizedStringKey(product.description))
+                .font(.helveticaRegular(size: 14))
         }
         .foregroundColor(themeManager.theme.textColor(colorScheme))
-        .padding(24)
-        .frame(maxWidth: .infinity)
-        .background(Color.white.opacity(0.3))
-        .clipShape(.rect(cornerRadius: 28))
+        .padding(.vertical, 15)
+        .padding(.horizontal, 10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .clipShape(.rect(cornerRadius: 10))
         .overlay {
-            RoundedRectangle(cornerRadius: 28)
-                .stroke(lineWidth: 1)
-                .opacity(0.6)
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(lineWidth: 4)
+                .opacity(selectedProduct == product ? 1 : 0.6)
         }
     }
 }
 
 // MARK: - Preview
-
 #Preview {
     SubscriptionView()
         .environmentObject(PurchaseManager())

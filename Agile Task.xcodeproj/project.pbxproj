@@ -96,6 +96,7 @@
 		75677A332A813F380034C45B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75677A322A813F380034C45B /* Preview Assets.xcassets */; };
 		7567E5AA2BC3D306007C1C97 /* Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7567E5A92BC3D306007C1C97 /* Localizable.swift */; };
 		757B83392ACDBA3E00A26D73 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */; };
+		757F5E152CDDF90100A72732 /* TaskConfiguration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 757F5E142CDDF90100A72732 /* TaskConfiguration.storekit */; };
 		7583617C2AB1D4DB0021FFDE /* AppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7583617B2AB1D4DB0021FFDE /* AppHelper.swift */; };
 		75896DD72A83DCC900B0C6F2 /* TaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75896DD62A83DCC900B0C6F2 /* TaskObject.swift */; };
 		758B02042BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
@@ -336,8 +337,8 @@
 		75677A2F2A813F380034C45B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75677A322A813F380034C45B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7567E5A92BC3D306007C1C97 /* Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizable.swift; sourceTree = "<group>"; };
-		757B83372ACDB4C200A26D73 /* MasterTaskConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = MasterTaskConfiguration.storekit; sourceTree = "<group>"; };
 		757B83382ACDBA3E00A26D73 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		757F5E142CDDF90100A72732 /* TaskConfiguration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = TaskConfiguration.storekit; sourceTree = "<group>"; };
 		7583617B2AB1D4DB0021FFDE /* AppHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppHelper.swift; sourceTree = "<group>"; };
 		75896DD62A83DCC900B0C6F2 /* TaskObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskObject.swift; sourceTree = "<group>"; };
 		758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
@@ -686,7 +687,6 @@
 				7537D01F2AA9DDC500F64175 /* Managers */,
 				75B58D132A827BD800937923 /* Common */,
 				75677A312A813F380034C45B /* Preview Content */,
-				757B83372ACDB4C200A26D73 /* MasterTaskConfiguration.storekit */,
 			);
 			path = "Agile Task";
 			sourceTree = "<group>";
@@ -732,6 +732,7 @@
 			children = (
 				75677A2F2A813F380034C45B /* Assets.xcassets */,
 				75B58CFD2A82204700937923 /* Fonts */,
+				757F5E142CDDF90100A72732 /* TaskConfiguration.storekit */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -1211,6 +1212,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				757F5E152CDDF90100A72732 /* TaskConfiguration.storekit in Resources */,
 				758B02042BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */,
 				75A2D39E2C2D80DE009B3FFB /* Helvetica.ttf in Resources */,
 				75F6A85A2B91CC86006A7067 /* Helvetica-Light.ttf in Resources */,

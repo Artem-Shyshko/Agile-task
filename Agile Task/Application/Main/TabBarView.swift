@@ -98,7 +98,10 @@ struct TabBarView: View {
             }
             .overlay(alignment: .bottom) {
                 if !appState.isTabBarHidden {
-                    customTabItem()
+                    VStack {
+                        Spacer()
+                        customTabItem()
+                    }
                 }
             }
         }

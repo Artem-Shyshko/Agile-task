@@ -5,11 +5,15 @@
 //  Created by Artur Korol on 13.09.2023.
 //
 
-import Foundation
+import SwiftUI
 import SwiftyDropbox
 
 final class AppHelper {
     static let shared = AppHelper()
+    
+    var isIPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad
+    }
     
     private init() {}
     

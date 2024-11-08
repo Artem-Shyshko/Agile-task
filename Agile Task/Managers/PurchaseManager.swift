@@ -12,7 +12,11 @@ import StoreKit
 final class PurchaseManager: NSObject, ObservableObject {
     @Published var selectedSubscriptionID = Constants.shared.freeSubscription
     @Published var showProcessView = false
-    private let productsID = [Constants.shared.monthlySubscriptionID, Constants.shared.yearlySubscriptionID]
+    private let productsID = [
+        Constants.shared.oneTimeSubscriptionID,
+        Constants.shared.monthlySubscriptionID,
+        Constants.shared.yearlySubscriptionID
+    ]
     private var productsLoaded = false
     private var updates: Task<Void, Never>? = nil
     private let maxFreeProjects = 2
@@ -64,7 +68,7 @@ final class PurchaseManager: NSObject, ObservableObject {
         showProcessView = true
         
         self.products = try await Product.products(for: productsID)
-            .sorted(by: { $0.price < $1.price })
+            .sorted(by: { $0.description.count < $1.description.count })
         self.productsLoaded = true
         showProcessView = false
     }

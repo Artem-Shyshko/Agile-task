@@ -1,15 +1,37 @@
 {
-  "identifier" : "695BEDD0",
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "A1BA6C48",
   "nonRenewingSubscriptions" : [
-
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "2AE7667A",
+      "localizations" : [
+        {
+          "description" : "month",
+          "displayName" : "One time subscription",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "agile_money_one_time",
+      "referenceName" : "One time subscription",
+      "type" : "NonRenewingSubscription"
+    }
   ],
   "products" : [
 
   ],
   "settings" : {
     "_failTransactionsEnabled" : false,
-    "_locale" : "en_US",
-    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -60,7 +82,7 @@
   },
   "subscriptionGroups" : [
     {
-      "id" : "B6ADF9E8",
+      "id" : "532A00F6",
       "localizations" : [
 
       ],
@@ -73,23 +95,31 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "0.99",
+          "displayPrice" : "0.79",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "F61B8FD5",
-          "introductoryOffer" : null,
+          "internalID" : "DA238B04",
+          "introductoryOffer" : {
+            "displayPrice" : "0.99",
+            "internalID" : "8EB018AD",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1M"
+          },
           "localizations" : [
             {
-              "description" : "Monthly",
-              "displayName" : "Monthly",
+              "description" : "/month, free 7-day trial, auto-renewable",
+              "displayName" : "Monthy",
               "locale" : "en_US"
             }
           ],
           "productID" : "agile_task_monthly",
           "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Monthly",
-          "subscriptionGroupID" : "B6ADF9E8",
-          "type" : "RecurringSubscription"
+          "subscriptionGroupID" : "532A00F6",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
         },
         {
           "adHocOffers" : [
@@ -98,33 +128,32 @@
           "codeOffers" : [
 
           ],
-          "displayPrice" : "9.99",
+          "displayPrice" : "4.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "C6B545C7",
-          "introductoryOffer" : {
-            "displayPrice" : "0.99",
-            "internalID" : "526FF6F5",
-            "paymentMode" : "none"
-          },
+          "internalID" : "F069B1B7",
+          "introductoryOffer" : null,
           "localizations" : [
             {
-              "description" : "Yearly",
+              "description" : "/year, 50% off, no trial, auto-renewable",
               "displayName" : "Yearly",
               "locale" : "en_US"
             }
           ],
           "productID" : "agile_task_yearly",
-          "recurringSubscriptionPeriod" : "P1Y",
+          "recurringSubscriptionPeriod" : "P1M",
           "referenceName" : "Yearly",
-          "subscriptionGroupID" : "B6ADF9E8",
-          "type" : "RecurringSubscription"
+          "subscriptionGroupID" : "532A00F6",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
         }
       ]
     }
   ],
   "version" : {
-    "major" : 3,
+    "major" : 4,
     "minor" : 0
   }
 }
