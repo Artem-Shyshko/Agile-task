@@ -210,10 +210,20 @@ private extension NewTaskView {
                 isSelected: viewModel.selectedDateOption != .none
             )
             .modifier(SectionStyle())
+            .overlay(alignment: .trailing) {
+                if viewModel.selectedDateOption == .custom {
+                    Text(viewModel.taskDate.format(viewModel.settings.taskDateFormat.format))
+                        .font(.helveticaRegular(size: 16))
+                        .frame(width: 100, alignment: .trailing )
+                        .background(themeManager.theme.sectionColor(colorScheme))
+                        .padding(.trailing, 5)
+                }
+            }
             
             if viewModel.selectedDateOption == .custom {
                 CustomCalendarView(
-                    selectedCalendarDay: $viewModel.taskDate, isShowingCalendarPicker: $viewModel.isShowingStartDateCalendarPicker,
+                    selectedCalendarDay: $viewModel.taskDate,
+                    isShowingCalendarPicker: $viewModel.isShowingStartDateCalendarPicker,
                     currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
                     backgroundColor:themeManager.theme.sectionColor(colorScheme),
                     calendar: Constants.shared.calendar
