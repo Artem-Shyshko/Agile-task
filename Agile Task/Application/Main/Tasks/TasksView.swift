@@ -284,7 +284,7 @@ private extension TasksView {
           isFocused = true
         }
     } else {
-      HStack {
+      HStack(spacing: 13) {
         Button {
           viewModel.showOrHideItems()
         } label: {
