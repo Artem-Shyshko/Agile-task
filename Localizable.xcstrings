@@ -269,6 +269,30 @@
         }
       }
     },
+    "alert_delete" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "alert_delete_bullet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete bullet?"
+          }
+        }
+      }
+    },
+    "alert_delete_checkbox" : {
+
+    },
     "alert_delete_task" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -317,6 +341,9 @@
           }
         }
       }
+    },
+    "alert_task_reminder" : {
+
     },
     "alert_task_title" : {
       "extractionState" : "manual",

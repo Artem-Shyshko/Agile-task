@@ -62,13 +62,11 @@ struct TasksView: View {
       .navigationDestination(for: TasksNavigation.self) { views in
         switch views {
         case .createTask(let editedTask):
-          NewTaskView(viewModel: NewTaskViewModel(appState: appState, taskList: viewModel.filteredTasks), editTask: editedTask)
+          NewTaskView(viewModel: NewTaskViewModel(appState: appState, editTask: editedTask, taskList: viewModel.filteredTasks))
         case .completedTasks:
           CompletedTaskView(viewModel: viewModel, path: $path)
         case .sorting:
           SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .tasks))
-        case .newCheckBox:
-          EmptyView()
         case .subscription:
           SubscriptionView()
         case .settings:

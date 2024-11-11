@@ -83,12 +83,9 @@ private extension BulletView {
     
     func listOfTextEditor() -> some View {
         ForEach($viewModel.bulletArray, id: \.id) { bullet in
-            TextEditor(
-                viewModel: viewModel,
-                showAlert: $showDeleteAlert,
-                bullet: bullet,
-                isFieldOnFocus: focusedInput == viewModel.focusNumber(bullet: bullet.wrappedValue)
-            )
+            TextEditor(title: bullet.title, isFieldOnFocus: focusedInput == viewModel.focusNumber(bullet: bullet.wrappedValue)) {
+                viewModel.showDeleteAlert = true
+            }
             .focused(
                 $focusedInput,
                 equals: viewModel.focusNumber(bullet: bullet.wrappedValue)
@@ -147,15 +144,14 @@ private extension BulletView {
 
 // MARK: - TextEditor
 
-fileprivate struct TextEditor: View {
-    @EnvironmentObject var themeManager: ThemeManager
-    @Environment(\.colorScheme) var colorScheme
+struct TextEditor: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.colorScheme) private var colorScheme
     
-    @StateObject var viewModel: BulletViewModel
-    @Binding var showAlert: Bool
-    @Binding var bullet: BulletDTO
+    @Binding var title: String
     var isFieldOnFocus: Bool
-    @FocusState var isFocus: Bool
+    @FocusState private var isFocus: Bool
+    var action: ()->()
     
     var body: some View {
         HStack(spacing: 4) {
@@ -166,7 +162,7 @@ fileprivate struct TextEditor: View {
                 .foregroundColor(.gray)
                 .frame(width: 13,height: 13)
             
-            TextField("add a point", text: $bullet.title)
+            TextField("add a point", text: $title)
                 .lineLimit(1...10)
                 .frame(minHeight: 35)
                 .fixedSize(horizontal: false, vertical: true)
@@ -178,9 +174,7 @@ fileprivate struct TextEditor: View {
                 ThreeHorizontalLinesView()
                 
                 Button(action: {
-                    isFocus = false
-                    viewModel.deletedBullet = bullet
-                    showAlert = true
+                    action()
                 }, label: {
                     Image(.trash)
                         .renderingMode(.template)

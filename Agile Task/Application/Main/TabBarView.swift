@@ -18,7 +18,6 @@ enum TasksNavigation: Hashable {
     case createTask(editedTask: TaskDTO? = nil),
          completedTasks,
          sorting,
-         newCheckBox,
          subscription,
          settings,
          appSettings,

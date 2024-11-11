@@ -8,7 +8,7 @@
 import RealmSwift
 
 struct CheckboxDTO: TaskItem {
-    var id: ObjectId
+    var id: ObjectId = .generate()
     var title: String
     var isCompleted: Bool = false
     var sortingOrder: Int = 0

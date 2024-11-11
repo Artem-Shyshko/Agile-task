@@ -103,8 +103,6 @@
 		758B02062BEE494D00E7865B /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */; };
 		758B22862AD59C1A00D4654D /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758B22852AD59C1A00D4654D /* AuthenticationView.swift */; };
 		7590CF922AEFA81B0015B396 /* CheckboxObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF912AEFA81B0015B396 /* CheckboxObject.swift */; };
-		7590CF952AEFADE80015B396 /* NewCheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF942AEFADE80015B396 /* NewCheckBoxView.swift */; };
-		7590CF972AEFAE900015B396 /* NewCheckBoxViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF962AEFAE900015B396 /* NewCheckBoxViewModel.swift */; };
 		7590CF992AF3A01F0015B396 /* SearchableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF982AF3A01F0015B396 /* SearchableView.swift */; };
 		7590CF9D2AF3FD790015B396 /* Binding+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF9C2AF3FD790015B396 /* Binding+Ext.swift */; };
 		759510C12ACD54EB0087004A /* SecurityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759510C02ACD54EB0087004A /* SecurityViewModel.swift */; };
@@ -344,8 +342,6 @@
 		758B02032BEE494D00E7865B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		758B22852AD59C1A00D4654D /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		7590CF912AEFA81B0015B396 /* CheckboxObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxObject.swift; sourceTree = "<group>"; };
-		7590CF942AEFADE80015B396 /* NewCheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCheckBoxView.swift; sourceTree = "<group>"; };
-		7590CF962AEFAE900015B396 /* NewCheckBoxViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewCheckBoxViewModel.swift; sourceTree = "<group>"; };
 		7590CF982AF3A01F0015B396 /* SearchableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableView.swift; sourceTree = "<group>"; };
 		7590CF9C2AF3FD790015B396 /* Binding+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Binding+Ext.swift"; sourceTree = "<group>"; };
 		759510C02ACD54EB0087004A /* SecurityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityViewModel.swift; sourceTree = "<group>"; };
@@ -528,7 +524,6 @@
 			children = (
 				75896DD32A83D7C700B0C6F2 /* NewTask */,
 				75E11C6B2B4C11B4003B891B /* Bullet */,
-				7590CF932AEFADC00015B396 /* CheckBox */,
 			);
 			path = Task;
 			sourceTree = "<group>";
@@ -706,15 +701,6 @@
 				75F96B722A8648440062D2BA /* NewTaskViewModel.swift */,
 			);
 			path = NewTask;
-			sourceTree = "<group>";
-		};
-		7590CF932AEFADC00015B396 /* CheckBox */ = {
-			isa = PBXGroup;
-			children = (
-				7590CF942AEFADE80015B396 /* NewCheckBoxView.swift */,
-				7590CF962AEFAE900015B396 /* NewCheckBoxViewModel.swift */,
-			);
-			path = CheckBox;
 			sourceTree = "<group>";
 		};
 		75B58CFD2A82204700937923 /* Fonts */ = {
@@ -1284,7 +1270,6 @@
 				752CEE522B3C87AD00CA1612 /* CheckboxTaskRow.swift in Sources */,
 				75C710412A8D0C54008E8A62 /* SettingsThemeView.swift in Sources */,
 				754714482C2D6CB100BF1CB3 /* LoaderView.swift in Sources */,
-				7590CF972AEFAE900015B396 /* NewCheckBoxViewModel.swift in Sources */,
 				752CEE6B2B3EF2A000CA1612 /* MailView.swift in Sources */,
 				752CEE692B3EE25700CA1612 /* ProjectRow.swift in Sources */,
 				CE05F3DB2C7F79DA001E13D0 /* RecordDTO.swift in Sources */,
@@ -1316,7 +1301,6 @@
 				7547144D2C2D6CB100BF1CB3 /* TimeControlView.swift in Sources */,
 				CE05F3F72C7F7A9D001E13D0 /* RecordsView.swift in Sources */,
 				752CEE672B3ED09000CA1612 /* NewProjectViewModel.swift in Sources */,
-				7590CF952AEFADE80015B396 /* NewCheckBoxView.swift in Sources */,
 				75474BB82AEBAE89001119A9 /* PrimaryButton.swift in Sources */,
 				758B22862AD59C1A00D4654D /* AuthenticationView.swift in Sources */,
 				752CEDE32B3C573800CA1612 /* CheckboxRepository.swift in Sources */,

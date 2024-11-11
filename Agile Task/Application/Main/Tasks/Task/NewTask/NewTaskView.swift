@@ -26,12 +26,13 @@ struct NewTaskView: View {
     
     @StateObject var viewModel: NewTaskViewModel
     @FocusState private var isFocusedField: Field?
+    @FocusState private var focusedBulletInput: Int?
+    @FocusState private var focusedCheckboxInput: Int?
     @State private var isShowingCheckBoxView: Bool = false
     @State private var isShowingBulletView: Bool = false
     @State private var isDescriptionEmpty = true
     
     @Environment(\.dismiss) var dismiss
-    var editTask: TaskDTO?
     
     // MARK: - Body
     
@@ -44,7 +45,7 @@ struct NewTaskView: View {
                         statusView()
                         titleView()
                         descriptionView()
-                        checkList()
+                        checkboxesView()
                         bulletListView()
                         dateView()
                         timeView()
@@ -64,49 +65,17 @@ struct NewTaskView: View {
             }
             .padding(.bottom, 12)
         }
+        .alert(viewModel.alert?.title ?? "", isPresented: $viewModel.isShowingAlert) {
+            alertButtons()
+        }
         .modifier(TabViewChildModifier())
         .onAppear {
-            isFocusedField = editTask == nil ? .title : nil
+            isFocusedField = viewModel.editTask == nil ? .title : nil
             viewModel.localNotificationManager = localNotificationManager
-            viewModel.updateFromEditTask(editTask)
+            viewModel.updateFromEditTask()
         }
         .navigationDestination(isPresented: $viewModel.showSubscriptionView) {
             SubscriptionView()
-        }
-        .fullScreenCover(isPresented: $isShowingCheckBoxView, content: {
-            NewCheckBoxView(
-                viewModel: NewCheckBoxViewModel(appState: appState),
-                taskCheckboxes: $viewModel.checkBoxes,
-                isShowing: $isShowingCheckBoxView,
-                task: editTask
-            )
-        })
-        .fullScreenCover(isPresented: $isShowingBulletView, content: {
-            BulletView(
-                viewModel: BulletViewModel(appState: appState),
-                taskBulletArray: $viewModel.bullets,
-                isShowing: $isShowingBulletView,
-                task: editTask
-            )
-        })
-        .alert("alert_delete_task", isPresented: $viewModel.showDeleteAlert) {
-            Button {
-                viewModel.showDeleteAlert = false
-            } label: {
-                Text("Cancel")
-            }
-            
-            Button {
-                if let editTask {
-                    viewModel.deleteTask(parentId: editTask.parentId)
-                    dismiss.callAsFunction()
-                }
-            } label: {
-                Text("Delete")
-            }
-        }
-        .alert(viewModel.error?.localized ?? "", isPresented: $viewModel.isShowingAlert) {
-            Button("OK") {}
         }
         .overlay(alignment: .top) {
             TipView(title: "tip_add_advanced_features", arrowEdge: .top)
@@ -164,40 +133,154 @@ private extension NewTaskView {
         }
     }
     
-    func checkList() -> some View {
-        Button {
-            isShowingCheckBoxView = true
-        } label: {
-            HStack(spacing: 5) {
-                setupIcon(with: .doneCheckbox)
-                Text("Checklist")
-                    .padding(.vertical, 8)
-                Spacer()
-                Text(viewModel.checkBoxes.isEmpty ? "Add" : "Edit")
-            }
-            .hAlign(alignment: .trailing)
-        }
-        .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-        .modifier(SectionStyle())
-    }
-    
     func bulletListView() -> some View {
-        Button {
-            isShowingBulletView = true
-        } label: {
+        VStack(spacing: Constants.shared.listRowSpacing) {
             HStack(spacing: 5) {
                 setupIcon(with: .bullet)
+                Button {
+                    viewModel.isShowingBullets.toggle()
+                } label: {
+                    Image(systemName: viewModel.isShowingBullets ? "chevron.down" : "chevron.right")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 10)
+                }
                 Text("Bulletlist")
-                    .padding(.vertical, 8)
-                Spacer()
-                Text(viewModel.bullets.isEmpty ? "Add" : "Edit")
+                    .hAlign(alignment: .leading)
+            Button {
+                viewModel.bullets.append(BulletDTO(object: BulletObject(title: "")))
+                if focusedBulletInput == nil {
+                    focusedBulletInput = 0
+                } else {
+                    focusedBulletInput! += 1
+                }
+            } label: {
+                    Image(systemName: "plus")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 10)
+                        .bold()
+                        .foregroundStyle(.black)
+                }
             }
-            .hAlign(alignment: .trailing)
+            .padding(.vertical, 8)
+            .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .modifier(SectionStyle())
+            
+            if viewModel.isShowingBullets {
+                ForEach($viewModel.bullets, id: \.id) { bullet in
+                    TextEditor(
+                        title: bullet.title,
+                        isFieldOnFocus: focusedBulletInput == viewModel.focusNumber(bullet: bullet.wrappedValue)) {
+                            viewModel.deletedBullet = bullet.wrappedValue
+                            viewModel.alert = .deleteBullet
+                            viewModel.isShowingAlert = true
+                        }
+                        .focused(
+                            $focusedBulletInput,
+                            equals: viewModel.focusNumber(bullet: bullet.wrappedValue)
+                        )
+                        .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+                        .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+                        .modifier(SectionStyle(opacity: 0.9))
+                        .padding(.leading, 20)
+                }
+                .onMove(perform: viewModel.moveBullet)
+            }
         }
-        .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-        .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-        .modifier(SectionStyle())
+    }
+    
+    func checkboxesView() -> some View {
+        VStack(spacing: Constants.shared.listRowSpacing) {
+            
+            HStack(spacing: 5) {
+                setupIcon(with: .doneCheckbox)
+                Button {
+                    viewModel.isShowingCheckboxes.toggle()
+                } label: {
+                    Image(systemName: viewModel.isShowingCheckboxes ? "chevron.down" : "chevron.right")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 10)
+                }
+                Text("Checklist")
+                    .hAlign(alignment: .leading)
+                Button {
+                    viewModel.checkBoxes.append(.init(title: ""))
+                    if focusedCheckboxInput == nil {
+                        focusedCheckboxInput = 0
+                    } else {
+                        focusedCheckboxInput! += 1
+                    }
+                } label: {
+                    Image(systemName: "plus")
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 10, height: 10)
+                        .bold()
+                        .foregroundStyle(.black)
+                }
+            }
+            .padding(.vertical, 8)
+            .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+            .modifier(SectionStyle())
+            
+            if viewModel.isShowingCheckboxes {
+                ForEach($viewModel.checkBoxes, id: \.id) { checkbox in
+                    TextEditor(
+                        title: checkbox.title,
+                        isFieldOnFocus: focusedCheckboxInput == viewModel.focusNumber(checkbox: checkbox.wrappedValue)) {
+                            viewModel.deletedCheckbox = checkbox.wrappedValue
+                            viewModel.alert = .deleteCheckbox
+                            viewModel.isShowingAlert = true
+                        }
+                        .focused(
+                            $focusedCheckboxInput,
+                            equals: viewModel.focusNumber(checkbox: checkbox.wrappedValue)
+                        )
+                        .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+                        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
+                        .modifier(SectionStyle(opacity: 0.9))
+                        .padding(.leading, 20)
+                }
+                .onMove(perform: viewModel.moveCheckbox)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func alertButtons() -> some View {
+        Button(viewModel.alert?.cancelButtonTitle ?? "", role: .cancel) {
+            viewModel.alert = nil
+        }
+        
+        if viewModel.alert == .deleteTask || viewModel.alert == .deleteBullet || viewModel.alert == .deleteCheckbox {
+            Button(viewModel.alert?.actionButtonTitle ?? "", role: .destructive) {
+                switch viewModel.alert {
+                case .deleteTask:
+                    if let editTask = viewModel.editTask {
+                        viewModel.deleteTask(parentId: editTask.parentId)
+                        dismiss.callAsFunction()
+                    }
+                case .deleteCheckbox:
+                    viewModel.deleteCheckbox()
+                    focusedBulletInput = viewModel.bullets.count - 1
+                case .deleteBullet:
+                    viewModel.deleteBullet()
+                    focusedCheckboxInput = viewModel.checkBoxes.count - 1
+                case .none, .emptyTitle, .reminder, .weeksRecurring:
+                    return
+                }
+                
+                viewModel.alert = nil
+            }
+        }
     }
     
     func dateView() -> some View {
@@ -252,7 +335,7 @@ private extension NewTaskView {
                     timePeriod: $viewModel.selectedDateTimePeriod,
                     timeFormat: viewModel.settings.timeFormat,
                     isTypedTime: .constant(false),
-                    isFocus: editTask == nil ? true : false
+                    isFocus: viewModel.editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
@@ -298,7 +381,7 @@ private extension NewTaskView {
                     timePeriod: $viewModel.selectedReminderTimePeriod,
                     timeFormat: viewModel.settings.timeFormat,
                     isTypedTime: $viewModel.isTypedReminderTime,
-                    isFocus: editTask == nil ? true : false
+                    isFocus: viewModel.editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
@@ -317,7 +400,7 @@ private extension NewTaskView {
                     timePeriod: $viewModel.selectedReminderTimePeriod,
                     timeFormat: viewModel.settings.timeFormat,
                     isTypedTime: $viewModel.isTypedReminderTime,
-                    isFocus: editTask == nil ? true : false
+                    isFocus: viewModel.editTask == nil ? true : false
                 )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .modifier(SectionStyle())
@@ -327,7 +410,7 @@ private extension NewTaskView {
                     timePeriod: $viewModel.selectedReminderTimePeriod,
                     isTypedTime: $viewModel.isTypedReminderTime,
                     timeFormat: viewModel.settings.timeFormat,
-                    isFocus: editTask == nil ? true : false
+                    isFocus: viewModel.editTask == nil ? true : false
                 )
             case .inOneHour, .none:
                 EmptyView()
@@ -404,7 +487,7 @@ private extension NewTaskView {
     
     @ViewBuilder
     func bottomButton() -> some View {
-        if let editTask {
+        if let editTask = viewModel.editTask {
             HStack {
                 Spacer()
                 Button {
@@ -414,7 +497,8 @@ private extension NewTaskView {
                 }
                 
                 Button {
-                    viewModel.showDeleteAlert = true
+                    viewModel.alert = .deleteTask
+                    viewModel.isShowingAlert = true
                 } label: {
                     Text("Delete")
                 }
@@ -439,11 +523,11 @@ private extension NewTaskView {
                 if !purchaseManager.canCreateTask(taskCount: taskCount) {
                     appState.taskListNavigationStack.append(.subscription)
                 } else {
-                    viewModel.saveButtonAction(editTask: editTask)
+                    viewModel.saveButtonAction()
                     dismiss.callAsFunction()
                 }
             } else {
-                viewModel.saveButtonAction(editTask: editTask)
+                viewModel.saveButtonAction()
                 dismiss.callAsFunction()
             }
     }
@@ -518,7 +602,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
 
 struct NewTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        NewTaskView(viewModel: NewTaskViewModel(appState: AppState(), taskList: TaskDTO.mockArray()), editTask: TaskDTO(object: TaskObject()))
+        NewTaskView(viewModel: NewTaskViewModel(appState: AppState(), editTask: TaskDTO(object: TaskObject()), taskList: TaskDTO.mockArray()))
             .environmentObject(LocalNotificationManager())
             .environmentObject(PurchaseManager())
             .environmentObject(ThemeManager())

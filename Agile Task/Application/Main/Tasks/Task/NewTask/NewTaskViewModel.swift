@@ -8,12 +8,6 @@
 import SwiftUI
 import RealmSwift
 
-enum NewTaskError: String, Error, Localizable {
-    case emptyTitle = "alert_task_title"
-    case reminder = "alert_task_reminder"
-    case weeksRecurring = "alert_task_weeks_recurring"
-}
-
 final class NewTaskViewModel: ObservableObject {
     private lazy var currentDate = Date()
     @Published var taskType: TaskType = .advanced
@@ -40,14 +34,20 @@ final class NewTaskViewModel: ObservableObject {
     
     @Published var showSubscriptionView = false
     @Published var isButtonPress = false
-    @Published var showDeleteAlert = false
     @Published var isShowingAlert = false
     @Published var showColorPanel = false
     @Published var isShowingStartDateCalendarPicker = false
     @Published var isShowingReminderCalendarPicker = false
+    @Published var isShowingCheckboxes = true
+    @Published var isShowingBullets = true
     @Published var calendarDate = Date()
-    @Published var error: NewTaskError?
+    @Published var deletedBullet: BulletDTO?
+    @Published var deletedBullets: [BulletDTO] = []
+    @Published var deletedCheckbox: CheckboxDTO?
+    @Published var deletedCheckboxes: [CheckboxDTO] = []
+    @Published var alert: ViewAlert? = nil
     var appState: AppState
+    var editTask: TaskDTO?
     var taskList: [TaskDTO]
     
     var localNotificationManager: LocalNotificationManager?
@@ -56,9 +56,10 @@ final class NewTaskViewModel: ObservableObject {
     
     // MARK: - init
     
-    init(appState: AppState, taskList: [TaskDTO]) {
+    init(appState: AppState, editTask: TaskDTO? = nil, taskList: [TaskDTO]) {
         self.appState = appState
         self.taskList = taskList
+        self.editTask = editTask
         settings = appState.settingsRepository!.get()
         selectedProjectName = appState.projectRepository!.getSelectedProject().name
         projectsNames = appState.projectRepository!.getProjects().map {$0.name}
@@ -209,7 +210,7 @@ final class NewTaskViewModel: ObservableObject {
         setupTime()
     }
     
-    func updateFromEditTask(_ editTask: TaskDTO?) {
+    func updateFromEditTask() {
         if let editTask {
             taskStatus = editTask.status
             title = checkDefaultTasksFor(title: editTask.title)
@@ -361,29 +362,29 @@ final class NewTaskViewModel: ObservableObject {
     
     
     func isValidForm() -> Bool {
-        error = nil
+        alert = nil
         
         if title.isEmpty {
-            error = NewTaskError.emptyTitle
+            alert = ViewAlert.emptyTitle
             isShowingAlert = true
         }
         
         if reminder == .custom, !isTypedReminderTime {
-            error = NewTaskError.reminder
+            alert = ViewAlert.reminder
             isShowingAlert = true
         }
         
         if recurringConfiguration.option == .custom, 
             recurringConfiguration.repeatEvery == .weeks,
             recurringConfiguration.repeatOnDays.isEmpty {
-                error = NewTaskError.weeksRecurring
+            alert = ViewAlert.weeksRecurring
                 isShowingAlert = true
         }
         
-        return error == nil
+        return alert == nil
     }
     
-    func saveButtonAction(editTask: TaskDTO?) {
+    func saveButtonAction() {
             if let editTask {
                 writeEditedTask(editTask)
             } else {
@@ -435,6 +436,62 @@ final class NewTaskViewModel: ObservableObject {
                 taskTime = timeInOneHour
             }
         }
+    }
+}
+
+// MARK: - Bullets
+
+extension NewTaskViewModel {
+    func focusNumber(bullet: BulletDTO) -> Int {
+        if let index = bullets.firstIndex(where: { $0.id == bullet.id}) {
+            return index
+        }
+        
+        return 0
+    }
+    
+    func deleteBullet() {
+        guard let deletedBullet else { return }
+        if let task = editTask {
+            guard task.bulletArray.contains(where: { $0.id == deletedBullet.id }) else {
+                bullets.removeAll(where: { $0.id == deletedBullet.id })
+                return
+            }
+            deletedBullets.append(deletedBullet)
+        }
+        bullets.removeAll(where: { $0.id == deletedBullet.id })
+    }
+    
+    func moveBullet(from source: IndexSet, to destination: Int) {
+        bullets.move(fromOffsets: source, toOffset: destination)
+    }
+}
+
+// MARK: - Checkboxes
+
+extension NewTaskViewModel {
+    func focusNumber(checkbox: CheckboxDTO) -> Int {
+        if let index = checkBoxes.firstIndex(where: { $0.id == checkbox.id}) {
+            return index
+        }
+        
+        return 0
+    }
+    
+    func deleteCheckbox() {
+        guard let deletedCheckbox else { return }
+        if let task = editTask {
+            guard task.checkBoxArray.contains(where: { $0.id == deletedCheckbox.id }) else {
+                checkBoxes.removeAll(where: { $0.id == deletedCheckbox.id })
+                return
+            }
+            deletedCheckboxes.append(deletedCheckbox)
+        }
+        checkBoxes.removeAll(where: { $0.id == deletedCheckbox.id })
+    }
+    
+    func moveCheckbox(from source: IndexSet, to destination: Int) {
+        checkBoxes.move(fromOffsets: source, toOffset: destination)
     }
 }
 
@@ -606,6 +663,49 @@ private extension NewTaskViewModel {
             "To do list"
         case .ukrainian:
             "Список справ"
+        }
+    }
+}
+
+// MARK: - NewTaskViewAlert
+
+extension NewTaskViewModel {
+    enum ViewAlert {
+        case deleteTask, deleteCheckbox, deleteBullet, emptyTitle, reminder, weeksRecurring
+        
+        var actionButtonTitle: LocalizedStringKey {
+            switch self {
+            case .deleteTask, .deleteCheckbox, .deleteBullet:
+                "alert_delete"
+            case .emptyTitle, .reminder, .weeksRecurring:
+                ""
+            }
+        }
+        
+        var cancelButtonTitle: LocalizedStringKey {
+            switch self {
+            case .deleteTask, .deleteCheckbox, .deleteBullet:
+                "alert_cancel"
+            case .emptyTitle, .reminder, .weeksRecurring:
+                "alert_ok"
+            }
+        }
+        
+        var title: LocalizedStringKey {
+            switch self {
+            case .deleteTask:
+                "alert_delete_task"
+            case .deleteCheckbox:
+                "alert_delete_checkbox"
+            case .deleteBullet:
+                "alert_delete_bullet"
+            case .emptyTitle:
+                "alert_task_title"
+            case .reminder:
+                "alert_task_reminder"
+            case .weeksRecurring:
+                "alert_task_weeks_recurring"
+            }
         }
     }
 }
