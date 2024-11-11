@@ -295,22 +295,28 @@ private extension NewTaskView {
             .modifier(SectionStyle())
             .overlay(alignment: .trailing) {
                 if viewModel.selectedDateOption == .custom {
-                    Text(viewModel.taskDate.format(viewModel.settings.taskDateFormat.format))
-                        .font(.helveticaRegular(size: 16))
-                        .frame(width: 100, alignment: .trailing )
-                        .background(themeManager.theme.sectionColor(colorScheme))
-                        .padding(.trailing, 5)
+                    Button {
+                        viewModel.isShowingStartDateCalendar.toggle()
+                    } label: {
+                        Text(viewModel.taskDate.format(viewModel.settings.taskDateFormat.format))
+                            .font(.helveticaRegular(size: 16))
+                            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
+                            .frame(width: 100, alignment: .trailing )
+                            .background(themeManager.theme.sectionColor(colorScheme))
+                            .padding(.trailing, 5)
+                    }
                 }
             }
             
-            if viewModel.selectedDateOption == .custom {
+            if viewModel.selectedDateOption == .custom && viewModel.isShowingStartDateCalendar == true {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.taskDate,
                     isShowingCalendarPicker: $viewModel.isShowingStartDateCalendarPicker,
                     currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
                     backgroundColor:themeManager.theme.sectionColor(colorScheme),
-                    calendar: Constants.shared.calendar
-                )
+                    calendar: Constants.shared.calendar) {
+                        viewModel.isShowingStartDateCalendar = false
+                    }
             }
         }
         .onChange(of: $viewModel.selectedDateOption.wrappedValue) { newValue in
@@ -373,27 +379,45 @@ private extension NewTaskView {
                 isSelected: viewModel.reminder != .none
             )
             .modifier(SectionStyle())
+            .overlay(alignment: .trailing) {
+                if viewModel.reminder == .custom {
+                    Button {
+                        viewModel.isShowingReminderCalendar.toggle()
+                    } label: {
+                        Text(viewModel.reminderDate.format(viewModel.settings.taskDateFormat.format))
+                            .font(.helveticaRegular(size: 16))
+                            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
+                            .frame(width: 100, alignment: .trailing )
+                            .background(themeManager.theme.sectionColor(colorScheme))
+                            .padding(.trailing, 5)
+                    }
+                }
+            }
             
             switch viewModel.reminder {
             case .custom:
-                TimeView(
-                    date: $viewModel.reminderTime,
-                    timePeriod: $viewModel.selectedReminderTimePeriod,
-                    timeFormat: viewModel.settings.timeFormat,
-                    isTypedTime: $viewModel.isTypedReminderTime,
-                    isFocus: viewModel.editTask == nil ? true : false
-                )
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .modifier(SectionStyle())
-                
-                CustomCalendarView(
-                    selectedCalendarDay: $viewModel.reminderDate,
-                    isShowingCalendarPicker: $viewModel.isShowingReminderCalendarPicker,
-                    currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
-                    backgroundColor: themeManager.theme.sectionColor(colorScheme),
-                    calendar: Constants.shared.calendar
-                )
-                .modifier(SectionStyle())
+                if viewModel.isShowingReminderCalendar {
+                    TimeView(
+                        date: $viewModel.reminderTime,
+                        timePeriod: $viewModel.selectedReminderTimePeriod,
+                        timeFormat: viewModel.settings.timeFormat,
+                        isTypedTime: $viewModel.isTypedReminderTime,
+                        isFocus: viewModel.editTask == nil ? true : false
+                    )
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .modifier(SectionStyle())
+                    
+                    CustomCalendarView(
+                        selectedCalendarDay: $viewModel.reminderDate,
+                        isShowingCalendarPicker: $viewModel.isShowingReminderCalendarPicker,
+                        currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
+                        backgroundColor: themeManager.theme.sectionColor(colorScheme),
+                        calendar: Constants.shared.calendar
+                    ) {
+                        viewModel.isShowingReminderCalendar = false
+                    }
+                    .modifier(SectionStyle())
+                }
             case .tomorrow, .nextWeek:
                 TimeView(
                     date: $viewModel.reminderTime,

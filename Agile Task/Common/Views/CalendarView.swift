@@ -45,9 +45,10 @@ struct CustomCalendarView: View {
                 viewModel: viewModel,
                 calendarDate: $selectedCalendarDay,
                 currentMonthDatesColor: currentMonthDatesColor,
-                items: items, 
-                onDateTap: onDateTap
-            )
+                items: items
+            ) {
+                onDateTap()
+            }
             .vAlign(alignment: .top)
             .padding(.horizontal, 20)
             .padding(.top, 60)
