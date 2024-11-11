@@ -501,14 +501,6 @@ private extension NewTaskView {
         .font(.helveticaRegular(size: 16))
     }
     
-    func setupIcon(with imageResource: ImageResource) -> some View {
-        Image(imageResource)
-            .renderingMode(.template)
-            .resizable()
-            .scaledToFit()
-            .frame(width: 10, height: 10)
-    }
-    
     @ViewBuilder
     func bottomButton() -> some View {
         if let editTask = viewModel.editTask {

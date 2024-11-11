@@ -17,8 +17,12 @@ struct SettingsThemeView: View {
     // MARK: - Body
     
     var body: some View {
-            Text("Themes")
-                .padding(.vertical, 10)
+        
+                HStack(spacing: 6) {
+                    setupIcon(with: .settingsCredentials, size: 12)
+                    Text("Themes")
+                        .padding(.vertical, 10)
+                }
                 .modifier(SectionStyle())
                 .overlay(alignment: .trailing) {
                     colorButton()

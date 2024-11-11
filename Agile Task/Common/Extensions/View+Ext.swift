@@ -37,4 +37,12 @@ extension View {
         self
             .frame(width: size, height: size)
     }
+    
+    func setupIcon(with imageResource: ImageResource, size: CGFloat = 10) -> some View {
+        Image(imageResource)
+            .renderingMode(.template)
+            .resizable()
+            .scaledToFit()
+            .frame(size: size)
+    }
 }

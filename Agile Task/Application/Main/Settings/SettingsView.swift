@@ -15,6 +15,7 @@ struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @Environment(\.dismiss) var dismiss
     @StateObject var viewModel: SettingsViewModel
+    private let iconSize: CGFloat = 15
     
     // MARK: - Body
     
@@ -59,7 +60,10 @@ private extension SettingsView {
     func accountView () -> some View {
         NavigationLink(value: TasksNavigation.subscription) {
             HStack {
-                Text("settings_subscription_title")
+                HStack(spacing: 6) {
+                    setupIcon(with: .settingsSubscription, size: iconSize)
+                    Text("settings_subscription_title")
+                }
                 Spacer()
                 Text(selectedSubscriptionTitle())
             }
@@ -79,39 +83,54 @@ private extension SettingsView {
     
     func appSettingsView() -> some View {
         NavigationLink(value: viewModel.settingsGeneral) {
-            Text("app_settings_title")
+                HStack(spacing: 6) {
+                    setupIcon(with: .settingsApp, size: iconSize)
+                    Text("app_settings_title")
+                }
                 .modifier(SectionStyle())
         }
     }
     
     func tasksSettingsView() -> some View {
         NavigationLink(value: viewModel.tasksSettings) {
-            Text("tasks_settings_title")
+            HStack(spacing: 6) {
+                setupIcon(with: .settingsTasks, size: iconSize)
+                Text("tasks_settings_title")
+            }
                 .modifier(SectionStyle())
         }
     }
     
     func securityView() -> some View {
         NavigationLink(value: viewModel.security) {
-            Text("Security")
+            HStack(spacing: 6) {
+                setupIcon(with: .settingsSecurity, size: iconSize)
+                Text("Security")
+            }
                 .modifier(SectionStyle())
         }
     }
     
     func moreAppsView() -> some View {
         NavigationLink(value: viewModel.more) {
-            Text("App credentials")
+            HStack(spacing: 6) {
+                setupIcon(with: .settingsCredentials, size: iconSize)
+                Text("App credentials")
+            }
                 .modifier(SectionStyle())
         }
     }
     
     func emailView() -> some View {
-        Button {
-            showMailView = true
-        } label: {
-            Text("Email us")
-                .modifier(SectionStyle())
+        HStack(spacing: 6) {
+            setupIcon(with: .settingsWrite, size: iconSize)
+            Button {
+                showMailView = true
+            } label: {
+                Text("Email us")
+            }
         }
+        .modifier(SectionStyle())
     }
 
     func versionView() -> some View {
