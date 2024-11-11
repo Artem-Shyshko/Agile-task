@@ -47,10 +47,8 @@ struct CalendarPickerView: View {
             dateOptionsView()
             divider()
             selectedOptionView()
-            if availableOptions.contains(where: { $0 == .custom }) {
-                divider()
-                applyButton()
-            }
+            divider()
+            applyButton()
         }
         .foregroundColor(currentMonthDatesColor)
         .padding(.vertical, 10)
@@ -114,10 +112,7 @@ private extension CalendarPickerView {
             calendarDate: $calendarDate,
             currentMonthDatesColor: currentMonthDatesColor,
             isForCalendarPicker: true,
-            onDateTap: {
-                selectedCalendarDay = calendarDate
-                isShowing = false
-            }
+            onDateTap: {}
         )
     }
     
