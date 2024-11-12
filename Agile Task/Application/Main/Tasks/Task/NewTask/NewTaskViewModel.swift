@@ -28,8 +28,16 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isCompleted = false
     @Published var selectedProjectName: String
     @Published var projectsNames: [String] = []
-    @Published var checkBoxes: [CheckboxDTO] = []
-    @Published var bullets: [BulletDTO] = []
+    @Published var checkBoxes: [CheckboxDTO] = [] {
+        didSet {
+            isShowingCheckboxes = checkBoxes.isEmpty ? false : true
+        }
+    }
+    @Published var bullets: [BulletDTO] = [] {
+        didSet {
+            isShowingBullets = bullets.isEmpty ? false : true
+        }
+    }
     @Published var recurringConfiguration = RecurringConfigurationDTO()
     
     @Published var showSubscriptionView = false
@@ -249,6 +257,8 @@ final class NewTaskViewModel: ObservableObject {
                 self.description = description
             }
         }
+        isShowingBullets = bullets.isEmpty ? false : true
+        isShowingCheckboxes = checkBoxes.isEmpty ? false : true
     }
     
     func setupTime() {
@@ -464,6 +474,7 @@ extension NewTaskViewModel {
             deletedBullets.append(deletedBullet)
         }
         bullets.removeAll(where: { $0.id == deletedBullet.id })
+        self.deletedBullet = nil
     }
     
     func moveBullet(from source: IndexSet, to destination: Int) {
@@ -492,6 +503,7 @@ extension NewTaskViewModel {
             deletedCheckboxes.append(deletedCheckbox)
         }
         checkBoxes.removeAll(where: { $0.id == deletedCheckbox.id })
+        self.deletedCheckbox = nil
     }
     
     func moveCheckbox(from source: IndexSet, to destination: Int) {

@@ -142,18 +142,21 @@ private extension NewTaskView {
                     isVisible: viewModel.bullets.isEmpty == false,
                     isShowing: viewModel.isShowingBullets
                 ) {
-                    viewModel.isShowingBullets.toggle()
+                    
+                    withAnimation(.easeOut) {
+                        viewModel.isShowingBullets.toggle()
+                    }
                 }
                 Text("Bulletlist")
                     .hAlign(alignment: .leading)
-            Button {
-                viewModel.bullets.append(BulletDTO(object: BulletObject(title: "")))
-                if focusedBulletInput == nil {
-                    focusedBulletInput = 0
-                } else {
-                    focusedBulletInput! += 1
-                }
-            } label: {
+                Button {
+                    viewModel.bullets.append(BulletDTO(object: BulletObject(title: "")))
+                    if focusedBulletInput == nil {
+                        focusedBulletInput = 0
+                    } else {
+                        focusedBulletInput! += 1
+                    }
+                } label: {
                     Image(systemName: "plus")
                         .renderingMode(.template)
                         .resizable()
@@ -168,26 +171,7 @@ private extension NewTaskView {
             .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .modifier(SectionStyle())
             
-            if viewModel.isShowingBullets {
-                ForEach($viewModel.bullets, id: \.id) { bullet in
-                    TextEditor(
-                        title: bullet.title,
-                        isFieldOnFocus: focusedBulletInput == viewModel.focusNumber(bullet: bullet.wrappedValue)) {
-                            viewModel.deletedBullet = bullet.wrappedValue
-                            viewModel.alert = .deleteBullet
-                            viewModel.isShowingAlert = true
-                        }
-                        .focused(
-                            $focusedBulletInput,
-                            equals: viewModel.focusNumber(bullet: bullet.wrappedValue)
-                        )
-                        .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-                        .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-                        .modifier(SectionStyle(opacity: 0.9))
-                        .padding(.leading, 20)
-                }
-                .onMove(perform: viewModel.moveBullet)
-            }
+            bulletList()
         }
     }
     
@@ -208,14 +192,15 @@ private extension NewTaskView {
     
     func checkboxesView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            
             HStack(spacing: 5) {
                 setupIcon(with: .doneCheckbox)
                 chevronButton(
                     isVisible: viewModel.checkBoxes.isEmpty == false,
                     isShowing: viewModel.isShowingCheckboxes
                 ) {
-                    viewModel.isShowingCheckboxes.toggle()
+                    withAnimation(.easeOut) {
+                        viewModel.isShowingCheckboxes.toggle()
+                    }
                 }
                 Text("Checklist")
                     .hAlign(alignment: .leading)
@@ -241,26 +226,65 @@ private extension NewTaskView {
             .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .modifier(SectionStyle())
             
-            if viewModel.isShowingCheckboxes {
+            checkboxList()
+        }
+    }
+    
+    @ViewBuilder
+    func checkboxList() -> some View {
+        if viewModel.isShowingCheckboxes {
+            List {
                 ForEach($viewModel.checkBoxes, id: \.id) { checkbox in
                     TextEditor(
                         title: checkbox.title,
-                        isFieldOnFocus: focusedCheckboxInput == viewModel.focusNumber(checkbox: checkbox.wrappedValue)) {
+                        isFieldOnFocus: true) {
                             viewModel.deletedCheckbox = checkbox.wrappedValue
                             viewModel.alert = .deleteCheckbox
                             viewModel.isShowingAlert = true
                         }
-                        .focused(
-                            $focusedCheckboxInput,
-                            equals: viewModel.focusNumber(checkbox: checkbox.wrappedValue)
+                        .scrollContentBackground(.hidden)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color(themeManager.theme.sectionColor(colorScheme).name).opacity(0.9))
                         )
-                        .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-                        .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-                        .modifier(SectionStyle(opacity: 0.9))
-                        .padding(.leading, 20)
                 }
                 .onMove(perform: viewModel.moveCheckbox)
             }
+            .padding(.leading, 20)
+            .listStyle(.plain)
+            .listRowSpacing(Constants.shared.listRowSpacing)
+            .scrollDisabled(true)
+            .frame(height: 47 * CGFloat(viewModel.checkBoxes.count))
+        }
+    }
+    
+    @ViewBuilder
+    func bulletList() -> some View {
+        if viewModel.isShowingBullets {
+            List {
+                ForEach($viewModel.bullets, id: \.id) { bullet in
+                    TextEditor(
+                        title: bullet.title,
+                        isFieldOnFocus: true) {
+                            viewModel.deletedBullet = bullet.wrappedValue
+                            viewModel.alert = .deleteBullet
+                            viewModel.isShowingAlert = true
+                        }
+                        .scrollContentBackground(.hidden)
+                        .listRowSeparator(.hidden)
+                        .listRowBackground(
+                            RoundedRectangle(cornerRadius: 4)
+                                .fill(Color(themeManager.theme.sectionColor(colorScheme).name).opacity(0.9))
+                        )
+                }
+                .onMove(perform: viewModel.moveBullet)
+            }
+            .padding(.leading, 20)
+            .listStyle(.plain)
+            .listRowSpacing(Constants.shared.listRowSpacing)
+            .scrollDisabled(true)
+            .frame(height: 47 * CGFloat(viewModel.bullets.count))
         }
     }
     
@@ -543,21 +567,21 @@ private extension NewTaskView {
     }
     
     func checkIfCanCreate() {
-            if viewModel.taskType == .advanced {
-                let project = appState.projectRepository!.getSelectedProject()
-                let taskCount = project.tasks
-                    .filter { $0.taskType == .advanced }
-                    .count
-                if !purchaseManager.canCreateTask(taskCount: taskCount) {
-                    appState.taskListNavigationStack.append(.subscription)
-                } else {
-                    viewModel.saveButtonAction()
-                    dismiss.callAsFunction()
-                }
+        if viewModel.taskType == .advanced {
+            let project = appState.projectRepository!.getSelectedProject()
+            let taskCount = project.tasks
+                .filter { $0.taskType == .advanced }
+                .count
+            if !purchaseManager.canCreateTask(taskCount: taskCount) {
+                appState.taskListNavigationStack.append(.subscription)
             } else {
                 viewModel.saveButtonAction()
                 dismiss.callAsFunction()
             }
+        } else {
+            viewModel.saveButtonAction()
+            dismiss.callAsFunction()
+        }
     }
     
     func colorsPanel() -> some View {

@@ -71,7 +71,6 @@ private extension FieldsInfoView {
                 focusedInput! += 1
             }
         }
-        
         .alert("are_you_sure_you_want_to_delete_the_point", isPresented: $showDeleteAlert) {
             Button {
                 showDeleteAlert = false
@@ -83,7 +82,7 @@ private extension FieldsInfoView {
                 viewModel.trashButtonAction()
                 focusedInput = viewModel.fieldArray.count - 1
             } label: {
-                Text("delete")
+                Text("alert_delete")
             }
         }
     }

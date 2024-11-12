@@ -103,12 +103,13 @@ private extension BulletView {
                 focusedInput! += 1
             }
         }, label: {
-            Image(.add)
+            Image(systemName: "plus")
                 .renderingMode(.template)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 15, height: 15)
-                .hAlign(alignment: .leading)
+                .frame(width: 10, height: 10)
+                .bold()
+                .foregroundStyle(.black)
         })
     }
     

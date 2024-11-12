@@ -277,6 +277,12 @@
             "state" : "translated",
             "value" : "Delete"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити"
+          }
         }
       }
     },
@@ -287,11 +293,30 @@
             "state" : "translated",
             "value" : "Are you sure you want to delete bullet?"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви впевнені, що хочете видалити?"
+          }
         }
       }
     },
     "alert_delete_checkbox" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete checkbox?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви впевнені, що хочете видалити чекбокс?"
+          }
+        }
+      }
     },
     "alert_delete_task" : {
       "extractionState" : "manual",
@@ -1025,9 +1050,6 @@
           }
         }
       }
-    },
-    "delete" : {
-
     },
     "Delete" : {
       "localizations" : {

@@ -135,7 +135,7 @@ struct RecordRow: View {
         .alert("are_you_sure_you_want_to_delete", isPresented: $isShowingDeleteAlert) {
             Button("cancel_button", role: .cancel) { }
             
-            Button("delete") {
+            Button("alert_delete") {
                 vm.deleteRecord(record)
             }
         }
