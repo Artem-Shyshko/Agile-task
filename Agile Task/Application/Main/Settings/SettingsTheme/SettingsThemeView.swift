@@ -19,7 +19,7 @@ struct SettingsThemeView: View {
     var body: some View {
         
                 HStack(spacing: 6) {
-                    setupIcon(with: .settingsCredentials, size: 12)
+                    setupIcon(with: .settingsTheme, size: 12)
                     Text("Themes")
                         .padding(.vertical, 10)
                 }
