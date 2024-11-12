@@ -68,7 +68,7 @@ final class PurchaseManager: NSObject, ObservableObject {
         showProcessView = true
         
         self.products = try await Product.products(for: productsID)
-            .sorted(by: { $0.description.count < $1.description.count })
+            .sorted(by: { $0.productOrder < $1.productOrder })
         self.productsLoaded = true
         showProcessView = false
     }
@@ -126,5 +126,21 @@ extension PurchaseManager: SKPaymentTransactionObserver {
     
     func paymentQueue(_ queue: SKPaymentQueue, shouldAddStorePayment payment: SKPayment, for product: SKProduct) -> Bool {
         return true
+    }
+}
+
+extension Product {
+    var productOrder: Int {
+        switch self.type {
+        case .autoRenewable:
+            if self.price < 1 {
+                return 1
+            }
+            return 2
+        case .nonRenewable:
+            return 0
+        default:
+            return 3
+        }
     }
 }

@@ -3021,12 +3021,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Improve your productivity\nwith Agile Task"
+            "value" : "Improve your life\nwith Agile Task"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Підвищуйте свою продуктивність\nз Agile Task"
           }
         }

@@ -22,7 +22,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "agile_money_one_time",
+      "productID" : "agile_task_one_time",
       "referenceName" : "One time subscription",
       "type" : "NonRenewingSubscription"
     }

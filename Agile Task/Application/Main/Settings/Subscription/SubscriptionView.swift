@@ -29,7 +29,6 @@ struct SubscriptionView: View {
         "purchase_unlimited_tasks",
         "purchase_unlimited_lists",
         "purchase_unlimited_checklists",
-        "purchase_unlimited_to_do_lists",
         "purchase_unlimited_secured",
         "purchase_advanced_features"
     ]
