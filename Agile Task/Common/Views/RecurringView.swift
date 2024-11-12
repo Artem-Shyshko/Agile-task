@@ -53,7 +53,7 @@ private extension RecurringView {
             .cornerRadius(7)
             .padding(.trailing, 10)
         }
-        .modifier(SectionStyle())
+        .modifier(SectionStyle(opacity: 0.9))
     }
     
     func repeatOnView() -> some View {
@@ -65,7 +65,7 @@ private extension RecurringView {
             }
         }
         .padding(.trailing, 10)
-        .modifier(SectionStyle())
+        .modifier(SectionStyle(opacity: 0.9))
     }
     
     func endsAfterView() -> some View {
@@ -99,7 +99,7 @@ private extension RecurringView {
                 .disabled(viewModel.recurringConfiguration.endsOption != .after)
             }
             .padding(.trailing, 10)
-            .modifier(SectionStyle())
+            .modifier(SectionStyle(opacity: 0.9))
         }
     }
     
@@ -139,7 +139,7 @@ private extension RecurringView {
             }
         }
         .padding(.trailing, 10)
-        .modifier(SectionStyle())
+        .modifier(SectionStyle(opacity: 0.9))
     }
     
     func upDownArrows(upAction: @escaping (()->()), downAction: @escaping (()->())) -> some View {

@@ -79,7 +79,8 @@ struct NewTaskView: View {
         }
         .overlay(alignment: .top) {
             TipView(title: "tip_add_advanced_features", arrowEdge: .top)
-                .padding(.leading, 50)
+                .hAlign(alignment: .trailing)
+                .padding(.trailing, AppHelper.shared.isIPad ? 150 : 60)
         }
     }
 }
@@ -137,14 +138,11 @@ private extension NewTaskView {
         VStack(spacing: Constants.shared.listRowSpacing) {
             HStack(spacing: 5) {
                 setupIcon(with: .bullet)
-                Button {
+                chevronButton(
+                    isVisible: viewModel.bullets.isEmpty == false,
+                    isShowing: viewModel.isShowingBullets
+                ) {
                     viewModel.isShowingBullets.toggle()
-                } label: {
-                    Image(systemName: viewModel.isShowingBullets ? "chevron.down" : "chevron.right")
-                        .renderingMode(.template)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 10, height: 10)
                 }
                 Text("Bulletlist")
                     .hAlign(alignment: .leading)
@@ -193,19 +191,31 @@ private extension NewTaskView {
         }
     }
     
+    @ViewBuilder
+    func chevronButton(isVisible: Bool, isShowing: Bool, action: @escaping ()->()) -> some View {
+        if isVisible {
+            Button {
+                action()
+            } label: {
+                Image(systemName: isShowing ? "chevron.down" : "chevron.right")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 10)
+            }
+        }
+    }
+    
     func checkboxesView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
             
             HStack(spacing: 5) {
                 setupIcon(with: .doneCheckbox)
-                Button {
+                chevronButton(
+                    isVisible: viewModel.checkBoxes.isEmpty == false,
+                    isShowing: viewModel.isShowingCheckboxes
+                ) {
                     viewModel.isShowingCheckboxes.toggle()
-                } label: {
-                    Image(systemName: viewModel.isShowingCheckboxes ? "chevron.down" : "chevron.right")
-                        .renderingMode(.template)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 10, height: 10)
                 }
                 Text("Checklist")
                     .hAlign(alignment: .leading)
@@ -290,7 +300,8 @@ private extension NewTaskView {
                 title: "Date",
                 options: DateType.allCases,
                 selection: $viewModel.selectedDateOption,
-                isSelected: viewModel.selectedDateOption != .none
+                isSelected: viewModel.selectedDateOption != .none,
+                hideSelectedValue: true
             )
             .modifier(SectionStyle())
             .overlay(alignment: .trailing) {
@@ -299,12 +310,12 @@ private extension NewTaskView {
                         viewModel.isShowingStartDateCalendar.toggle()
                     } label: {
                         Text(viewModel.taskDate.format(viewModel.settings.taskDateFormat.format))
-                            .font(.helveticaRegular(size: 16))
-                            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-                            .frame(width: 100, alignment: .trailing )
-                            .background(themeManager.theme.sectionColor(colorScheme))
-                            .padding(.trailing, 5)
                     }
+                    .font(.helveticaRegular(size: 16))
+                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
+                    .frame(width: 100, alignment: .trailing )
+                    .background(themeManager.theme.sectionColor(colorScheme))
+                    .padding(.trailing, 5)
                 }
             }
             
@@ -376,7 +387,8 @@ private extension NewTaskView {
                 title: "Reminder",
                 options: Reminder.allCases,
                 selection: $viewModel.reminder,
-                isSelected: viewModel.reminder != .none
+                isSelected: viewModel.reminder != .none,
+                hideSelectedValue: true
             )
             .modifier(SectionStyle())
             .overlay(alignment: .trailing) {
@@ -385,12 +397,12 @@ private extension NewTaskView {
                         viewModel.isShowingReminderCalendar.toggle()
                     } label: {
                         Text(viewModel.reminderDate.format(viewModel.settings.taskDateFormat.format))
-                            .font(.helveticaRegular(size: 16))
-                            .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-                            .frame(width: 100, alignment: .trailing )
-                            .background(themeManager.theme.sectionColor(colorScheme))
-                            .padding(.trailing, 5)
                     }
+                    .font(.helveticaRegular(size: 16))
+                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
+                    .frame(width: 100, alignment: .trailing )
+                    .background(themeManager.theme.sectionColor(colorScheme))
+                    .padding(.trailing, 5)
                 }
             }
             
@@ -576,6 +588,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
     var options: [SelectionValue]
     @Binding var selection: SelectionValue
     var isSelected: Bool = true
+    var hideSelectedValue: Bool?
     
     var body: some View {
         HStack(spacing: 5) {
@@ -595,18 +608,22 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
                     }
                 }
             } label: {
-                customPickerLabel(rightName: title, leftName: LocalizedStringKey(selection.description))
+                if selection.description.localized == "Custom".localized, hideSelectedValue == true {
+                    customPickerLabel(leftName: title, rightName: "".localized)
+                } else {
+                    customPickerLabel(leftName: title, rightName: selection.description.localized)
+                }
             }
         }
         .tint(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
         .foregroundStyle(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
     }
     
-    private func customPickerLabel(rightName: LocalizedStringKey, leftName: LocalizedStringKey) -> some View {
+    private func customPickerLabel(leftName: LocalizedStringKey, rightName: LocalizedStringKey) -> some View {
         HStack {
-            Text(rightName)
-            Spacer()
             Text(leftName)
+            Spacer()
+            Text(rightName)
             Image(systemName: "chevron.up.chevron.down")
                 .imageScale(.small)
         }

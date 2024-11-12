@@ -230,6 +230,7 @@ final class NewTaskViewModel: ObservableObject {
             if let date = editTask.date {
                 taskDate = date
                 selectedDateOption = editTask.dateOption
+                isShowingStartDateCalendar = false
             }
             
             if let time = editTask.time {
@@ -241,6 +242,7 @@ final class NewTaskViewModel: ObservableObject {
                 self.reminderDate = reminderDate
                 reminder = editTask.reminder
                 reminderTime = reminderDate
+                isShowingReminderCalendar = false
             }
             
             if let description = editTask.description {
