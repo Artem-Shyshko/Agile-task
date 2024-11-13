@@ -8,8 +8,9 @@
 import SwiftUI
 
 struct TabViewChildModifier: ViewModifier {
-    @EnvironmentObject var themeManager: ThemeManager
-    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.colorScheme) private var colorScheme
+    var bottomPadding: CGFloat = 35
     
     func body(content: Content) -> some View {
         ZStack {
@@ -17,13 +18,12 @@ struct TabViewChildModifier: ViewModifier {
             
             content
                 .padding(.horizontal, 5)
+                .padding(.bottom, bottomPadding)
         }
         .scrollContentBackground(.hidden)
         .navigationBarBackButtonHidden()
         .toolbar(.hidden, for: .navigationBar)
-        .onAppear {
-            UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.white]
-        }
+        .toolbar(.hidden, for: .tabBar)
     }
     
     func background() -> some View {

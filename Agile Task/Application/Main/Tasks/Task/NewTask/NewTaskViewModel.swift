@@ -28,16 +28,8 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isCompleted = false
     @Published var selectedProjectName: String
     @Published var projectsNames: [String] = []
-    @Published var checkBoxes: [CheckboxDTO] = [] {
-        didSet {
-            isShowingCheckboxes = checkBoxes.isEmpty ? false : true
-        }
-    }
-    @Published var bullets: [BulletDTO] = [] {
-        didSet {
-            isShowingBullets = bullets.isEmpty ? false : true
-        }
-    }
+    @Published var checkBoxes: [CheckboxDTO] = []
+    @Published var bullets: [BulletDTO] = []
     @Published var recurringConfiguration = RecurringConfigurationDTO()
     
     @Published var showSubscriptionView = false
@@ -45,7 +37,7 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isShowingAlert = false
     @Published var showColorPanel = false
     @Published var isShowingStartDateCalendarPicker = false
-    @Published var isShowingStartDateCalendar = true
+    @Published var isShowingDateCalendar = true
     @Published var isShowingReminderCalendarPicker = false
     @Published var isShowingReminderCalendar = true
     @Published var isShowingCheckboxes = true
@@ -238,7 +230,7 @@ final class NewTaskViewModel: ObservableObject {
             if let date = editTask.date {
                 taskDate = date
                 selectedDateOption = editTask.dateOption
-                isShowingStartDateCalendar = false
+                isShowingDateCalendar = false
             }
             
             if let time = editTask.time {
@@ -380,11 +372,6 @@ final class NewTaskViewModel: ObservableObject {
         
         if title.isEmpty {
             alert = ViewAlert.emptyTitle
-            isShowingAlert = true
-        }
-        
-        if reminder == .custom, !isTypedReminderTime {
-            alert = ViewAlert.reminder
             isShowingAlert = true
         }
         
@@ -687,13 +674,13 @@ private extension NewTaskViewModel {
 
 extension NewTaskViewModel {
     enum ViewAlert {
-        case deleteTask, deleteCheckbox, deleteBullet, emptyTitle, reminder, weeksRecurring
+        case deleteTask, deleteCheckbox, deleteBullet, emptyTitle, weeksRecurring
         
         var actionButtonTitle: LocalizedStringKey {
             switch self {
             case .deleteTask, .deleteCheckbox, .deleteBullet:
                 "alert_delete"
-            case .emptyTitle, .reminder, .weeksRecurring:
+            case .emptyTitle, .weeksRecurring:
                 ""
             }
         }
@@ -702,7 +689,7 @@ extension NewTaskViewModel {
             switch self {
             case .deleteTask, .deleteCheckbox, .deleteBullet:
                 "alert_cancel"
-            case .emptyTitle, .reminder, .weeksRecurring:
+            case .emptyTitle, .weeksRecurring:
                 "alert_ok"
             }
         }
@@ -717,8 +704,6 @@ extension NewTaskViewModel {
                 "alert_delete_bullet"
             case .emptyTitle:
                 "alert_task_title"
-            case .reminder:
-                "alert_task_reminder"
             case .weeksRecurring:
                 "alert_task_weeks_recurring"
             }

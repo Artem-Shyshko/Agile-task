@@ -158,10 +158,8 @@ struct TasksView: View {
       .overlay(alignment: .bottom) {
         if viewModel.taskSortingOption == .all {
           TipView(title: "tip_group_tasks", arrowEdge: .bottom)
-            .offset(y:50)
         }
       }
-      .toolbar(isShowingAddTaskCalendar ? .hidden : .visible, for: .tabBar)
     }
   }
 }
@@ -430,7 +428,7 @@ private extension TasksView {
       } label: {
         Image(.quickTask)
       }
-      .padding(.bottom, 30)
+      .padding(.bottom, 50)
     }
   }
   
@@ -472,7 +470,7 @@ private extension TasksView {
                   viewModel.quickTaskDateType = .date
                   viewModel.isQuickTaskDateSelected = false
                   isShowingAddTaskCalendar = false
-                  appState.isTabBarHidden = false
+                  appState.hideTabBar = false
                   isAddTaskFocused = !isShowingAddTaskCalendar
                 }
               } label: {
@@ -490,7 +488,7 @@ private extension TasksView {
                   viewModel.quickTaskDateType = .date
                   viewModel.isQuickTaskDateSelected = true
                   isShowingAddTaskCalendar = true
-                  appState.isTabBarHidden = true
+                  appState.hideTabBar = true
                   isAddTaskFocused = !isShowingAddTaskCalendar
                 }
               } label: {
@@ -510,7 +508,7 @@ private extension TasksView {
                   viewModel.quickTaskDateType = .reminder
                   viewModel.isQuickTaskReminderDateSelected = false
                   isShowingAddTaskCalendar = false
-                  appState.isTabBarHidden = false
+                  appState.hideTabBar = false
                   isAddTaskFocused = !isShowingAddTaskCalendar
                 }
               } label: {
@@ -528,7 +526,7 @@ private extension TasksView {
                   viewModel.quickTaskDateType = .reminder
                   viewModel.isQuickTaskReminderDateSelected = true
                   isShowingAddTaskCalendar = true
-                  appState.isTabBarHidden = true
+                  appState.hideTabBar = true
                   isAddTaskFocused = !isShowingAddTaskCalendar
                 }
               } label: {
@@ -586,7 +584,7 @@ private extension TasksView {
           withAnimation {
             isShowingAddTaskCalendar = false
           }
-          appState.isTabBarHidden = false
+          appState.hideTabBar = false
         }
       }
     }
@@ -602,7 +600,7 @@ private extension TasksView {
   
   func reloadTabBarAndPlusButton() {
     isShowingAddTaskCalendar = false
-    appState.isTabBarHidden = false
+    appState.hideTabBar = false
     isAddTaskFocused = false
     viewModel.isShowingAddTask = false
   }

@@ -7,7 +7,7 @@
 
 import RealmSwift
 
-struct CheckboxDTO: TaskItem {
+struct CheckboxDTO: Hashable, Identifiable, TaskItem {
     var id: ObjectId = .generate()
     var title: String
     var isCompleted: Bool = false

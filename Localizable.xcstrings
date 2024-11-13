@@ -367,9 +367,6 @@
         }
       }
     },
-    "alert_task_reminder" : {
-
-    },
     "alert_task_title" : {
       "extractionState" : "manual",
       "localizations" : {

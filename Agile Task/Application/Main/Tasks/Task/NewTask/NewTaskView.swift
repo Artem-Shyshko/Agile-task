@@ -142,10 +142,7 @@ private extension NewTaskView {
                     isVisible: viewModel.bullets.isEmpty == false,
                     isShowing: viewModel.isShowingBullets
                 ) {
-                    
-                    withAnimation(.easeOut) {
-                        viewModel.isShowingBullets.toggle()
-                    }
+                    viewModel.isShowingBullets.toggle()
                 }
                 Text("Bulletlist")
                     .hAlign(alignment: .leading)
@@ -173,10 +170,17 @@ private extension NewTaskView {
             
             bulletList()
         }
+        .onChange(of: viewModel.bullets) { newValue in
+            if newValue.isEmpty {
+                viewModel.isShowingBullets = false
+            } else {
+                viewModel.isShowingBullets = true
+            }
+        }
     }
     
     @ViewBuilder
-    func chevronButton(isVisible: Bool, isShowing: Bool, action: @escaping ()->()) -> some View {
+    func chevronButton(isVisible: Bool, isShowing: Bool, action: @escaping (()->())) -> some View {
         if isVisible {
             Button {
                 action()
@@ -187,6 +191,8 @@ private extension NewTaskView {
                     .scaledToFit()
                     .frame(width: 10, height: 10)
             }
+            .buttonStyle(.borderless)
+            .frame(width: 10)
         }
     }
     
@@ -198,9 +204,7 @@ private extension NewTaskView {
                     isVisible: viewModel.checkBoxes.isEmpty == false,
                     isShowing: viewModel.isShowingCheckboxes
                 ) {
-                    withAnimation(.easeOut) {
                         viewModel.isShowingCheckboxes.toggle()
-                    }
                 }
                 Text("Checklist")
                     .hAlign(alignment: .leading)
@@ -227,6 +231,13 @@ private extension NewTaskView {
             .modifier(SectionStyle())
             
             checkboxList()
+        }
+        .onChange(of: viewModel.checkBoxes) { newValue in
+            if newValue.isEmpty {
+                viewModel.isShowingCheckboxes = false
+            } else {
+                viewModel.isShowingCheckboxes = true
+            }
         }
     }
     
@@ -308,7 +319,7 @@ private extension NewTaskView {
                 case .deleteBullet:
                     viewModel.deleteBullet()
                     focusedCheckboxInput = viewModel.checkBoxes.count - 1
-                case .none, .emptyTitle, .reminder, .weeksRecurring:
+                case .none, .emptyTitle, .weeksRecurring:
                     return
                 }
                 
@@ -319,38 +330,40 @@ private extension NewTaskView {
     
     func dateView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            CustomPickerView(
-                image: .dateAndTime,
-                title: "Date",
-                options: DateType.allCases,
-                selection: $viewModel.selectedDateOption,
-                isSelected: viewModel.selectedDateOption != .none,
-                hideSelectedValue: true
-            )
-            .modifier(SectionStyle())
-            .overlay(alignment: .trailing) {
-                if viewModel.selectedDateOption == .custom {
+            HStack {
+                CustomPickerView(
+                    image: .dateAndTime,
+                    title: "Date",
+                    options: DateType.allCases,
+                    selection: $viewModel.selectedDateOption,
+                    isSelected: viewModel.selectedDateOption != .none,
+                    dateTitle: viewModel.taskDate.format(viewModel.settings.taskDateFormat.format),
+                    isShowingDate: !viewModel.isShowingDateCalendar
+                )
+                
+                if viewModel.selectedDateOption == .custom, !viewModel.isShowingDateCalendar {
                     Button {
-                        viewModel.isShowingStartDateCalendar.toggle()
+                        viewModel.isShowingDateCalendar = true
                     } label: {
-                        Text(viewModel.taskDate.format(viewModel.settings.taskDateFormat.format))
+                        Image(systemName: "xmark")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 10, height: 10)
+                            .bold()
                     }
-                    .font(.helveticaRegular(size: 16))
-                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-                    .frame(width: 100, alignment: .trailing )
-                    .background(themeManager.theme.sectionColor(colorScheme))
-                    .padding(.trailing, 5)
                 }
             }
+            .modifier(SectionStyle())
             
-            if viewModel.selectedDateOption == .custom && viewModel.isShowingStartDateCalendar == true {
+            if viewModel.selectedDateOption == .custom && viewModel.isShowingDateCalendar == true {
                 CustomCalendarView(
                     selectedCalendarDay: $viewModel.taskDate,
                     isShowingCalendarPicker: $viewModel.isShowingStartDateCalendarPicker,
                     currentMonthDatesColor: themeManager.theme.sectionTextColor(colorScheme),
                     backgroundColor:themeManager.theme.sectionColor(colorScheme),
                     calendar: Constants.shared.calendar) {
-                        viewModel.isShowingStartDateCalendar = false
+                        viewModel.isShowingDateCalendar = false
                     }
             }
         }
@@ -406,33 +419,35 @@ private extension NewTaskView {
     
     func reminderView() -> some View {
         VStack(spacing: Constants.shared.listRowSpacing) {
-            CustomPickerView(
-                image: .reminders,
-                title: "Reminder",
-                options: Reminder.allCases,
-                selection: $viewModel.reminder,
-                isSelected: viewModel.reminder != .none,
-                hideSelectedValue: true
-            )
-            .modifier(SectionStyle())
-            .overlay(alignment: .trailing) {
-                if viewModel.reminder == .custom {
+            HStack {
+                CustomPickerView(
+                    image: .reminders,
+                    title: "Reminder",
+                    options: Reminder.allCases,
+                    selection: $viewModel.reminder,
+                    isSelected: viewModel.reminder != .none,
+                    dateTitle: viewModel.reminderDate.format(viewModel.settings.taskDateFormat.format),
+                    isShowingDate: !viewModel.isShowingReminderCalendar
+                )
+                
+                if viewModel.reminder == .custom, !viewModel.isShowingReminderCalendar {
                     Button {
-                        viewModel.isShowingReminderCalendar.toggle()
+                        viewModel.isShowingReminderCalendar = true
                     } label: {
-                        Text(viewModel.reminderDate.format(viewModel.settings.taskDateFormat.format))
+                        Image(systemName: "xmark")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 10, height: 10)
+                            .bold()
                     }
-                    .font(.helveticaRegular(size: 16))
-                    .foregroundStyle(themeManager.theme.sectionTextColor(colorScheme))
-                    .frame(width: 100, alignment: .trailing )
-                    .background(themeManager.theme.sectionColor(colorScheme))
-                    .padding(.trailing, 5)
                 }
             }
+            .modifier(SectionStyle())
             
             switch viewModel.reminder {
             case .custom:
-                if viewModel.isShowingReminderCalendar {
+                if viewModel.isShowingReminderCalendar == true {
                     TimeView(
                         date: $viewModel.reminderTime,
                         timePeriod: $viewModel.selectedReminderTimePeriod,
@@ -612,7 +627,8 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
     var options: [SelectionValue]
     @Binding var selection: SelectionValue
     var isSelected: Bool = true
-    var hideSelectedValue: Bool?
+    var dateTitle: String?
+    var isShowingDate: Bool = true
     
     var body: some View {
         HStack(spacing: 5) {
@@ -623,6 +639,7 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
                     .scaledToFit()
                     .frame(width: 10, height: 10)
             }
+            
             Menu {
                 Picker(selection: $selection, label: EmptyView()) {
                     ForEach(options, id: \.self) { option in
@@ -632,8 +649,8 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
                     }
                 }
             } label: {
-                if selection.description.localized == "Custom".localized, hideSelectedValue == true {
-                    customPickerLabel(leftName: title, rightName: "".localized)
+                if selection.description.localized == "Custom".localized, let dateTitle, isShowingDate {
+                    customPickerLabel(leftName: title, rightName: dateTitle.localized, showImage: false)
                 } else {
                     customPickerLabel(leftName: title, rightName: selection.description.localized)
                 }
@@ -643,13 +660,15 @@ struct CustomPickerView<SelectionValue: Hashable & CustomStringConvertible>: Vie
         .foregroundStyle(isSelected ? themeManager.theme.sectionTextColor(colorScheme) : .secondary)
     }
     
-    private func customPickerLabel(leftName: LocalizedStringKey, rightName: LocalizedStringKey) -> some View {
+    private func customPickerLabel(leftName: LocalizedStringKey, rightName: LocalizedStringKey, showImage: Bool = true) -> some View {
         HStack {
             Text(leftName)
             Spacer()
             Text(rightName)
-            Image(systemName: "chevron.up.chevron.down")
-                .imageScale(.small)
+            if showImage {
+                Image(systemName: "chevron.up.chevron.down")
+                    .imageScale(.small)
+            }
         }
     }
 }

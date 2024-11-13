@@ -44,11 +44,9 @@ struct SubscriptionView: View {
                 ScrollView {
                     content()
                 }
-                .padding(.bottom, 5)
             }
         }
         .onAppear {
-            appState.isTabBarHidden = true
             Task {
                 try await purchaseManager.loadProducts()
                 
@@ -64,11 +62,8 @@ struct SubscriptionView: View {
                 }
             }
         }
-        .onDisappear(perform: {
-            appState.isTabBarHidden = false
-        })
         .manageSubscriptionsSheet(isPresented: $isPresentedManageSubscription)
-        .modifier(TabViewChildModifier())
+        .modifier(TabViewChildModifier(bottomPadding: 0))
         .overlay {
             loaderView(show: purchaseManager.showProcessView)
         }

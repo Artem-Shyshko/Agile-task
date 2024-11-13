@@ -35,7 +35,7 @@ enum SecuredNavigation: Hashable {
     case recordsList,
          createRecord(record: RecordDTO? = nil),
          recordInfo(record: RecordDTO),
-         purchase,
+         subscription,
          sorting,
          settings,
          appSettings,

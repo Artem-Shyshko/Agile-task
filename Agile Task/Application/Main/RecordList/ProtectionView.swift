@@ -56,7 +56,7 @@ private extension ProtectionView {
         switch view {
         case .createRecord(let record):
             return AnyView(NewRecordView(viewModel: NewRecordViewModel(appState: appState, editedRecord: record)))
-        case .purchase:
+        case .subscription:
             return AnyView(SubscriptionView())
         case .sorting:
             return AnyView(SortingView(viewModel: SortingViewModel(appState: appState, sortingState: .records)))

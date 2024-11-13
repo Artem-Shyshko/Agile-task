@@ -20,7 +20,7 @@ final class SettingsViewModel: ObservableObject {
         case .tasksList:
             return TasksNavigation.subscription
         case .recordsList:
-            return SecuredNavigation.purchase
+            return SecuredNavigation.subscription
         }
     }
     

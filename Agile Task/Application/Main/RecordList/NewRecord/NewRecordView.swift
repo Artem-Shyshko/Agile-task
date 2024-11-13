@@ -362,7 +362,7 @@ private extension NewRecordView {
             .count
         
         if !purchaseManager.canCreateTask(taskCount: recordCount) {
-            appState.securedNavigationStack.append(.purchase)
+            appState.securedNavigationStack.append(.subscription)
         } else {
             viewModel.saveRecord()
             dismiss.callAsFunction()
