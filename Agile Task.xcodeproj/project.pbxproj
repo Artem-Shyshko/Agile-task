@@ -126,6 +126,7 @@
 		75B58D0B2A8234B900937923 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0A2A8234B900937923 /* TabBarView.swift */; };
 		75B58D0E2A824C1400937923 /* Color+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0D2A824C1400937923 /* Color+Ext.swift */; };
 		75B58D102A8250CF00937923 /* TasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B58D0F2A8250CF00937923 /* TasksView.swift */; };
+		75C68ECD2CE4DEF700A544DA /* KeybordHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C68ECC2CE4DEF700A544DA /* KeybordHandler.swift */; };
 		75C710382A8CE4BC008E8A62 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C710372A8CE4BC008E8A62 /* SettingsView.swift */; };
 		75C7103D2A8CEE4F008E8A62 /* SettingsButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */; };
 		75C7103F2A8CEEDB008E8A62 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */; };
@@ -364,6 +365,7 @@
 		75B58D0A2A8234B900937923 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		75B58D0D2A824C1400937923 /* Color+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Ext.swift"; sourceTree = "<group>"; };
 		75B58D0F2A8250CF00937923 /* TasksView.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = TasksView.swift; sourceTree = "<group>"; };
+		75C68ECC2CE4DEF700A544DA /* KeybordHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeybordHandler.swift; sourceTree = "<group>"; };
 		75C710372A8CE4BC008E8A62 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		75C7103C2A8CEE4F008E8A62 /* SettingsButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsButtonStyle.swift; sourceTree = "<group>"; };
 		75C7103E2A8CEEDB008E8A62 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 				7511B3C52B99FF130090DB4E /* TermsOfUseButton.swift */,
 				CE05F40A2C7F82DE001E13D0 /* RecordRow.swift */,
 				75A3CFFF2A990BD4000F68BA /* TaskRow.swift */,
+				75C68ECC2CE4DEF700A544DA /* KeybordHandler.swift */,
 				752CEE6A2B3EF2A000CA1612 /* MailView.swift */,
 				752CEE682B3EE25700CA1612 /* ProjectRow.swift */,
 				751BFB3F2A9E01AB00D3E0B8 /* RecurringView.swift */,
@@ -1382,6 +1385,7 @@
 				75A709AF2A82900A003894F7 /* TasksViewModel.swift in Sources */,
 				75E11C712B4C13DF003B891B /* BulletObject.swift in Sources */,
 				CE05F3FB2C7F7A9D001E13D0 /* RecordListViewModel.swift in Sources */,
+				75C68ECD2CE4DEF700A544DA /* KeybordHandler.swift in Sources */,
 				7537D01E2AA9DDC000F64175 /* ThemeManager.swift in Sources */,
 				CE05F3D22C7F7985001E13D0 /* SettingsRecordInfo.swift in Sources */,
 			);

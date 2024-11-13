@@ -9,7 +9,7 @@
 import SwiftUI
 import RealmSwift
 
-struct NewTaskView: View {
+struct NewTaskView: View, KeyboardReadable {
     
     enum Field: Hashable {
         case title
@@ -26,8 +26,7 @@ struct NewTaskView: View {
     
     @StateObject var viewModel: NewTaskViewModel
     @FocusState private var isFocusedField: Field?
-    @FocusState private var focusedBulletInput: Int?
-    @FocusState private var focusedCheckboxInput: Int?
+    @State private var isKeyboardVisible = false
     @State private var isShowingCheckBoxView: Bool = false
     @State private var isShowingBulletView: Bool = false
     @State private var isDescriptionEmpty = true
@@ -68,7 +67,7 @@ struct NewTaskView: View {
         .alert(viewModel.alert?.title ?? "", isPresented: $viewModel.isShowingAlert) {
             alertButtons()
         }
-        .modifier(TabViewChildModifier())
+        .modifier(TabViewChildModifier(bottomPadding: isKeyboardVisible ? 0 : 35))
         .onAppear {
             isFocusedField = viewModel.editTask == nil ? .title : nil
             viewModel.localNotificationManager = localNotificationManager
@@ -81,6 +80,9 @@ struct NewTaskView: View {
             TipView(title: "tip_add_advanced_features", arrowEdge: .top)
                 .hAlign(alignment: .trailing)
                 .padding(.trailing, AppHelper.shared.isIPad ? 150 : 60)
+        }
+        .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+            isKeyboardVisible = newIsKeyboardVisible
         }
     }
 }
@@ -148,11 +150,6 @@ private extension NewTaskView {
                     .hAlign(alignment: .leading)
                 Button {
                     viewModel.bullets.append(BulletDTO(object: BulletObject(title: "")))
-                    if focusedBulletInput == nil {
-                        focusedBulletInput = 0
-                    } else {
-                        focusedBulletInput! += 1
-                    }
                 } label: {
                     Image(systemName: "plus")
                         .renderingMode(.template)
@@ -210,11 +207,6 @@ private extension NewTaskView {
                     .hAlign(alignment: .leading)
                 Button {
                     viewModel.checkBoxes.append(.init(title: ""))
-                    if focusedCheckboxInput == nil {
-                        focusedCheckboxInput = 0
-                    } else {
-                        focusedCheckboxInput! += 1
-                    }
                 } label: {
                     Image(systemName: "plus")
                         .renderingMode(.template)
@@ -315,10 +307,8 @@ private extension NewTaskView {
                     }
                 case .deleteCheckbox:
                     viewModel.deleteCheckbox()
-                    focusedBulletInput = viewModel.bullets.count - 1
                 case .deleteBullet:
                     viewModel.deleteBullet()
-                    focusedCheckboxInput = viewModel.checkBoxes.count - 1
                 case .none, .emptyTitle, .weeksRecurring:
                     return
                 }
