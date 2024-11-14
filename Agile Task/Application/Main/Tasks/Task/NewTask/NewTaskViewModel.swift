@@ -40,8 +40,6 @@ final class NewTaskViewModel: ObservableObject {
     @Published var isShowingDateCalendar = true
     @Published var isShowingReminderCalendarPicker = false
     @Published var isShowingReminderCalendar = true
-    @Published var isShowingCheckboxes = true
-    @Published var isShowingBullets = true
     @Published var calendarDate = Date()
     @Published var deletedBullet: BulletDTO?
     @Published var deletedBullets: [BulletDTO] = []
@@ -249,8 +247,6 @@ final class NewTaskViewModel: ObservableObject {
                 self.description = description
             }
         }
-        isShowingBullets = bullets.isEmpty ? false : true
-        isShowingCheckboxes = checkBoxes.isEmpty ? false : true
     }
     
     func setupTime() {

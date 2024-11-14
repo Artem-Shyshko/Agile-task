@@ -51,9 +51,11 @@ struct TasksView: View {
               .overlay(alignment: .top) {
                 HStack(alignment: .top) {
                   TipView(title: "tip_double_tab", arrowEdge: .top)
+                    .hAlign(alignment: .leading)
                   TipView(title: "tip_swipe_left", arrowEdge: .top)
+                    .hAlign(alignment: .trailing)
                 }
-                .padding(.top, 15)
+                .padding(.horizontal)
               }
           }
           .padding(.bottom, 10)
@@ -157,7 +159,7 @@ struct TasksView: View {
       }
       .overlay(alignment: .bottom) {
         if viewModel.taskSortingOption == .all {
-          TipView(title: "tip_group_tasks", arrowEdge: .bottom)
+          TipView(title: "tip_group_tasks", arrowEdge: .bottom, spacing: AppHelper.shared.isIPad ? 55 : 50)
         }
       }
     }

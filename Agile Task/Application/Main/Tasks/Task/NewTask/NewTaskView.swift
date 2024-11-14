@@ -30,6 +30,8 @@ struct NewTaskView: View, KeyboardReadable {
     @State private var isShowingCheckBoxView: Bool = false
     @State private var isShowingBulletView: Bool = false
     @State private var isDescriptionEmpty = true
+    @State private var isShowingCheckboxes = true
+    @State private var isShowingBullets = true
     
     @Environment(\.dismiss) var dismiss
     
@@ -142,9 +144,9 @@ private extension NewTaskView {
                 setupIcon(with: .bullet)
                 chevronButton(
                     isVisible: viewModel.bullets.isEmpty == false,
-                    isShowing: viewModel.isShowingBullets
+                    isShowing: isShowingBullets
                 ) {
-                    viewModel.isShowingBullets.toggle()
+                    isShowingBullets.toggle()
                 }
                 Text("Bulletlist")
                     .hAlign(alignment: .leading)
@@ -169,9 +171,9 @@ private extension NewTaskView {
         }
         .onChange(of: viewModel.bullets) { newValue in
             if newValue.isEmpty {
-                viewModel.isShowingBullets = false
+                isShowingBullets = false
             } else {
-                viewModel.isShowingBullets = true
+                isShowingBullets = true
             }
         }
     }
@@ -199,9 +201,9 @@ private extension NewTaskView {
                 setupIcon(with: .doneCheckbox)
                 chevronButton(
                     isVisible: viewModel.checkBoxes.isEmpty == false,
-                    isShowing: viewModel.isShowingCheckboxes
+                    isShowing: isShowingCheckboxes
                 ) {
-                        viewModel.isShowingCheckboxes.toggle()
+                        isShowingCheckboxes.toggle()
                 }
                 Text("Checklist")
                     .hAlign(alignment: .leading)
@@ -226,16 +228,16 @@ private extension NewTaskView {
         }
         .onChange(of: viewModel.checkBoxes) { newValue in
             if newValue.isEmpty {
-                viewModel.isShowingCheckboxes = false
+                isShowingCheckboxes = false
             } else {
-                viewModel.isShowingCheckboxes = true
+                isShowingCheckboxes = true
             }
         }
     }
     
     @ViewBuilder
     func checkboxList() -> some View {
-        if viewModel.isShowingCheckboxes {
+        if isShowingCheckboxes {
             List {
                 ForEach($viewModel.checkBoxes, id: \.id) { checkbox in
                     TextEditor(
@@ -264,7 +266,7 @@ private extension NewTaskView {
     
     @ViewBuilder
     func bulletList() -> some View {
-        if viewModel.isShowingBullets {
+        if isShowingBullets {
             List {
                 ForEach($viewModel.bullets, id: \.id) { bullet in
                     TextEditor(
