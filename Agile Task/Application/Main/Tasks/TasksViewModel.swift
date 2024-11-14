@@ -624,7 +624,6 @@ extension TasksViewModel {
     
     func hapticFeedBack() {
         guard settings.hapticFeedback else { return }
-        let generator = UINotificationFeedbackGenerator()
-        generator.notificationOccurred(.success)
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
 }
