@@ -381,7 +381,6 @@ private extension TasksView {
         }
       }
       .font(.helveticaRegular(size: 16))
-      .frame(width: 110)
       
       Button {
         rightButtonAction()
