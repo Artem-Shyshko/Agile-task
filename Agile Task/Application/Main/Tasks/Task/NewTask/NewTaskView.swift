@@ -181,17 +181,14 @@ private extension NewTaskView {
     @ViewBuilder
     func chevronButton(isVisible: Bool, isShowing: Bool, action: @escaping (()->())) -> some View {
         if isVisible {
-            Button {
-                action()
-            } label: {
-                Image(systemName: isShowing ? "chevron.down" : "chevron.right")
-                    .renderingMode(.template)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 10, height: 10)
-            }
-            .buttonStyle(.borderless)
-            .frame(width: 10)
+            Image(systemName: isShowing ? "chevron.down" : "chevron.right")
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 10, height: 10)
+                .onTapGesture {
+                    action()
+                }
         }
     }
     
