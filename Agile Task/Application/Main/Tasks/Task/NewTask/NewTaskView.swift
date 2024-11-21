@@ -159,7 +159,7 @@ private extension NewTaskView {
                         .scaledToFit()
                         .frame(width: 10, height: 10)
                         .bold()
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.vertical, 8)
@@ -216,7 +216,7 @@ private extension NewTaskView {
                         .scaledToFit()
                         .frame(width: 10, height: 10)
                         .bold()
-                        .foregroundStyle(.black)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.vertical, 8)
