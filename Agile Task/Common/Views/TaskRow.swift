@@ -297,7 +297,26 @@ private extension TaskRow {
         if !task.bulletArray.isEmpty, task.showCheckboxes {
             ForEach($task.bulletArray, id: \.id.wrappedValue
             ) { bullet in
-                BulletTaskRow(viewModel: viewModel, bullet: bullet, colorName: task.colorName)
+                BulletTaskRow(
+                    viewModel: viewModel,
+                    bullet: bullet,
+                    colorName: task.colorName
+                )
+                .foregroundStyle(bulletForegroundColor())
+                .strikethrough(task.isCompleted, color: .completedTaskLineColor)
+            }
+        }
+    }
+    
+    func bulletForegroundColor() -> Color {
+        if task.isCompleted {
+            return Color.completedTaskLineColor
+        } else {
+            if colorScheme == .dark,
+               task.colorName != themeManager.theme.sectionColor(colorScheme).name {
+                return .black
+            } else {
+                return themeManager.theme.sectionTextColor(colorScheme)
             }
         }
     }

@@ -24,7 +24,6 @@ struct BulletTaskRow: View {
                 .frame(width: 12, height: 12)
             Text(LocalizedStringKey(bullet.title))
         }
-        .foregroundColor(foregroundColor())
         .listRowBackground(
             RoundedRectangle(cornerRadius: 4)
                 .fill(Color(colorName))
@@ -35,14 +34,6 @@ struct BulletTaskRow: View {
 }
 
 private extension BulletTaskRow {
-    func foregroundColor() -> Color {
-        if colorScheme == .dark,
-           colorName != themeManager.theme.sectionColor(colorScheme).name {
-            return .black
-        } else {
-            return  themeManager.theme.sectionTextColor(colorScheme)
-        }
-    }
 }
 
 #Preview {
