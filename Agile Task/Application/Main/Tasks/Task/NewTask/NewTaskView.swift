@@ -579,7 +579,7 @@ private extension NewTaskView {
             let taskCount = project.tasks
                 .filter { $0.taskType == .advanced }
                 .count
-            if !purchaseManager.canCreateTask(taskCount: taskCount) {
+            if !purchaseManager.canCreateTask(taskCount: taskCount) && viewModel.editTask == nil {
                 appState.taskListNavigationStack.append(.subscription)
             } else {
                 viewModel.saveButtonAction()
