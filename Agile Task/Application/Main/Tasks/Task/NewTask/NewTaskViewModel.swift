@@ -570,7 +570,7 @@ private extension NewTaskViewModel {
         
         switch recurringConfiguration.endsOption {
         case .on:
-            endsDate = recurringConfiguration.endsDate
+            endsDate = recurringConfiguration.endsDate > self.taskDate ? recurringConfiguration.endsDate : self.taskDate
         case .after, .never:
             endsDate = Constants.shared.calendar.date(byAdding: .year, value: 1, to: taskDate) ?? taskDate
         }
