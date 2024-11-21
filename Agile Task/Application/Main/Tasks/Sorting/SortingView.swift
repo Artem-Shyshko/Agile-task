@@ -9,7 +9,9 @@ import SwiftUI
 import RealmSwift
 
 struct SortingView: View {
-    @Environment(\.dismiss) var dismiss
+    @EnvironmentObject private var themeManager: ThemeManager
+    @Environment(\.colorScheme) private var colorShame
+    @Environment(\.dismiss) private var dismiss
     @StateObject var viewModel: SortingViewModel
     
     var body: some View {
@@ -94,7 +96,7 @@ private extension SortingView {
     
     var checkMark: some View {
         Image(systemName: "checkmark")
-            .foregroundColor(.black)
+            .foregroundColor(themeManager.theme.sectionTextColor(colorShame))
     }
 }
 
