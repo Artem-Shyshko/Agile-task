@@ -165,10 +165,10 @@ private extension NewTaskView {
             .padding(.vertical, 8)
             .tint(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .foregroundColor(viewModel.bullets.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .modifier(SectionStyle())
             
             bulletList()
         }
+        .modifier(SectionStyle())
         .onChange(of: viewModel.bullets) { newValue in
             if newValue.isEmpty {
                 isShowingBullets = false
@@ -219,10 +219,10 @@ private extension NewTaskView {
             .padding(.vertical, 8)
             .tint(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
             .foregroundColor(viewModel.checkBoxes.isEmpty ? .secondary : themeManager.theme.sectionTextColor(colorScheme))
-            .modifier(SectionStyle())
             
             checkboxList()
         }
+        .modifier(SectionStyle())
         .onChange(of: viewModel.checkBoxes) { newValue in
             if newValue.isEmpty {
                 isShowingCheckboxes = false

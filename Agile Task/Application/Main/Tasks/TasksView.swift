@@ -422,7 +422,7 @@ private extension TasksView {
   
   @ViewBuilder
   func plusButton() -> some View {
-    if viewModel.settings.showPlusButton {
+    if viewModel.settings.showPlusButton && viewModel.isShowingAddTask == false {
       Button {
         isAddTaskFocused = true
         viewModel.isShowingAddTask = true
