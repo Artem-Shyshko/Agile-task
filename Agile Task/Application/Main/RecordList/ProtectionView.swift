@@ -11,6 +11,7 @@ struct ProtectionView: View {
     // MARK: - Properties
     @EnvironmentObject var themeManager: ThemeManager
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var authManager: AuthManager
     @Environment(\.colorScheme) var colorScheme
     @Binding var path: [SecuredNavigation]
     @Binding var showPasswordViewForRecords: Bool
@@ -31,6 +32,7 @@ struct ProtectionView: View {
                     .frame(size: 50)
                 
                 Button {
+                    authManager.auth()
                     path.append(.recordsList)
                 } label: {
                     Text("record_list_view_section")

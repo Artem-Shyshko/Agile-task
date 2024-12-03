@@ -22,6 +22,15 @@ final class AuthManager: ObservableObject {
         context.evaluatePolicy(
             .deviceOwnerAuthenticationWithBiometrics,
             localizedReason: "Log in to your account") { success, error in
+                guard error == nil else {
+                    print("Error authentication")
+                    
+                    Task { @MainActor in
+                        self.state = .error
+                    }
+                    return
+                }
+                
                 Task { @MainActor in
                     self.state = success ? .loggedIn : .noneAuth
                 }

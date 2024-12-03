@@ -62,8 +62,8 @@ private extension SetPasswordView {
                     viewModel.allRequirementsMet == true {
                     defaults.setValue(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
                     showPasswordView = true
-                    AppHelper.shared.isOnboarding = true
                     viewModel.saveRecordWith()
+                    viewModel.appState.settingsRepository!.save(viewModel.settings)
                     dismiss()
                 }
             } else {
@@ -73,7 +73,7 @@ private extension SetPasswordView {
                    viewModel.allRequirementsMet == true {
                     defaults.set(viewModel.confirmPassword, forKey: Constants.shared.userPassword)
                     viewModel.appState.settingsRepository!.save(viewModel.settings)
-                    dismiss.callAsFunction()
+                    dismiss()
                 }
             }
         } label: {

@@ -14,6 +14,7 @@ struct AuthenticationView: View {
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.scenePhase) var scene
+    @Environment(\.dismiss) var dismiss
     
     @StateObject var viewModel: AuthenticationViewModel
     @Binding var isShowing: Bool
@@ -57,7 +58,14 @@ private extension AuthenticationView {
         let securityOption = recordProtect == nil ? viewModel.settings.securityOption : recordProtect
         if securityOption == .faceID {
             authManager.auth()
-            isShowing = authManager.state == .loggedIn ? false : true
+            
+            switch authManager.state {
+            case .loggedIn:
+                isShowing = false
+            case .error, .noneAuth:
+                isShowing = false
+                dismiss()
+            }
         }
     }
 }

@@ -77,6 +77,7 @@ struct TabBarView: View {
     
     // MARK: - Properties
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var authManager: AuthManager
     @State var showAuthViewForRecords: Bool = false
     @State var showPasswordViewForRecords: Bool = false
     @State var reloadRecords: Bool = false
@@ -113,6 +114,10 @@ struct TabBarView: View {
             appState.taskListNavigationStack = []
             appState.securedNavigationStack = []
             appState.projectsNavigationStack = []
+            
+            if newValue == .secured {
+                authManager.state = .noneAuth
+            }
         }
         .onChange(of: showAuthViewForRecords) { newValue in
             if !newValue {

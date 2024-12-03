@@ -37,7 +37,6 @@ struct RecordsView: View {
                 }
             }
             .onAppear {
-                authManager.state = .noneAuth
                 viewModel.mainLoad()
             }
             .onChange(of: reloadRecords) { newValue in
