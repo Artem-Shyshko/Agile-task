@@ -429,7 +429,7 @@ private extension TasksView {
       } label: {
         Image(.quickTask)
       }
-      .padding(.bottom, 50)
+      .padding(.bottom, 90)
     }
   }
   
