@@ -12,6 +12,7 @@ struct PasswordView: View {
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var themeManager: ThemeManager
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.dismiss) var dismiss
     
     @StateObject var viewModel: AuthenticationViewModel
     @FocusState private var keyboardFocused: Bool
@@ -19,33 +20,29 @@ struct PasswordView: View {
     // MARK: - Body
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                themeManager.theme.gradient(colorScheme)
-                    .ignoresSafeArea()
-                VStack {
-                    Spacer()
-                    ZStack {
-                        TextField("", text: $viewModel.password)
-                            .keyboardType(.alphabet)
-                            .disableAutocorrection(true)
-                            .foregroundColor(.clear)
-                            .accentColor(.clear)
-                            .focused($keyboardFocused)
-                            .onAppear {
-                                keyboardFocused = true
-                            }
-                        
-                        HStack {
-                            ForEach(0..<(viewModel.passwordCount), id: \.self) { index in
-                                PasswordCircleView(index: index,
-                                                   geometry: geometry,
-                                                   password: $viewModel.password,
-                                                   passwordCount: $viewModel.passwordCount)
-                            }
+            VStack {
+                navigationBar
+                ZStack {
+                    TextField("", text: $viewModel.password)
+                        .keyboardType(.alphabet)
+                        .disableAutocorrection(true)
+                        .foregroundColor(.clear)
+                        .accentColor(.clear)
+                        .focused($keyboardFocused)
+                        .onAppear {
+                            keyboardFocused = true
+                        }
+                    
+                    HStack {
+                        ForEach(0..<(viewModel.passwordCount), id: \.self) { index in
+                            PasswordCircleView(index: index,
+                                               geometry: geometry,
+                                               password: $viewModel.password,
+                                               passwordCount: $viewModel.passwordCount)
                         }
                     }
-                    Spacer()
                 }
+                .frame(maxHeight: .infinity, alignment: .center)
             }
             .modifier(TabViewChildModifier())
         }
@@ -62,6 +59,26 @@ struct PasswordView: View {
                 Text("alert_ok")
             }
         }
+    }
+}
+
+private extension PasswordView {
+    var navigationBar: some View {
+        NavigationBarView(
+            leftItem: cancelButton,
+            header: EmptyView(),
+            rightItem: EmptyView()
+        )
+    }
+    
+    var cancelButton: some View {
+        Button {
+            dismiss()
+        } label: {
+            Text("cancel_button")
+                .font(.helveticaRegular(size: 16))
+        }
+        .foregroundColor(.white)
     }
 }
 
