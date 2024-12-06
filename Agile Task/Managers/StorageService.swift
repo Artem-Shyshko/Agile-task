@@ -17,7 +17,7 @@ extension Results {
 
 protocol BackupProtocol {
     func getRealmData() -> Data?
-    func saveBackup(data: Data, fileName: String, toICloud: Bool) -> Result<String, BackupError>
+    func saveBackup(data: Data, toICloud: Bool) -> Result<String, BackupError>
     func listAllBackups(fromICloud: Bool) -> [String]
     func restoreBackup(named name: String, fromICloud: Bool) -> Result<String, BackupError>
     func restoreBackup(data: Data) -> Result<String, BackupError>
@@ -130,14 +130,10 @@ final class StorageService {
         reloadWidget()
         return storage.objects(T.self).toArray()
     }
-    
-    private func reloadWidget() {
-        WidgetCenter.shared.reloadTimelines(ofKind: "AgileTaskWidget")
-    }
 }
 
 extension StorageService: BackupProtocol {
-    func saveBackup(data: Data, fileName: String, toICloud: Bool = false) -> Result<String, BackupError> {
+    func saveBackup(data: Data, toICloud: Bool = false) -> Result<String, BackupError> {
         let fileManager = FileManager.default
         let backupDirectory = toICloud ? getICloudBackupDirectory() : getLocalBackupDirectory()
         
@@ -145,7 +141,7 @@ extension StorageService: BackupProtocol {
             return .failure(.urlIsNotAvailable)
         }
         
-        let name = "Backup_\(fileName)"
+        let name = "Backup: \(Date().backupDateString)"
         let backupURL = directory.appendingPathComponent(name)
         
         do {
@@ -153,11 +149,8 @@ extension StorageService: BackupProtocol {
                 try fileManager.removeItem(at: backupURL)
             }
             
-            let isSaved = fileManager.createFile(atPath: backupURL.path, contents: data)
-            if isSaved {
-                return .success("Backup \(name) successfully saved")
-            }
-            return .failure(.cantSaveBackup)
+            try data.write(to: backupURL, options: .atomic)
+            return .success("\(name) successfully saved")
         } catch {
             print("Error saving backup: \(error.localizedDescription)")
             return .failure(.creatingBackupError)
@@ -184,6 +177,10 @@ extension StorageService: BackupProtocol {
         }
         
         do {
+            if fromICloud {
+                try fileManager.startDownloadingUbiquitousItem(at: directory)
+            }
+            
             let files = try fileManager.contentsOfDirectory(atPath: directory.path)
             return files
         } catch {
@@ -207,11 +204,16 @@ extension StorageService: BackupProtocol {
                 return .failure(.fileDoesNotExist)
             }
             
+            try Realm().invalidate()
+            
             if fileManager.fileExists(atPath: realmURL.path) {
                 try fileManager.removeItem(at: realmURL)
             }
             
             try fileManager.copyItem(at: backupURL, to: realmURL)
+            
+            Realm.Configuration.defaultConfiguration = Realm.Configuration()
+            
             return .success("Backup \(name) successfully restored")
         } catch {
             print("Error restoring backup: \(error.localizedDescription)")
@@ -223,11 +225,16 @@ extension StorageService: BackupProtocol {
         do {
             let fileManager = FileManager.default
             
+            try Realm().invalidate()
+            
             if fileManager.fileExists(atPath: realmURL.path) {
                 try fileManager.removeItem(at: realmURL)
             }
             
             let isSaved = fileManager.createFile(atPath: realmURL.path, contents: data)
+            
+            Realm.Configuration.defaultConfiguration = Realm.Configuration()
+            
             if isSaved {
                 return .success("Backup successfully restored")
             }
@@ -245,10 +252,29 @@ extension StorageService: BackupProtocol {
 }
 
 private extension StorageService {
+    func reloadWidget() {
+       WidgetCenter.shared.reloadTimelines(ofKind: "AgileTaskWidget")
+   }
+    
+    func exportRealmDatabase() -> URL? {
+        do {
+            let fileManager = FileManager.default
+            let backupURL = fileManager.temporaryDirectory.appendingPathComponent("realmBackup.realm")
+            
+            if fileManager.fileExists(atPath: backupURL.path) {
+                try fileManager.removeItem(at: backupURL)
+            }
+            
+            try fileManager.copyItem(at: realmURL, to: backupURL)
+            return backupURL
+        } catch {
+            print("Error exporting Realm database: \(error.localizedDescription)")
+        }
+        return nil
+    }
     
     private func getLocalBackupDirectory() -> URL {
-        let fileManager = FileManager.default
-        let urls = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        let urls = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         guard let documentDirectory = urls.first else {
             fatalError("Unable to access document directory")
         }
@@ -257,20 +283,20 @@ private extension StorageService {
         createBackupDirectoryIfNeeded(directory: backupDirectory)
         return backupDirectory
     }
-
+    
     func getICloudBackupDirectory() -> URL? {
-        let fileManager = FileManager.default
-        guard let iCloudURL = fileManager.url(forUbiquityContainerIdentifier: nil) else {
+        let container = "iCloud.\(Bundle.main.bundleIdentifier ?? "")"
+        guard let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: container) else {
             print("iCloud is not available")
             return nil
         }
-        let backupDirectory = iCloudURL.appendingPathComponent("Documents").appendingPathComponent("Backups")
+        let backupDirectory = iCloudURL.appendingPathComponent("Documents")
         print("iCloud Backup Directory: \(backupDirectory.path)")
         createBackupDirectoryIfNeeded(directory: backupDirectory)
         return backupDirectory
     }
     
-    private func createBackupDirectoryIfNeeded(directory: URL) {
+    func createBackupDirectoryIfNeeded(directory: URL) {
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: directory.path) {
             do {

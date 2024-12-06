@@ -10,6 +10,7 @@ import SwiftyDropbox
 
 final class BackupViewModel: ObservableObject {
     private var dropboxClient = DropboxClientsManager.authorizedClient
+    var appState: AppState
     
     @Published var alertTitle = ""
     @Published var isShowingAlert = false
@@ -18,7 +19,6 @@ final class BackupViewModel: ObservableObject {
     @Published var isShowingRestoreAlert = false
     
     var selectedBackup: String = ""
-    var appState: AppState
     
     init(appState: AppState) {
         self.appState = appState
@@ -26,7 +26,7 @@ final class BackupViewModel: ObservableObject {
     
     func saveBackup(toICloud: Bool) {
         guard let data = appState.storage?.getRealmData() else { return }
-        let result = appState.storage!.saveBackup(data: data, fileName: Date().backupDateString, toICloud: toICloud)
+        let result = appState.storage!.saveBackup(data: data, toICloud: toICloud)
         DispatchQueue.main.async {
             switch result {
             case .success(let success):
@@ -51,7 +51,8 @@ final class BackupViewModel: ObservableObject {
     }
     
     func restoreBackup(named: String, fromICloud: Bool) {
-        let result = appState.storage!.restoreBackup(named: named, fromICloud: fromICloud)
+        guard let storage = appState.storage else { return }
+        let result = storage.restoreBackup(named: named, fromICloud: fromICloud)
         
         DispatchQueue.main.async {
             switch result {
@@ -104,7 +105,8 @@ final class BackupViewModel: ObservableObject {
     }
     
     func getBackups(fromICloud: Bool) {
-        savedBackups = appState.storage!.listAllBackups(fromICloud: fromICloud)
+        guard let storage = appState.storage else { return }
+        savedBackups = storage.listAllBackups(fromICloud: fromICloud)
     }
     
     func saveToDropbox() {
@@ -113,7 +115,7 @@ final class BackupViewModel: ObservableObject {
             return
         }
         
-        guard let fileData = appState.storage!.getRealmData() else {
+        guard let storage = appState.storage, let fileData = storage.getRealmData() else {
             print("No data found")
             return
         }
@@ -134,26 +136,30 @@ final class BackupViewModel: ObservableObject {
     }
     
     func restoreDropboxBackup(name: String) {
-        guard let client = DropboxClientsManager.authorizedClient else {
+        guard let storage = appState.storage, let client = DropboxClientsManager.authorizedClient else {
             print("User is not authorized. Please log in.")
             return
         }
         
         client.files.download(path: "/AgileTask/\(name)")
             .response { [weak self] response, error in
+                guard let self else { return }
+                
                 if let response = response {
                     let data = response.1
-                    let result = self?.appState.storage!.restoreBackup(data: data)
-                    switch result {
-                    case .success(let success):
-                        self?.alertTitle = success
-                        self?.appState.restore()
-                    case .failure(let failure):
-                        self?.alertTitle = failure.rawValue
-                    case .none:
-                        self?.alertTitle = BackupError.restoringBackupError.rawValue
+                    let result = storage.restoreBackup(data: data)
+                    
+                    DispatchQueue.main.async {
+                        switch result {
+                        case .success(let success):
+                            self.alertTitle = success
+                            self.appState.restore()
+                        case .failure(let failure):
+                            self.alertTitle = failure.rawValue
+                        }
+                        
+                        self.isShowingAlert = true
                     }
-                    self?.isShowingAlert = true
                 } else if let error = error {
                     print(error)
                 }
@@ -164,18 +170,18 @@ final class BackupViewModel: ObservableObject {
     }
     
     func listFilesInDirectory() {
-            guard let client = DropboxClientsManager.authorizedClient else {
-                print("User is not authorized. Please log in.")
-                return
-            }
-            
-            client.files.listFolder(path: "/AgileTask").response { [weak self] response, error in
-                if let result = response {
-                    let fileNames = result.entries.map { $0.name }
-                    self?.savedBackups = fileNames
-                } else if let error = error {
-                    print("Error listing files: \(error)")
-                }
+        guard let client = DropboxClientsManager.authorizedClient else {
+            print("User is not authorized. Please log in.")
+            return
+        }
+        
+        client.files.listFolder(path: "/AgileTask").response { [weak self] response, error in
+            if let result = response {
+                let fileNames = result.entries.map { $0.name }
+                self?.savedBackups = fileNames
+            } else if let error = error {
+                print("Error listing files: \(error)")
             }
         }
+    }
 }

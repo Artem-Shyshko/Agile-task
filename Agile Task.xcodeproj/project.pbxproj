@@ -44,6 +44,8 @@
 		7537D0242AAA316200F64175 /* NewProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0232AAA316200F64175 /* NewProjectView.swift */; };
 		7537D0272AAA391300F64175 /* ProjectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0262AAA391300F64175 /* ProjectObject.swift */; };
 		753DFB6A2B62A7FE00D4FD11 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DFB692B62A7FE00D4FD11 /* Theme.swift */; };
+		753EA3D62D034BBA00259692 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDE42B3C57DB00CA1612 /* StorageService.swift */; };
+		753EA3D72D034BD600259692 /* Date+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A709A92A828B68003894F7 /* Date+Ext.swift */; };
 		753F581B2AC70293007FC650 /* SortingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753F581A2AC70293007FC650 /* SortingViewModel.swift */; };
 		7544A3992CB01B2400FE3118 /* ProtectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7544A3982CB01B2400FE3118 /* ProtectionView.swift */; };
 		754714132C2C273700BF1CB3 /* AgileTaskWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754714122C2C273700BF1CB3 /* AgileTaskWatchApp.swift */; };
@@ -54,7 +56,6 @@
 		754714242C2C280800BF1CB3 /* TaskObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75896DD62A83DCC900B0C6F2 /* TaskObject.swift */; };
 		754714252C2C281100BF1CB3 /* TaskDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDA2B3C565C00CA1612 /* TaskDTO.swift */; };
 		754714262C2C281500BF1CB3 /* TaskRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDD2B3C569C00CA1612 /* TaskRepository.swift */; };
-		754714272C2C282400BF1CB3 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDE42B3C57DB00CA1612 /* StorageService.swift */; };
 		754714332C2D66EA00BF1CB3 /* CheckboxDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CEDDF2B3C571000CA1612 /* CheckboxDTO.swift */; };
 		754714342C2D66ED00BF1CB3 /* CheckboxObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7590CF912AEFA81B0015B396 /* CheckboxObject.swift */; };
 		754714352C2D66F000BF1CB3 /* ProjectObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7537D0262AAA391300F64175 /* ProjectObject.swift */; };
@@ -753,19 +754,11 @@
 			children = (
 				75B58D0A2A8234B900937923 /* TabBarView.swift */,
 				7544A38F2CAD74F500FE3118 /* Tasks */,
-				75B58D122A826CD500937923 /* TasksList */,
 				7537D0202AAA0FF400F64175 /* Projects */,
 				CE05F3DE2C7F7A9D001E13D0 /* RecordList */,
 				75C710362A8CE49F008E8A62 /* Settings */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		75B58D122A826CD500937923 /* TasksList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TasksList;
 			sourceTree = "<group>";
 		};
 		75B58D132A827BD800937923 /* Common */ = {
@@ -1242,6 +1235,7 @@
 				754714242C2C280800BF1CB3 /* TaskObject.swift in Sources */,
 				7547143D2C2D671000BF1CB3 /* Font+Ext.swift in Sources */,
 				754714342C2D66ED00BF1CB3 /* CheckboxObject.swift in Sources */,
+				753EA3D62D034BBA00259692 /* StorageService.swift in Sources */,
 				754714352C2D66F000BF1CB3 /* ProjectObject.swift in Sources */,
 				7547143C2C2D670600BF1CB3 /* SettingsRepositoryImpl.swift in Sources */,
 				754714362C2D66F300BF1CB3 /* ProjectDTO.swift in Sources */,
@@ -1252,7 +1246,6 @@
 				CE05F40D2C7F8593001E13D0 /* SortingType.swift in Sources */,
 				7547143E2C2D671400BF1CB3 /* Color+Ext.swift in Sources */,
 				7547143F2C2D676300BF1CB3 /* CheckboxRepository.swift in Sources */,
-				754714272C2C282400BF1CB3 /* StorageService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1395,6 +1388,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				753EA3D72D034BD600259692 /* Date+Ext.swift in Sources */,
 				7507039C2BA9FB940023D5FF /* Constants.swift in Sources */,
 				75E11CDD2B4C3736003B891B /* TaskDTO.swift in Sources */,
 				75E11CF02B4C392A003B891B /* ProjectDTO.swift in Sources */,

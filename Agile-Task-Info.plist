@@ -2,10 +2,28 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSUbiquitousContainerSupportedFolderLevels</key>
+	<string>Any</string>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.masterapps.agile-task.refresh</string>
 	</array>
+    <key>NSUbiquitousContainers</key>
+    <dict>
+         <key>iCloud.com.masterapps.agile-task</key>
+         <dict>
+              <key>NSUbiquitousContainerIsDocumentScopePublic</key>
+              <true/>
+              <key>NSUbiquitousContainerName</key>
+              <string>Agile Task</string>
+              <key>NSUbiquitousContainerSupportedFolderLevels</key>
+              <string>Any</string>
+             </dict>
+    </dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

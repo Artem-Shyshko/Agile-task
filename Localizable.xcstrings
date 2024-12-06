@@ -668,6 +668,22 @@
         }
       }
     },
+    "backup_delete_app" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Files - will delete all backups if Application deleted."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файли - видалять усі бекапи якщо програму буде видалено"
+          }
+        }
+      }
+    },
     "backup_title" : {
       "localizations" : {
         "en" : {

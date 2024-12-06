@@ -19,8 +19,8 @@ struct BackupView: View {
             
             VStack(spacing: Constants.shared.listRowSpacing) {
                 filesBackup()
-//                iCloudBackup()
-//                dropboxBackup()
+                iCloudBackup()
+                dropboxBackup()
                 Spacer()
             }
         }
@@ -89,10 +89,21 @@ struct SectionButton: View {
 struct SectionLinkButton: View {
     var title: LocalizedStringKey
     var value: any Hashable
+    var isArrow: Bool = false
     
     var body: some View {
         NavigationLink(value: value, label: {
-            Text(title)
+            HStack {
+                Text(title)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if isArrow {
+                    Image(.arrowRight)
+                        .renderingMode(.template)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(size: 25)
+                }
+            }
         })
         .modifier(SectionStyle())
     }

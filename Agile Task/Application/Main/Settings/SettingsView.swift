@@ -28,6 +28,7 @@ struct SettingsView: View {
                 appSettingsView()
                 tasksSettingsView()
                 securityView()
+                backupView()
                 moreAppsView()
                 emailView()
                 versionView()
@@ -83,11 +84,11 @@ private extension SettingsView {
     
     func appSettingsView() -> some View {
         NavigationLink(value: viewModel.settingsGeneral) {
-                HStack(spacing: 6) {
-                    setupIcon(with: .settingsApp, size: iconSize)
-                    Text("app_settings_title")
-                }
-                .modifier(SectionStyle())
+            HStack(spacing: 6) {
+                setupIcon(with: .settingsApp, size: iconSize)
+                Text("app_settings_title")
+            }
+            .modifier(SectionStyle())
         }
     }
     
@@ -97,7 +98,17 @@ private extension SettingsView {
                 setupIcon(with: .settingsTasks, size: iconSize)
                 Text("tasks_settings_title")
             }
-                .modifier(SectionStyle())
+            .modifier(SectionStyle())
+        }
+    }
+    
+    func backupView() -> some View {
+        NavigationLink(value: TasksNavigation.backup) {
+            HStack(spacing: 6) {
+                setupIcon(with: .settingsBackup, size: iconSize)
+                Text("backup_title")
+            }
+            .modifier(SectionStyle())
         }
     }
     
@@ -107,7 +118,7 @@ private extension SettingsView {
                 setupIcon(with: .settingsSecurity, size: iconSize)
                 Text("Security")
             }
-                .modifier(SectionStyle())
+            .modifier(SectionStyle())
         }
     }
     
@@ -117,7 +128,7 @@ private extension SettingsView {
                 setupIcon(with: .settingsCredentials, size: iconSize)
                 Text("App credentials")
             }
-                .modifier(SectionStyle())
+            .modifier(SectionStyle())
         }
     }
     
@@ -132,11 +143,11 @@ private extension SettingsView {
         }
         .modifier(SectionStyle())
     }
-
+    
     func versionView() -> some View {
-      Text("Version \(viewModel.getAppVersion())")
-        .hAlign(alignment: .trailing)
-        .padding(.vertical)
+        Text("Version \(viewModel.getAppVersion())")
+            .hAlign(alignment: .trailing)
+            .padding(.vertical)
     }
 }
 

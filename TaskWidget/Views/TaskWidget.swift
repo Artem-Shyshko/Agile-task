@@ -42,16 +42,16 @@ struct TaskWidget: Widget {
     let tasks = TaskDTO.mockArray()
     TaskEntry(dateString: Date().description, tasks: tasks, configuration: .init())
 }
-
-extension Date {
-    func format(_ format: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        
-        return dateFormatter.string(from: self)
-    }
-    
-    func dateComponents(_ components: Set<Calendar.Component>, using calendar: Calendar = .current) -> DateComponents {
-        calendar.dateComponents(components, from: self)
-    }
-}
+//
+//extension Date {
+//    func format(_ format: String) -> String {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = format
+//        
+//        return dateFormatter.string(from: self)
+//    }
+//    
+//    func dateComponents(_ components: Set<Calendar.Component>, using calendar: Calendar = .current) -> DateComponents {
+//        calendar.dateComponents(components, from: self)
+//    }
+//}

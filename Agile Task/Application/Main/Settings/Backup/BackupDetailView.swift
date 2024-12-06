@@ -13,7 +13,8 @@ enum BackupStorage {
 
 struct BackupDetailView: View {
     @StateObject var viewModel: BackupViewModel
-    
+    @EnvironmentObject var themeManager: ThemeManager
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) private var dismiss
     @Environment(\.requestReview) private var requestReview
     @State private var authorizationStatus = ""
@@ -22,13 +23,22 @@ struct BackupDetailView: View {
     var body: some View {
         VStack(spacing: Constants.shared.viewSectionSpacing) {
             navigationBar()
+            if backupStorage == .locally {
+                Text("backup_delete_app")
+                    .font(.helveticaRegular(size: 16))
+                    .foregroundStyle(themeManager.theme.textColor(colorScheme))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
             
             VStack(spacing: Constants.shared.listRowSpacing) {
                 if backupStorage == .dropbox {
                     dropboxAuthorization()
                 }
-                createBackup()
-                downloadBackup()
+                
+                if backupStorage == .dropbox && viewModel.isAuthorized || backupStorage != .dropbox {
+                    createBackup()
+                    downloadBackup()
+                }
                 Spacer()
             }
         }
@@ -91,10 +101,17 @@ private extension BackupDetailView {
     }
     
     func downloadBackup() -> some View {
-        SectionLinkButton(title: "restore_backup", value: TasksNavigation.backupList(storage: backupStorage))
+        SectionLinkButton(
+            title: "restore_backup",
+            value: TasksNavigation.backupList(
+                storage: backupStorage
+            ),
+            isArrow: true
+        )
     }
 }
 
 #Preview {
     BackupDetailView(viewModel: BackupViewModel(appState: AppState()), backupStorage: .dropbox)
+        .environmentObject(ThemeManager())
 }
