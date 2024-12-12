@@ -206,7 +206,7 @@ private extension TaskRow {
     @ViewBuilder
     func recurringDateView() -> some View {
         if let recurring = task.recurring, recurring.option != .none {
-            Text(task.createdDate.format(viewModel.dateFormat()))
+            Text(task.createdDate.format(viewModel.settings.taskDateFormat.format))
                 .font(.helveticaLight(size: 14))
                 .foregroundStyle(foregroundColor())
         }
@@ -232,7 +232,7 @@ private extension TaskRow {
     @ViewBuilder
     func dateView() -> some View {
         if let date = task.date {
-            Text(date.format(viewModel.dateFormat()))
+            Text(date.format(viewModel.settings.taskDateFormat.format))
                 .font(.helveticaLight(size: 14))
                 .foregroundStyle(
                     task.isCompleted

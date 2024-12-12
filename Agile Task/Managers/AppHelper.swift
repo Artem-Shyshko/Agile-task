@@ -30,7 +30,7 @@ final class AppHelper {
         
         if let action = components.host, action == "addnewtask" {
             return .widgetNewTask
-        } else if components.path.contains("token") {
+        } else if components.path.contains("token") ||  components.path == "/connect" {
             return handleDropboxURL(with: url)
         } else {
             print("Unknown URL, we can't handle this one!")

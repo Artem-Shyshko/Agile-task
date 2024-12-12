@@ -10,14 +10,14 @@ import WidgetKit
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> TaskEntry {
         let tasks = TaskDataModel.shared.tasks
-        let dateFormat = TaskDataModel.shared.dateFormat()
+        let dateFormat = TaskDataModel.shared.settings.taskDateFormat.format
         let dateString = Date().format(dateFormat)
         return TaskEntry(dateString: dateString, tasks: tasks, configuration: ConfigurationAppIntent())
     }
     
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> TaskEntry {
         let tasks = TaskDataModel.shared.tasks
-        let dateFormat = TaskDataModel.shared.dateFormat()
+        let dateFormat = TaskDataModel.shared.settings.taskDateFormat.format
         let dateString = Date().format(dateFormat)
         
         return TaskEntry(dateString: dateString, tasks: tasks, configuration: configuration)
@@ -35,7 +35,7 @@ private extension Provider {
         TaskDataModel.shared.getTasks()
         var tasks = [TaskDTO]()
         
-        let dateFormat = TaskDataModel.shared.dateFormat()
+        let dateFormat = TaskDataModel.shared.settings.taskDateFormat.format
         let dateString = Date().format(dateFormat)
         
         tasks = TaskDataModel.shared.tasks

@@ -375,27 +375,6 @@ extension TasksViewModel {
             }
         }
     }
-    
-    func dateFormat() -> String {
-        let settings = appState.settingsRepository!.get()
-        
-        switch settings.taskDateFormat {
-        case .dayMonthYear:
-            return "dd/MM/yy"
-        case .weekDayDayMonthYear:
-            return "EE, dd/MM/yy"
-        case .monthDayYear:
-            return "MM/dd/yy"
-        case .weekDayMonthDayYear:
-            return "EE, MM/dd/yy"
-        case .weekDayDayNumberShortMoth:
-            return "EE, dd MMM"
-        case .dayNumberShortMonthFullYear:
-            return "dd MMM yyyy"
-        case .dayNumberShortMonth:
-            return "dd MMM"
-        }
-    }
 }
 
 // MARK: - Grouping and Sorting
@@ -594,15 +573,15 @@ extension TasksViewModel {
     private var taskGropedByDate: [String: [TaskDTO]] {
         Dictionary(grouping: filteredTasks) {
             if let taskDate = $0.date {
-                return taskDate.format(self.dateFormat())
+                return taskDate.format(settings.taskDateFormat.format)
             } else {
-                return $0.createdDate.format(self.dateFormat())
+                return $0.createdDate.format(settings.taskDateFormat.format)
             }
         }
     }
     
     var sectionHeaders: [String] {
-        currentDate.daysOfWeek().map { $0.format(self.dateFormat()) }
+        currentDate.daysOfWeek().map { $0.format(settings.taskDateFormat.format) }
     }
     
     func sectionContent(_ key: String) -> [TaskDTO] {

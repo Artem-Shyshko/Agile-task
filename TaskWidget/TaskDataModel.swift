@@ -77,25 +77,4 @@ class TaskDataModel {
                 }
             })
     }
-    
-    func dateFormat() -> String {
-        let settings = settingsRepo.get()
-        
-        switch settings.taskDateFormat {
-        case .dayMonthYear:
-            return "dd/MM/yy"
-        case .weekDayDayMonthYear:
-            return "EE, dd/MM/yy"
-        case .monthDayYear:
-            return "MM/dd/yy"
-        case .weekDayMonthDayYear:
-            return "EE, MM/dd/yy"
-        case .weekDayDayNumberShortMoth:
-            return "EE, dd MMM"
-        case .dayNumberShortMonthFullYear:
-            return "dd MMM yyyy"
-        case .dayNumberShortMonth:
-            return "dd MMM"
-        }
-    }
 }

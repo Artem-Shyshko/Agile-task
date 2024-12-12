@@ -303,7 +303,7 @@ private extension TasksView {
         VStack {
           switch viewModel.taskSortingOption {
           case .today:
-            timeControl(title: viewModel.currentDate.format(viewModel.dateFormat())) {
+            timeControl(title: viewModel.currentDate.format(viewModel.settings.taskDateFormat.format)) {
               viewModel.minusFromCurrentDate(component: .day)
             } rightButtonAction: {
               viewModel.addToCurrentDate(component: .day)
@@ -399,7 +399,7 @@ private extension TasksView {
   func weekSectionHeader(key: String) -> some View {
     HStack {
       let title = viewModel.sectionHeader(key)
-      let today = Date().format(viewModel.dateFormat())
+      let today = Date().format(viewModel.settings.taskDateFormat.format)
       Spacer()
       if key == today {
         Text(LocalizedStringKey(title))
@@ -412,7 +412,7 @@ private extension TasksView {
     }
     .foregroundStyle(themeManager.theme.textColor(colorScheme))
     .overlay {
-      if key == Date().format(viewModel.dateFormat()) {
+      if key == Date().format(viewModel.settings.taskDateFormat.format) {
         Color.white.opacity(0.1)
           .frame(height: 40)
           .clipShape(.rect(cornerRadius: 3))
@@ -476,7 +476,7 @@ private extension TasksView {
                 }
               } label: {
                 HStack(spacing: 5) {
-                  Text(viewModel.quickTaskDate.format(viewModel.dateFormat()))
+                  Text(viewModel.quickTaskDate.format(viewModel.settings.taskDateFormat.format))
                   Image(systemName: "xmark").renderingMode(.template)
                     .resizable()
                     .scaledToFit()
@@ -514,7 +514,7 @@ private extension TasksView {
                 }
               } label: {
                 HStack(spacing: 5) {
-                  Text(viewModel.quickTaskReminderDate.format(viewModel.dateFormat()))
+                  Text(viewModel.quickTaskReminderDate.format(viewModel.settings.taskDateFormat.format))
                   Image(systemName: "xmark").renderingMode(.template)
                     .resizable()
                     .scaledToFit()
